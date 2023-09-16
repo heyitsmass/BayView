@@ -23,6 +23,12 @@ const nextConfig = (a, { defaultConfig }) => {
         test: /\.node$/,
         loader: "node-loader"
       });
+      config.target = "node"; 
+
+      config.node = { 
+        ...config.node, 
+        __dirname: false
+      } 
       return config;
     }
   };
