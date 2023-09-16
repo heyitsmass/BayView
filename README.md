@@ -20,6 +20,8 @@ npm install
 npm run dev
 ```
 
+Note: The bot will initialize multiple times on the development server due to fastReload. 
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 The server will initialize the bot using the `BayLoader` in /src/utils that runs alongside the main web app. 
