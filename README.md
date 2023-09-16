@@ -36,5 +36,5 @@ This web site and internet bot is not endorsed by, directly affiliated with, mai
 
 ### Fair Use
 ```
-The website utilizes product images from other websites including but not limited to logos, images, or other content publicly provided by manufacturers, advertises and businesses. In doing so, no copyright is claimed for this kind of content on the website and to the extent that such material may appear to be infringed, we assert that such alleged infringement is permissible under the fair use principles of U.S. copyright laws. If your believe any material has been used in an unauthorized manner, please contact us at: brandonc@heyitsmass.dev for immediate removal of any copyrighted material. 
+This website utilizes product images from other websites including but not limited to logos, images, or other content publicly provided by manufacturers, advertises and businesses. In doing so, no copyright is claimed for this kind of content on the website. To the extent that such material may appear to be infringed, we assert that such alleged infringement is permissible under the fair use principles of U.S. copyright laws. If you believe any material has been used in an unauthorized manner, please contact us at: brandonc@heyitsmass.dev for immediate removal of any copyrighted material. 
 ```
