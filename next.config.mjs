@@ -1,37 +1,39 @@
 /** @type {import('next').NextConfig} */
+import { merge } from 'webpack-merge';
 
-import "./src/utils/BayLoader.mjs";
-
-const nextConfig = (a, { defaultConfig }) => {
+const config = (fb, { defaultConfig }) => {
   return {
-    ...defaultConfig,
+    webpack: (cfg, { isServer, ...ctx }) => {
+      if (isServer) {
+        return merge(cfg, {
+          module: {
+            rules: [
+              {
+                test: /\.node$/,
+                loader: 'node-loader'
+              }
+            ]
+          },
+          node: {
+            __dirname: false
+          }
+        });
+      }
+      return cfg;
+    },
+    redirects: async () => [
+      {
+        source: '/',
+        permanent: true,
+        destination: '/home'
+      }
+    ],
     experimental: {
       serverActions: true,
-      esmExternals: "loose"
-    },
-    redirects: async () => {
-      return [
-        {
-          source: "/",
-          permanent: true,
-          destination: "/home"
-        }
-      ];
-    },
-    webpack: (config, ctx) => {
-      config.module.rules.push({
-        test: /\.node$/,
-        loader: "node-loader"
-      });
-      config.target = "node"; 
-
-      config.node = { 
-        ...config.node, 
-        __dirname: false
-      } 
-      return config;
+      esmExternals: 'loose',
+      instrumentationHook: true
     }
   };
 };
 
-export default nextConfig;
+export default config;
