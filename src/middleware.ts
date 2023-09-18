@@ -1,2 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-export async function middleware(request: NextRequest) {}
+import { NextRequest } from "next/server";
+
+const middleware = async (request: NextRequest) => {
+  
+};
+export default middleware;
