@@ -1,9 +1,9 @@
-import { StatusResponse, TestMap } from "@/types/discord";
-import { client } from "@/utils/BayLoader.mjs";
-import { NextResponse } from "next/server";
+import { StatusResponse, TestMap } from '@/types/discord';
+import { __BayView } from '@/utils/BayLoader';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const { ws } = client;
+  const { ws } = __BayView.init().client;
 
   return NextResponse.json({
     ok: true,
