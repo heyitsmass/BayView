@@ -13,7 +13,7 @@ Once Docker has been installed, From the root directory:
 ```
 git clone https://github.com/heyitsmass/BayView && cd BayView && touch.env
 ```
-If you on the development team, message me directly and I will provide you the API Token and Client ID.
+If you on the development team, then download the key from the Development Discord. If you are not on the development team your ID will not be whitelisted and you cannot access the key.
  
 If you would like to create your own bot using this project as a template then follow [Discord Developer Guide](https://discord.com/developers/docs/getting-started) to obtain your own API Token and Client ID. 
 
