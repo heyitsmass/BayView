@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-import { merge } from 'webpack-merge';
+import { merge } from "webpack-merge";
 
 const config = (fb, { defaultConfig }) => {
   return {
@@ -10,7 +10,7 @@ const config = (fb, { defaultConfig }) => {
             rules: [
               {
                 test: /\.node$/,
-                loader: 'node-loader'
+                loader: "node-loader"
               }
             ]
           },
@@ -23,16 +23,17 @@ const config = (fb, { defaultConfig }) => {
     },
     redirects: async () => [
       {
-        source: '/',
+        source: "/",
         permanent: true,
-        destination: '/home'
+        destination: "/home"
       }
     ],
     experimental: {
       serverActions: true,
-      esmExternals: 'loose',
+      esmExternals: "loose",
       instrumentationHook: true
-    }
+    },
+    output: "standalone"
   };
 };
 
