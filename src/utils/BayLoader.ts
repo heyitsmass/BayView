@@ -15,20 +15,32 @@ export class BayView {
   }).setToken(BayView.token!);
 
   public readonly client = BayView.client;
-  private static commands = [
+  private commands = [
     {
       name: "ping",
       description: "Replies with Pong"!
     }
   ];
-  private constructor() {}
+  private constructor() {
+    this.client.on("ready", () => {
+      console.log(`Logged in as ${this.client.user?.tag}!`);
+    });
+
+    this.client.on("interactionCreate", async (interaction) => {
+      if (!interaction.isChatInputCommand()) return;
+
+      if (interaction.commandName === "ping") {
+        await interaction.reply("Bah-a-la-la-la.");
+      }
+    });
+  }
 
   public login = async () => {
     const { token, clientID } = this.$parent;
 
     if (!this.client.readyAt) {
       await this.rest.put(Routes.applicationCommands(clientID!), {
-        body: BayView.commands
+        body: [...this.commands]
       });
 
       console.log("Successfully reloaded application (/) commands.");
