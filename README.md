@@ -60,7 +60,6 @@ bayview-development  |
 bayview-development  | - info Loaded env from /app/.env
 bayview-development  | - ready started server on [::]:3000, url: http://localhost:3000
 bayview-development  | - event compiled client and server successfully in 89 ms (20 modules)
-bayview-development  | - info Loaded env from /app/.env
 bayview-development  | - wait compiling /instrumentation (client and server)...
 bayview-development  | - event compiled successfully in 21 ms (42 modules)
 bayview-development  | Successfully reloaded application (/) commands.
