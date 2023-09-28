@@ -1,0 +1,55 @@
+#!/bin/bash
+FILE=.built
+start=0
+build=0
+help=0
+
+if [[ $1 == '' ]]; then
+    start=1
+    build=1
+fi
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -s|--start) start=1; shift ;;
+        -b|--build) build=1;;
+        -h|--help) help=1;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+if [[ $help == 1 ]]; then
+    echo
+    echo "$0 [-bs]|[--build|start]"
+    echo
+    echo ' Builds and runs the Docker container.'
+    echo
+    echo "-------------------------------------------------"
+    echo
+    echo "Options:"
+    echo
+    echo "  -s | --start      : Start the docker container."
+    echo "  -b | --build      : Build the docker container."
+    echo
+    echo "-------------------------------------------------"
+    echo
+    echo "Note: Can be specified for individual operations."
+    exit 1
+    
+fi
+
+if ([ $build == 1 ] && ! [ -f "$FILE" ]); then
+    
+    docker build -t nextjs-docker .
+    
+    date=`date`
+    echo 'Created Build on:' $date >> .built
+    
+fi;
+
+if [[ $start == 1 ]]; then
+    
+    docker run -it --rm -p 3000:3000 nextjs-docker
+    
+fi;
