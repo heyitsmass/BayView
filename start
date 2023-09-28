@@ -1,23 +1,12 @@
 #!/bin/bash
 FILE=.built
-start=0
+start=1
 build=0
 help=0
 
-if [[ $1 == '' ]]; then
-    start=1
-
-    if [[ -f "$FILE" ]]; then 
-      build=0
-    else 
-      build=1 
-    fi 
-
-fi
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -s|--start) start=1; shift ;;
         -b|--build) build=1;;
         -h|--help) help=1;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
@@ -35,8 +24,8 @@ if [[ $help == 1 ]]; then
     echo
     echo "Options:"
     echo
-    echo "  -s | --start      : Start the docker container."
-    echo "  -b | --build      : Build the docker container."
+    #echo "  -s | --start      : Start the docker container."
+    echo "  -b | --build      : Re-Build the docker container."
     echo
     echo "-------------------------------------------------"
     echo
@@ -45,17 +34,19 @@ if [[ $help == 1 ]]; then
     
 fi
 
-if [[ $build == 1 ]]; then
-    
-    docker compose up --build --no-start 
-    
-    date=`date`
-    echo 'Created Build on:' $date >> .built
-    
-fi;
 
 if [[ $start == 1 ]]; then
     
-    docker start -ia bayview-development
+    if [[ $build == 1 ]]; then
+        
+        date=`date`
+        echo 'Created Build on:' $date >> .built
+        
+        
+        docker compose up --build
+        
+    fi;
+    
+    docker compose up
     
 fi;
