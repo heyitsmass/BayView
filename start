@@ -6,7 +6,13 @@ help=0
 
 if [[ $1 == '' ]]; then
     start=1
-    build=1
+
+    if [[ -f "$FILE" ]]; then 
+      build=0
+    else 
+      build=1 
+    fi 
+
 fi
 
 while [[ "$#" -gt 0 ]]; do
@@ -39,9 +45,9 @@ if [[ $help == 1 ]]; then
     
 fi
 
-if ([ $build == 1 ] && ! [ -f "$FILE" ]); then
+if [[ $build == 1 ]]; then
     
-    docker build -t nextjs-docker .
+    docker compose up --build --no-start 
     
     date=`date`
     echo 'Created Build on:' $date >> .built
@@ -50,6 +56,6 @@ fi;
 
 if [[ $start == 1 ]]; then
     
-    docker run -it --rm -p 3000:3000 nextjs-docker
+    docker start -ia bayview-development
     
 fi;
