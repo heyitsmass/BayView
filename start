@@ -51,3 +51,5 @@ if [[ $start == 1 ]]; then
     docker compose up --force-recreate -V 
     
 fi;
+
+docker compose down -v
