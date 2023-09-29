@@ -43,11 +43,13 @@ if [[ $start == 1 ]]; then
         echo 'Created Build on:' $date >> .built
         
         
-        docker compose up --build
+        docker compose up --force-recreate -V --build
 
         exit 2
     fi;
     
-    docker compose up
+    docker compose up --force-recreate -V 
     
 fi;
+
+docker compose down -v
