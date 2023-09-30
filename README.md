@@ -96,6 +96,7 @@ It is expected these design patterns will be followed upon contributing to the r
 
 📍If the server hangs during shutdown attempting to close it with `ctrl+c` then you can either stop it directly from Docker Desktop or open a secondary console window and type `docker kill bayview-development`
 
+📍While potentially unrelated, if you get a `dial unix /var/run/docker.sock: connect: permission denied` error then type `chmod 666 /var/run/docker.sock` and retry
 
 ## Disclaimers: 
 
