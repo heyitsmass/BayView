@@ -1,4 +1,3 @@
-
 import styles from "./page.module.css";
 import Button from "../../Components/CounterButton"
 
@@ -12,6 +11,3 @@ export default function Page() {
     <Button className={styles.yellow}></Button>
   </div>;
 }
-
-
-
