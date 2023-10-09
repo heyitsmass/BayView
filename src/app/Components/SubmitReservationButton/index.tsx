@@ -2,9 +2,10 @@
 
 'use client'
 import { ButtonHTMLAttributes, DetailedHTMLProps, SyntheticEvent, useEffect, useId, useState } from "react";
+import styles from './pages.modules.css'
+export type SubmitReservationButton = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-export type SubmitButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-const SubmitReservationButton = ({...props}: SubmitButtonProps) => {
+const SubmitReservationButton = ({...props}: SubmitReservationButton) => {
 
     const hotelId = {};
     const [passedObject, setObject] = useState({});
@@ -13,6 +14,10 @@ const SubmitReservationButton = ({...props}: SubmitButtonProps) => {
         e.preventDefault();
 
     }
+
+    return (
+        <button className={"SubmitReservationButton"}>Reserve this.</button>
+    )
 
 }
 
