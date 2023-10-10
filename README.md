@@ -41,7 +41,7 @@ DISCORD_CLIENT_ID=<CLIENT_ID>
 ### Step 3: 
 From here you are ready to build and run Docker image 
 
-```chmod +x ./start && ./start```
+```chmod +x start && ./start```
 
 📍<b> *This will create a `.built` file with the build date/time stamped into it, Subsequent calls to ./start will only initialize a new container from the previous image. Pass the `-b|--build` option to rebuild the image or `-h|--help` to display the help menu*</b>
 
