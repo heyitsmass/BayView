@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@discordjs/core": "^1.0.1",
     "@discordjs/ws": "^1.0.1",
     "@types/node": "20.6.0",
@@ -19,15 +23,17 @@
     "discord.js": "^14.13.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
-    "postcss": "8.4.29",
+    "mongoose": "^7.6.1",
+    "next": "^13.5.4",
+    "postcss": "^8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
     "utf-8-validate": "^6.0.3",
     "webpack-merge": "^5.9.0",
-    "zlib-sync": "^0.1.8"
+    "zlib-sync": "^0.1.8",
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "node-loader": "^2.0.0"
