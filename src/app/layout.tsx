@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import "./globals.css";
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 export default async function Layout({
   children
