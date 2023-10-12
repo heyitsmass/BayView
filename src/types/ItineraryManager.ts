@@ -1,0 +1,428 @@
+import mongoose from "mongoose";
+
+
+type IdentityState = 'anonymous' | 'registered' | 'authenticated';
+type FlowState = 'login' | 'registration' | 'uninitialized' | 'initialized' | 'planning' | 'reserving' | 'updating' | 'updated' | 'planned' | 'booked' | 'completed' | 'archived';
+type StorageMethod = 'local' | 'cloud' | 'database' | 'server' | 'file';
+
+
+
+interface State {
+  type: FlowState
+}
+
+
+class LoginFlow implements State {
+  type: FlowState = 'login';
+}
+
+class RegistrationFlow implements State {
+  type: FlowState = 'registration';
+
+}
+
+class ItineraryFlow {
+  private identity: IdentityState = 'anonymous';
+  private stage: FlowState = 'uninitialized';
+  private storage: StorageMethod = 'local';
+  private state: State = new LoginFlow();
+
+  private user: {
+    authorization: string;
+    username: string;
+  } | null = null;
+
+  private get_next_state() {
+    /** Gets the next flow state */
+  }
+
+  private get_previous_state() {
+    /** Gets the previous flow state */
+  }
+
+  private visit_state(state: State) {
+    /** Visits the state */
+  }
+
+  public get_state() {
+    /** Gets the current state */
+  }
+
+  public set_state(state: State) {
+    /** Sets the current state */
+    return this.visit_state(state);
+  }
+
+  private get_identity() {
+    /** Gets the current identity */
+  }
+
+  private set_identity(identity: IdentityState, user?: { authorization: string; username: string; }) {
+    /** Sets the current identity */
+  }
+
+  private get_storage() {
+    /** Gets the current storage method */
+  }
+
+  private set_storage(storage: StorageMethod) {
+    /** Sets the current storage method */
+  }
+
+}
+
+
+
+
+abstract class ItineraryManager {
+
+  public static itineraries: Itinerary[];
+  public flow = new ItineraryFlow();
+
+  public loadItineraries() {
+    /** Fetches the itineraries from the database. */
+  };
+  public saveItineraries() {
+    /** Flushes the database with the current list of itineraries */
+  };
+
+  public addItinerary(itinerary: Itinerary) {
+    /** Adds an itinerary to the database */
+  }
+
+  public removeItinerary(itinerary: Itinerary) {
+    /** Removes an itinerary from the current storage method */
+  }
+
+  public modifyItinerary(itinerary: Itinerary) {
+  }
+
+  public getItineraries() {
+    /** Returns the current list of itineraries */
+  }
+
+  public getItinerary(itinerary: Itinerary) {
+    /** Locates the itinerary in the cache*/
+  }
+
+  public createItinerary() {
+  }
+
+  public initializeFlow() {
+    this.flow.set_state({ type: 'login' });
+    return this.flow.get_state(); //login
+  }
+
+
+}
+
+/** Event Manager class (Event Context Manager)*/
+export class EventManager {
+  /** Context manager functions */
+  private event!: Event;    //state
+  private events!: Event[]; //current events in the manager
+  private $history!: Event[]; //history of events in the manager
+  private transition_to_next_event() {
+    /** Transitions current state to the next event */
+    const state = this.events.pop();
+    if (!state)
+      return;
+    this.$history.push(this.event);
+    return this.event = state;
+  }
+
+  private switch_to_event(event: Event) {
+    /** Switches the current event to the specified event */
+    this.$history.push(this.event);
+    return this.event = event;
+  }
+
+  private transition_to_previous_event() {
+    /** Transitions current state to the previous event */
+    const state = this.$history.pop();
+    if (!state)
+      return;
+    return this.event = state;
+  }
+}
+
+export class Group extends EventManager {
+
+  public get_current_event() {
+    /** Returns the currently active event */
+  }
+
+  public get_next_event() {
+    /** Returns the next event */
+  }
+
+  public get_previous_event() {
+    /** Returns the previous event */
+  }
+
+
+  public get_events() {
+    /** Returns the events in the group */
+  }
+
+  public add_event(event: Event) {
+    /** Adds an event to the group */
+  }
+
+  public remove_event(event: Event) {
+    /** Removes an event from the group */
+  }
+
+  public modify_event(event: Event) {
+    /** Modifies an event in the group */
+  }
+
+  public get_start_time() {
+    /** Returns the start time of the current event */
+  }
+
+  public get_end_time() {
+    /** Returns the end time of the current event */
+  }
+
+  public get_location() {
+    /** Retusn the location of the current event */
+  }
+
+  public get_transportation() {
+    /**Returns the transportation attatched to the event */
+  }
+  public get_transportation_url() {
+    /**Returns the current transportation urls attached to the evet */
+  }
+
+}
+
+/** Itinerary class */
+export class Itinerary extends Group { }
+
+/** Coordinated Interiary class */
+export class CoordinatedItinerary extends Itinerary {
+
+  public get_coordinators() {
+    /** Returns the coordinators in the itinerary */
+  }
+
+  public add_coordinator() {
+    /** Adds a coordinator to the itinerary */
+
+  }
+
+  public get_groups() {
+    /** Returns the groups in the itinerary */
+  }
+
+  public add_group(group: Group) {
+    /** Adds a group to the itinerary */
+  }
+
+  public remove_group(group: Group) {
+    /** Removes a group from the itinerary */
+  }
+
+  public modify_group(group: Group) {
+    /** Modifies a group in the itinerary */
+  }
+
+}
+
+
+/** Notifier interface for the Notifiers */
+interface Notifier {
+  /** Sends a notification to the user */
+  send_notification(): void;
+}
+
+
+class SMSNotifier implements Notifier {
+  /** SMS Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users phone */
+  }
+}
+
+class EmailNotifier implements Notifier {
+  /** Email Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users email */
+  }
+}
+
+class TwitterNotifier implements Notifier {
+  /** Twitter Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users twitter account */
+  }
+}
+
+class DiscordNotifier implements Notifier {
+  /** Discord Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users discord account */
+  }
+}
+
+class FacebookNotifier implements Notifier {
+  /** Facebook Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users facebook account */
+  }
+}
+
+class SlackNotifier implements Notifier {
+  /** Slack Notifier implementation */
+  public send_notification() {
+    /** Sends a notification to the users slack account */
+  }
+}
+
+
+interface Person {
+  /** Generic person representation. */
+  name: {
+    first: string;
+    last: string;
+    middle?: string;
+    username?: string;
+  }
+  email: string;
+  phone: string;
+  discord: {
+    username: string;
+    id: number | string;
+  }
+  /** Gets the name as a string */
+  get_name: () => string;
+  add_notifier: (notifier: Notifier) => void;
+
+}
+
+interface IEvent {
+  /** Gets the reseration link associated with the event */
+  get_url: () => string;
+}
+
+/** Event interface for the Events */
+abstract class Event {
+
+  public add_person(user: Person) {
+    /** Adds a person to the event */
+  }
+
+  public get_persons() {
+    /** Returns the persons in the event */
+  }
+
+  public remove_person(user: Person) {
+    /** Removes a person from the event */
+  }
+
+  public notify_persons() {
+    /** Notifies all persons in the event */
+  }
+
+  public notify_person(user: Person) {
+    /** Notifies a person in the event */
+  }
+
+  public get_start_time() {
+    /** Returns the start time of the event */
+  }
+  public get_end_time() {
+    /** Returns the end time of the event */
+  }
+
+  public get_location() {
+    /** Returns the location of the event */
+  }
+
+  public get_transportation() {
+    /** Returns the transportation for the event */
+  }
+
+  public get_event() {
+    /** Returns the event */
+  }
+}
+export class Hotel extends Event implements IEvent {
+
+  /** Hotel class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the hotel */
+    return '';
+  }
+}
+
+export class Restaurant extends Event implements IEvent {
+  /** Restaurant class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the restaurant */
+    return '';
+  }
+}
+
+export class Activity extends Event implements IEvent {
+  /** Activity class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the activity */
+    return '';
+  }
+}
+
+export class Flight extends Event implements IEvent {
+  /** Flight class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the flight */
+    return '';
+  }
+}
+
+
+export class Ticket extends Event implements IEvent {
+  /** Ticket class for the Events */
+
+  public get_url() {
+    /** Returns the purchase link for the ticket */
+    return '';
+  }
+}
+
+export class Pass extends Event implements IEvent {
+  /** Pass class for the Events */
+
+  public get_url() {
+    /** Returns the purchase link for the park pass */
+    return '';
+  }
+}
+
+
+/** Transportation interface for the Events */
+interface Transportation extends IEvent { }
+
+export class Uber implements Transportation {
+  /** Uber class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the uber */
+    return '';
+  }
+}
+
+export class Lyft implements Transportation {
+  /** Lyft class for the Events */
+
+  public get_url() {
+    /** Returns the reservation link for the lyft */
+    return '';
+  }
+}
