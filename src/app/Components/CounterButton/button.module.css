@@ -1,0 +1,15 @@
+.button { 
+  background: white; 
+  font-size: 1rem; 
+  font-family: 'Times New Roman'; 
+  cursor: pointer; 
+  padding: 1rem; 
+  border-radius: .4em;;
+}
+
+.button:hover { 
+  background: white;
+  transform: scale(104%);
+  box-shadow: 0 0 8px -2px black;
+  color: black; 
+}
