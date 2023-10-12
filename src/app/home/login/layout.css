@@ -1,0 +1,7 @@
+.login { 
+  height: 98%; 
+  width: 100%; 
+  display: flex; 
+  border: solid 1px white; 
+  background-image: url('../../../../public/images/background.png');
+}
