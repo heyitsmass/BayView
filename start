@@ -1,0 +1,55 @@
+#!/bin/bash
+FILE=.built
+start=1
+build=0
+help=0
+
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -b|--build) build=1;;
+        -h|--help) help=1;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+if [[ $help == 1 ]]; then
+    echo
+    echo "$0 [-bs]|[--build|start]"
+    echo
+    echo ' Builds and runs the Docker container.'
+    echo
+    echo "-------------------------------------------------"
+    echo
+    echo "Options:"
+    echo
+    #echo "  -s | --start      : Start the docker container."
+    echo "  -b | --build      : Re-Build the docker container."
+    echo
+    echo "-------------------------------------------------"
+    echo
+    echo "Note: Can be specified for individual operations."
+    exit 1
+    
+fi
+
+
+if [[ $start == 1 ]]; then
+    
+    if [[ $build == 1 ]]; then
+        
+        date=`date`
+        echo 'Created Build on:' $date >> .built
+        
+        
+        docker compose up --force-recreate -V --build
+
+        exit 2
+    fi;
+    
+    docker compose up --force-recreate -V 
+    
+fi;
+
+docker compose down -v

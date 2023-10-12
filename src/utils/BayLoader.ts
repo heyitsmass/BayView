@@ -1,54 +1,65 @@
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes } from "discord.js";
 
 type BayViewClient<Ready extends boolean = boolean> = Client<Ready>;
 
-export class __BayView {
+export class BayView {
   private static client: BayViewClient = new Client({
     intents: [GatewayIntentBits.Guilds]
   });
-  private static instance?: __BayView;
+  private readonly $parent: typeof BayView = BayView;
+  private static instance?: BayView;
   private static readonly token?: string = process.env.DISCORD_API_TOKEN;
   private static readonly clientID?: string = process.env.DISCORD_CLIENT_ID;
   private rest: REST = new REST({
-    version: '10'
-  }).setToken(__BayView.token!);
+    version: "10"
+  }).setToken(BayView.token!);
 
-  public readonly client = __BayView.client;
-  private static commands = [
+  public readonly client = BayView.client;
+  private commands = [
     {
-      name: 'ping',
-      description: 'Replies with Pong'!
+      name: "ping",
+      description: "Replies with Pong"!
     }
   ];
-  private constructor() {}
+  private constructor() {
+    this.client.on("ready", () => {
+      console.log(`Logged in as ${this.client.user?.tag}!`);
+    });
+
+    this.client.on("interactionCreate", async (interaction) => {
+      if (!interaction.isChatInputCommand()) return;
+
+      if (interaction.commandName === "ping") {
+        await interaction.reply("Bah-a-la-la-la.");
+      }
+    });
+  }
 
   public login = async () => {
-    const { token, clientID } = __BayView;
+    const { token, clientID } = this.$parent;
 
     if (!this.client.readyAt) {
       await this.rest.put(Routes.applicationCommands(clientID!), {
-        body: __BayView.commands
+        body: [...this.commands]
       });
 
-      console.log('Successfully reloaded application (/) commands.');
+      console.log("Successfully reloaded application (/) commands.");
 
       await this.client.login(token);
     }
-    return this as __BayView;
+    return this as BayView;
   };
 
   static init = () => {
     if (!this.token) {
-      throw new Error('API token required.');
+      throw new Error("API token required.");
     }
-    return (this.instance ??= new __BayView());
+    return (this.instance ??= new BayView());
   };
 }
 
 try {
-  __BayView.init().login();
+  BayView.init().login();
 } catch (err) {
   console.log(err);
 }
-
-//shoma: jjordan@seacrestservices.com
