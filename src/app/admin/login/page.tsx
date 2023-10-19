@@ -5,7 +5,7 @@ import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
 
 
 
-export default async function Page({children}:{children:any}){ 
+export default async function Page({children}:{children:React.ReactNode}){ 
 
     return <div className={styles.login}>
         
