@@ -41,9 +41,25 @@ export const userSchema = new Schema<IUser>({
   }
 });
 
+userSchema.method(
+  "refreshAccessToken",
+  async function (this: HydratedDocument<IUser>) {
+    const { credentials } = getCredentials(
+      this.username,
+      this._id.toString()
+    );
+
+    this.credentials = credentials;
+    await this.save();
+  }
+);
+
 type IUserQueryHelpers = {};
 
 type IUserMethods = {
+  refreshAccessToken: () => Promise<
+    Pick<RefreshAccessTokenResponse, "credentials">
+  >;
 };
 
 type IUserVirtuals = {};
