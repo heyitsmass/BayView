@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --gray-900: rgb(12, 13, 16);
   --gray-800: rgb(22, 23, 26);
