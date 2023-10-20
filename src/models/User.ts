@@ -7,6 +7,17 @@ import { Credentials } from "google-auth-library";
 import { RefreshAccessTokenResponse } from "google-auth-library/build/src/auth/oauth2client";
 import { getCredentials } from "@/app/services/auth/utils";
 
+export const credentialsSchema = new Schema<Credentials>(
+  {
+    access_token: { type: String, required: true },
+    refresh_token: { type: String, required: true },
+    expiry_date: { type: Number, required: true },
+    id_token: { type: String, required: true }
+  },
+  {
+    _id: false
+  }
+);
 
 export const userSchema = new Schema<IUser>({
   name: {
