@@ -28,4 +28,27 @@ async function validateUser() {
     user.credentials as HydratedSingleSubdocument<Credentials>
   ).toJSON();
 }
+export default async function Layout({
+  children
+}: {
+  children: ReactNode;
+}) {
+  let credentials;
+
+  try {
+    credentials = await validateUser();
+  } catch (err) {
+    console.log((err as Error).message);
+    redirect("/auth/logout");
+  }
+
+  return (
+    <Provider
+      value={{
+        credentials
+      }}
+    >
+      {children}
+    </Provider>
+  );
 }
