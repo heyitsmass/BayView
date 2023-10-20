@@ -77,3 +77,30 @@ export async function refreshTokens(refreshToken: string) {
   };
 }
 
+export async function loginUser(form: FormData) {
+  const emailOrUsername = form.get("emailOrUsername") as string;
+  const password = form.get("password") as string;
+
+  const user = await Users.findOne({
+    $or: [{ email: emailOrUsername }, { username: emailOrUsername }]
+  });
+
+  if (!user) throw Error("User not found");
+
+  const validPassword = await bcrypt.compare(
+    password,
+    (user as EmailUser).password
+  );
+
+  if (!validPassword) throw Error("Invalid password");
+
+  await user.refreshAccessToken();
+
+  const creds = (
+    user.credentials as HydratedSingleSubdocument<Credentials>
+  ).toJSON() as Credentials;
+
+  await updateCookies(creds);
+
+  redirect(`/home/${user._id.toString()}`);
+}
