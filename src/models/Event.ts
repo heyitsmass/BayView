@@ -25,6 +25,19 @@ export const hotelSchema = new Schema<Hotel>(
   }
 );
 
+export const reservationSchema = new Schema<Reservation>(
+  {
+    reservationName: { type: String, required: true },
+    reservationType: { type: String, required: true },
+    reservationNumber: { type: String, required: false },
+    reservationData: { type: hotelSchema, required: true }
+  },
+  {
+    _id: false
+  }
+);
+
+
 export const flightSchema = new Schema<Flight>({
   airline: { type: String, required: true },
   flightNumber: { type: String, required: true },
@@ -37,5 +50,10 @@ const Events =
 const Flights = Events.discriminator<Flight>("Flight", flightSchema);
 
 const Hotels = Events.discriminator<Hotel>("Hotel", hotelSchema);
+
+const Reservations = Events.discriminator<Reservation>(
+  "Reservation",
+  reservationSchema
+);
 
 export default Events;
