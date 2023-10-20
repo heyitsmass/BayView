@@ -14,12 +14,14 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import styles from "./input.module.css";
 
 type UserInputProps = {
+  icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
 
 const UserInput = ({ ...props }: UserInputProps) => {
+  const { icon } = props;
 
   const [input, setInput] = useState("");
 
@@ -33,6 +35,7 @@ const UserInput = ({ ...props }: UserInputProps) => {
     <div className={styles.inputWrapper}>
       <label htmlFor={props.id}>{props.placeholder}</label>
       <span className={styles.input}>
+        {icon && <FontAwesomeIcon {...icon} />}
         <input
           {...props}
           onKeyUp={({ currentTarget }) =>
