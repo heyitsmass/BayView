@@ -15,6 +15,20 @@ export const eventSchema = new Schema<Event>(
   }
 );
 
+export const hotelSchema = new Schema<Hotel>(
+  {
+    hotelName: { type: String, required: true },
+    roomNumber: { type: String, required: true }
+  },
+  {
+    _id: false
+  }
+);
+
+
 const Events =
   mongoose.models.Events || mongoose.model("Events", eventSchema);
+
+const Hotels = Events.discriminator<Hotel>("Hotel", hotelSchema);
+
 export default Events;
