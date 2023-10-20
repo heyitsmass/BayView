@@ -25,9 +25,16 @@ export const hotelSchema = new Schema<Hotel>(
   }
 );
 
+export const flightSchema = new Schema<Flight>({
+  airline: { type: String, required: true },
+  flightNumber: { type: String, required: true },
+  gate: { type: String, required: true }
+});
 
 const Events =
   mongoose.models.Events || mongoose.model("Events", eventSchema);
+
+const Flights = Events.discriminator<Flight>("Flight", flightSchema);
 
 const Hotels = Events.discriminator<Hotel>("Hotel", hotelSchema);
 
