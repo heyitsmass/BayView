@@ -18,3 +18,7 @@ export async function updateCookies({ ...args }: Credentials) {
   cookieStore.set("access_token", access_token, { expires: expiry_date });
   cookieStore.set("refresh_token", refresh_token, { expires: expiry_date });
 }
+
+export const createToken = (payload: any, expiresIn: number | string) =>
+  jwt.sign(payload, process.env.TOKEN_KEY!, { expiresIn });
+
