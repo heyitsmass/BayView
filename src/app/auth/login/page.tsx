@@ -36,6 +36,13 @@ const PasswordInput = () => {
 };
 
 export default function Page() {
+  const login = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      const tokens = await handleLogin(code);
+    },
+    flow: "auth-code"
+  });
+
   /**
    * mode = 0 = false = "login"
    * mode = 1 = true = "register"
@@ -100,7 +107,10 @@ export default function Page() {
         <div className={styles.buttons}>
           <Button type='submit'>{mode ? "Register" : "Login"}</Button>
           <Button onClick={(e) => login()}>
+            <FontAwesomeIcon icon={faGoogle} />
+          </Button>
         </div>
+      </form>
     </div>
   );
 }
