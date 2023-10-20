@@ -28,6 +28,10 @@ export type IUser<T extends AuthTypes = AuthTypes> = {
   authType: T;
   /** The user's password */
   password: T extends "email" ? string : undefined;
+  /** The users' discord Id */
+  discordId?: string;
+  /** The current DM Channel Id */
+  discordDMChannel?: String;
 };
 
 export type EmailUser = IUser<"email">;
