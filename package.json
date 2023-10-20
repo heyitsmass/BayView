@@ -32,7 +32,7 @@
     "tailwindcss": "^3.3.3",
     "typescript": "5.2.2",
     "utf-8-validate": "^6.0.3",
-    "webpack-merge": "^5.9.0",
+    "webpack-merge": "^5.9.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.5",
