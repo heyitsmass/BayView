@@ -54,6 +54,8 @@ export const flightSchema = new Schema<Flight>({
   gate: { type: String, required: true }
 });
 
+export type EventTypes = Flight | Hotel | Reservation | Activity;
+
 const Events =
   mongoose.models.Events || mongoose.model("Events", eventSchema);
 
@@ -70,4 +72,5 @@ const Activities = Events.discriminator<Activity>(
   "Activity",
   activitySchema
 );
+export { Activities, Flights, Hotels, Reservations };
 export default Events;
