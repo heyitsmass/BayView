@@ -37,6 +37,16 @@ export const reservationSchema = new Schema<Reservation>(
   }
 );
 
+export const activitySchema = new Schema<Activity>(
+  {
+    activityName: { type: String, required: true },
+    activityType: { type: String, required: true },
+    activitySubtype: { type: String, required: true }
+  },
+  {
+    _id: false
+  }
+);
 
 export const flightSchema = new Schema<Flight>({
   airline: { type: String, required: true },
@@ -56,4 +66,8 @@ const Reservations = Events.discriminator<Reservation>(
   reservationSchema
 );
 
+const Activities = Events.discriminator<Activity>(
+  "Activity",
+  activitySchema
+);
 export default Events;
