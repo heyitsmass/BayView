@@ -18,6 +18,22 @@ import { useState } from "react";
 import handleLogin from "../../services/auth/google";
 import styles from "./page.module.css";
 
+const PasswordInput = () => {
+  const [hidden, setHidden] = useState(false);
+
+  return (
+    <UserInput
+      placeholder='Password...'
+      name='password'
+      type={hidden ? "password" : "text"}
+      icon={{
+        icon: hidden ? faLock : faUnlock,
+        onClick: () => setHidden(!hidden)
+      }}
+      required
+    />
+  );
+};
 
 export default function Page() {
   /**
