@@ -1,17 +1,49 @@
 /**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  /* config options here */
+  experimental: {
+    instrumentationHook: true,
+    esmExternals: 'loose',
+    serverActions: true
+  },
+  reactStrictMode: false,
+  redirects: async () => {
+    return [
       {
-        source: "/",
-        permanent: true,
-        destination: "/home"
+        source: '/',
+        destination: '/home',
+        permanent: true
+      },
+      {
+        source: '/home',
+        missing: [
+          {
+            type: 'cookie',
+            key: 'refresh_token'
+          },
+          {
+            type: 'cookie',
+            key: 'access_token'
+          }
+        ],
+        destination: '/auth/login',
+        permanent: false
+      },
+      {
+        source: '/auth/login',
+        has: [
+          {
+            type: 'cookie',
+            key: 'refresh_token'
+          }
+        ],
+        destination: '/home',
+        permanent: false
       }
-    ],
-    experimental: {
-      serverActions: true,
-      esmExternals: "loose",
-      instrumentationHook: true
-    },
-    output: "standalone"
-  };
+    ];
+  }
 };
 
-export default config;
+export default nextConfig;
