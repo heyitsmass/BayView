@@ -49,6 +49,50 @@ const getIdFromGoogle = (googleId: string, email: string) => {
 
 export default async function handleLogin(code: string) {
   const { tokens } = await oAuth2Client.getToken(code);
+
+  const _id: string = await fetch(
+    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
+  ).then(async (res) => {
+    const userInfo = (await res.json()) as {
+      id: string;
+      name: string;
+      given_name: string;
+      family_name: string;
+      picture: string;
+      locale: string;
+      email: string;
+      verified_email: boolean;
+      hd: string;
+    };
+
+    let _id = getIdFromGoogle(userInfo.id, userInfo.email);
+
+    let user = await Users.findOne({ _id });
+
+    tokens.scope = [tokens.scope, SCOPES.USER.default].join(" ");
+
+    if (!user) {
+      //create one in the db
+      user = new Users({
+        _id,
+        name: {
+          first: userInfo.given_name,
+          last: userInfo.family_name
+        },
+        authType: "google",
+        email: userInfo.email,
+        credentials: tokens
+      });
+    } else {
+      //update the user in the db
+      user.credentials = tokens;
+    }
+
+    await user.save();
+
+    return _id;
+  });
+
   await updateCookies(tokens);
 
   redirect(`/home/${_id}`);
