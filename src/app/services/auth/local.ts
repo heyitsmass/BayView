@@ -47,3 +47,33 @@ export const registerUser = async (form: FormData) => {
   });
 };
 
+export async function refreshTokens(refreshToken: string) {
+  const payload = jwt.verify(refreshToken, process.env.TOKEN_KEY!) as {
+    username: string;
+    access_token: string;
+  };
+
+  const { _id } = jwt.verify(
+    payload.access_token,
+    process.env.TOKEN_KEY!
+  ) as {
+    _id: string;
+  };
+
+  const user = await Users.findOne({
+    _id,
+    username: payload.username,
+    "credentials.refresh_token": refreshToken
+  });
+
+  if (!user) throw Error("User not found");
+
+  const { credentials } = await user.refreshAccessToken();
+
+  await updateCookies(credentials);
+
+  return {
+    credentials: user.credentials
+  };
+}
+
