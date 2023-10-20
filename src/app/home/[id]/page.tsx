@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 
 export default function Page({
   params
@@ -8,12 +9,14 @@ export default function Page({
     id: string;
   };
 }) {
+  const { push } = useRouter();
 
   const { id } = params;
 
   return (
     <div>
       {id}
+      <button onClick={async (e) => push("/auth/logout")}>Logout</button>
     </div>
   );
 }
