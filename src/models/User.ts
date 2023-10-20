@@ -38,7 +38,9 @@ export const userSchema = new Schema<IUser>({
   coordinatedItineraries: {
     type: [coordinatedItinerarySchema],
     default: null
-  }
+  },
+  discordId: { type: String, required: false, default: null },
+  discordDMChannel: { type: String, required: false, default: null }
 });
 
 userSchema.method(
