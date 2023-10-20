@@ -10,6 +10,14 @@ const oAuth2Client = new OAuth2Client(
   process.env.CLIENT_SECRET,
   "postmessage"
 );
+
+export async function getTokens(code: string) {
+  const { tokens } = await oAuth2Client.getToken(code);
+  return {
+    tokens
+  };
+}
+
 export async function refreshTokens(refreshToken: string) {
   const user = new UserRefreshClient(
     process.env.CLIENT_ID,
