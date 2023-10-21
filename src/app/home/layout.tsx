@@ -1,6 +1,54 @@
-import { ReactNode } from 'react';
-import './layout.css'; 
+"use server";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { ReactNode } from "react";
 
-export default function Layout({ children }: { children: ReactNode }) {
-  return <div className="layout">{children}</div>;
+import { Credentials } from "google-auth-library";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import Provider from "../Provider";
+
+import Users from "@/models/User";
+import { HydratedSingleSubdocument } from "mongoose";
+
+async function validateUser() {
+  const ref_tok = cookies().get("refresh_token")?.value;
+  if (!ref_tok) redirect("/auth/login");
+
+  const user = await Users.findOne({
+    "credentials.refresh_token": ref_tok
+  });
+
+  if (!user) throw Error("User not found");
+
+  if (user.credentials.expiry_date! <= Date.now()) {
+    throw new Error("Token expired");
+  }
+
+  return (
+    user.credentials as HydratedSingleSubdocument<Credentials>
+  ).toJSON();
+}
+export default async function Layout({
+  children
+}: {
+  children: ReactNode;
+}) {
+  let credentials;
+
+  try {
+    credentials = await validateUser();
+  } catch (err) {
+    console.log((err as Error).message);
+    redirect("/auth/logout");
+  }
+
+  return (
+    <Provider
+      value={{
+        credentials
+      }}
+    >
+      {children}
+    </Provider>
+  );
 }

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --gray-900: rgb(12, 13, 16);
   --gray-800: rgb(22, 23, 26);
@@ -23,12 +27,14 @@
   transition: all 0.2s ease;
 }
 
+html {
+  width: 99vw;
+  height: 99vh;
+}
+
 html,
 body {
-  height: 100%;
-  width: 100%;
-  max-height: 100vh;
-  max-width: 100vw;
+
   overflow: hidden;
   color-scheme: dark;
   background: var(--background-color-dark);
@@ -38,4 +44,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }

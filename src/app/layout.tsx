@@ -1,12 +1,18 @@
-import { ReactNode } from "react";
-import "./globals.css";
+'use server';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { ReactNode } from 'react';
+import './globals.css';
 
-export default async function Layout({
-  children
-}: {
-  children: ReactNode;
-}) {
+import OAuthProvider from './GoogleProvider';
 
-  return <html><body>{children}</body></html>;
+export default async function Layout({ children }: { children: ReactNode }) {
+  return (
+    <html>
+      <body>
+        <OAuthProvider clientId={process.env.CLIENT_ID!}>
+          {children}
+        </OAuthProvider>
+      </body>
+    </html>
+  );
 }
