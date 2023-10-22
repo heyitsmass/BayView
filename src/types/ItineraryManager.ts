@@ -1,36 +1,58 @@
-import mongoose from "mongoose";
+import { IUser } from "./User";
+import mongoose, { HydratedDocument } from "mongoose";
 
-
-type IdentityState = 'anonymous' | 'registered' | 'authenticated';
-type FlowState = 'login' | 'registration' | 'uninitialized' | 'initialized' | 'planning' | 'reserving' | 'updating' | 'updated' | 'planned' | 'booked' | 'completed' | 'archived';
-type StorageMethod = 'local' | 'cloud' | 'database' | 'server' | 'file';
-
-
+type IdentityState = "anonymous" | "registered" | "authenticated";
+type FlowState =
+  | "login"
+  | "registration"
+  | "uninitialized"
+  | "initialized"
+  | "planning"
+  | "reserving"
+  | "updating"
+  | "updated"
+  | "planned"
+  | "booked"
+  | "completed"
+  | "archived";
+type StorageMethod = "local" | "cloud" | "database" | "server" | "file";
 
 interface State {
-  type: FlowState
+  type: FlowState;
 }
 
-
 class LoginFlow implements State {
-  type: FlowState = 'login';
+  type: FlowState = "login";
 }
 
 class RegistrationFlow implements State {
-  type: FlowState = 'registration';
-
+  type: FlowState = "registration";
 }
 
 class ItineraryFlow {
-  private identity: IdentityState = 'anonymous';
-  private stage: FlowState = 'uninitialized';
-  private storage: StorageMethod = 'local';
+  private identity: IdentityState = "anonymous";
+  private stage: FlowState = "uninitialized";
+  private storage: StorageMethod = "local";
   private state: State = new LoginFlow();
 
   private user: {
     authorization: string;
     username: string;
   } | null = null;
+
+  private constructor(user: HydratedDocument<IUser>) {
+    console.log("In the flow.");
+  }
+
+  public static findUserInDatabase(username: string) {
+    /** find the user */
+
+    console.log("Finding user...", username);
+
+    const user = {} as HydratedDocument<IUser>;
+    console.log("Found user...");
+    return new ItineraryFlow(user);
+  }
 
   private get_next_state() {
     /** Gets the next flow state */
@@ -57,7 +79,10 @@ class ItineraryFlow {
     /** Gets the current identity */
   }
 
-  private set_identity(identity: IdentityState, user?: { authorization: string; username: string; }) {
+  private set_identity(
+    identity: IdentityState,
+    user?: { authorization: string; username: string }
+  ) {
     /** Sets the current identity */
   }
 
@@ -68,23 +93,32 @@ class ItineraryFlow {
   private set_storage(storage: StorageMethod) {
     /** Sets the current storage method */
   }
-
 }
 
-
-
-
-abstract class ItineraryManager {
-
+export class ItineraryManager {
   public static itineraries: Itinerary[];
-  public flow = new ItineraryFlow();
+  public flow;
+
+  private constructor(flow: ItineraryFlow) {
+    console.log("in im constructor");
+    this.flow = flow;
+  }
+
+  public static getItineraryByUser(username: string) {
+    console.log("Hello from im: ", username);
+
+    const flow = ItineraryFlow.findUserInDatabase(username);
+
+    console.log("Finished creating flow.");
+    return new ItineraryManager(flow);
+  }
 
   public loadItineraries() {
     /** Fetches the itineraries from the database. */
-  };
+  }
   public saveItineraries() {
     /** Flushes the database with the current list of itineraries */
-  };
+  }
 
   public addItinerary(itinerary: Itinerary) {
     /** Adds an itinerary to the database */
@@ -94,8 +128,7 @@ abstract class ItineraryManager {
     /** Removes an itinerary from the current storage method */
   }
 
-  public modifyItinerary(itinerary: Itinerary) {
-  }
+  public modifyItinerary(itinerary: Itinerary) {}
 
   public getItineraries() {
     /** Returns the current list of itineraries */
@@ -105,49 +138,43 @@ abstract class ItineraryManager {
     /** Locates the itinerary in the cache*/
   }
 
-  public createItinerary() {
-  }
+  public createItinerary() {}
 
   public initializeFlow() {
-    this.flow.set_state({ type: 'login' });
+    this.flow.set_state({ type: "login" });
     return this.flow.get_state(); //login
   }
-
-
 }
 
 /** Event Manager class (Event Context Manager)*/
 export class EventManager {
   /** Context manager functions */
-  private event!: Event;    //state
+  private event!: Event; //state
   private events!: Event[]; //current events in the manager
   private $history!: Event[]; //history of events in the manager
   private transition_to_next_event() {
     /** Transitions current state to the next event */
     const state = this.events.pop();
-    if (!state)
-      return;
+    if (!state) return;
     this.$history.push(this.event);
-    return this.event = state;
+    return (this.event = state);
   }
 
   private switch_to_event(event: Event) {
     /** Switches the current event to the specified event */
     this.$history.push(this.event);
-    return this.event = event;
+    return (this.event = event);
   }
 
   private transition_to_previous_event() {
     /** Transitions current state to the previous event */
     const state = this.$history.pop();
-    if (!state)
-      return;
-    return this.event = state;
+    if (!state) return;
+    return (this.event = state);
   }
 }
 
 export class Group extends EventManager {
-
   public get_current_event() {
     /** Returns the currently active event */
   }
@@ -159,7 +186,6 @@ export class Group extends EventManager {
   public get_previous_event() {
     /** Returns the previous event */
   }
-
 
   public get_events() {
     /** Returns the events in the group */
@@ -195,22 +221,19 @@ export class Group extends EventManager {
   public get_transportation_url() {
     /**Returns the current transportation urls attached to the evet */
   }
-
 }
 
 /** Itinerary class */
-export class Itinerary extends Group { }
+export class Itinerary extends Group {}
 
 /** Coordinated Interiary class */
 export class CoordinatedItinerary extends Itinerary {
-
   public get_coordinators() {
     /** Returns the coordinators in the itinerary */
   }
 
   public add_coordinator() {
     /** Adds a coordinator to the itinerary */
-
   }
 
   public get_groups() {
@@ -228,16 +251,13 @@ export class CoordinatedItinerary extends Itinerary {
   public modify_group(group: Group) {
     /** Modifies a group in the itinerary */
   }
-
 }
-
 
 /** Notifier interface for the Notifiers */
 interface Notifier {
   /** Sends a notification to the user */
   send_notification(): void;
 }
-
 
 class SMSNotifier implements Notifier {
   /** SMS Notifier implementation */
@@ -281,7 +301,6 @@ class SlackNotifier implements Notifier {
   }
 }
 
-
 interface Person {
   /** Generic person representation. */
   name: {
@@ -289,17 +308,16 @@ interface Person {
     last: string;
     middle?: string;
     username?: string;
-  }
+  };
   email: string;
   phone: string;
   discord: {
     username: string;
     id: number | string;
-  }
+  };
   /** Gets the name as a string */
   get_name: () => string;
   add_notifier: (notifier: Notifier) => void;
-
 }
 
 interface IEvent {
@@ -309,7 +327,6 @@ interface IEvent {
 
 /** Event interface for the Events */
 abstract class Event {
-
   public add_person(user: Person) {
     /** Adds a person to the event */
   }
@@ -350,12 +367,11 @@ abstract class Event {
   }
 }
 export class Hotel extends Event implements IEvent {
-
   /** Hotel class for the Events */
 
   public get_url() {
     /** Returns the reservation link for the hotel */
-    return '';
+    return "";
   }
 }
 
@@ -364,7 +380,7 @@ export class Restaurant extends Event implements IEvent {
 
   public get_url() {
     /** Returns the reservation link for the restaurant */
-    return '';
+    return "";
   }
 }
 
@@ -373,7 +389,7 @@ export class Activity extends Event implements IEvent {
 
   public get_url() {
     /** Returns the reservation link for the activity */
-    return '';
+    return "";
   }
 }
 
@@ -382,17 +398,16 @@ export class Flight extends Event implements IEvent {
 
   public get_url() {
     /** Returns the reservation link for the flight */
-    return '';
+    return "";
   }
 }
-
 
 export class Ticket extends Event implements IEvent {
   /** Ticket class for the Events */
 
   public get_url() {
     /** Returns the purchase link for the ticket */
-    return '';
+    return "";
   }
 }
 
@@ -401,20 +416,19 @@ export class Pass extends Event implements IEvent {
 
   public get_url() {
     /** Returns the purchase link for the park pass */
-    return '';
+    return "";
   }
 }
 
-
 /** Transportation interface for the Events */
-interface Transportation extends IEvent { }
+interface Transportation extends IEvent {}
 
 export class Uber implements Transportation {
   /** Uber class for the Events */
 
   public get_url() {
     /** Returns the reservation link for the uber */
-    return '';
+    return "";
   }
 }
 
@@ -423,6 +437,6 @@ export class Lyft implements Transportation {
 
   public get_url() {
     /** Returns the reservation link for the lyft */
-    return '';
+    return "";
   }
 }

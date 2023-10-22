@@ -9,6 +9,9 @@ export default async function Layout(
   }
 ) {
 
-  return <div className='login'>{children}</div>
+  
+  
+
+  return <div className="flex">{children}</div>
 
 }
