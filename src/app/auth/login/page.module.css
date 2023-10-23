@@ -1,0 +1,40 @@
+.login {
+  border: solid 1px white;
+  width: 40%;
+  min-width: fit-content;
+}
+
+.login button {
+  font-size: 0.9rem;
+}
+
+.login a {
+  text-decoration: underline;
+}
+
+.header {
+  border: solid 1px white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header button {
+  font-size: 0.8rem;
+}
+
+.login form {
+  border: solid 1px white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons button:not(:first-child) {
+  margin-left: 1rem;
+}
