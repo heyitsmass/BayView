@@ -9,7 +9,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <html>
       <body>
-        <OAuthProvider clientId={process.env.CLIENT_ID!}>
+        <OAuthProvider clientId={process.env.GOOGLE_CLIENT_ID!}>
           {children}
         </OAuthProvider>
       </body>

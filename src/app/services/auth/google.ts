@@ -6,8 +6,8 @@ import Users from "@/models/User";
 import { SCOPES } from "../constants";
 
 const oAuth2Client = new OAuth2Client(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
   "postmessage"
 );
 
@@ -20,8 +20,8 @@ export async function getTokens(code: string) {
 
 export async function refreshTokens(refreshToken: string) {
   const user = new UserRefreshClient(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
     refreshToken
   );
 
