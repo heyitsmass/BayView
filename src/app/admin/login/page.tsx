@@ -1,5 +1,5 @@
 import Link from "next/link";
-import UserInput from "@/app/home/login/components/Input";
+import UserInput from "@/components/Input";
 import styles from './page.module.css';
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
 
