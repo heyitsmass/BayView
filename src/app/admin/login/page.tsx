@@ -14,8 +14,8 @@ export default async function Page(){
         <h1>BayView </h1>
         <h1>Admin Login</h1>
         <form>
-            <UserInput inlineIcon={{ icon: faUser }} type="text" placeholder="Username" required />
-            <UserInput inlineIcon={{ icon: faKey }} type="password" placeholder="Password" required />
+            <UserInput icon={{ icon: faUser }} type="text" placeholder="Username" required />
+            <UserInput icon={{ icon: faKey }} type="password" placeholder="Password" required />
             <button type="submit">Login</button>
         </form>
 
