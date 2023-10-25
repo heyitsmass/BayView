@@ -220,3 +220,106 @@ class AvailabilityResponse(NamedTuple):
     statusCode: int
 
 
+"""
+    Availability returned from the endpoint.
+"""
+
+
+class StartingPrice(NamedTuple):
+    subtotal: str
+    currency: str
+    tax: str
+    total: str
+    pricePerDay: str
+
+
+"""
+    Ticket returned from the endpoint.
+"""
+
+
+class Ticket(NamedTuple):
+    name: str
+    numDays: int
+    startingFromPrice: StartingPrice
+    priceDates: list[str]
+
+
+"""
+    Product type returned from the endpoint.
+"""
+
+
+class ProductType(NamedTuple):
+    productType: str
+    discountGroup: str
+    addOn: None | str = None
+
+
+"""
+    Product returned from the endpoint.
+"""
+
+
+class Product(NamedTuple):
+    productType: ProductType
+    isVariablePricing: bool
+    tickets: list[Ticket]
+
+
+"""
+    Tickets returned from the endpoint.
+"""
+
+
+class Offer(NamedTuple):
+    offerId: str
+    time: str
+    label: str
+
+
+"""
+    Offers returned from the endpoint.
+"""
+
+
+class DiningRes(NamedTuple):
+    id: str
+    name: str
+    description: str
+    fastPassPlus: bool
+    mealPeriodInfo: list[dict]
+    disneyOwned: bool
+    priceRange: str
+    serviceStyle: None | str
+    type: str
+
+
+"""
+    Dining reservations returned from the endpoint.
+"""
+
+
+class SupportedPass(NamedTuple):
+    availNumMonths: int | None
+    displayName: str
+    displayOrder: int
+    icon: str
+    iconEndColor: str
+    iconStartColor: str
+    isSupported: bool
+    passId: str
+    configInstanceId: str
+
+
+"""
+    Dining reservations returned from the endpoint.
+"""
+
+
+class SupportedPark(NamedTuple):
+    isSupported: bool
+    parkId: str
+    parkType: str
+    sortOrder: int
+    configInstanceId: str
