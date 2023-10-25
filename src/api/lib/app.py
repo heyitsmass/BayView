@@ -243,6 +243,57 @@ class WebDriver(Firefox):
             "data": fin,
         }
 
+    def get_resort_tickets(self, type: Literal["adult", "child"]):
+        """
+        Gets the resort tickets.
+
+        Args:
+            type (Literal["adult", "child"]): The type of ticket to get.
+
+        Returns:
+            dict: A dictionary containing the resorts and their associated products.
+        """
+        resorts = self.request(
+            "get",
+            f"https://{self.host}.com/api/lexicon-view-assembler-service/wdw/tickets/product-listing?storeId=wdw&affiliations=STD_GST",
+        )
+
+        if resorts.status_code != 200:
+            raise Exception(f"Expected 200, got {resorts.status_code}")
+
+        data = resorts.json()
+
+        discountGroups = data.get("discountGroups")
+
+        resorts = {}
+
+        for group in discountGroups:
+            products = discountGroups[group]["products"]
+            for productName in products:
+                productType = ProductType(**products[productName]["productKey"])
+                isVariablePricing = products[productName]["isVariablePricing"]
+                tickets = []
+
+                ticketDays = products[productName]["ticketDays"]
+
+                for ticketDay in ticketDays[type]:
+                    obj = {
+                        "name": ticketDay["names"]["standardName"]["text"],
+                        "numDays": ticketDay["numDays"],
+                        "startingFromPrice": StartingPrice(
+                            **ticketDay["startingFromPrice"]
+                        )._asdict(),
+                        "priceDates": ticketDay["priceDates"],
+                    }
+
+                    tickets.append(Ticket(**obj)._asdict())
+
+                resorts[productName] = Product(
+                    productType._asdict(), isVariablePricing, tickets
+                )._asdict()
+
+        return resorts
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
