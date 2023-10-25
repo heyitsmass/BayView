@@ -136,3 +136,87 @@ class CalendarDays(NamedTuple):
     statusCode: int
 
 
+"https://disneyworld.disney.go.com/dine-res/api/availability/<party-size>/<YYYY-MM-DD>/<time-start>:<time-end>/"
+
+
+"""
+    Meal period info returned from the endpoint.
+"""
+
+
+class MealPeriodInfo(NamedTuple):
+    type: str
+    name: str
+    experience: str
+    priceLegend: str
+    primaryCuisineType: str
+
+
+"""
+    Restaurant returned from the endpoint.
+"""
+
+
+class Restaurant(NamedTuple):
+    id: str
+    name: str
+    description: str
+    mealPeriodType: str
+    priceRange: str
+    experienceType: str
+    primaryCuisineType: str
+    serviceStyle: str
+    ancestorLocationParkResort: str
+    ancestorLocationLandArea: str
+    urlFriendlyId: str
+    fastPassId: bool
+    admissionRequired: bool
+    disneyOwned: bool
+    hasAssociatedServices: bool
+    quickServiceAvailable: bool
+    resservationsRecommended: bool
+    hasDiningEventsAssociated: bool
+    location: str
+    type: str
+    media: dict
+    offers: dict
+    facets: list
+    descriptions: dict
+    webLinks: dict
+    mealPeriodInfo: list[MealPeriodInfo]
+
+
+"""
+    Event times returned from the endpoint.
+"""
+
+
+class EventTimes(NamedTuple):
+    restaurant: dict[str, Restaurant]
+
+
+"""
+    Dining event returned from the endpoint.
+"""
+
+
+class DiningEvent(NamedTuple):
+    name: str
+    id: str
+    description: str
+    media: dict
+    eventTimes: list[EventTimes]
+
+
+"""
+    Availability response returned from the endpoint.
+"""
+
+
+class AvailabilityResponse(NamedTuple):
+    restaurant: dict[str, Restaurant]
+    diningEvent: dict[str, DiningEvent]
+    dinnerShow: str
+    statusCode: int
+
+
