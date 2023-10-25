@@ -128,3 +128,19 @@ def get_blackout_dates(facility: None | Literal["ak", "hs", "ep", "mk"]):
     return blackout_dates, 200
 
 
+@app.route("/parks/", methods=["GET"])
+def get_parks():
+    """
+    Retrieve a list of parks from the database.
+
+    Returns:
+         Tuple: A tuple containing the list of parks and the HTTP status code.
+    """
+    try:
+        parks = driver.get_parks()
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+    return parks, 200
+
+
