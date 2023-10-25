@@ -747,3 +747,7 @@ class WebDriver(Firefox):
             self.dump_cookies()
 
         return auth_status
+
+
+driver = WebDriver()
+
