@@ -20,3 +20,17 @@ class AuthenticationStatus(NamedTuple):
     isSecure: bool
     swid: None | str = None
 
+
+"https://disneyworld.disney.go.com/authentication/get-client-token/"
+
+
+"""
+    Client token returned from the endpoint.
+"""
+
+
+class AccessToken(NamedTuple):
+    access_token: str
+    expires_in: int
+
+
