@@ -32,6 +32,35 @@ load_dotenv()
 COOKIE_LOC = "./data/cookies.json"
 
 
+class Heartbeat(Timer):
+    """A class that runs a function periodically at a specified interval.
+
+    Args:
+        Timer (class): A Timer class that this class inherits from.
+
+    Attributes:
+        function (function): The function to run periodically.
+        args (tuple): The positional arguments to pass to the function.
+        kwargs (dict): The keyword arguments to pass to the function.
+        interval (float): The interval at which to run the function.
+        finished (threading.Event): An event that signals when the timer should stop.
+
+    Methods:
+        run: The method that runs the function periodically.
+    """
+
+    async def run(self):
+        """
+        The method that runs the function periodically.
+        """
+        while not self.finished.is_set():
+            if isinstance(self.function, Coroutine):
+                await self.function(*self.args, **self.kwargs)
+            else:
+                self.function(*self.args, **self.kwargs)
+
+            await asyncio.sleep(self.interval)
+
 
 class WebDriver(Firefox):
     """
@@ -82,6 +111,12 @@ class WebDriver(Firefox):
             self.load_cookies()
         except Exception:
             pass  # cookie averse (possibly different host)
+
+        # assert self.auth.isLoggedIn, "Login failed."
+
+        self.heartbeat = Heartbeat(
+            10 * 60, self.reauth
+        )  # refresh the auth status every 10 minutes
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
