@@ -319,6 +319,11 @@ class WebDriver(Firefox):
             f"https://{self.host}.com/dine-res/api/calendar-days"
         ).json()
 
+    def get_client_token(self):
+        return self.request(
+            "get", f"https://{self.host}.com/authentication/get-client-token/"
+        ).json()["access_token"]
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
