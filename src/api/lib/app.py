@@ -186,6 +186,63 @@ class WebDriver(Firefox):
             parks[supportedPark.parkId] = supportedPark._asdict()
 
         return {"parkIds": parkIds, "parks": parks}
+
+    def get_blackout_dates(
+        self,
+        facility: None | Literal["ak", "hs", "ep", "mk"],
+        productTypes: list[str],
+        numMonths: int | str = 1,
+    ):
+        """
+        Gets the blackout dates.
+
+        Args:
+            facility (None | Literal["ak", "hs", "ep", "mk"]): The facility to get the blackout dates for.
+            productTypes (list[str]): The product types to get the blackout dates for.
+            numMonths (int | str, optional): The number of months to get the blackout dates for. Defaults to 1.
+
+        Returns:
+            dict: A dictionary containing the facility ID, facility, product types, number of months, and data.
+        """
+        res = self.request(
+            "get",
+            f"https://{self.host}.com/passes/blockout-dates/api/get-availability/?product-types={productTypes}&destinationId=WDW&numMonths={numMonths}",
+        )
+
+        if not res.status_code == 200:
+            raise Exception(f"Expected 200, got {res.status_code}")
+
+        facilityMap = {"ak": "WDW_AK", "hs": "WDW_HS", "ep": "WDW_EP", "mk": "WDW_MK"}
+
+        results = res.json()
+
+        fin = {}
+
+        for i, res in enumerate(results):
+            obj = {}
+
+            dates = []
+
+            for key in res["availabilities"]:
+                if key["facilityId"] == facilityMap[facility]:
+                    obj = {
+                        "date": key["date"],
+                        "openTime": key.get("facilityOpeningTime", None),
+                        "closeTime": key.get("facilityClosingTime", None),
+                        "available": key["slots"][0]["available"],
+                    }
+                    dates.append(obj)
+
+            fin[productTypes[i]] = dates
+
+        return {
+            "facilityId": facilityMap[facility],
+            "facility": facility,
+            "productTypes": productTypes,
+            "numMonths": numMonths,
+            "data": fin,
+        }
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
