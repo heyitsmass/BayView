@@ -294,6 +294,19 @@ class WebDriver(Firefox):
 
         return resorts
 
+    def get_profile(self):
+        """
+        Gets the user profile.
+        """
+        res = self.request(
+            "get",
+            "https://api.wdprapps.disney.com/pep/profile?isUser=True&brand=wdw&locale=en-us&userType=GUEST",
+        )
+
+        self.disneyProfile = Profile(**res.json())
+
+        return self.disneyProfile._asdict()
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
