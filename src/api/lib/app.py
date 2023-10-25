@@ -141,6 +141,28 @@ class WebDriver(Firefox):
         self.heartbeat = Heartbeat(
             10 * 60, self.reauth
         )  # refresh the auth status every 10 minutes
+    def get_passes(self):
+        """
+        Gets the passes.
+        """
+        res = self.request(
+            "get",
+            "https://disneyworld.disney.go.com/passes/blockout-dates/api/get-passes/",
+        )
+
+        if not res.status_code == 200:
+            raise Exception(f"Expected 200, got {res.status_code}")
+
+        data = res.json()
+        passIds = []
+        passes = {}
+
+        for _pass in data["supported-passes"]:
+            supportedPass = SupportedPass(**_pass)
+            passIds.append(supportedPass.passId)
+            passes[supportedPass.passId] = supportedPass._asdict()
+
+        return {"passIds": passIds, "passes": passes}
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
