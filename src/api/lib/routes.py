@@ -84,7 +84,22 @@ def get_dining_calendar():
     return dates, 200
 
 
+@app.route("/resorts/tickets/<type>", methods=["GET"])
+def get_resort_tickets(type: Literal["adult", "child"]):
+    """
+    Get resort tickets for a given ticket type.
+
+    Args:
+        type (Literal["adult", "child"]): The type of ticket to retrieve.
+
+    Returns:
+        Tuple: A tuple containing the resort tickets and the HTTP status code.
+    """
+    try:
+        resorts = driver.get_resort_tickets(type)
     except Exception as e:
         return {"error": str(e)}, 500
 
     return resorts, 200
+
+
