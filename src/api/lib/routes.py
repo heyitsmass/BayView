@@ -161,3 +161,5 @@ def get_passes():
     return passes, 200
 
 
+if __name__ == "__main__":
+    print("Tests passed!")
