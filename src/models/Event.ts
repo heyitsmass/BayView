@@ -59,18 +59,21 @@ export type EventTypes = Flight | Hotel | Reservation | Activity;
 const Events =
   mongoose.models.Events || mongoose.model("Events", eventSchema);
 
-const Flights = Events.discriminator<Flight>("Flight", flightSchema);
+const Flights =
+  Events.discriminators?.Flights ||
+  Events.discriminator<Flight>("Flight", flightSchema);
 
-const Hotels = Events.discriminator<Hotel>("Hotel", hotelSchema);
+const Hotels =
+  Events.discriminators?.Hotels ||
+  Events.discriminator<Hotel>("Hotel", hotelSchema);
 
-const Reservations = Events.discriminator<Reservation>(
-  "Reservation",
-  reservationSchema
-);
+const Reservations =
+  Events.discriminators?.Reservations ||
+  Events.discriminator<Reservation>("Reservation", reservationSchema);
 
-const Activities = Events.discriminator<Activity>(
-  "Activity",
-  activitySchema
-);
+const Activities =
+  Events.discriminators?.Activity ||
+  Events.discriminator<Activity>("Activity", activitySchema);
+
 export { Activities, Flights, Hotels, Reservations };
 export default Events;
