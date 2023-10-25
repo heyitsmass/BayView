@@ -169,6 +169,127 @@ class WebDriver(Firefox):
       GETTERS
     """
 
+    def get_tickets(
+            self,
+            startDate: str = datetime.now().strftime("%Y-%m-%d"),
+            endDate: str | None = None,
+            discountGroup: str = "std-gst",
+            storeId: str = "wdw",
+            numDays: int | str = 1,
+            numMonths: int | str = 1,
+            facility: str | None = None,
+        ):
+            facility = None if facility is None else facility.lower()
+            numDays = int(numDays)
+            if not endDate:
+                endDate = (
+                    datetime.strptime(startDate, "%Y-%m-%d")
+                    + timedelta(days=numDays)
+                    + timedelta(days=30 * numMonths)
+                ).strftime("%Y-%m-%d")
+
+            res = self.request(
+                "get",
+                f"https://disneyworld.disney.go.com/api/lexicon-view-assembler-service/wdw/tickets/product-types/theme-parks/prices?discountGroup={discountGroup}&startDate={startDate}&storeId={storeId}&endDate={endDate}&numDays={numDays}&fpAvailability=false",
+            )
+
+            # print(res.json())
+
+            data = res.json()
+
+            if res.status_code != 200:
+                raise Exception("Failed to get ticket prices")
+
+            dates = {}
+
+            for point in data["pricingCalendar"]:
+                for date in point["dates"]:
+                    _date = date["date"]
+
+                    keys = [
+                        "date",
+                        "validityStartDate",
+                        "validityEndDate",
+                        "currency",
+                        "availability",
+                        "lowestPricePerDay",
+                        "highestPricePerDay",
+                        "lowestPrice",
+                        "highestPrice",
+                    ]
+
+                    prices = []
+
+                    for price in date["pricing"]:
+                        # print(price)
+
+                        keys = [
+                            "ageGroup",
+                            "pricePerDay",
+                            "subtotal",
+                            "tax",
+                            "availability",
+                            "validityStartDate",
+                            "validityEndDate",
+                        ]
+
+                        alt_map = dict(
+                            zip(
+                                keys,
+                                [
+                                    "ageGroup",
+                                    "pricePerDay",
+                                    "subtotal",
+                                    "tax",
+                                    "available",
+                                    "validFrom",
+                                    "validTo",
+                                ],
+                            )
+                        )
+
+                        obj: dict[str, str | bool] = {
+                            alt_map[k]: price[k] for k in price if k in keys
+                        }
+
+                        mapped_name = ""
+                        id: str = price["id"]
+
+                        match id.split("_"):
+                            case [*values, "mk"]:
+                                mapped_name = "Magic Kingdom"
+                            case [*values, "ep"]:
+                                mapped_name = "Epcot"
+                            case [*values, "hs"]:
+                                mapped_name = "Hollywood Studios"
+                            case [*values, "ak"]:
+                                mapped_name = "Animal Kingdom"
+                            case _:
+                                if "PHP" in id:
+                                    mapped_name = "Park Hopper Plus"
+                                elif "P" in id:
+                                    mapped_name = "Park Hopper"
+                                else:
+                                    mapped_name = "Unknown"
+
+                        obj["name"] = mapped_name
+
+                        if not facility:
+                            prices.append(obj)
+                        else:
+                            if facility in id:
+                                prices.append(obj)
+                            else:
+                                continue
+
+                    obj = {k: date[k] for k in date if k in keys}
+
+                    obj["prices"] = prices
+
+                    dates[_date] = obj
+
+            return dates
+        
     def get_passes(self):
         """
         Gets the passes.
