@@ -62,6 +62,30 @@ class Heartbeat(Timer):
             await asyncio.sleep(self.interval)
 
 
+class MissingEnvVariableError(Exception):
+    """
+    Exception raised when a required environment variable is missing.
+
+    Attributes:
+      var (str): The name of the missing environment variable.
+    """
+
+    def __init__(self, var: str):
+        """
+        Exception raised when a required environment variable is missing.
+        """
+        self.args = {f"Missing environment variable {var}"}
+
+
+def check_env(value: list[str]):
+    for key in value:
+        if os.environ.get(key, None) is None:
+            raise MissingEnvVariableError(key)
+
+
+check_env(["DISNEY_USERNAME", "DISNEY_PASSWORD"])
+
+
 class WebDriver(Firefox):
     """
     A class representing a firefox webdriver, includes necessary functions for logging into the `host`website
