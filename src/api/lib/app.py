@@ -141,6 +141,34 @@ class WebDriver(Firefox):
         self.heartbeat = Heartbeat(
             10 * 60, self.reauth
         )  # refresh the auth status every 10 minutes
+
+    def dispatch(self, action: Literal["calendar", "dining"], **kwargs):
+        """
+        #!!! Experimental !!!
+        Dispatches the specified action.
+
+        Args:
+            action (Literal["calendar", "dining"]): The action to dispatch.
+            **kwargs: Additional keyword arguments.
+
+        Raises:
+            Exception: If the specified action is unknown.
+
+        Returns:
+            Any: The result of the dispatched action.
+        """
+        match action:
+            case "calendar":
+                return self.get_calendar()
+            case "dining":
+                return self.get_dining_availability(**kwargs)
+            case _:
+                raise Exception(f"Unknown get action {action}")
+
+    """
+      GETTERS
+    """
+
     def get_passes(self):
         """
         Gets the passes.
