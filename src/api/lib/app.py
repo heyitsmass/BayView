@@ -163,6 +163,29 @@ class WebDriver(Firefox):
             passes[supportedPass.passId] = supportedPass._asdict()
 
         return {"passIds": passIds, "passes": passes}
+
+    def get_parks(self):
+        """
+        Gets the parks.
+        """
+        res = self.request(
+            "get", f"https://{self.host}.com/passes/blockout-dates/api/get-parks"
+        )
+
+        if not res.status_code == 200:
+            raise Exception(f"Expected 200, got {res.status_code}")
+
+        data = res.json()
+
+        parkIds = []
+        parks = {}
+
+        for _park in data["supported-parks"]:
+            supportedPark = SupportedPark(**_park)
+            parkIds.append(supportedPark.parkId)
+            parks[supportedPark.parkId] = supportedPark._asdict()
+
+        return {"parkIds": parkIds, "parks": parks}
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
