@@ -1,5 +1,7 @@
 import { IUser } from "./User";
 import mongoose, { HydratedDocument } from "mongoose";
+import Itineraries from "@models/Itinerary";
+import { IItinerary } from "types\Itinerary";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -138,8 +140,34 @@ export class ItineraryManager {
     /** Locates the itinerary in the cache*/
   }
 
-  public createItinerary() {}
+  // TODO:
+  public async createItinerary() {
 
+    // using model that was created
+    // initialize new document
+    const currentDate = new Date();
+
+    const newItinerary: HydratedDocument<IItinerary> = Itineraries.create(doc);
+    /*Date.now()*/
+
+    // on login flow
+    // push new doc to database
+    if(this.flow.state.FlowState == "login"){
+      await newItinerary = Itineraries.create(doc);
+    }
+    // else to local cache
+    else {
+      // save to local cache
+    }
+
+    // state is changed to this itinerary
+    this.flow.set_state();
+
+    // context data is returned to the flow
+    this.flow./*something*/ = newItinerary.context
+    console.log("Creation complete");
+
+  }
   public initializeFlow() {
     this.flow.set_state({ type: "login" });
     return this.flow.get_state(); //login
@@ -370,7 +398,7 @@ export class DiscordNotifier implements Notifier {
       throw new Error("Please try again.");
     }
 
-    return new DiscordNotifier(recipient_id, channel_id);
+
   }
 
 
