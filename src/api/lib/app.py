@@ -157,6 +157,23 @@ class WebDriver(Firefox):
 
         self.load_pre_conditions()  # load the dining res pre-conditions
 
+    def load_pre_conditions(self):
+        """
+        Loads the pre-conditions for the dining reservation page.
+
+        Raises:
+            Exception: If the pre-conditions fail to load.
+
+        """
+        endpoint = f"https://{self.host}.com/dine-res/availability"
+        if self.current_url != endpoint:
+            self.get(endpoint)
+        print("Loading pre-conditions...")
+        WebDriverWait(self, timeout=30).until(
+            EC.invisibility_of_element_located((By.XPATH, '//*[@id="sec-cpt-if"]'))
+        )
+        print("Pre-conditions loaded.")
+
     def load_cookies(self):
         """
         Loads the cookies from the cookie file.
