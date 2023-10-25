@@ -60,15 +60,15 @@ const Events =
   mongoose.models.Events || mongoose.model("Events", eventSchema);
 
 const Flights =
-  Events.discriminators?.Flights ||
+  Events.discriminators?.Flight ||
   Events.discriminator<Flight>("Flight", flightSchema);
 
 const Hotels =
-  Events.discriminators?.Hotels ||
+  Events.discriminators?.Hotel ||
   Events.discriminator<Hotel>("Hotel", hotelSchema);
 
 const Reservations =
-  Events.discriminators?.Reservations ||
+  Events.discriminators?.Reservation ||
   Events.discriminator<Reservation>("Reservation", reservationSchema);
 
 const Activities =
