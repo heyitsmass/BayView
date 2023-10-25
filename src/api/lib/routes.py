@@ -67,6 +67,23 @@ def get_dining(
     return availabilities, 200
 
 
+@app.route("/dining/calendar", methods=["GET"])
+def get_dining_calendar():
+    """
+    Retrieves the dining calendar from the driver and returns it.
+
+    Returns:
+        Tuple: A tuple containing the dining calendar and the HTTP status code.
+
+    """
+    try:
+        dates = driver.get_calendar()
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+    return dates, 200
+
+
     except Exception as e:
         return {"error": str(e)}, 500
 
