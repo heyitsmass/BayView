@@ -324,6 +324,86 @@ class WebDriver(Firefox):
             "get", f"https://{self.host}.com/authentication/get-client-token/"
         ).json()["access_token"]
 
+    def get_dining_availability(
+        self,
+        partySize: int,
+        date: str | int | datetime = datetime.now().strftime("%Y-%m-%d"),
+        startTime: datetime | int | str = datetime.now().strftime("%H:%M"),
+        endTime: datetime
+        | int
+        | str = datetime.fromtimestamp(time.time() + (24 * 60 * 1000)).strftime(
+            "%H:%M"
+        ),
+    ):
+        """
+        Gets the dining availability.
+        """
+        if partySize > 10:
+            raise Exception("Party size cannot be greater than 10.")
+
+        timeStart = self.fmt_date(startTime)
+        timeEnd = self.fmt_date(endTime)
+
+        if timeStart > timeEnd:
+            raise Exception("Start time cannot be greater than end time.")
+
+        date = self.fmt_date(date, "%Y-%m-%d")
+
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        if today > date:
+            raise Exception("Date cannot be in the past.")
+
+        res = self.__dining_request(
+            f"https://{self.host}.com/dine-res/api/availability/{partySize}/{date}/{timeStart},{timeEnd}"
+        )
+
+        if res.status_code != 200:
+            raise Exception(f"Expected 200, got {res.status_code}")
+
+        availability = AvailabilityResponse(**res.json()).restaurant
+
+        keys = [
+            "id",
+            "name",
+            "description",
+            "fastPassPlus",
+            "mealPeriodInfo",
+            "disneyOwned",
+            "priceRange",
+            "urlFriendlyId",
+            "admissionRequired",
+        ]
+        availabilities = {}
+        for key in availability:
+            obj = {k: availability[key].get(k, "") for k in keys}
+            name = obj["name"]
+            obj["media"] = availability[key]["media"]["finderStandardThumb"]
+
+            availabilities[name] = obj
+
+            offers = availability[key]["offers"]
+            availabilities[name]["offers"] = {}
+
+            for value in offers:
+                for mealPeriod in offers[value]:
+                    # _type = mealPeriod["type"]
+                    _type = mealPeriod["mealPeriodType"]
+
+                    offers = mealPeriod["offersByAccessibility"]
+                    __offers = []
+
+                    for item in offers:
+                        subOffers = item["offers"]
+                        for subOffer in subOffers:
+                            offer = Offer(**subOffer)
+
+                            __offers.append(offer._asdict())
+
+                    availabilities[name]["offers"][_type] = __offers
+
+        return availabilities
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
