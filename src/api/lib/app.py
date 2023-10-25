@@ -1,4 +1,38 @@
 import asyncio
+import json
+import os
+import time
+from datetime import datetime
+from threading import Timer
+from typing import Coroutine, Literal
+
+from dotenv import load_dotenv
+from selenium.webdriver import FirefoxOptions
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from seleniumrequests import Firefox
+
+from .abc import (
+    AuthenticationStatus,
+    AvailabilityResponse,
+    Offer,
+    Product,
+    ProductType,
+    Profile,
+    StartingPrice,
+    SupportedPark,
+    SupportedPass,
+    Ticket,
+)
+
+load_dotenv()
+
+COOKIE_LOC = "./data/cookies.json"
+
+
+
 class WebDriver(Firefox):
     """
     A class representing a firefox webdriver, includes necessary functions for logging into the `host`website
@@ -44,6 +78,10 @@ class WebDriver(Firefox):
 
         self.get(f"https://{host}.com/")  # get the host (cookie averse documents.)
 
+        try:
+            self.load_cookies()
+        except Exception:
+            pass  # cookie averse (possibly different host)
     def login(self, __max_retries=3):
         """
         Logs into the host website.
@@ -103,3 +141,37 @@ class WebDriver(Firefox):
 
         self.load_pre_conditions()  # load the dining res pre-conditions
 
+    def load_cookies(self):
+        """
+        Loads the cookies from the cookie file.
+        """
+        if os.path.exists(COOKIE_LOC):
+            with open(COOKIE_LOC, "r") as f:
+                cookies = json.load(f)
+                self.update_cookies(cookies)
+                self.refresh()
+                WebDriverWait(self, 10).until(
+                    EC.visibility_of_element_located(
+                        (
+                            By.XPATH,
+                            "/html/body/wdpr-ui-universal-layout/div[7]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[1]/a",
+                        )
+                    )
+                )
+
+    def update_cookies(self, cookies: list[dict[str, str]] = None):
+        """
+        Updates the cookies for the driver and requests session.
+        """
+        cookies = self.get_cookies() if cookies is None else cookies
+
+        for cookie in cookies:
+            self.add_cookie(cookie)
+            self.requests_session.cookies.set(cookie["name"], cookie["value"])
+
+    def dump_cookies(self):
+        """
+        Dumps the cookies to the cookie file.
+        """
+        with open(COOKIE_LOC, "w") as f:
+            json.dump(self.get_cookies(), f, indent=4)
