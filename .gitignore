@@ -39,3 +39,39 @@ next-env.d.ts
 .test
 Dockerfile.txt
 testingGround
+
+# VS code files 
+.vscode
+
+# Node files 
+.env
+
+# Old files 
+old
+
+# Venv files 
+bin 
+include 
+lib64 
+man 
+pyvenv.cfg 
+
+
+# certs 
+certs
+*.crt 
+*.key 
+
+# cookies 
+cookies.json 
+
+
+# pycache
+
+*.pyc
+
+# MacOS files 
+
+.DS_Store
+
+
