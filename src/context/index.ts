@@ -1,32 +1,34 @@
-'use client';
+"use client";
 
-import { Credentials } from 'google-auth-library';
-import { useContext, createContext } from 'react';
+import { Credentials } from "google-auth-library";
+import { useContext, createContext } from "react";
 
-export type TDashboardContext = {
+export type THomepageContext = {
   credentials: Credentials;
 };
 
-export type DashboardAction = {
+export type HomepageAction = {
   type: string;
 };
 
-export type TDashboardDispatch = (action: DashboardAction) => Promise<void>;
+export type THomepageDispatch = (action: HomepageAction) => Promise<void>;
 
-const DashboardContext = createContext<TDashboardContext | null>(null);
-const DashboardDispatch = createContext(async (action: DashboardAction) => {});
+const HomepageContext = createContext<THomepageContext | null>(null);
+const HomepageDispatch = createContext(
+  async (action: HomepageAction) => {}
+);
 
-const useDashboard = () => {
-  return useContext(DashboardContext);
+const useHomepage = () => {
+  return useContext(HomepageContext);
 };
 
-const useDashboardDispatch = () => {
-  return useContext(DashboardDispatch);
+const useHomepageDispatch = () => {
+  return useContext(HomepageDispatch);
 };
 
 export {
-  useDashboard,
-  useDashboardDispatch,
-  DashboardContext,
-  DashboardDispatch
+  useHomepage,
+  useHomepageDispatch,
+  HomepageContext,
+  HomepageDispatch
 };
