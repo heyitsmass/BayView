@@ -176,6 +176,27 @@ class WebDriver(Firefox):
         print("Refreshed auth status:", self.auth)
 
         self.update_cookies()
+
+    def fmt_date(self, date: str | int | datetime, fmt: str = "%H:%M"):
+        """
+        Formats the date into the specified format. (Defaults to %H:%M)
+        """
+        if isinstance(date, str):
+            try:
+                return datetime.fromisoformat(date).strftime(fmt)
+            except ValueError:
+                try:
+                    datetime.strptime(date, fmt)
+                    return date
+                except ValueError:
+                    raise Exception("Unable to normalize date - Invalid format.")
+        elif isinstance(date, datetime):
+            return date.strftime(fmt)
+        elif isinstance(date, int):
+            return datetime.fromtimestamp(date).strftime(fmt)
+        else:
+            raise Exception("Unable to normalize date - Unknown type.")
+
     def login(self, __max_retries=3):
         """
         Logs into the host website.
