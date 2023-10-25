@@ -38,6 +38,35 @@ def get_tickets(facility: None | Literal["ak", "hs", "ep", "mk"] = None):
         return {"error": str(e)}, 500
 
     return resorts, 200
+
+
+@app.route("/dining/<partySize>", methods=["GET"])
+def get_dining(
+    partySize: int,
+):
+    """
+    Returns the dining availability for a given party size, booking date, start time, and end time.
+
+    Args:
+        partySize (int): The size of the dining party.
+
+    Returns:
+        dict: A dictionary containing the dining availability for the given party size.
+    """
+    bookingDate: str = request.args.get("bookingDate")
+    startTime: str | int | datetime = request.args.get("startTime")
+    endTime: str | int | datetime = request.args.get("endTime")
+
+    try:
+        availabilities = driver.get_dining_availability(
+            int(partySize), bookingDate, startTime, endTime
+        )
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+    return availabilities, 200
+
+
     except Exception as e:
         return {"error": str(e)}, 500
 
