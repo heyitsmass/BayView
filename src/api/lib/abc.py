@@ -112,3 +112,27 @@ class User(NamedTuple):
 
 class Profile(NamedTuple):
     user: User
+
+
+"https://disneyworld.disney.go.com/dine-res/api/calendar-days"
+
+"""
+    Booking date ranges returned from the endpoint.
+"""
+
+
+class BookingDateRanges(NamedTuple):
+    startDate: str
+    endDate: str
+
+
+"""
+    Calendar days returned from the endpoint.
+"""
+
+
+class CalendarDays(NamedTuple):
+    bookingDateRanges: BookingDateRanges
+    statusCode: int
+
+
