@@ -82,6 +82,22 @@ class WebDriver(Firefox):
             self.load_cookies()
         except Exception:
             pass  # cookie averse (possibly different host)
+    def reauth(self):
+        """
+        Re-authenticates the API.
+        """
+        self.refresh()
+
+        self.auth = self.auth_status()
+
+        if not self.auth.isLoggedIn or not self.auth.isSecure:
+            self.login()
+
+        self.load_pre_conditions()  # load the dining res pre-conditions
+
+        print("Refreshed auth status:", self.auth)
+
+        self.update_cookies()
     def login(self, __max_retries=3):
         """
         Logs into the host website.
@@ -175,3 +191,31 @@ class WebDriver(Firefox):
         """
         with open(COOKIE_LOC, "w") as f:
             json.dump(self.get_cookies(), f, indent=4)
+
+    def auth_status(self):
+        """
+        Gets the authentication status.
+        """
+        auth_status = self.auth
+
+        try:
+            res = self.request(
+                "get", f"https://{self.host}.com/authentication/status/", timeout=10
+            )
+
+            auth_status = AuthenticationStatus(**res.json())
+
+        except Exception:
+            pass
+        # assert res.status_code == 200, f'Expected 200, got {res.status_code}'
+
+        if not auth_status.isLoggedIn:
+            if os.path.exists(COOKIE_LOC):
+                os.remove(COOKIE_LOC)
+            self.delete_all_cookies()
+            self.refresh()
+        else:
+            self.update_cookies()
+            self.dump_cookies()
+
+        return auth_status
