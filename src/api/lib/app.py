@@ -307,6 +307,18 @@ class WebDriver(Firefox):
 
         return self.disneyProfile._asdict()
 
+    def get_calendar(self):
+        """
+        Gets the dining reservation calendar availability dates.
+
+        Returns:
+            dict: A dictionary containing the calendar availability dates.
+        """
+
+        return self.__dining_request(
+            f"https://{self.host}.com/dine-res/api/calendar-days"
+        ).json()
+
     def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
         """
         A wrapper for the dining request function that handles throttling.
