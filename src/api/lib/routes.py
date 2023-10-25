@@ -103,3 +103,28 @@ def get_resort_tickets(type: Literal["adult", "child"]):
     return resorts, 200
 
 
+@app.route("/blackout-dates/<facility>", methods=["GET"])
+def get_blackout_dates(facility: None | Literal["ak", "hs", "ep", "mk"]):
+    """
+    Returns a list of blackout dates for the specified facility and product types.
+
+    Args:
+        facility (str): The facility code for which to retrieve blackout dates.
+        productTypes (str): A comma-separated string of product types to retrieve blackout dates for.
+        numMonths (int): The number of months to retrieve blackout dates for.
+
+    Returns:
+        Tuple: A tuple containing the blackout dates for the specified facility and product types and the HTTP status code.
+    """
+    productTypes = request.args.get("passes")
+    numMonths = request.args.get("numMonths")
+
+    productTypes = productTypes.split(",")
+    try:
+        blackout_dates = driver.get_blackout_dates(facility, productTypes, numMonths)
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+    return blackout_dates, 200
+
+
