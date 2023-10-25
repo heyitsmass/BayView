@@ -751,3 +751,6 @@ class WebDriver(Firefox):
 
 driver = WebDriver()
 
+if __name__ == "__main__":
+    driver = WebDriver()
+    driver.quit()
