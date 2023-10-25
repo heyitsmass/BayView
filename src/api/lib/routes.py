@@ -144,3 +144,20 @@ def get_parks():
     return parks, 200
 
 
+@app.route("/passes/", methods=["GET"])
+def get_passes():
+    """
+    Endpoint to retrieve passes from the driver.
+
+    Returns:
+       Tuple: A tuple containing the list of passes and the HTTP status code.
+    """
+    try:
+        passes = driver.get_passes()
+    except Exception as e:
+        print(e)
+        return {"error": str(e)}, 500
+
+    return passes, 200
+
+
