@@ -82,6 +82,25 @@ class WebDriver(Firefox):
             self.load_cookies()
         except Exception:
             pass  # cookie averse (possibly different host)
+    def __dining_request(self, url: str, max_retries: int = 3, **kwargs):
+        """
+        A wrapper for the dining request function that handles throttling.
+        """
+        res = self.request("get", url, **kwargs)
+
+        if res.status_code == 428:
+            print("Request throttled. Retrying...")
+            if max_retries > 0:
+                self.reauth()
+                return self.__dining_request(url, max_retries - 1, **kwargs)
+            raise Exception("Max retries exceeded.")
+
+        return res
+
+    """
+        UTILITY FUNCTIONS 
+    """
+
     def reauth(self):
         """
         Re-authenticates the API.
