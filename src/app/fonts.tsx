@@ -1,7 +1,7 @@
 import { Barlow, Barlow_Semi_Condensed, Barlow_Condensed } from "next/font/google";
 
 export const barlow = Barlow({
-	weight: ["400","500","600"],
+	weight: ["400","500","600","700"],
 	subsets: ["latin"],
 	display: "swap",
 	style: "normal",
@@ -9,7 +9,7 @@ export const barlow = Barlow({
 });
 
 export const barlowSemiCondensed = Barlow_Semi_Condensed({
-	weight: ["400","500","600"],
+	weight: ["400","500","600","700"],
 	subsets: ["latin"],
 	display: "swap",
 	style: "normal",
@@ -17,7 +17,7 @@ export const barlowSemiCondensed = Barlow_Semi_Condensed({
 });
 
 export const barlowCondensed = Barlow_Condensed({
-	weight: ["400","500","600"],
+	weight: ["400","500","600","700"],
 	subsets: ["latin"],
 	display: "swap",
 	style: "normal",
