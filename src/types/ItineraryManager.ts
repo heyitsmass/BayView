@@ -1,7 +1,7 @@
 import { IUser } from "./User";
 import mongoose, { HydratedDocument } from "mongoose";
 import Itineraries from "@models/Itinerary";
-import { IItinerary } from "types\Itinerary";
+import { IItinerary } from "@types/Itinerary";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -143,29 +143,40 @@ export class ItineraryManager {
   // TODO:
   public async createItinerary() {
 
-    // using model that was created
+    // using database model that we have for itineraries
     // initialize new document
-    const currentDate = new Date();
-
-    const newItinerary: HydratedDocument<IItinerary> = Itineraries.create(doc);
-    /*Date.now()*/
+    const newItinerary: Schema<IItinerary> = new Itineraries({
+      startDate: Date.now(),
+      endDate: Date.now(),
+    });
+    const itineraryInstance: HydratedDocument<IItinerary> = {} as HydratedDocument<IItinerary>;
 
     // on login flow
     // push new doc to database
     if(this.flow.state.FlowState == "login"){
-      await newItinerary = Itineraries.create(doc);
+      try{
+        await itineraryInstance = newItinerary.save();
+        console.log("created new itinerary: \n");
+        console.log(itineraryInstance);
+      }catch (e){
+        console.log(e.message);
+      }
     }
-    // else to local cache
+    // else, push info on doc to local cache
     else {
-      // save to local cache
+      localStorage.setItem("CurrentFlow", newItinerary);
+      console.log("save to the local cache: still needs to be implemented properly");
     }
 
     // state is changed to this itinerary
-    this.flow.set_state();
+    console.log("change state to be this itinerary: still needs to be implemented")
+    //this.flow.set_state();
 
     // context data is returned to the flow
-    this.flow./*something*/ = newItinerary.context
+    //this.flow./*something*/ = newItinerary.context
     console.log("Creation complete");
+    console.log("return required data from created entry to flow: still needs to be implemented");
+
 
   }
   public initializeFlow() {
