@@ -415,10 +415,8 @@ export class DiscordNotifier implements Notifier {
       throw new Error("Please try again.");
     }
 
-
+    return new DiscordNotifier(recipient_id, channel_id);
   }
-
-
 
 }
 
