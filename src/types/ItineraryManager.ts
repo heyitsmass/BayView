@@ -70,6 +70,7 @@ export class ItineraryFlow {
 
   public get_state() {
     /** Gets the current state */
+    return this.state.type; 
   }
 
   public set_state(state: State) {
@@ -152,7 +153,7 @@ export class ItineraryManager {
     // on login flow
     // push new doc to database
     console.log(this.flow.state);
-    if(this.flow.state.type == "login"){
+    if(this.flow.get_state() == "login"){
         const itinerary = await Itineraries.create();
         console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
     }
