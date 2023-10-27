@@ -12,6 +12,7 @@ itinerarySchema.pre('save', function(next){
   // assuming that elements in events are sorted
   //    in chronological order
   console.log("checking if event length is populated")
+  const {events} = this; 
   if(this.events.length > 0){
     console.log("events found")
     this.startDate = events[0].date;
