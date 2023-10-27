@@ -152,7 +152,6 @@ export class ItineraryManager {
 
     // on login flow
     // push new doc to database
-    console.log(this.flow.state);
     if(this.flow.get_state() == "login"){
         const itinerary = await Itineraries.create();
         console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
