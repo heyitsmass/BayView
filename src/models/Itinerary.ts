@@ -2,14 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import { eventSchema } from "./Event";
 
 export const itinerarySchema = new Schema<IItinerary>({
-  startDate: { type: Date, required: true, default: Date.now() },
-  endDate: { type: Date, required: true, default: Date.now() },
+  startDate: { type: Date, required: false },
+  endDate: { type: Date, required: false},
   events: [eventSchema]
 });
-
-const Itineraries =
-    mongoose.models.Itinerary ||
-    mongoose.model<IItinerary>("Itinerary", itinerarySchema);
 
 itinerarySchema.pre('save', (next) => {
   // assuming that elements in events are sorted
@@ -23,5 +19,9 @@ itinerarySchema.pre('save', (next) => {
   console.log("returning next")
   next();
 });
+
+
+  mongoose.models?.Itinerary ||
+  mongoose.model<IItinerary>("Itinerary", itinerarySchema);
 
 export default Itineraries;
