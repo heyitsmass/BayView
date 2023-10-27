@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { eventSchema } from "./Event";
+import { IItinerary } from "@/types/Itinerary";
 
 export const itinerarySchema = new Schema<IItinerary>({
   startDate: { type: Date, required: false },
