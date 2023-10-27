@@ -15,8 +15,8 @@ itinerarySchema.pre('save', function(next){
   const {events} = this; 
   if(this.events.length > 0){
     console.log("events found")
-    this.startDate = events[0].date;
-    this.endDate = events[events.length - 1].date;
+    this.startDate = events.at(0)?.date;
+    this.endDate = events.at(-1)?.date;
   }
   console.log("returning next")
   next();
