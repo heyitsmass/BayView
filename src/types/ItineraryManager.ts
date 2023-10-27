@@ -149,24 +149,12 @@ export class ItineraryManager {
   //
   public async createItinerary() {
 
-    // using database model that we have for itineraries
-    // initialize new document
-    const newItinerary: Schema<IItinerary> = new Itineraries({
-      startDate: Date.now(),
-      endDate: Date.now(),
-    });
-
     // on login flow
     // push new doc to database
     console.log(this.flow.state);
     if(this.flow.state.type == "login"){
-      try{
-        const itineraryInstance = await newItinerary.save();
-        console.log("created new itinerary: \n");
-        console.log(itineraryInstance);
-      }catch (e){
-        console.log(e.message);
-      }
+        const itinerary = await Itineraries.create();
+        console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
     }
     // else, push info on doc to local cache
     else {
