@@ -1,8 +1,8 @@
 'use server';
 
-import { DashboardAction } from '@/context';
+import { HomepageAction } from '@/context';
 
-export default async function Handler(action: DashboardAction) {  
+export default async function Handler(action: HomepageAction) {  
 
   
 
