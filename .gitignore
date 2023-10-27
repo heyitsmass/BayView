@@ -56,15 +56,14 @@ lib64
 man 
 pyvenv.cfg 
 
-
 # certs 
 certs
+*.pem
 *.crt 
 *.key 
 
 # cookies 
 cookies.json 
-
 
 # pycache
 
@@ -74,4 +73,4 @@ cookies.json
 
 .DS_Store
 
-
+flights-testing

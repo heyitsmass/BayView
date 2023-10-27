@@ -1,14 +1,15 @@
   .login {
-    width: 100%;
-    height: 100%;
-    font-family: 'Rubik';
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    border: solid 1px white;
+    width: 100%; 
+    min-width: fit-content;
+    height: 100%; 
+    background-repeat: no-repeat;
+    background-size: cover;
+
   }
   
   .header {
+    width: 40%;
     margin-top: 50%;
     display: flex;
     flex-direction: column;
@@ -17,8 +18,7 @@
   
   .login h1 {
     text-align: center;
-    font-size: 150%;
-    text-transform: uppercase;
+    font-size: 200%%;
     font-weight: bold;
     margin-bottom: 1rem;
     
@@ -27,13 +27,10 @@
   .login form {
     display: flex;
     flex-direction: column;
-  
     height: 100%;
     width: 100%;
-    height: min-content;
     align-items: center;
-    transform: translateY(-50%);
-    margin-top: 10rem;
+    margin: 2%;
   }
   
   
@@ -43,9 +40,11 @@
   }
   
   .login form button {
-  
-    width: 40%;
+    width: 5%;
     font-size: 100%;
-  
-    margin: 5%;
+    margin: 2%;
   }
+
+
+
+ 
