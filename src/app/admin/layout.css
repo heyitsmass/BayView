@@ -1,6 +1,5 @@
 .layout {
     height: 100%; 
     width: 100%; 
-    max-width: contain;
-    max-height: contain;
+    background-color: white;
   }
