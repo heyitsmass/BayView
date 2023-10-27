@@ -1,5 +1,5 @@
 import { IUser } from "./User";
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { HydratedDocument, Schema } from "mongoose";
 import Itineraries from "@/models/Itinerary";
 import { IItinerary } from "@/types/Itinerary";
 
