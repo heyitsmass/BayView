@@ -70,7 +70,7 @@ export default function Layout({children}: { children: React.ReactNode }) {
         <div className='dashboard'>
           <div className='Border'>
             <div className='title'>
-                <Image src={img} alt="Baymax" width={75} hight={75}/>
+                <Image src={img} alt="Baymax" width={75} height={75}/>
                 <h1>Bayview
                 Admin Dashboard
                 </h1>
