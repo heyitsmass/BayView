@@ -8,7 +8,7 @@ export const itinerarySchema = new Schema<IItinerary>({
   events: [eventSchema]
 });
 
-itinerarySchema.pre('save', (next) => {
+itinerarySchema.pre('save', function(next){
   // assuming that elements in events are sorted
   //    in chronological order
   console.log("checking if event length is populated")
