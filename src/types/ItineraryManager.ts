@@ -153,7 +153,7 @@ export class ItineraryManager {
     // on login flow
     // push new doc to database
     if(this.flow.get_state() == "login"){
-        const itinerary:HydratedDocument<IItinerary> = await Itineraries.create();
+        const itinerary = await Itineraries.create() as HydratedDocument<IItinerary>;
         console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
     }
     // else, push info on doc to local cache
