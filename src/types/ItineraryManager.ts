@@ -1,7 +1,7 @@
 import { IUser } from "./User";
 import mongoose, { HydratedDocument } from "mongoose";
-import Itineraries from "@models/Itinerary";
-import { IItinerary } from "@types/Itinerary";
+import Itineraries from "@/models/Itinerary";
+import { IItinerary } from "@/types/Itinerary";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -31,7 +31,7 @@ class RegistrationFlow implements State {
   type: FlowState = "registration";
 }
 
-class ItineraryFlow {
+export class ItineraryFlow {
   private identity: IdentityState = "anonymous";
   private stage: FlowState = "uninitialized";
   private storage: StorageMethod = "local";
@@ -140,7 +140,13 @@ export class ItineraryManager {
     /** Locates the itinerary in the cache*/
   }
 
-  // TODO:
+  // TODOs:
+  // testing needed
+  // change start and end dates to be accurate to
+  //            the list of events.
+  // save itinerary to local cache in the event that state type is not login
+  // change the current flow state to be that of this new created itinerary
+  //
   public async createItinerary() {
 
     // using database model that we have for itineraries
@@ -149,13 +155,13 @@ export class ItineraryManager {
       startDate: Date.now(),
       endDate: Date.now(),
     });
-    const itineraryInstance: HydratedDocument<IItinerary> = {} as HydratedDocument<IItinerary>;
 
     // on login flow
     // push new doc to database
-    if(this.flow.state.FlowState == "login"){
+    console.log(this.flow.state);
+    if(this.flow.state.type == "login"){
       try{
-        await itineraryInstance = newItinerary.save();
+        const itineraryInstance = await newItinerary.save();
         console.log("created new itinerary: \n");
         console.log(itineraryInstance);
       }catch (e){
@@ -164,7 +170,7 @@ export class ItineraryManager {
     }
     // else, push info on doc to local cache
     else {
-      localStorage.setItem("CurrentFlow", newItinerary);
+      //localStorage.setItem("CurrentFlow", newItinerary);
       console.log("save to the local cache: still needs to be implemented properly");
     }
 
