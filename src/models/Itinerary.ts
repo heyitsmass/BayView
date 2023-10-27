@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { eventSchema } from "./Event";
 import { IItinerary } from "@/types/Itinerary";
-
+import {Event} from "@/types/Event";
 export const itinerarySchema = new Schema<IItinerary>({
   startDate: { type: Date, required: false },
   endDate: { type: Date, required: false},
