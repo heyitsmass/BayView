@@ -70,6 +70,7 @@ export class ItineraryFlow {
 
   public get_state() {
     /** Gets the current state */
+    return this.state.type; 
   }
 
   public set_state(state: State) {
@@ -149,24 +150,11 @@ export class ItineraryManager {
   //
   public async createItinerary() {
 
-    // using database model that we have for itineraries
-    // initialize new document
-    const newItinerary: Schema<IItinerary> = new Itineraries({
-      startDate: Date.now(),
-      endDate: Date.now(),
-    });
-
     // on login flow
     // push new doc to database
-    console.log(this.flow.state);
-    if(this.flow.state.type == "login"){
-      try{
-        const itineraryInstance = await newItinerary.save();
-        console.log("created new itinerary: \n");
-        console.log(itineraryInstance);
-      }catch (e){
-        console.log(e.message);
-      }
+    if(this.flow.get_state() == "login"){
+        const itinerary = await Itineraries.create() as HydratedDocument<IItinerary>;
+        console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
     }
     // else, push info on doc to local cache
     else {
