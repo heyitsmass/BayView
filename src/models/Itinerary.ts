@@ -11,7 +11,7 @@ const Itineraries =
     mongoose.models.Itinerary ||
     mongoose.model<IItinerary>("Itinerary", itinerarySchema);
 
-itinerarySchema.pre('save', (next) => {
+itinerarySchema.pre('save', function(next){
   // assuming that elements in events are sorted
   //    in chronological order
   console.log("checking if event length is populated")
