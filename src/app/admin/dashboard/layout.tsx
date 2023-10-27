@@ -7,7 +7,7 @@ import img from "../../../../public/images/baymax.png";
 import { faServer,faUser, faBoxArchive, faPeopleGroup, faHouse, faPhone, faTerminal, faCloud, faClipboard, faFingerprint, faEye, faKeyboard, faLaptop, faCubes, faDatabase, faRobot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-
+import { SyntheticEvent } from "react";
 
 interface Section {
     id: string;
