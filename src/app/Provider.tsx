@@ -1,24 +1,25 @@
 "use client";
-import {
-  DashboardAction,
-  DashboardContext,
-  DashboardDispatch,
-  TDashboardContext
-} from "@/context";
+
 import { useReducer } from "react";
 import Handler from "./Handler";
+import {
+  HomepageAction,
+  HomepageContext,
+  HomepageDispatch,
+  THomepageContext
+} from "@/context";
 
-type DashboardProviderProps = {
-  value: TDashboardContext;
+type HomepageProviderProps = {
+  value: THomepageContext;
   children: React.ReactNode;
 };
 
-export default function Provider({ ...props }: DashboardProviderProps) {
+export default function Provider({ ...props }: HomepageProviderProps) {
   const { value, children } = props;
 
   const [ctx, dispatch] = useReducer(Reducer, value);
 
-  const Manager = async (action: DashboardAction) => {
+  const Manager = async (action: HomepageAction) => {
     try {
       const res = await Handler(action);
     } catch (err) {
@@ -29,15 +30,15 @@ export default function Provider({ ...props }: DashboardProviderProps) {
   };
 
   return (
-    <DashboardContext.Provider value={ctx}>
-      <DashboardDispatch.Provider value={Manager}>
+    <HomepageContext.Provider value={ctx}>
+      <HomepageDispatch.Provider value={Manager}>
         {children}
-      </DashboardDispatch.Provider>
-    </DashboardContext.Provider>
+      </HomepageDispatch.Provider>
+    </HomepageContext.Provider>
   );
 }
 
-const Reducer = (subject: TDashboardContext, action: DashboardAction) => {
+const Reducer = (subject: THomepageContext, action: HomepageAction) => {
   console.log(action);
 
   return subject;
