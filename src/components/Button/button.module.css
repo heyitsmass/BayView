@@ -1,10 +1,69 @@
 .button {
-  border: none;
-  padding: 1rem 2rem;
-  background: black;
-  color: white;
-  font-size: 1.4rem;
-  border-radius: 6rem;
-  font-weight: bold;
-  cursor: pointer;
+  @apply rounded-full bg-black text-white font-bold py-3 px-8 cursor-pointer transition ease-in duration-200;
+}
+
+.button:hover {
+  @apply bg-zinc-600 disabled:bg-black;
+}
+
+
+.button:active {
+  @apply bg-zinc-800;
+}
+
+.button:focus {
+  @apply outline-none ring-2 ring-zinc-500;
+}
+
+.primaryButton {
+  @apply rounded-full bg-red-600 text-white font-bold py-3 px-8 cursor-pointer transition ease-in duration-200;
+}
+
+.primaryButton:hover {
+  @apply bg-red-500 disabled:bg-red-600;
+}
+
+.primaryButton:active {
+  @apply bg-red-700;
+}
+
+.primaryButton:focus {
+  @apply outline-none ring-2 ring-red-500;
+}
+
+.inlineIcon {
+    @apply pr-3;
+}
+
+.inlineIcon svg {
+  @apply w-[1.2rem] h-[1.2rem] pb-[0.05rem];
+}
+
+.spinner {
+  height: 20px;
+  width: 20px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.5);
+  border-radius: 100%;
+  margin-top: 2px;
+  animation: clockwise 0.7s linear infinite;
+}
+
+@keyframes clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(72deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  80% {
+    transform: rotate(288deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
