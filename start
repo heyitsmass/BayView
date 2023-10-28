@@ -2,12 +2,14 @@
 FILE=.built
 start=1
 build=0
+test=0
 help=0
 
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -b|--build) build=1;;
+        -b|--rebuild) build=1;;
+        -t|--test) test=1;;
         -h|--help) help=1;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
@@ -24,32 +26,28 @@ if [[ $help == 1 ]]; then
     echo
     echo "Options:"
     echo
-    #echo "  -s | --start      : Start the docker container."
-    echo "  -b | --build      : Re-Build the docker container."
+    echo "  -b | --rebuild      : Re-Build the docker container."
+    echo "  -t | --test         : Build and test the container."
     echo
     echo "-------------------------------------------------"
     echo
     echo "Note: Can be specified for individual operations."
     exit 1
-    
+
 fi
 
+f=''
+b=''
 
 if [[ $start == 1 ]]; then
-    
     if [[ $build == 1 ]]; then
-        
-        date=`date`
-        echo 'Created Build on:' $date >> .built
-        
-        
-        docker compose up --force-recreate -V --build
-
-        exit 2
+        b='--build'
+    elif [[ $test == 1 ]]; then
+        f='-f ./docker-compose.test.yml'
+        b='--build'
     fi;
-    
-    docker compose up --force-recreate -V 
-    
+    docker compose $f up $b --force-recreate -V
 fi;
 
+docker compose down -v
 docker compose down -v
