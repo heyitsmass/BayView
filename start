@@ -50,4 +50,3 @@ if [[ $start == 1 ]]; then
 fi;
 
 docker compose down -v
-docker compose down -v
