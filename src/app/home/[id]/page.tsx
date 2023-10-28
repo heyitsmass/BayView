@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import styles from "./page.module.css";
 
 export default function Page({
   params
@@ -14,9 +15,15 @@ export default function Page({
   const { id } = params;
 
   return (
-    <div>
-      {id}
-      <button onClick={async (e) => push("/auth/logout")}>Logout</button>
-    </div>
+	<div className={styles.layout}>
+		<div>
+			{id}
+			<button onClick={async (e) => push("/auth/logout")}>Logout</button>
+		</div>
+		{/* <TopBar></TopBar> */}
+		<div className={styles.contentGrid}>
+			{/* Card Components here */}
+		</div>
+	</div>
   );
 }
