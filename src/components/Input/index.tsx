@@ -2,7 +2,7 @@
 import {
   DetailedHTMLProps,
   InputHTMLAttributes,
-  useRef,
+  useCallback,
   useState
 } from "react";
 
@@ -15,36 +15,45 @@ import styles from "./input.module.css";
 
 type UserInputProps = {
   icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
+  label?: string;
+	id?: string;
+  className?: string;
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
 
-const UserInput = ({ ...props }: UserInputProps) => {
-  const { icon } = props;
+function useInputValidation(initialValue: string = "") {
+	const [input, setInput] = useState(initialValue);
 
-  const [input, setInput] = useState("");
+	const validateInput = (value: string): void => {
+		// Validation logic here
+		setInput(value);
+	};
 
-  const validateInput = (value: string) => {
-    setInput(value);
-  };
+	return [input, validateInput] as const;
+}
+
+const UserInput = ({ icon, label, id, children, className, ...props }: UserInputProps) => {
+  const [input, validateInput] = useInputValidation();
+  const onKeyUp = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => validateInput(event.currentTarget.value), [validateInput]);
 
   const [type, setHidden] = useState(props.type);
 
   return (
-    <div className={styles.inputWrapper}>
-      <label htmlFor={props.id}>{props.placeholder}</label>
-      <span className={styles.input}>
-        {icon && <FontAwesomeIcon {...icon} />}
-        <input
-          {...props}
-          onKeyUp={({ currentTarget }) =>
-            validateInput(currentTarget.value)
-          }
-          autoComplete='new-password'
-        />
-        {props.children}
-      </span>
+    <div className={className}>
+      { label ? (
+        <label className={styles.label} htmlFor={id}>
+          {label}
+        </label>)
+        :
+        <div className="w-full h-7"></div>
+      }
+      <div className={styles.inputWrapper}>
+        {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
+        <input className={styles.input} id={id} {...props} onKeyUp={onKeyUp} />
+        {children}
+      </div>
     </div>
   );
 };
