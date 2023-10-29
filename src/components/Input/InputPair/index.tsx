@@ -11,7 +11,7 @@ type InputPairProps = {
 	children: [ReactNode, ReactNode];
 };
 
-export function InputPair({ ...props }: InputPairProps) {
+export default function InputPair({ ...props }: InputPairProps) {
 	
 	const {className, icon, children} = props; 
 	
