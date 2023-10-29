@@ -7,17 +7,18 @@ import styles from './card.module.css';
 type CardProps = {
 	title: string;
 	subtitle?: string;
-	id?: string;
-	children?: ReactNode;
 } & HTMLProps<HTMLBodyElement>;
 
-export default function Card({ title, subtitle, children, ...props }: CardProps) {
+export default function Card({ ...props }: CardProps) {
+
+	const {children, className, title, subtitle} = props; 
+	
 	const [isOpen, setIsOpen] = useState(true);
 
 	return (
-		<div  className={`${props.className} ${styles.defaultCard} ${isOpen ? 'max-h-[45rem] overflow-scroll' : 'max-h-24 overflow-clip'}`}>
+		<div  className={`${className} ${styles.defaultCard} ${isOpen ? 'max-h-[45rem] overflow-scroll' : 'max-h-24 overflow-clip'}`}>
 			<button className="flex items-center sticky" onClick={() => setIsOpen(!isOpen)}>
-				<FontAwesomeIcon className="w-4 pr-2" size="lg" icon={isOpen ? faAngleDown : faAngleUp}></FontAwesomeIcon>
+				<FontAwesomeIcon className="w-4 pr-2" size="lg" icon={isOpen ? faAngleDown : faAngleUp}/>
 				<h1 className="text-2xl font-bold">{title}</h1>
 			</button>
 			<h2 className="pl-6 text-zinc-400">{subtitle}</h2>
