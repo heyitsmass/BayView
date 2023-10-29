@@ -8,12 +8,14 @@ import {
 
 import {
   FontAwesomeIcon,
+  FontAwesomeIconProps
 } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import styles from "./input.module.css";
 
 type UserInputProps = {
-  icon?: IconDefinition;
+  icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
   label?:string; 
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -50,7 +52,7 @@ const UserInput = ({ ...props }: UserInputProps) => {
         <div className="w-full h-7"></div>
       }
       <div className={styles.inputWrapper}>
-        {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
+        {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
         <input className={styles.input} id={id} {...props} onKeyUp={onKeyUp} />
         {children}
       </div>
