@@ -3,21 +3,18 @@ import {
   DetailedHTMLProps,
   InputHTMLAttributes,
   useCallback,
-  useState
+  useState, SyntheticEvent
 } from "react";
 
 import {
   FontAwesomeIcon,
-  FontAwesomeIconProps
 } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import styles from "./input.module.css";
 
 type UserInputProps = {
-  icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
-  label?: string;
-	id?: string;
-  className?: string;
+  icon?: IconDefinition;
+  label:string; 
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -34,9 +31,12 @@ function useInputValidation(initialValue: string = "") {
 	return [input, validateInput] as const;
 }
 
-const UserInput = ({ icon, label, id, children, className, ...props }: UserInputProps) => {
+const UserInput = ({ ...props }: UserInputProps) => {
+	
+  const {icon, label, id, children, className} = props; 
+	
   const [input, validateInput] = useInputValidation();
-  const onKeyUp = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => validateInput(event.currentTarget.value), [validateInput]);
+  const onKeyUp = useCallback((event: SyntheticEvent) => validateInput((event.currentTarget as HTMLInputElement).value), [validateInput]);
 
   const [type, setHidden] = useState(props.type);
 
@@ -50,7 +50,7 @@ const UserInput = ({ icon, label, id, children, className, ...props }: UserInput
         <div className="w-full h-7"></div>
       }
       <div className={styles.inputWrapper}>
-        {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
+        {icon && <FontAwesomeIcon className={styles.icon} icon={icon} />}
         <input className={styles.input} id={id} {...props} onKeyUp={onKeyUp} />
         {children}
       </div>
