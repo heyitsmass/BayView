@@ -14,7 +14,7 @@ import styles from "./input.module.css";
 
 type UserInputProps = {
   icon?: IconDefinition;
-  label:string; 
+  label?:string; 
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
