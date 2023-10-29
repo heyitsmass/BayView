@@ -40,8 +40,6 @@ const UserInput = ({ ...props }: UserInputProps) => {
   const [input, validateInput] = useInputValidation();
   const onKeyUp = useCallback((event: SyntheticEvent) => validateInput((event.currentTarget as HTMLInputElement).value), [validateInput]);
 
-  const [type, setHidden] = useState(props.type);
-
   return (
     <div className={className}>
       { label ? (
@@ -53,7 +51,7 @@ const UserInput = ({ ...props }: UserInputProps) => {
       }
       <div className={styles.inputWrapper}>
         {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
-        <input className={styles.input} id={id} {...props} onKeyUp={onKeyUp} />
+        <input className={styles.input} {...props} />
         {children}
       </div>
     </div>
