@@ -1,34 +1,29 @@
+/* Common Button Styles */
 .button {
-  @apply rounded-full bg-black text-white font-bold py-3 px-8 cursor-pointer transition ease-in duration-200;
+  @apply text-white font-bold rounded-full py-3 px-8 cursor-pointer transition ease-in duration-200;
+  @apply flex align-middle justify-items-center outline-none ring-2 ring-transparent;
 }
 
-.button:hover {
-  @apply bg-zinc-600 disabled:bg-black;
+.button:disabled {
+  @apply opacity-25 cursor-not-allowed;
 }
 
-
-.button:active {
-  @apply bg-zinc-800;
+/* Primary (Black) Button Styles */
+.button.primary {
+  @apply bg-black;
 }
 
-.button:focus {
-  @apply outline-none ring-2 ring-zinc-500;
+.button.primary:not(:disabled) {
+  @apply hover:bg-zinc-800 active:bg-zinc-700 focus:ring-zinc-700;
 }
 
-.primaryButton {
-  @apply rounded-full bg-red-600 text-white font-bold py-3 px-8 cursor-pointer transition ease-in duration-200;
+/* Secondary (Red) Button Styles */
+.button.secondary {
+  @apply bg-red-600;
 }
 
-.primaryButton:hover {
-  @apply bg-red-500 disabled:bg-red-600;
-}
-
-.primaryButton:active {
-  @apply bg-red-700;
-}
-
-.primaryButton:focus {
-  @apply outline-none ring-2 ring-red-500;
+.button.secondary:not(:disabled) {
+  @apply hover:bg-red-500 active:bg-red-400 focus:ring-red-400;
 }
 
 .inlineIcon {
