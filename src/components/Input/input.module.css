@@ -1,40 +1,21 @@
 .inputWrapper {
-	background: #f2f2f2;
-
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	border-radius: 6rem;
-	justify-content: center;
-	width: 50%;
-	margin: 1rem 0;
+	@apply w-full pb-2 relative;
 }
 
-.inputWrapper label {
-	color: black;
+.label {
+  @apply block pl-3 h-7 text-base;
+}
+
+.input {	
+  @apply w-full text-base rounded-full focus:outline-none;
+  @apply bg-zinc-50 border dark:border-zinc-600 border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
+  padding: 0.75rem 1rem 0.75rem 3.1rem;
+} 
+
+.icon {
+	@apply text-lg;
+    padding: 0.5rem 0 0.4rem 1rem;
 	position: absolute;
-	visibility: hidden;
-}
-
-.input {
-	display: flex;
-	align-items: center;
-}
-
-.input svg {
-	font-size: 1.2rem;
-	color: rgba(0, 0, 0, 0.46);
-	padding: 0.4rem 0 0.4rem 1rem;
-	width: 2rem;
-	text-align: center;
-}
-
-.input input {
-	background-color: transparent;
-	border: none;
-	outline: none;
-	color: black;
-	font-size: 1rem;
-	padding: 0.8rem 0.6rem;
-	width: 100%;
+	left: 0.2rem;
+	top: 0.55rem;
 }
