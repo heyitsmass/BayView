@@ -1,5 +1,7 @@
 import { IUser } from "./User";
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { HydratedDocument, Schema } from "mongoose";
+import Itineraries from "@/models/Itinerary";
+import { IItinerary } from "@/types/Itinerary";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -29,7 +31,7 @@ class RegistrationFlow implements State {
   type: FlowState = "registration";
 }
 
-class ItineraryFlow {
+export class ItineraryFlow {
   private identity: IdentityState = "anonymous";
   private stage: FlowState = "uninitialized";
   private storage: StorageMethod = "local";
@@ -68,6 +70,7 @@ class ItineraryFlow {
 
   public get_state() {
     /** Gets the current state */
+    return this.state.type; 
   }
 
   public set_state(state: State) {
@@ -138,8 +141,38 @@ export class ItineraryManager {
     /** Locates the itinerary in the cache*/
   }
 
-  public createItinerary() {}
+  // TODOs:
+  // testing needed
+  // change start and end dates to be accurate to
+  //            the list of events.
+  // save itinerary to local cache in the event that state type is not login
+  // change the current flow state to be that of this new created itinerary
+  //
+  public async createItinerary() {
 
+    // on login flow
+    // push new doc to database
+    if(this.flow.get_state() == "login"){
+        const itinerary = await Itineraries.create(new Itineraries()) as HydratedDocument<IItinerary>
+        console.log("Created new itinerary:\n", itinerary.toJSON({flattenObjectIds:true}))
+    }
+    // else, push info on doc to local cache
+    else {
+      //localStorage.setItem("CurrentFlow", newItinerary);
+      console.log("save to the local cache: still needs to be implemented properly");
+    }
+
+    // state is changed to this itinerary
+    console.log("change state to be this itinerary: still needs to be implemented")
+    //this.flow.set_state();
+
+    // context data is returned to the flow
+    //this.flow./*something*/ = newItinerary.context
+    console.log("Creation complete");
+    console.log("return required data from created entry to flow: still needs to be implemented");
+
+
+  }
   public initializeFlow() {
     this.flow.set_state({ type: "login" });
     return this.flow.get_state(); //login
@@ -372,8 +405,6 @@ export class DiscordNotifier implements Notifier {
 
     return new DiscordNotifier(recipient_id, channel_id);
   }
-
-
 
 }
 
