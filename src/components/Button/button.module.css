@@ -1,10 +1,64 @@
+/* Common Button Styles */
 .button {
-  border: none;
-  padding: 1rem 2rem;
-  background: black;
-  color: white;
-  font-size: 1.4rem;
-  border-radius: 6rem;
-  font-weight: bold;
-  cursor: pointer;
+  @apply text-white font-bold rounded-full py-3 px-8 cursor-pointer transition ease-in duration-200;
+  @apply flex align-middle justify-items-center outline-none ring-2 ring-transparent;
+}
+
+.button:disabled {
+  @apply opacity-25 cursor-not-allowed;
+}
+
+/* Primary (Black) Button Styles */
+.button.primary {
+  @apply bg-black;
+}
+
+.button.primary:not(:disabled) {
+  @apply hover:bg-zinc-800 active:bg-zinc-700 focus:ring-zinc-700;
+}
+
+/* Secondary (Red) Button Styles */
+.button.secondary {
+  @apply bg-red-600;
+}
+
+.button.secondary:not(:disabled) {
+  @apply hover:bg-red-500 active:bg-red-400 focus:ring-red-400;
+}
+
+.inlineIcon {
+    @apply pr-3;
+}
+
+.inlineIcon svg {
+  @apply w-[1.2rem] h-[1.2rem] pb-[0.05rem];
+}
+
+.spinner {
+  height: 20px;
+  width: 20px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.5);
+  border-radius: 100%;
+  margin-top: 2px;
+  animation: clockwise 0.7s linear infinite;
+}
+
+@keyframes clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(72deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  80% {
+    transform: rotate(288deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

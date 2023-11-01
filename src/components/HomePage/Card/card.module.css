@@ -1,0 +1,4 @@
+.defaultCard {
+    @apply w-full p-5 bg-white border border-zinc-200 rounded-xl dark:bg-zinc-800 dark:border-zinc-800;
+    @apply transition-all duration-300 ease-in-out;
+}
