@@ -1,87 +1,61 @@
 import asyncio
-import os
-from asyncio import Future
 from threading import Thread
-from typing import Coroutine
+from typing import Callable
+import logging
 
-from dotenv import load_dotenv
 
-from .app import WebDriver
-from .routes import app
+class Heartbeat:
+    def __init__(self, fn: Callable, *args, **kwargs):
+        self.function = fn
+        self.args = args
+        self.kwargs = kwargs
 
-load_dotenv()
+        self.__loop = asyncio.new_event_loop()
+        self.__task = self.__loop.create_task(self.__run())
+        self.__thread = Thread(target=self.__start, args=(self.__loop,))
+        self.__interval = 0
+        self.__running = False
+        logging.info("Heartbeat initialized.")
 
-class EventLoop:
-    """
-    A class that runs an event loop in a separate thread.
-    """
-
-    def __init__(self, driver: WebDriver):
-        """
-        A class representing an asyncio event loop that runs in the background.
-
-        :param driver: An instance of the WebDriver class.
-        """
-        self._running = False
-
-        self._loop = asyncio.new_event_loop()  # create an event loop
-        self._thread = Thread(
-            target=self.__start_background_loop, args=(self._loop,), daemon=True
-        )
-
-        self._driver = driver
-        self.tasks: list[Future] = []
-
-    def isRunning(self) -> bool:
-        """
-        Returns:
-            True if the event loop is running, False otherwise.
-        """
-        return self._running
-
-    def run(self):
-        """
-        Runs the event loop.
-        """
-        self._running = True
-        self._thread.start()
-
-        self.create_task(self._driver.heartbeat.run())
-
-        self._primary = self.create_task(
-            app.run(
-                port=os.environ.get("PORT", 3001),
-            )
-        )
-
-        return self._primary.result()
-
-    def stop(self):
-        """
-        Stops the event loop.
-        """
-        self._running = False
-        self._driver.quit()
-        self._loop.stop()
-        self._thread.join()
-
-    def __start_background_loop(self, loop: asyncio.AbstractEventLoop):
-        """
-        Starts the event loop in a separate thread.
-        """
+    def __start(self, loop: asyncio.AbstractEventLoop):
         asyncio.set_event_loop(loop)
         loop.run_forever()
 
-    def create_task(self, task: Coroutine):
-        """
-        Creates a task in the event loop.
-        """
-        task = asyncio.run_coroutine_threadsafe(task, self._loop)
-        self.tasks.append(task)
-        return task
+    async def __run(self):
+        while self.__running:
+            logging.info("Heartbeat")
+            self.function(*self.args, **self.kwargs)
+            await asyncio.sleep(self.__interval)
+
+    def run(self, interval: int):
+        self.__interval = interval
+        self.__running = True
+        logging.info(f"Starting heartbeat - interval: {self.__interval}")
+        self.__thread.start()
+        # asyncio.gather(self.__run())
+
+    def isRunning(self):
+        return self.__running
+
+    def stop(self):
+        self.__running = False
+        self.__task.result()
+        self.__thread.join()
+        self.__loop.stop()
+        logging.info("Heartbeat stopped.")
 
 
 if __name__ == "__main__":
-    # tests
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler("debug.log"), logging.StreamHandler()],
+    )
 
-    print("Tests passed!")
+    hb = Heartbeat(lambda: print("Hello World"))
+
+    hb.run(5)
+
+    print("started.")
+
+    hb.stop() 

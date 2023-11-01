@@ -2,8 +2,11 @@ from datetime import datetime
 from typing import Literal
 
 from flask import Flask, request
-
 from .app import driver
+from .abc import HTTPResponse
+
+
+driver.init()
 
 app = Flask(__name__)
 
@@ -14,7 +17,9 @@ def test():
 
 
 @app.route("/tickets/<facility>", methods=["GET"])
-def get_tickets(facility: None | Literal["ak", "hs", "ep", "mk"] = None):
+def get_tickets(
+    facility: None | Literal["ak", "hs", "ep", "mk"] = None
+) -> HTTPResponse:
     kwargs = {
         "startDate": request.args.get("startDate"),
         "endDate": request.args.get("endDate"),
@@ -31,19 +36,13 @@ def get_tickets(facility: None | Literal["ak", "hs", "ep", "mk"] = None):
     """
     # return {"error": "This endpoint is not implemented yet."}, 500
 
-    try:
-        resorts = driver.get_tickets(**kwargs, facility=facility)
-  
-    except Exception as e:
-        return {"error": str(e)}, 500
-
-    return resorts, 200
+    return driver.dispatch("get_tickets", facility, **kwargs)
 
 
 @app.route("/dining/<partySize>", methods=["GET"])
-def get_dining(
+def get_dining_availability(
     partySize: int,
-):
+) -> HTTPResponse:
     """
     Returns the dining availability for a given party size, booking date, start time, and end time.
 
@@ -57,18 +56,11 @@ def get_dining(
     startTime: str | int | datetime = request.args.get("startTime")
     endTime: str | int | datetime = request.args.get("endTime")
 
-    try:
-        availabilities = driver.get_dining_availability(
-            int(partySize), bookingDate, startTime, endTime
-        )
-    except Exception as e:
-        return {"error": str(e)}, 500
-
-    return availabilities, 200
+    return driver.dispatch("get_dining", partySize, bookingDate, startTime, endTime)
 
 
 @app.route("/dining/calendar", methods=["GET"])
-def get_dining_calendar():
+def get_calendar() -> HTTPResponse:
     """
     Retrieves the dining calendar from the driver and returns it.
 
@@ -76,16 +68,11 @@ def get_dining_calendar():
         Tuple: A tuple containing the dining calendar and the HTTP status code.
 
     """
-    try:
-        dates = driver.get_calendar()
-    except Exception as e:
-        return {"error": str(e)}, 500
-
-    return dates, 200
+    return driver.dispatch("get_dining_calendar")
 
 
 @app.route("/resorts/tickets/<type>", methods=["GET"])
-def get_resort_tickets(type: Literal["adult", "child"]):
+def get_resort_tickets(type: Literal["adult", "child"]) -> HTTPResponse:
     """
     Get resort tickets for a given ticket type.
 
@@ -95,16 +82,13 @@ def get_resort_tickets(type: Literal["adult", "child"]):
     Returns:
         Tuple: A tuple containing the resort tickets and the HTTP status code.
     """
-    try:
-        resorts = driver.get_resort_tickets(type)
-    except Exception as e:
-        return {"error": str(e)}, 500
-
-    return resorts, 200
+    return driver.dispatch("get_resort_tickets", type == "adult")
 
 
-@app.route("/blackout-dates/<facility>", methods=["GET"])
-def get_blackout_dates(facility: None | Literal["ak", "hs", "ep", "mk"]):
+@app.route("/blockout-dates/<facility>", methods=["GET"])
+def get_blackout_dates(
+    facility: None | Literal["ak", "hs", "ep", "mk"]
+) -> HTTPResponse:
     """
     Returns a list of blackout dates for the specified facility and product types.
 
@@ -116,50 +100,31 @@ def get_blackout_dates(facility: None | Literal["ak", "hs", "ep", "mk"]):
     Returns:
         Tuple: A tuple containing the blackout dates for the specified facility and product types and the HTTP status code.
     """
-    productTypes = request.args.get("passes")
+    productTypes = request.args.get("passes", "").split(",")
     numMonths = request.args.get("numMonths")
 
-    productTypes = productTypes.split(",")
-    try:
-        blackout_dates = driver.get_blackout_dates(facility, productTypes, numMonths)
-    except Exception as e:
-        return {"error": str(e)}, 500
-
-    return blackout_dates, 200
+    return driver.dispatch("get_blackout_dates", facility, productTypes, numMonths)
 
 
-@app.route("/parks/", methods=["GET"])
-def get_parks():
+@app.route("/parks", methods=["GET"])
+def get_parks() -> HTTPResponse:
     """
     Retrieve a list of parks from the database.
 
     Returns:
          Tuple: A tuple containing the list of parks and the HTTP status code.
     """
-    try:
-        parks = driver.get_parks()
-    except Exception as e:
-        return {"error": str(e)}, 500
 
-    return parks, 200
+    return driver.dispatch("get_parks")
 
 
-@app.route("/passes/", methods=["GET"])
-def get_passes():
+@app.route("/passes", methods=["GET"])
+def get_passes() -> HTTPResponse:
     """
     Endpoint to retrieve passes from the driver.
 
     Returns:
        Tuple: A tuple containing the list of passes and the HTTP status code.
     """
-    try:
-        passes = driver.get_passes()
-    except Exception as e:
-        print(e)
-        return {"error": str(e)}, 500
 
-    return passes, 200
-
-
-if __name__ == "__main__":
-    print("Tests passed!")
+    return driver.dispatch("get_passes")

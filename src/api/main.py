@@ -1,7 +1,7 @@
-from lib.app import driver
-from lib.loop import EventLoop
+from src.my.routes import app
 
 if __name__ == "__main__":
-    loop = EventLoop(driver)
-
-    loop.run()
+    app.run(
+        debug=True,
+        port=5000,
+    )

@@ -1,306 +1,54 @@
-from typing import NamedTuple
+"""Types for the Disney API."""
+from typing import NamedTuple, TypeVar, Union
 
-"https://disneyworld.disney.go.com/authentication/status/"
 
-"""
-    CSRF data returned from the endpoint.
-"""
+"""Status Codes"""
+STATUS_OK = 200
+STATUS_BAD_REQUEST = 400
+STATUS_UNAUTHORIZED = 401
+STATUS_NOT_FOUND = 404
+STATUS_TOO_MANY_REQUESTS = 429
+STATUS_INTERNAL_SERVER_ERROR = 500
+STATUS_NOT_IMPLEMENTED = 501
+STATUS_SERVICE_UNAVAILABLE = 503
 
-class CSRF(NamedTuple):
+
+class AuthCSRF(NamedTuple):
+    """CSRF data returned from the endpoint."""
+
     token: str
     header: str
 
-"""
-    Authentication status returned from the endpoint.
-"""
 
-class AuthenticationStatus(NamedTuple):
-    csrf: CSRF
+class Auth(NamedTuple):
+    """Authentication status returned from the endpoint."""
+
+    csrf: AuthCSRF
     isLoggedIn: bool
     isSecure: bool
     swid: None | str = None
 
 
-"https://disneyworld.disney.go.com/authentication/get-client-token/"
+class ClientToken(NamedTuple):
+    """Client token returned from the endpoint."""
 
-
-"""
-    Client token returned from the endpoint.
-"""
-
-
-class AccessToken(NamedTuple):
     access_token: str
     expires_in: int
 
 
-"https://api.wdprapps.disney.com/pep/profile?isUser=True&brand=wdw&locale=en-us&userType=GUEST"
+class Park(NamedTuple):
+    """Park data returned from the endpoint."""
 
-"""
-    Avatar data returned from the endpoint.
-"""
+    isSupported: bool
+    parkId: str
+    parkType: str
+    sortOrder: int
+    configInstanceId: str
 
 
-class Avatar(NamedTuple):
-    id: str
-    title: str
-    url: str
+class Pass(NamedTuple):
+    """Pass data returned from the endpoint."""
 
-
-"""
-    Self media links returned from the endpoint.
-"""
-
-
-class SelfLinks(NamedTuple):
-    href: str
-
-
-"""
-    Links returned from the endpoint.
-"""
-
-
-class Links(NamedTuple):
-    self: SelfLinks
-
-
-"""
-    Notification response returned from the endpoint.
-"""
-
-
-class NotificationResponse(NamedTuple):
-    startItem: int
-    itemLimit: int
-    itemCount: str
-    receivedInvitations: list[str]
-    links: Links
-
-
-"""
-    Guest identifier returned from the endpoint.
-"""
-
-
-class GuestIdentifier(NamedTuple):
-    type: str
-    value: str
-
-
-"""
-    User data returned from the endpoint.
-"""
-
-
-class User(NamedTuple):
-    avatar: Avatar
-    notificationResponse: NotificationResponse
-    firstName: str
-    lastName: str
-    email: str
-    guestIdentifiers: list[GuestIdentifier]
-    affiliations: list[str]
-    messageBanner: str
-    asyncMessagingToken: None | str = None
-
-
-"""
-    Profile returned from the endpoint.
-"""
-
-
-class Profile(NamedTuple):
-    user: User
-
-
-"https://disneyworld.disney.go.com/dine-res/api/calendar-days"
-
-"""
-    Booking date ranges returned from the endpoint.
-"""
-
-
-class BookingDateRanges(NamedTuple):
-    startDate: str
-    endDate: str
-
-
-"""
-    Calendar days returned from the endpoint.
-"""
-
-
-class CalendarDays(NamedTuple):
-    bookingDateRanges: BookingDateRanges
-    statusCode: int
-
-
-"https://disneyworld.disney.go.com/dine-res/api/availability/<party-size>/<YYYY-MM-DD>/<time-start>:<time-end>/"
-
-
-"""
-    Meal period info returned from the endpoint.
-"""
-
-
-class MealPeriodInfo(NamedTuple):
-    type: str
-    name: str
-    experience: str
-    priceLegend: str
-    primaryCuisineType: str
-
-
-"""
-    Restaurant returned from the endpoint.
-"""
-
-
-class Restaurant(NamedTuple):
-    id: str
-    name: str
-    description: str
-    mealPeriodType: str
-    priceRange: str
-    experienceType: str
-    primaryCuisineType: str
-    serviceStyle: str
-    ancestorLocationParkResort: str
-    ancestorLocationLandArea: str
-    urlFriendlyId: str
-    fastPassId: bool
-    admissionRequired: bool
-    disneyOwned: bool
-    hasAssociatedServices: bool
-    quickServiceAvailable: bool
-    resservationsRecommended: bool
-    hasDiningEventsAssociated: bool
-    location: str
-    type: str
-    media: dict
-    offers: dict
-    facets: list
-    descriptions: dict
-    webLinks: dict
-    mealPeriodInfo: list[MealPeriodInfo]
-
-
-"""
-    Event times returned from the endpoint.
-"""
-
-
-class EventTimes(NamedTuple):
-    restaurant: dict[str, Restaurant]
-
-
-"""
-    Dining event returned from the endpoint.
-"""
-
-
-class DiningEvent(NamedTuple):
-    name: str
-    id: str
-    description: str
-    media: dict
-    eventTimes: list[EventTimes]
-
-
-"""
-    Availability response returned from the endpoint.
-"""
-
-
-class AvailabilityResponse(NamedTuple):
-    restaurant: dict[str, Restaurant]
-    diningEvent: dict[str, DiningEvent]
-    dinnerShow: str
-    statusCode: int
-
-
-"""
-    Availability returned from the endpoint.
-"""
-
-
-class StartingPrice(NamedTuple):
-    subtotal: str
-    currency: str
-    tax: str
-    total: str
-    pricePerDay: str
-
-
-"""
-    Ticket returned from the endpoint.
-"""
-
-
-class Ticket(NamedTuple):
-    name: str
-    numDays: int
-    startingFromPrice: StartingPrice
-    priceDates: list[str]
-
-
-"""
-    Product type returned from the endpoint.
-"""
-
-
-class ProductType(NamedTuple):
-    productType: str
-    discountGroup: str
-    addOn: None | str = None
-
-
-"""
-    Product returned from the endpoint.
-"""
-
-
-class Product(NamedTuple):
-    productType: ProductType
-    isVariablePricing: bool
-    tickets: list[Ticket]
-
-
-"""
-    Tickets returned from the endpoint.
-"""
-
-
-class Offer(NamedTuple):
-    offerId: str
-    time: str
-    label: str
-
-
-"""
-    Offers returned from the endpoint.
-"""
-
-
-class DiningRes(NamedTuple):
-    id: str
-    name: str
-    description: str
-    fastPassPlus: bool
-    mealPeriodInfo: list[dict]
-    disneyOwned: bool
-    priceRange: str
-    serviceStyle: None | str
-    type: str
-
-
-"""
-    Dining reservations returned from the endpoint.
-"""
-
-
-class SupportedPass(NamedTuple):
     availNumMonths: int | None
     displayName: str
     displayOrder: int
@@ -312,14 +60,262 @@ class SupportedPass(NamedTuple):
     configInstanceId: str
 
 
-"""
-    Dining reservations returned from the endpoint.
-"""
+class StartingPrice(NamedTuple):
+    """Ticket Starting price data returned from the endpoint."""
+
+    subtotal: str
+    currency: str
+    tax: str
+    total: str
+    pricePerDay: str
 
 
-class SupportedPark(NamedTuple):
-    isSupported: bool
-    parkId: str
-    parkType: str
-    sortOrder: int
-    configInstanceId: str
+class Ticket(NamedTuple):
+    """Ticket data returned from the endpoint."""
+
+    name: str
+    numDays: int
+    startingFromPrice: StartingPrice
+    priceDates: list[str]
+
+
+class Hotel(NamedTuple):
+    ...
+
+
+class ProfileAvatar(NamedTuple):
+    """Avatar data returned from the endpoint."""
+
+    id: str
+    title: str
+    url: str
+
+
+class ProfileLinks(NamedTuple):
+    """Media links returned from the endpoint."""
+
+    href: str
+
+
+class Links(NamedTuple):
+    """Links returned from the endpoint."""
+
+    self: ProfileLinks
+
+
+class NotificationResponse(NamedTuple):
+    """Notification response returned from the endpoint."""
+
+    startItem: int
+    itemLimit: int
+    itemCount: str
+    receivedInvitations: list[str]
+    links: Links
+
+
+class GuestIdentifier(NamedTuple):
+    """Guest identifier returned from the endpoint."""
+
+    type: str
+    value: str
+
+
+class User(NamedTuple):
+    """User data returned from the endpoint."""
+
+    avatar: ProfileAvatar
+    notificationResponse: NotificationResponse
+    firstName: str
+    lastName: str
+    email: str
+    guestIdentifiers: list[GuestIdentifier]
+    affiliations: list[str]
+    messageBanner: str
+    asyncMessagingToken: None | str = None
+
+
+class Profile(NamedTuple):
+    """Profile returned from the endpoint."""
+
+    user: User
+
+
+class BookingDateRanges(NamedTuple):
+    """Date ranges returned from the endpoint."""
+
+    startDate: str
+    endDate: str
+
+
+class Calendar(NamedTuple):
+    """Calendar data returned from the endpoint."""
+
+    bookingDateRanges: BookingDateRanges
+    statusCode: int
+
+
+class ProductType(NamedTuple):
+    """Product type data returned from the endpoint."""
+
+    productType: str
+    discountGroup: str
+    addOn: None | str = None
+
+
+class ResortTicket(NamedTuple):
+    """Resort ticket data returned from the endpoint."""
+
+    productType: ProductType
+    isVariablePricing: bool
+    tickets: list[Ticket]
+
+
+class BlackoutDate(NamedTuple):
+    """Blackout date data returned from the endpoint."""
+
+    facilityId: str
+    facility: str
+    productTypes: list[str]
+    numMonths: int
+    blackoutDates: dict[str, list[str]]
+
+
+class Offer(NamedTuple):
+    """Offer data returned from the endpoint."""
+
+    offerId: str
+    time: str
+    label: str
+
+
+class MealPeriodInfo(NamedTuple):
+    """Meal period info returned from the endpoint."""
+
+    type: str
+    name: str
+    experience: str
+    priceLegend: str
+    primaryCuisineType: str
+
+
+class DiningAvailability(NamedTuple):
+    """Dining availability data returned from the endpoint."""
+
+    id: str
+    name: str
+    description: str
+    fastPassPlus: bool
+    mealPeriodInfo: dict[str, MealPeriodInfo]
+    disneyOwned: bool
+    priceRange: str
+    urlFriendlyId: str
+    admissionRequired: bool
+    media: dict
+    offers: dict[str, list[Offer]]
+
+
+class ParkTicket(NamedTuple):
+    """Park ticket data returned from the endpoint."""
+
+    productType: ProductType
+    isVariablePricing: bool
+    tickets: list[Ticket]
+
+
+class Price(NamedTuple):
+    """Price data returned from the endpoint."""
+
+    ageGroup: str
+    pricePerDay: str
+    subtotal: str
+    tax: str
+    validFrom: str
+    validTo: str
+    available: bool
+    name: str
+
+
+class TicketPrice(NamedTuple):
+    """Ticket price data returned from the endpoint."""
+
+    date: str
+    validityStartDate: str
+    validityEndDate: str
+    currency: str
+    lowestPricePerDay: str
+    highestPricePerDay: str
+    lowestPrice: str
+    highestPrice: str
+    availability: bool
+    prices: list[Price]
+
+
+### Driver Response Types ###
+class ParkResponse(NamedTuple):
+    """Park response returned from the driver."""
+
+    ids: list[str]
+    parks: dict[str, Park]
+
+
+class PassResponse(NamedTuple):
+    """Pass response returned from the driver."""
+
+    ids: list[str]
+    passes: dict[str, Pass]
+
+
+class BlackoutDateResponse(NamedTuple):
+    """Blackout date response returned from the driver."""
+
+    facility: str
+    facilityId: str
+    productTypes: list[str]
+    numMonths: int
+    blockoutDates: dict[str, list[str]]
+
+
+class DiningAvailabilityResponse(NamedTuple):
+    """Dining availability response returned from the driver."""
+
+    availabilities: dict[str, DiningAvailability]
+
+
+class ResortTicketsResponse(NamedTuple):
+    """Resort tickets response returned from the driver."""
+
+    tickets: dict[str, ResortTicket]
+
+
+class TicketsResponse(NamedTuple):
+    """Tickets response returned from the driver."""
+
+    tickets: dict[str, TicketPrice]
+
+
+T = TypeVar("T")
+
+
+class HTTPResponse(NamedTuple):
+    """HTTP response returned from the driver."""
+
+    status_code: Union[
+        STATUS_OK,
+        STATUS_BAD_REQUEST,
+        STATUS_UNAUTHORIZED,
+        STATUS_NOT_FOUND,
+        STATUS_TOO_MANY_REQUESTS,
+        STATUS_INTERNAL_SERVER_ERROR,
+        STATUS_NOT_IMPLEMENTED,
+        STATUS_SERVICE_UNAVAILABLE,
+    ]
+    data: T | None = None
+    message: str | None = None
+
+
+class StatusResponse(NamedTuple):
+    """Status response returned from the driver."""
+
+    last_auth: str
+    auth_status: Auth
+    response_time: int
