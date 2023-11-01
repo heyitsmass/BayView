@@ -57,7 +57,7 @@ export const flightSchema = new Schema<Flight>({
 export type EventTypes = Flight | Hotel | Reservation | Activity;
 
 const Events =
-  mongoose.models.Events || mongoose.model("Events", eventSchema);
+  mongoose.models?.Events || mongoose.model("Events", eventSchema);
 
 const Flights =
   Events.discriminators?.Flight ||
