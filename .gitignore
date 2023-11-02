@@ -40,3 +40,4 @@ next-env.d.ts
 Dockerfile.txt
 testingGround
 flights-testing
+tsconfig.json
