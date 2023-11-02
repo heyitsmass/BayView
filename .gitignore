@@ -74,3 +74,4 @@ cookies.json
 .DS_Store
 
 flights-testing
+tsconfig.json
