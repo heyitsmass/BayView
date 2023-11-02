@@ -3,7 +3,7 @@ import React, { ReactNode, useState, HTMLProps } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/Button";
-export default function SetLocationModal({ open, onClose }) {
+export default function SetLocationModal(props: { open: boolean, onClose: any }) {
   if (!open) return null;
   return (
     <div className="block fixed w-full h-full bg-black/30">
@@ -17,7 +17,7 @@ export default function SetLocationModal({ open, onClose }) {
           <FontAwesomeIcon
             className="absolute ml-10 mt-2"
             icon={faClose}
-            onClick={onClose}
+            onClick={props.onClose}
           />
         </div>
         <div className="block mt-7">
