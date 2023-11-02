@@ -41,3 +41,38 @@ Dockerfile.txt
 testingGround
 flights-testing
 tsconfig.json
+
+# VS code files 
+.vscode
+
+# Node files 
+.env
+
+# Old files 
+old
+
+# Venv files 
+bin 
+include 
+lib64 
+man 
+pyvenv.cfg 
+
+# certs 
+certs
+*.pem
+*.crt 
+*.key 
+
+# cookies 
+cookies.json 
+
+# pycache
+
+*.pyc
+
+# MacOS files 
+
+.DS_Store
+
+flights-testing

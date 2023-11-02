@@ -5,8 +5,7 @@ const nextConfig = {
   /* config options here */
   experimental: {
     instrumentationHook: true,
-    esmExternals: 'loose',
-    serverActions: true
+    esmExternals: 'loose'
   },
   reactStrictMode: false,
   redirects: async () => {
