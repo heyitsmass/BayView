@@ -57,7 +57,7 @@ export default function Page() {
    */
   return (
     <div>
-      <button className="-z-1 fixed" onClick = {() => setOpenModal(true)} > Location </button> 
+      <button className="-z-1 fixed" onClick = {() => setOpenModal(true)} > Location Demo Click </button> 
 
       <SetLocationModal open = {openModal} onClose = {() => setOpenModal(false) } />
 
