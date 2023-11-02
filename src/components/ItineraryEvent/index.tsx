@@ -1,7 +1,7 @@
 import React, { ReactNode, useState, HTMLProps } from "react";
 import styles from "./itineraryevent.module.css";
 
-export default function ItineraryEvent({ time, location, guestNumber }) {
+export default function ItineraryEvent({ date, time, location, guestNumber }) {
   return (
     <div className="inline-block">
       <div className={styles.time}>
