@@ -1,6 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .login { 
   height: 98%; 
   width: 100%; 
   display: flex; 
   border: solid 1px white; 
 }
+

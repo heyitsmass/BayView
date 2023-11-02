@@ -1,0 +1,12 @@
+
+.container {
+    @apply: h-full bg-white w-full flex;
+}
+
+.overlay {
+    @apply: fixed w-full h-full bg-black;
+}
+
+.modelBtn{
+    @apply: fixed -z-1;
+}

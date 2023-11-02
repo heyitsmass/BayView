@@ -18,6 +18,7 @@ import { useState } from "react";
 import handleLogin from "../../services/auth/google";
 import styles from "./page.module.css";
 import ItineraryEvent from "@/components/Itinerary/ItineraryEvent"
+import SetLocationModal from "@/components/SetLocationModal";
 
 const PasswordInput = () => {
   const [hidden, setHidden] = useState(false);
@@ -49,14 +50,17 @@ export default function Page() {
    * mode = 1 = true = "register"
    */
   const [mode, setMode] = useState(false);
-
+  const [openModal, setOpenModal] = useState(false);
   /**
    * handleLogin = () => {}
    * handleRegister = () => {}
    */
   return (
     <div>
-     <ItineraryEvent time = {"8:00"} location = {"Pixar Pier"} guestNumber = {"4"} />
+      <button className="-z-1 fixed" onClick = {() => setOpenModal(true)} > Location </button> 
+
+      <SetLocationModal open = {openModal} onClose = {() => setOpenModal(false) } />
+
     </div>
   );
 }
