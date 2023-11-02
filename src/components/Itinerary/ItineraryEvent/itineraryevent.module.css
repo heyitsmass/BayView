@@ -1,0 +1,13 @@
+.event {
+    /*@apply inline
+    w-full pt-5 pb-7 pr-96 pl-5 bg-white  bg-opacity-50
+    */ 
+}
+
+.time {
+    @apply bg-red-600 border-zinc-200 rounded-xl relative text-white font-semibold dark:bg-zinc-800 dark:border-zinc-800 pl-3 py-4 pr-10 inline-block  justify-center z-10;
+}
+
+.info {
+    @apply inline bg-gray-300 border-zinc-200 rounded-tr-xl rounded-br-xl text-black dark:bg-zinc-800 dark:border-zinc-800 pl-5 py-[18px] -ml-3 pr-56 z-0;
+}
