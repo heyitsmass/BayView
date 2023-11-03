@@ -1,6 +1,6 @@
 import { Credentials } from "google-auth-library";
 import { ICoordinatedItinerary } from "./CoordinatedItinerary";
-
+import { IItinerary } from "@/types/Itinerary";
 type AuthTypes = "email" | "google" | "admin";
 
 export type IUser<T extends AuthTypes = AuthTypes> = {
