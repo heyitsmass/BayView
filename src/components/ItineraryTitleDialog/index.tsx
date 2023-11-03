@@ -3,10 +3,16 @@ import React, { ReactNode, useState, HTMLProps } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/Button";
-export default function SetLocationModal(props: { open: boolean, onClose: any }) {
-  if (!open) return null;
-  return (
-    <div className="block fixed w-full h-full bg-black/30">
+import { SyntheticEvent } from "react";
+
+type LocationModalProps = { 
+  open: boolean
+  onClose: (e?:SyntheticEvent) => void 
+} 
+
+export default function SetLocationModal({open, onClose}:LocationModalProps) {
+  return <>
+    {open && <div className="block fixed w-full h-full bg-black/30">
       <div
         className={
           "block bg-white fixed max-w-xl -translate-x-1/2 -translate-y-1/2 top-1/3 left-1/2 border-zinc-200 rounded-xl pl-4 py-4 pr-20 shadow-red-600 z-0"
@@ -17,7 +23,7 @@ export default function SetLocationModal(props: { open: boolean, onClose: any })
           <FontAwesomeIcon
             className="absolute ml-10 mt-2"
             icon={faClose}
-            onClick={props.onClose}
+            onClick={onClose}
           />
         </div>
         <div className="block mt-7">
@@ -35,5 +41,6 @@ export default function SetLocationModal(props: { open: boolean, onClose: any })
         </div>
       </div>
     </div>
-  );
+    }
+  </>
 }
