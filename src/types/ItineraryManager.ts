@@ -37,7 +37,7 @@ export class ItineraryFlow {
   private storage: StorageMethod = "local";
   private state: State = new LoginFlow();
 
-  private user: {
+  private static user: {
     authorization: string;
     username: string;
   } | null = null;
@@ -80,6 +80,11 @@ export class ItineraryFlow {
 
   private get_identity() {
     /** Gets the current identity */
+    if(this.user ==  null || identity == "anonymous"){
+      console.log("There is currently no user set.");
+      return
+    }
+    return this.user;
   }
 
   private set_identity(
@@ -87,6 +92,27 @@ export class ItineraryFlow {
     user?: { authorization: string; username: string }
   ) {
     /** Sets the current identity */
+    // if user identity is to be set to anonymous, the current user
+    // referance should be null.
+    if(identity == "anonymous" ) {
+      this.identity = identity;
+      ItineraryFlow.user = null;
+      console.log("Identity set to anonymous. No user is is assigned.")
+      return;
+    } else {
+      this.identity = identity;
+    }
+
+
+    // assuming user was authenticated and now must be set
+    //
+    if (this.identity == "authenticated") {
+      this.identity = identity;
+      ItineraryFlow.user = user;
+      console.log(`User is set to: ${ItineraryFlow.user}`);
+      return;
+    }
+
   }
 
   private get_storage() {
