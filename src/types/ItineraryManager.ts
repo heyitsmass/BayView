@@ -80,7 +80,7 @@ export class ItineraryFlow {
 
   private get_identity() {
     /** Gets the current identity */
-    if(this.user ==  null || identity == "anonymous"){
+    if(this.user ==  null || this.identity == "anonymous"){
       console.log("There is currently no user set.");
       return
     }
