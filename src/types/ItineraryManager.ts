@@ -105,9 +105,7 @@ export class ItineraryFlow {
 
 
     // assuming user was authenticated and now must be set
-    //
     if (this.identity == "authenticated") {
-      this.identity = identity;
       ItineraryFlow.user = user;
       console.log(`User is set to: ${ItineraryFlow.user}`);
       return;
