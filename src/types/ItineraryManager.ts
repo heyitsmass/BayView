@@ -37,7 +37,7 @@ export class ItineraryFlow {
   private storage: StorageMethod = "local";
   private state: State = new LoginFlow();
 
-  private static user: {
+  private user: {
     authorization: string;
     username: string;
   } | null = null;
