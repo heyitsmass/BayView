@@ -96,7 +96,7 @@ export class ItineraryFlow {
     // referance should be null.
     if(identity == "anonymous" ) {
       this.identity = identity;
-      this.user = null;
+      this.user = undefined;
       console.log("Identity set to anonymous. No user is is assigned.")
       return;
     } else {
