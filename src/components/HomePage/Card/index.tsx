@@ -17,8 +17,8 @@ export default function Card({ ...props }: CardProps) {
 
 	return (
 		<div  className={`${className} ${styles.defaultCard} ${isOpen ? 'max-h-[45rem] overflow-scroll' : 'max-h-24 overflow-clip'}`}>
-			<button className="flex items-center sticky" onClick={() => setIsOpen(!isOpen)}>
-				<FontAwesomeIcon className="w-4 pr-2" size="lg" icon={isOpen ? faAngleDown : faAngleUp}/>
+			<button className="flex items-center" onClick={() => setIsOpen(!isOpen)}>
+				<FontAwesomeIcon className={`${styles.icon} w-4 pr-2 icon`} size="lg" icon={isOpen ? faAngleDown : faAngleUp}/>
 				<h1 className="text-2xl font-bold">{title}</h1>
 			</button>
 			<h2 className="pl-6 text-zinc-400">{subtitle}</h2>
