@@ -96,7 +96,7 @@ export class ItineraryFlow {
     // referance should be null.
     if(identity == "anonymous" ) {
       this.identity = identity;
-      ItineraryFlow.user = null;
+      this.user = null;
       console.log("Identity set to anonymous. No user is is assigned.")
       return;
     } else {
@@ -106,7 +106,7 @@ export class ItineraryFlow {
 
     // assuming user was authenticated and now must be set
     if (this.identity == "authenticated") {
-      ItineraryFlow.user = user;
+      this.user = user;
       console.log(`User is set to: ${ItineraryFlow.user}`);
       return;
     }
