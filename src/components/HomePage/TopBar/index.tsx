@@ -34,7 +34,7 @@ export default function TopBar() {
 	const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
 	const [pillDimensions, setPillDimensions] = useState<PillDimensions>({ width: 0, position: 0 });
 	const linkRefs = useRef<LinkRefs>({});
-	const profileRef = useRef(null);
+	const profileRef = useRef<HTMLDivElement | null>(null);
 
 	// Determine the current link based on the pathname
 	const currentLink: LinkType = useMemo(() => {
@@ -58,14 +58,16 @@ export default function TopBar() {
 		setProfileDropdownOpen(!isProfileDropdownOpen);
 	};
 
-	const handleOutsideClick = (event) => {
-		if (profileRef.current && !profileRef.current.contains(event.target)) {
+	const handleOutsideClick = (event: MouseEvent) => {
+		// Cast event.target to Element, which is a subtype of Node and has the contains method
+		const target = event.target as Node;
+		if (profileRef.current && !(profileRef.current.contains(target))) {
 			setProfileDropdownOpen(false);
 		}
 	};
 
 	// This function is called when the profile icon is clicked
-	const handleProfileClick = (event) => {
+	const handleProfileClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		// If the dropdown is not open, we set up a listener for outside clicks
 		if (!isProfileDropdownOpen) {
 			document.addEventListener('mousedown', handleOutsideClick);
