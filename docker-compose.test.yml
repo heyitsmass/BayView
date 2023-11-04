@@ -6,8 +6,8 @@ services:
           context: .
           target: dev
         command: 
-            npm run build 
-            npm test
+            npm run build |
+            npm run test
         volumes:
             - .:/app
             - /app/node_modules
