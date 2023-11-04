@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';
 import FlightCard from "@/components/HomePage/Card/FlightCard";
 
+
 export default function Page() {
   return (
 	<AnimatePresence>
