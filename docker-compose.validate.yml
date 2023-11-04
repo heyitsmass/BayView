@@ -1,0 +1,16 @@
+version: '1'
+services:
+    app:
+        container_name: bayview-development
+        build: 
+          context: .
+          target: dev
+        command: 
+            ash -c "npm run lint && npm run build" 
+        volumes:
+            - .:/app
+            - /app/node_modules
+            - /app/.next
+
+volumes:
+    bayview-nodemodules: {}

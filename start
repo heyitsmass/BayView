@@ -2,6 +2,7 @@
 FILE=.built
 start=1
 build=0
+validate=0
 test=0
 help=0
 
@@ -9,6 +10,7 @@ help=0
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -b|--rebuild) build=1;;
+        -v|--validate) validate=1;;
         -t|--test) test=1;;
         -h|--help) help=1;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
@@ -26,8 +28,9 @@ if [[ $help == 1 ]]; then
     echo
     echo "Options:"
     echo
-    echo "  -b | --rebuild      : Re-Build the docker container."
-    echo "  -t | --test         : Build and test the container."
+    echo "  -b | --rebuild      : Update package dependencies."
+    echo "  -v | --validate     : Validate the build for pull request."
+    echo "  -t | --test         : Run vitest."
     echo
     echo "-------------------------------------------------"
     echo
@@ -41,6 +44,9 @@ b=''
 
 if [[ $start == 1 ]]; then
     if [[ $build == 1 ]]; then
+        b='--build'
+    elif [[ $validate == 1 ]]; then
+        f='-f ./docker-compose.validate.yml'
         b='--build'
     elif [[ $test == 1 ]]; then
         f='-f ./docker-compose.test.yml'
