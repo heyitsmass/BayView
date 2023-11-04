@@ -2,6 +2,10 @@
 	@apply w-full pb-2 relative;
 }
 
+.inputWrapper * {
+  transition: all 0.25s ease-in-out;
+}
+
 .label {
   @apply block pl-3 h-7 text-base;
 }

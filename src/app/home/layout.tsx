@@ -9,6 +9,7 @@ import Provider from "../Provider";
 
 import Users from "@/models/User";
 import { HydratedSingleSubdocument } from "mongoose";
+import TopBar from "@/components/HomePage/TopBar";
 
 async function validateUser() {
   const ref_tok = cookies().get("refresh_token")?.value;
@@ -48,7 +49,12 @@ export default async function Layout({
         credentials
       }}
     >
-      {children}
+      <div className="flex-start w-screen h-screen">
+        <TopBar/>
+        <div style={{ height: 'calc(100vh - 5rem)' }} className="my-20 overflow-y-scroll">
+          {children}
+        </div>
+      </div>
     </Provider>
   );
 }

@@ -1,11 +1,6 @@
-.layout {
-    height: 100%; 
-    width: 100%; 
-    overflow: scroll;
-}
-
 .contentGrid {
-    @apply grid gap-2 gap-y-4 sm:gap-y-2 grid-cols-1 mt-24 mb-12 px-8;
-    @apply sm:gap-y-2 md:grid-cols-2 md:gap-4 2xl:grid-cols-3 2xl:gap-8
+    @apply grid gap-4 px-8 py-10;
+    @apply grid-cols-1 md:grid-cols-2 2xl:grid-cols-3;
+    @apply mx-auto max-w-[130rem];
 }
   
