@@ -1,13 +1,13 @@
 import React, { ReactNode, useState, HTMLProps } from"react";
 import itineraryTitleCSS from './itinerarytitle.module.css'
-import EditableInputField from "@/components/Input/EditableInputField"
+import EditableInputField from "../Input/EditableInputField"
 import {faLocationDot, faCalendar} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 export default function ItineraryTitle() {
 
     return (
-      <div className={itineraryTitleCSS.title}>
+      <div data-testid="title-check" className={itineraryTitleCSS.title}>
         <div className={itineraryTitleCSS.header}>
           <EditableInputField initialText="Itinerary Title" />
         </div>

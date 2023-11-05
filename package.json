@@ -16,9 +16,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-oauth/google": "^0.11.1",
+    "@testing-library/jest-dom": "^6.1.4",
     "@types/node": "20.1.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "^4.1.1",
     "autoprefixer": "^10.4.15",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.7",
@@ -28,6 +30,7 @@
     "eslint-config-next": "14.0.1",
     "framer-motion": "^10.16.4",
     "google-auth-library": "^9.1.0",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.1",
     "next": "^14.0.1",
@@ -40,10 +43,12 @@
     "vitest": "^0.34.6"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/bcryptjs": "^2.4.5",
     "@types/jsonwebtoken": "^9.0.4",
     "@vitest/ui": "^0.34.6",
-    "node-loader": "^2.0.0"
+    "node-loader": "^2.0.0",
+    "react-test-renderer": "^18.2.0"
   },
   "type": "module"
 }
