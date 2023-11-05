@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 describe("ItineraryTitle", () => {
   test("renders Itinerary Title component as expected", () => {
     render(
-      <ItineraryTitleDialog
+      <ItineraryTitle
       />
     );
 
