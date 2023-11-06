@@ -25,7 +25,8 @@ export default function AnimationComponent({ ...props }: AnimationProps) {
 		// Add more later...
 	};
 
-	const animationVariant = props.type ? animations[props.type] : animations.fadeSlideBlur;
+	// TODO: Find a better way to handle this, force default for now.
+	const animationVariant = animations.fadeSlideBlur;
 
 	// Merge custom transition with defaultTransition
 	const appliedTransition = { ...defaultTransition, ...props.transition};

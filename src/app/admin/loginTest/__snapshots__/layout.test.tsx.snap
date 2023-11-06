@@ -1,0 +1,107 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Layout Component > Renders correctly with sections 1`] = `
+<div>
+  <div
+    class="dashboard"
+  >
+    <div
+      class="Border"
+    >
+      <div
+        class="title"
+      >
+        <img
+          alt="Baymax"
+          data-nimg="1"
+          decoding="async"
+          height="75"
+          loading="lazy"
+          src="/_next/image?url=%2Fpublic%2Fimages%2Fbaymax.png&w=256&q=75"
+          srcset="/_next/image?url=%2Fpublic%2Fimages%2Fbaymax.png&w=96&q=75 1x, /_next/image?url=%2Fpublic%2Fimages%2Fbaymax.png&w=256&q=75 2x"
+          style="color: transparent;"
+          width="75"
+        />
+        <h1>
+          Bayview Admin Dashboard
+        </h1>
+      </div>
+      <div>
+        <button
+          class="collapsible"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-database "
+            data-icon="database"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"
+              fill="currentColor"
+            />
+          </svg>
+           Database
+        </button>
+        <div
+          class="content "
+        />
+      </div>
+      <div>
+        <button
+          class="collapsible"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-robot "
+            data-icon="robot"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 640 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z"
+              fill="currentColor"
+            />
+          </svg>
+           Bot
+        </button>
+        <div
+          class="content "
+        />
+      </div>
+      <div>
+        <button
+          class="collapsible"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-server "
+            data-icon="server"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm48 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm56 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"
+              fill="currentColor"
+            />
+          </svg>
+           API
+        </button>
+        <div
+          class="content "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
