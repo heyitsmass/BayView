@@ -1,43 +1,39 @@
 import asyncio
 import email
 import imaplib
+import logging
 import os
 import re
 import time
 from itertools import chain
-import logging
 
-from dotenv import load_dotenv
+import dotenv
+import nest_asyncio
 
-load_dotenv()
-FIFTEEN_MINUTES = 60 * 15 * 1000
+from .. import abc
+
+if __name__ != "__main__":
+    nest_asyncio.apply()
+
+dotenv.load_dotenv()
 
 
 class EmailDriver(imaplib.IMAP4_SSL):
     """A driver for getting the OTP code from the email."""
 
-    def __init__(self):
+    def __init__(self, _from: str = "Member.Services@disneyaccount.com"):
         imap_url = "imap.gmail.com"
 
         self.uid_max = 0
-        self.criteria = {"FROM": "Member.Services@disneyaccount.com"}  # search criteria
+        self.criteria = {"FROM": _from}  # search criteria
 
         super().__init__(imap_url)
 
-        logging.info("EmailDriver initialized.")
-        username = os.environ.get("DISNEY_USERNAME")
-        password = os.environ.get("IMAP_PASSWORD")
-
-        if not username or not password:
-            # logging.error("Missing IMAP credentials in .env file.")
-            raise Exception("Missing IMAP credentials in .env file.")
-
         self.login(
-            username,
-            password,
+            os.getenv("DISNEY_USERNAME"),
+            os.getenv("IMAP_PASSWORD"),
         )
 
-        logging.info("IMAP login successful.")
         self.select("Inbox")  # select the inbox folder
         self.uid_max = self.get_max_uid()  # get the latest email
         self.st = 0  # start time
@@ -71,44 +67,47 @@ class EmailDriver(imaplib.IMAP4_SSL):
 
             yield email.message_from_bytes(data[0][1])  # return the email
 
-        else:
-            logging.info("No new emails found.")
-
     def refresh(self):
         return self.noop()
 
-    async def __run(self):
+    async def _get_otp(self, polling_interval: int = 5):
         self.refresh()  # keep alive
         self.st = time.time()  # start time
+        self.hb = time.time()  # heartbeat
+        self.ref = time.time()  # refresh
 
-        while True:
+        otp: str | None = None
+
+        while otp is None:
             async for e in self.get_emails():  # get emails
                 match = re.search(
                     r'otp_code">([0-9]+)<', e.as_string()
                 )  # search for the otp code
 
                 if match:
-                    logging.info("OTP code found.")
-                    return match.group(1)  # return the otp code
+                    otp = match.group(1)  # return the otp code
 
-            await asyncio.sleep(5)  # sleep for 5 seconds
-            if time.time() - self.st > FIFTEEN_MINUTES:
-                logging.error("Timed out waiting for OTP email.")
+            await asyncio.sleep(polling_interval)  # sleep for 5 seconds
+
+            if time.time() - self.st > abc.FIFTEEN_MINUTES:
                 raise TimeoutError(
                     "Timed out waiting for OTP email."
                     "\n\t- 15 minutes (Expiration time for OTP code met.)"
                 )
-            self.refresh()  # keep alive
+
+            if time.time() - self.hb > abc.ONE_MINUTE:
+                logging.warning("Still waiting for OTP email.")
+                self.hb = time.time()  # heartbeat
+
+            if time.time() - self.ref > 5:
+                self.refresh()  # keep alive
+                self.ref = time.time()  # refresh
+
+        return otp
 
     def get_otp(self):
-        return asyncio.run(
-            self.__run()
-        )  # run until the timeout is reached or the otp is found
+        logging.info("Waiting for OTP email.")
+        return asyncio.run(self._get_otp(polling_interval=1))
 
-
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler("./logs/otp.log"), logging.StreamHandler()],
-    )
+    def test_client():
+        return EmailDriver(_from=os.getenv("DISNEY_USERNAME"))
