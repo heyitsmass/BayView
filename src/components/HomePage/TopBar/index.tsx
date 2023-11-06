@@ -47,9 +47,9 @@ export default function TopBar() {
 	// because it depends on `currentLink`, which is memoized and changes less frequently.
 	useLayoutEffect(() => {
 		const el = linkRefs.current[currentLink.href];
-		if (el) {
+		if (el && el.parentElement) {
 			const newWidth = el.offsetWidth;
-			const newPosition = el.offsetLeft - (el.parentElement ? el.parentElement.offsetLeft : 0);
+			const newPosition = el.offsetLeft - el.parentElement.offsetLeft;
 			setPillDimensions({ width: newWidth, position: newPosition });
 		}
 	}, [currentLink]);
