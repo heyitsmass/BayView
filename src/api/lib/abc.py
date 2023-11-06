@@ -1,7 +1,6 @@
 """Types for the Disney API."""
 from typing import NamedTuple, TypeVar, Union
 
-
 """Status Codes"""
 STATUS_OK = 200
 STATUS_BAD_REQUEST = 400
@@ -11,6 +10,22 @@ STATUS_TOO_MANY_REQUESTS = 429
 STATUS_INTERNAL_SERVER_ERROR = 500
 STATUS_NOT_IMPLEMENTED = 501
 STATUS_SERVICE_UNAVAILABLE = 503
+
+
+PASSWORD_LENGTH = 12  # length of the password
+
+# this seems redundant but allows for easy modification of the time limits
+# e.g. 1:2s or 1.2:2s
+ONE_SECOND = 1
+ONE_MINUTE = ONE_SECOND * 60  # 1 minute in seconds
+FIVE_MINUTES = 5 * ONE_MINUTE  # 5 minutes in seconds
+FIFTEEN_MINUTES = 15 * ONE_MINUTE  # 15 minutes in seconds
+ONE_HOUR = 60 * ONE_MINUTE  # 1 hour in seconds
+ONE_DAY = ONE_HOUR * 24  # 1 day in seconds
+
+WAIT_TIMEOUT = ONE_SECOND * 3
+LOAD_TIMEOUT = ONE_SECOND * 40
+REQUEST_TIMEOUT = ONE_SECOND * 10
 
 
 class AuthCSRF(NamedTuple):
@@ -23,9 +38,9 @@ class AuthCSRF(NamedTuple):
 class Auth(NamedTuple):
     """Authentication status returned from the endpoint."""
 
-    csrf: AuthCSRF
-    isLoggedIn: bool
-    isSecure: bool
+    csrf: AuthCSRF | None = None
+    isLoggedIn: bool = False
+    isSecure: bool = False
     swid: None | str = None
 
 
@@ -87,8 +102,8 @@ class ProfileAvatar(NamedTuple):
     """Avatar data returned from the endpoint."""
 
     id: str
-    title: str
-    url: str
+    name: str
+    media: dict[str, str]
 
 
 class ProfileLinks(NamedTuple):
@@ -103,41 +118,24 @@ class Links(NamedTuple):
     self: ProfileLinks
 
 
-class NotificationResponse(NamedTuple):
-    """Notification response returned from the endpoint."""
+class ProfileInfo(NamedTuple):
+    """Profile info returned from the endpoint."""
 
-    startItem: int
-    itemLimit: int
-    itemCount: str
-    receivedInvitations: list[str]
-    links: Links
-
-
-class GuestIdentifier(NamedTuple):
-    """Guest identifier returned from the endpoint."""
-
-    type: str
-    value: str
-
-
-class User(NamedTuple):
-    """User data returned from the endpoint."""
-
-    avatar: ProfileAvatar
-    notificationResponse: NotificationResponse
+    prefix: str
     firstName: str
     lastName: str
-    email: str
-    guestIdentifiers: list[GuestIdentifier]
-    affiliations: list[str]
-    messageBanner: str
-    asyncMessagingToken: None | str = None
+    ageBand: str
 
 
 class Profile(NamedTuple):
-    """Profile returned from the endpoint."""
+    """User data returned from the endpoint."""
 
-    user: User
+    avatar: ProfileAvatar
+    favorites: list[str]
+    xid: str
+    profile: ProfileInfo
+    links: Links
+    self: ProfileLinks
 
 
 class BookingDateRanges(NamedTuple):
@@ -170,7 +168,7 @@ class ResortTicket(NamedTuple):
     tickets: list[Ticket]
 
 
-class BlackoutDate(NamedTuple):
+class BlockoutDate(NamedTuple):
     """Blackout date data returned from the endpoint."""
 
     facilityId: str
@@ -265,7 +263,7 @@ class PassResponse(NamedTuple):
     passes: dict[str, Pass]
 
 
-class BlackoutDateResponse(NamedTuple):
+class BlockoutDateResponse(NamedTuple):
     """Blackout date response returned from the driver."""
 
     facility: str
@@ -319,3 +317,8 @@ class StatusResponse(NamedTuple):
     last_auth: str
     auth_status: Auth
     response_time: int
+
+
+class TestABC:
+    # This file does not need tests.
+    pass
