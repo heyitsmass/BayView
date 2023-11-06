@@ -2,7 +2,7 @@ import ItineraryEvent from "../../ItineraryEvent";
 import {describe, test, expect, vi} from 'vitest'
 import React from "react";
 import {render, screen} from "@testing-library/react"
-import "@testing-library/jest-dom"
+//import "@testing-library/jest-dom"
 
 
 describe ('ItineraryEvent', () =>  {
