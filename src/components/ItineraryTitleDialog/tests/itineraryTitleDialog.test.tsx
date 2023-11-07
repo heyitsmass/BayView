@@ -2,7 +2,7 @@ import ItineraryTitleDialog from "../../ItineraryTitleDialog";
 import { describe, test, expect, vi } from "vitest";
 import React, { useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+//import "@testing-library/jest-dom";
 
 
 describe("ItineraryTitleDialog", () => {
