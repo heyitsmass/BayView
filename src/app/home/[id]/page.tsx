@@ -1,29 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { AnimatePresence } from 'framer-motion';
+import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';
+import FlightCard from "@/components/HomePage/Card/FlightCard";
 
-export default function Page({
-  params
-}: {
-  params: {
-    id: string;
-  };
-}) {
-  const { push } = useRouter();
 
-  const { id } = params;
-
+export default function Page() {
   return (
-	<div className={styles.layout}>
-		<div>
-			{id}
-			<button onClick={async (e) => push("/auth/logout")}>Logout</button>
-		</div>
-		{/* <TopBar></TopBar> */}
-		<div className={styles.contentGrid}>
-			{/* Card Components here */}
-		</div>
-	</div>
+	<AnimatePresence>
+		<AnimationComponent transition={{duration: 0.5}}>
+			<div className={styles.contentGrid}>
+				{/* Card Components here */}
+				<FlightCard></FlightCard>
+			</div>
+		</AnimationComponent>
+	</AnimatePresence>
   );
 }

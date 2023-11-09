@@ -18,10 +18,6 @@ export default function Button({
   const [isPending, setIsPending] = useState(false); 
   const classNames = [props.className, props.variant ? styles[props.variant] : styles.primary, styles.button].join(' ');
   
-  const setPending = (bool_:boolean) => {
-    setIsPending(bool_);
-  };
-
   return (
   <button {...props} className={`${classNames}`}>
     	{ props.icon && 
