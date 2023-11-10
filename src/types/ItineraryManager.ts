@@ -31,6 +31,47 @@ class RegistrationFlow implements State {
   type: FlowState = "registration";
 }
 
+class UninitializedFlow implements State {
+  type: FlowState = "uninitialized";
+}
+
+class InitializedFlow implements State {
+  type: FlowState = "initialized";
+}
+
+class PlanningFlow implements State {
+  type: FlowState = "planning";
+}
+
+class ReservingFlow implements State {
+  type: FlowState = "reserving";
+}
+
+class UpdatingFlow implements State {
+  type: FlowState = "updating";
+}
+
+class UpdatedFlow implements State {
+  type: FlowState = "updated";
+}
+
+class PlannedFlow implements State {
+  type: FlowState = "planned";
+}
+
+class BookedFlow implements State {
+  type: FlowState = "booked";
+}
+
+class CompletedFlow implements State {
+  type: FlowState = "completed";
+}
+
+class ArchivedFlow implements State {
+  type: FlowState = "archived";
+}
+
+
 export class ItineraryFlow {
   private identity: IdentityState = "anonymous";
   private stage: FlowState = "uninitialized";
