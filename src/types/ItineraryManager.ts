@@ -116,6 +116,7 @@ export class ItineraryFlow {
         // there is no state after archived, refer to archived as next for archived.
       case "archived": return nextState = "archived";
     }
+    // potentially create a new instance of some state and return it
   }
 
   private get_previous_state() {
@@ -136,6 +137,7 @@ export class ItineraryFlow {
       case "completed": return previousState = "booked";
       case "archived": return previousState = "completed";
     }
+    // potentially create a new instance of some state and return it
   }
 
   private visit_state(state: State) {
