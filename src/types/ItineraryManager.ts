@@ -99,14 +99,48 @@ export class ItineraryFlow {
 
   private get_next_state() {
     /** Gets the next flow state */
+    nextState: FlowState;
+    switch (this.get_state()) {
+
+      case "login": return nextState = "registration";
+      case "registration": return nextState = "uninitialized";
+      case "uninitialized": return nextState = "initialized";
+      case "initialized": return nextState = "planning";
+      case "planning": return nextState = "reserving";
+      case "reserving": return nextState = "updating";
+      case "updating": return nextState = "updated";
+      case "updated": return nextState = "planned";
+      case "planned": return nextState = "booked";
+      case "booked": return nextState = "completed";
+      case "completed": return nextState = "archived";
+        // there is no state after archived, refer to archived as next for archived.
+      case "archived": return nextState = "archived";
+    }
   }
 
   private get_previous_state() {
     /** Gets the previous flow state */
+    previousState: FlowState;
+    switch (this.get_state()) {
+      // there is no state before login, refer to "login" as previous for "login
+      case "login":
+      case "registration": return previousState = "login";
+      case "uninitialized": return previousState = "registration";
+      case "initialized": return previousState = "uninitialized";
+      case "planning": return previousState = "initialized";
+      case "reserving": return previousState = "planning";
+      case "updating": return previousState = "reserving";
+      case "updated": return previousState = "updating";
+      case "planned": return previousState = "updated";
+      case "booked": return previousState = "planned";
+      case "completed": return previousState = "booked";
+      case "archived": return previousState = "completed";
+    }
   }
 
   private visit_state(state: State) {
     /** Visits the state */
+    this.state = state;
   }
 
   public get_state() {
