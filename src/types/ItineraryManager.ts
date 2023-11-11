@@ -99,7 +99,7 @@ export class ItineraryFlow {
 
   private get_next_state() {
     /** Gets the next flow state */
-    nextState: FlowState;
+    let nextState: FlowState;
     switch (this.get_state()) {
 
       case "login": return nextState = "registration";
@@ -121,7 +121,7 @@ export class ItineraryFlow {
 
   private get_previous_state() {
     /** Gets the previous flow state */
-    previousState: FlowState;
+    let previousState: FlowState;
     switch (this.get_state()) {
       // there is no state before login, refer to "login" as previous for "login
       case "login":
