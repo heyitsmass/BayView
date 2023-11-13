@@ -65,3 +65,20 @@ export type Reservable = Hotel | Flight | Dining;
 
 export type Reservation<T extends Reservable = Reservable> = Event & T;
 
+export type Activities =
+  | Theatre
+export type ShowTime = {
+  date: Date;
+  time: string;
+};
+export interface Theatre {
+  play: string; // Name of the play currently running
+  playwright: string; // Name of the playwright of the current play
+  showTimes: ShowTime[]; // Schedule of show times for the play
+  ticketPrice: number; // Cost of a ticket for the theatre
+  theatreRating: number; // Rating of the theatre
+  seatingCapacity: number; // Maximum seating capacity of the theatre
+  isSoldOut: boolean; // Indicates whether the current play is sold out
+  intervalDuration: string; // Duration of the intermission between acts
+}
+

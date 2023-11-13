@@ -1,16 +1,21 @@
   FlightModel,
   HotelModel,
+  TheatreModel,
   Flight,
   Hotel,
+  Theatre,
     Hotel: HotelModel,
     Dining: DiningModel,
     Flight: FlightModel,
+    Theatre: TheatreModel,
     case "Dining":
       return getDinner();
     case "Flight":
       return getFlight();
     case "Hotel":
       return getHotel();
+    case "Theatre":
+      return getTheatre();
 
 /** Generate a random flight. */
 const getFlight = (): Flight => {
@@ -141,3 +146,19 @@ const getDinner = (): Dining => {
   };
 };
 
+/** Generate a random thetre show. */
+const getTheatre = (): Theatre => {
+  return {
+    play: faker.lorem.words(),
+    playwright: faker.person.firstName(),
+    showTimes: showTimes(),
+    ticketPrice: faker.number.float({ min: 1, max: 100 }),
+    theatreRating: faker.number.float({ min: 1, max: 5 }),
+    seatingCapacity: faker.number.int({ min: 1, max: 1000 }),
+    isSoldOut: faker.datatype.boolean(),
+    intervalDuration: `${faker.number.int({
+      min: 1,
+      max: 10
+    })} minutes`
+  };
+};
