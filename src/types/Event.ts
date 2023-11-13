@@ -7,9 +7,28 @@ export interface Event {
   description?: string;
 }
 
-export interface Flight extends Event {
-  airline: string;
-  flightNumber: string;
+export type Airport = {
+  name: string;
+  iataCode: string;
+};
+
+export type Airline = {
+  name: string;
+  iataCode: string;
+};
+
+type AirlineSeat = {
+  row: number;
+  seat: string;
+};
+export interface Flight {
+  airport: Airport;
+  airline: Airline;
+  departureTime: Date;
+  arrivalTime: Date;
+  flightNumber: number;
+  reservationNumber: string;
+  seats: AirlineSeat[];
   gate: string;
 }
 

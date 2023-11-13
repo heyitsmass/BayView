@@ -1,60 +1,46 @@
-import { Activity, Event, Flight, Hotel, Reservation } from "@/types/Event";
+  Flight,
 import mongoose, { Schema } from "mongoose";
 
-export const eventSchema = new Schema<Event>(
-  {
-    eventType: { type: String, required: true },
-    date: { type: Date, required: true },
-    name: { type: String, required: true },
-    time: { type: String, required: true },
-    location: { type: String, required: true },
-    description: { type: String, required: false }
-  },
-  {
-    _id: false
-  }
-);
 
-export const hotelSchema = new Schema<Hotel>(
-  {
-    hotelName: { type: String, required: true },
-    roomNumber: { type: String, required: true }
-  },
-  {
-    _id: false
-  }
-);
 
-export const reservationSchema = new Schema<Reservation>(
-  {
-    reservationName: { type: String, required: true },
-    reservationType: { type: String, required: true },
-    reservationNumber: { type: String, required: false },
-    reservationData: { type: hotelSchema, required: true }
+const helperSchema = { 
+  name: String,
+  description: String,
+  _id: false
+};
+const flightSchema = new Schema<Reservation<Flight>>({
+  ...reservationSchema.obj,
+  airport: {
+    type: helperSchema,
+    default: {}
   },
-  {
-    _id: false
-  }
-);
-
-export const activitySchema = new Schema<Activity>(
-  {
-    activityName: { type: String, required: true },
-    activityType: { type: String, required: true },
-    activitySubtype: { type: String, required: true }
+  airline: {
+    type: helperSchema,
+    default: {}
   },
-  {
-    _id: false
-  }
-);
-
-export const flightSchema = new Schema<Flight>({
-  airline: { type: String, required: true },
-  flightNumber: { type: String, required: true },
-  gate: { type: String, required: true }
+  departureTime: Date,
+  arrivalTime: Date,
+  flightNumber: String,
+  reservationNumber: String,
+  seats: {
+    type: [
+      {
+        row: Number,
+        seat: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  gate: String
 });
 
-export type EventTypes = Flight | Hotel | Reservation | Activity;
+    _id: false
+
+const FlightModel =
+  EventModel.discriminators?.Flight ||
+  EventModel.discriminator<Reservation<Flight>>('Flight', flightSchema);
+
 
 const Events =
   mongoose.models?.Events || mongoose.model("Events", eventSchema);
@@ -71,9 +57,4 @@ const Reservations =
   Events.discriminators?.Reservation ||
   Events.discriminator<Reservation>("Reservation", reservationSchema);
 
-const Activities =
-  Events.discriminators?.Activity ||
-  Events.discriminator<Activity>("Activity", activitySchema);
-
-export { Activities, Flights, Hotels, Reservations };
-export default Events;
+  FlightModel,
