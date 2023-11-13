@@ -82,7 +82,18 @@ export type Activities =
   | Sports
   | Nightlife
   | Shopping
+  | Spa
+  | Golf
+  | Hiking
+  | Biking;
+
+export type EventTypes =
+  | "Hotel"
+  | "Flight"
+  | "Dining"
+  | "Theatre"
   | "Concert"
+  | "Museum"
   | "Park"
   | "Zoo"
   | "Aquarium"
@@ -91,6 +102,13 @@ export type Activities =
   | "Sports"
   | "Nightlife"
   | "Shopping"
+  | "Spa"
+  | "Golf"
+  | "Hiking"
+  | "Biking";
+
+export type Activity<T extends Activities = Activities> = Event & T;
+
 export type ShowTime = {
   date: Date;
   time: string;
