@@ -71,9 +71,11 @@ export type Activities =
   | Museum
   | Park
   | Zoo
+  | Aquarium
   | "Concert"
   | "Park"
   | "Zoo"
+  | "Aquarium"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -175,3 +177,14 @@ export interface Zoo {
   conservationPrograms: ConvservationProgram[]; // Information about zoo's conservation programs
   // ... (other zoo-specific properties)
 }
+
+export interface Aquarium {
+  exhibits: Exhibit[];
+  admissionFee: number;
+  openingHours: string;
+  underwaterTunnel: boolean; // Indicates whether there's an underwater tunnel for visitors
+  touchPools: boolean; // Indicates whether there are touch pools for interactive experiences
+  showSchedule: ShowTime[]; // Schedule for shows and presentations
+  // ... (other aquarium-specific properties)
+}
+

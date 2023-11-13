@@ -1,3 +1,4 @@
+  AquariumModel,
   ConcertModel,
   FlightModel,
   HotelModel,
@@ -5,6 +6,7 @@
   ParkModel,
   TheatreModel,
   ZooModel
+  Aquarium,
   Concert,
   Flight,
   Hotel,
@@ -20,6 +22,9 @@
     Museum: MuseumModel,
     Park: ParkModel,
     Zoo: ZooModel,
+    Aquarium: AquariumModel,
+    case "Aquarium":
+      return getAquarium();
     case "Concert":
       return getConcert();
     case "Dining":
@@ -360,3 +365,26 @@ const getZoo = (): Zoo => {
   };
 };
 
+/** Generate a random aquarium activity */
+const getAquarium = (): Aquarium => {
+  const exhibits = nameAndRandomDescription([
+    "Coral Reef Exploration",
+    "Amazon Rainforest Tank",
+    "Penguin Habitat",
+    "Shark Lagoon",
+    "Jellyfish Gallery",
+    "Seahorse Sanctuary",
+    "Tropical Rainforest Display",
+    "Kelp Forest Exhibit",
+    "Deep Sea Wonders",
+    "Touch Pool Experience"
+  ]);
+  return {
+    exhibits,
+    admissionFee: faker.number.float({ min: 1, max: 100 }),
+    openingHours: openingHours(),
+    underwaterTunnel: faker.datatype.boolean(),
+    touchPools: faker.datatype.boolean(),
+    showSchedule: showTimes()
+  };
+};

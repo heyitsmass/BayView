@@ -260,6 +260,39 @@ const ZooModel =
   EventModel.discriminators?.Zoo ||
   EventModel.discriminator<Activity<Zoo>>('Zoo', zooSchema);
 
+const aquariumSchema = new Schema<Activity<Aquarium>>({
+  ...activitySchema.obj,
+  exhibits: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  admissionFee: Number,
+  openingHours: String,
+  underwaterTunnel: Boolean, // Indicates whether there's an underwater tunnel for visitors
+  touchPools: Boolean, // Indicates whether there are touch pools for interactive experiences
+  showSchedule: {
+    type: [
+      {
+        date: Date,
+        time: String,
+        _id: false
+      }
+    ],
+    default: []
+  } // Schedule for shows and presentations
+});
+
+const AquariumModel =
+  EventModel.discriminators?.Aquarium ||
+  EventModel.discriminator<Activity<Aquarium>>('Aquarium', aquariumSchema);
+
+  AquariumModel,
   ConcertModel,
   DiningModel,
   FlightModel,
