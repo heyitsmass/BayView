@@ -3,6 +3,7 @@
   Flight,
   Hotel,
   Museum,
+  Park,
 const hotelSchema = new Schema<Reservation<Hotel>>({
   ...reservationSchema.obj,
   checkIn: Date,
@@ -157,8 +158,59 @@ const MuseumModel =
   EventModel.discriminators?.Museum ||
   EventModel.discriminator<Activity<Museum>>('Museum', museumSchema);
 
+const parkSchema = new Schema<Activity<Park>>({
+  ...activitySchema.obj,
+  activities: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  }, // List of activities available in the park (e.g., hiking, biking, swimming)
+  openingHours: String,
+  facilities: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  }, // List of facilities available in the park (e.g., picnic areas, playgrounds)
+  naturalFeatures: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  }, // Features like lakes, trails, etc.
+  wildlife: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  } // Types of wildlife commonly found in the park
+  // ... (other park-specific properties)
+});
+
+const ParkModel =
+  EventModel.discriminators?.Park ||
+  EventModel.discriminator<Activity<Park>>('Park', parkSchema);
+
   ConcertModel,
   DiningModel,
   FlightModel,
   MuseumModel,
+  ParkModel,
   TheatreModel,

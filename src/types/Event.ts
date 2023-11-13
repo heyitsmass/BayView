@@ -69,7 +69,9 @@ export type Activities =
   | Theatre
   | Concert
   | Museum
+  | Park
   | "Concert"
+  | "Park"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -119,3 +121,29 @@ export interface Museum {
   // ... (other museum-specific properties)
 }
 
+type Wildlife = {
+  name: string;
+  description: string;
+};
+
+type NaturalFeature = {
+  name: string;
+  description: string;
+};
+
+type Facility = {
+  name: string;
+  description: string;
+};
+
+export interface Park {
+  activities: {
+    name: string;
+    description: string;
+  }[];
+  openingHours: string;
+  facilities: Facility[]; // List of facilities available in the park (e.g., picnic areas, playgrounds)
+  naturalFeatures: NaturalFeature[]; // Features like lakes, trails, etc.
+  wildlife: Wildlife[]; // Types of wildlife commonly found in the park
+  // ... (other park-specific properties)
+}
