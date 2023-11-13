@@ -2,6 +2,7 @@
   Concert,
   Dining,
   Flight,
+  Golf,
   Hotel,
   Museum,
   Nightlife,
@@ -445,6 +446,32 @@ const SpaModel =
   EventModel.discriminators?.Spa ||
   EventModel.discriminator<Activity<Spa>>('Spa', spaSchema);
 
+const golfSchema = new Schema<Activity<Golf>>({
+  ...activitySchema.obj,
+  course: String,
+  holes: Number,
+  teeTimes: {
+    type: [
+      {
+        date: Date,
+        time: String,
+        price: Number,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  golfCartRental: Boolean,
+  golfClubRental: Boolean,
+  golfLessons: Boolean,
+  courseDescription: String,
+  courseDifficulty: String
+});
+
+const GolfModel =
+  EventModel.discriminators?.Golf ||
+  EventModel.discriminator<Activity<Golf>>('Golf', golfSchema);
+
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -472,6 +499,7 @@ const AmusementParkModel =
   ConcertModel,
   DiningModel,
   FlightModel,
+  GolfModel,
   MuseumModel,
   NightlifeModel,
   ParkModel,

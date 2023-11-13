@@ -1,6 +1,7 @@
   AquariumModel,
   ConcertModel,
   FlightModel,
+  GolfModel,
   HotelModel,
   MuseumModel,
   NightlifeModel,
@@ -14,6 +15,7 @@
   Aquarium,
   Concert,
   Flight,
+  Golf,
   Hotel,
   Museum,
   Nightlife,
@@ -48,6 +50,8 @@
       return getDinner();
     case "Flight":
       return getFlight();
+    case "Golf":
+      return getGolf();
     case "Hotel":
       return getHotel();
     case "Museum":
@@ -1779,6 +1783,46 @@ const getSpa = (): Spa => {
     spaRating: faker.number.float({ min: 1, max: 5 }),
     bookingPolicy: faker.lorem.words(),
     openingHours: openingHours()
+  };
+};
+
+/** Generate a random golf activity.  */
+const getGolf = (): Golf => {
+  const teeTime = () => {
+    const date = faker.date.soon();
+
+    return {
+      date,
+      time: date.toLocaleTimeString("it-IT"),
+      price: faker.number.float({ min: 1, max: 100 })
+    };
+  };
+
+  const teeTimes = () => {
+    const times = [] as any[];
+
+    for (let i = 0; i < randomInt(1, 24); i++) {
+      times.push(teeTime());
+    }
+
+    return times;
+  };
+
+  const holes = () => {
+    const bool = faker.datatype.boolean();
+
+    return bool ? 18 : 9;
+  };
+
+  return {
+    course: faker.lorem.words(),
+    courseDifficulty: faker.lorem.word(),
+    courseDescription: faker.lorem.words(),
+    golfLessons: faker.datatype.boolean(),
+    golfCartRental: faker.datatype.boolean(),
+    golfClubRental: faker.datatype.boolean(),
+    teeTimes: teeTimes(),
+    holes: holes()
   };
 };
 

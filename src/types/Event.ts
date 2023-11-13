@@ -316,3 +316,19 @@ export interface Spa {
   // ... (other spa-specific properties)
 }
 
+type TeeTime = {
+  date: Date;
+  time: string;
+  price: number;
+};
+export interface Golf {
+  course: string;
+  holes: number;
+  teeTimes: TeeTime[];
+  golfCartRental: boolean; // Indicates whether golf carts are available for rent
+  golfClubRental: boolean; // Indicates whether golf clubs are available for rent
+  golfLessons: boolean; // Indicates whether golf lessons are offered
+  courseDifficulty: string; // Difficulty level of the golf course
+  courseDescription: string; // Description of the golf course
+  // ... (other golf-specific properties)
+}
