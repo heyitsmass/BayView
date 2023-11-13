@@ -4,6 +4,7 @@
   Flight,
   Hotel,
   Museum,
+  Nightlife,
   Park,
   Sports,
   Waterpark,
@@ -340,6 +341,25 @@ const SportsModel =
   EventModel.discriminators?.Sports ||
   EventModel.discriminator<Activity<Sports>>('Sports', sportsSchema);
 
+const nightlifeSchema = new Schema<Activity<Nightlife>>({
+  ...activitySchema.obj,
+  venue: String,
+  type: String,
+  openingHours: String,
+  dressCode: String,
+  ageRestriction: Number,
+  coverCharge: Number,
+  livePerformances: Boolean,
+  music: [String],
+  drinks: [String],
+  food: [String],
+  atmosphere: String
+});
+
+const NightlifeModel =
+  EventModel.discriminators?.Nightlife ||
+  EventModel.discriminator<Activity<Nightlife>>('Nightlife', nightlifeSchema);
+
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -368,6 +388,7 @@ const AmusementParkModel =
   DiningModel,
   FlightModel,
   MuseumModel,
+  NightlifeModel,
   ParkModel,
   SportsModel,
   TheatreModel,

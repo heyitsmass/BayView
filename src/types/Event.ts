@@ -80,6 +80,7 @@ export type Activities =
   | Waterpark
   | AmusementPark
   | Sports
+  | Nightlife
   | "Concert"
   | "Park"
   | "Zoo"
@@ -87,6 +88,7 @@ export type Activities =
   | "Waterpark"
   | "AmusementPark"
   | "Sports"
+  | "Nightlife"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -249,3 +251,18 @@ export type SportEvents =
   | "Soccer"
   | "Tennis";
 
+export interface Nightlife {
+  venue: string;
+  type: string;
+  openingHours: string;
+  dressCode: string;
+  ageRestriction: number; // Minimum age required for entry
+  livePerformances: boolean; // Indicates whether there are live performances
+  coverCharge: number; // Cover charge for entry
+  music: string[]; // Types of music played at the venue
+  drinks: string[]; // Types of drinks available at the venue
+  food: string[]; // Types of food available at the venue
+  atmosphere: string; // Atmosphere of the venue (e.g., casual, upscale)
+
+  // ... (other nightlife-specific properties)
+}
