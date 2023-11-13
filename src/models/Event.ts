@@ -4,7 +4,7 @@
   Hotel,
   Museum,
   Park,
-  Zoo
+  Waterpark,
 const hotelSchema = new Schema<Reservation<Hotel>>({
   ...reservationSchema.obj,
   checkIn: Date,
@@ -292,6 +292,38 @@ const AquariumModel =
   EventModel.discriminators?.Aquarium ||
   EventModel.discriminator<Activity<Aquarium>>('Aquarium', aquariumSchema);
 
+const waterparkSchema = new Schema<Activity<Waterpark>>({
+  ...activitySchema.obj,
+  attractions: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  waterSlides: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  openingHours: String,
+  admissionFee: Number,
+  wavePool: Boolean, // Indicates whether there's a wave pool
+  lazyRiver: Boolean // Indicates whether there's a lazy river
+});
+
+const WaterparkModel =
+  EventModel.discriminators?.Waterpark ||
+  EventModel.discriminator<Activity<Waterpark>>('Waterpark', waterparkSchema);
+
   AquariumModel,
   ConcertModel,
   DiningModel,
@@ -299,4 +331,5 @@ const AquariumModel =
   MuseumModel,
   ParkModel,
   TheatreModel,
+  WaterparkModel,
   ZooModel

@@ -72,10 +72,12 @@ export type Activities =
   | Park
   | Zoo
   | Aquarium
+  | Waterpark
   | "Concert"
   | "Park"
   | "Zoo"
   | "Aquarium"
+  | "Waterpark"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -186,5 +188,25 @@ export interface Aquarium {
   touchPools: boolean; // Indicates whether there are touch pools for interactive experiences
   showSchedule: ShowTime[]; // Schedule for shows and presentations
   // ... (other aquarium-specific properties)
+}
+
+type WaterparkAttraction = {
+  name: string;
+  description: string;
+};
+
+type Waterslide = {
+  name: string;
+  description: string;
+};
+
+export interface Waterpark {
+  attractions: WaterparkAttraction[];
+  admissionFee: number;
+  openingHours: string;
+  wavePool: boolean; // Indicates whether there's a wave pool
+  lazyRiver: boolean; // Indicates whether there's a lazy river
+  waterSlides: Waterslide[]; // Different types of water slides available
+  // ... (other waterpark-specific properties)
 }
 
