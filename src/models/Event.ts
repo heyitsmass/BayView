@@ -7,6 +7,7 @@
   Nightlife,
   Park,
   Shopping,
+  Spa,
   Sports,
   Waterpark,
 const hotelSchema = new Schema<Reservation<Hotel>>({
@@ -403,6 +404,47 @@ const ShoppingModel =
   EventModel.discriminators?.Shopping ||
   EventModel.discriminator<Activity<Shopping>>('Shopping', shoppingSchema);
 
+const spaSchema = new Schema<Activity<Spa>>({
+  ...activitySchema.obj,
+  spaRating: Number,
+  services: {
+    type: [
+      {
+        name: String,
+        price: Number,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  openingHours: String,
+  spaPackages: {
+    type: [
+      {
+        name: String,
+        price: Number,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  wellnessClasses: {
+    type: [
+      {
+        name: String,
+        price: Number,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  bookingPolicy: String
+});
+
+const SpaModel =
+  EventModel.discriminators?.Spa ||
+  EventModel.discriminator<Activity<Spa>>('Spa', spaSchema);
+
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -434,6 +476,7 @@ const AmusementParkModel =
   NightlifeModel,
   ParkModel,
   ShoppingModel,
+  SpaModel,
   SportsModel,
   TheatreModel,
   WaterparkModel,

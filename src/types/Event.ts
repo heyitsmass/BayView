@@ -299,3 +299,20 @@ export interface Shopping {
   // ... (other shopping-specific properties)
 }
 
+type SpaPackage = {
+  name: string;
+  price: number;
+};
+
+type WellnessClass = SpaPackage;
+type Service = SpaPackage;
+export interface Spa {
+  spaRating: number;
+  services: Service[];
+  openingHours: string;
+  spaPackages: SpaPackage[]; // Different spa packages offered
+  wellnessClasses: WellnessClass[]; // Classes or workshops related to wellness
+  bookingPolicy: string; // Information about booking policies
+  // ... (other spa-specific properties)
+}
+
