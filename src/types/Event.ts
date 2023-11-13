@@ -332,3 +332,19 @@ export interface Golf {
   courseDescription: string; // Description of the golf course
   // ... (other golf-specific properties)
 }
+
+export interface Hiking {
+  trail: string; // Name of the hiking trail
+  difficulty: string; // Difficulty level of the trail (e.g., easy, moderate, difficult)
+  length: number; // Length of the hiking trail in kilometers
+  rating: number; // Rating of the hiking trail
+  distance: number; // Length of the hiking trail in kilometers
+  startingPoint: string; // Starting point or trailhead of the hiking route
+  elevationGain: number; // Total elevation gain on the hiking trail
+  recommendedGear: string[]; // Recommended gear for hiking (e.g., hiking boots, backpack)
+  pointsOfInterest: string[]; // Notable points of interest along the hiking trail
+  campingOptions: boolean; // Indicates whether there are camping options along the trail
+  // ... (other hiking-specific properties)
+}
+
+export interface Biking extends Hiking {}

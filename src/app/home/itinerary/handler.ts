@@ -1,7 +1,9 @@
   AquariumModel,
+  BikingModel,
   ConcertModel,
   FlightModel,
   GolfModel,
+  HikingModel,
   HotelModel,
   MuseumModel,
   NightlifeModel,
@@ -13,9 +15,11 @@
   WaterparkModel,
   ZooModel
   Aquarium,
+  Biking,
   Concert,
   Flight,
   Golf,
+  Hiking,
   Hotel,
   Museum,
   Nightlife,
@@ -36,6 +40,8 @@
     Park: ParkModel,
     Zoo: ZooModel,
     Aquarium: AquariumModel,
+    Hiking: HikingModel,
+    Biking: BikingModel,
     Waterpark: WaterparkModel,
     AmusementPark: AmusementParkModel,
     Sports: SportsModel,
@@ -68,6 +74,10 @@
       return getWaterpark();
     case "Zoo":
       return getZoo();
+    case "Hiking":
+      return getHiking();
+    case "Biking":
+      return getBiking();
 
 /** Generate a random flight. */
 const getFlight = (): Flight => {
@@ -1823,6 +1833,98 @@ const getGolf = (): Golf => {
     golfClubRental: faker.datatype.boolean(),
     teeTimes: teeTimes(),
     holes: holes()
+  };
+};
+
+/**
+ * Generate a random hiking event
+ * @param gear - List of gear to choose from
+ * @param poi - List of points of interest to choose from
+ */
+const getHiking = (gear?: string[], poi?: string[]): Hiking => {
+  return {
+    trail: faker.lorem.words(),
+    length: faker.number.int({ min: 1, max: 20 }),
+    difficulty: faker.lorem.word(),
+    distance: faker.number.float({ min: 1, max: 20 }),
+    elevationGain: faker.number.float({ min: 1, max: 20 }),
+    startingPoint: faker.location.streetAddress(),
+    rating: faker.number.float({ min: 1, max: 5 }),
+    recommendedGear: randomWordList(
+      gear || [
+        "Hiking Boots",
+        "Backpack",
+        "Trekking Poles",
+        "Water Bottle",
+        "Weather-Appropriate Clothing",
+        "Sunscreen",
+        "Hat",
+        "Sunglasses",
+        "Map and Compass",
+        "First Aid Kit",
+        "Snacks",
+        "Headlamp or Flashlight",
+        "Multi-tool or Knife",
+        "Emergency Whistle",
+        "Rain Gear",
+        "Insect Repellent"
+      ]
+    ),
+    pointsOfInterest: randomWordList(
+      poi || [
+        "Scenic Overlook",
+        "Waterfall",
+        "Wildflower Meadow",
+        "Mountain Summit",
+        "Alpine Lake",
+        "Cave or Rock Formation",
+        "Historical Site",
+        "Old Growth Forest",
+        "Canyon Viewpoint",
+        "Wildlife Observation Spot"
+      ]
+    ),
+    campingOptions: faker.datatype.boolean()
+  };
+};
+
+/**
+ * Generate a random biking event
+ */
+const getBiking = (): Biking => {
+  return {
+    ...getHiking(
+      [
+        "Helmet",
+        "Bike",
+        "Cycling Shorts",
+        "Cycling Jersey",
+        "Gloves",
+        "Cycling Shoes",
+        "Water Bottle and Cage",
+        "Sunglasses",
+        "Bike Repair Kit",
+        "Bike Pump",
+        "Multi-tool",
+        "Bike Lights",
+        "Reflective Gear",
+        "Cycling Computer",
+        "Bike Lock",
+        "Backpack"
+      ],
+      [
+        "Scenic Viewpoint",
+        "Mountain Summit",
+        "Lake or Reservoir",
+        "Historic Landmark",
+        "Wildlife Observation Area",
+        "Cycling Trailhead",
+        "Picnic Spot",
+        "Bike-Friendly Cafe",
+        "Bike Repair Station",
+        "Art Installation or Sculpture"
+      ]
+    )
   };
 };
 

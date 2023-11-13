@@ -1,8 +1,10 @@
   AmusementPark,
+  Biking,
   Concert,
   Dining,
   Flight,
   Golf,
+  Hiking,
   Hotel,
   Museum,
   Nightlife,
@@ -472,6 +474,32 @@ const GolfModel =
   EventModel.discriminators?.Golf ||
   EventModel.discriminator<Activity<Golf>>('Golf', golfSchema);
 
+const hikingSchema = new Schema<Activity<Hiking>>({
+  ...activitySchema.obj,
+  trail: String,
+  difficulty: String,
+  length: Number,
+  rating: Number,
+  distance: Number,
+  startingPoint: String,
+  elevationGain: Number,
+  recommendedGear: [String],
+  pointsOfInterest: [String],
+  campingOptions: Boolean
+});
+
+const HikingModel =
+  EventModel.discriminators?.Hiking ||
+  EventModel.discriminator<Activity<Hiking>>('Hiking', hikingSchema);
+
+const bikingSchema = new Schema<Activity<Biking>>({
+  ...activitySchema.obj,
+  ...hikingSchema.obj
+});
+
+const BikingModel =
+  EventModel.discriminators?.Biking ||
+  EventModel.discriminator<Activity<Biking>>('Biking', bikingSchema);
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -496,10 +524,12 @@ const AmusementParkModel =
 
   AmusementParkModel,
   AquariumModel,
+  BikingModel,
   ConcertModel,
   DiningModel,
   FlightModel,
   GolfModel,
+  HikingModel,
   MuseumModel,
   NightlifeModel,
   ParkModel,
