@@ -68,6 +68,7 @@ export type Reservation<T extends Reservable = Reservable> = Event & T;
 export type Activities =
   | Theatre
   | Concert
+  | Museum
   | "Concert"
 export type ShowTime = {
   date: Date;
@@ -95,5 +96,26 @@ export interface Concert {
   isSoldOut: boolean; // Indicates whether the concert is sold out
   departureLocation: string; // Location where the trip to the concert starts
   transportationMode: string; // Mode of transportation (e.g., car, public transit)
+}
+
+type Exhibit = {
+  name: string;
+  description: string;
+};
+
+type SpecialEvent = {
+  name: string;
+  description: string;
+  date: Date;
+  time: string;
+};
+export interface Museum {
+  exhibits: Exhibit[];
+  admissionFee: number;
+  openingHours: string;
+  specialEvents: SpecialEvent[]; // List of special events or exhibitions
+  guidedTours: boolean; // Indicates whether guided tours are available
+  audioGuide: boolean; // Indicates whether audio guides are available
+  // ... (other museum-specific properties)
 }
 
