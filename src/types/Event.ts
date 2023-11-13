@@ -37,21 +37,30 @@ export interface Hotel {
   checkOut: Date;
   roomNumber: string | number;
 }
+
+export type MealTypes = "breakfast" | "lunch" | "dinner";
+export interface Offer<T extends MealTypes = MealTypes> {
+  offerId: string;
+  time: string;
+  label: T;
 }
 
-export interface Reservation<T extends Hotel | Flight = Hotel | Flight>
-  extends Event {
-  reservationName: string;
-  reservationType: string; //hotel, flight, restaurant, etc...
-  reservationNumber?: string;
-  reservationData: T;
+export interface MealPeriodInfo {
+  name: string;
+  experience: string;
+  priceLegend: string;
+  primaryCuisineType: string;
 }
 
-export type ActivityTypes =
-  | "attraction"
-  | "fireworks"
-  | "restaurant"
-  | "entertainment";
+export interface Dining {
+  mealPeriodInfo: MealPeriodInfo;
+  priceRange: string;
+  admissionRequired: boolean;
+  offers: {
+    [x: string]: Offer[];
+  };
+}
+
 
 export interface Activity extends Event {
   activityName: string;
