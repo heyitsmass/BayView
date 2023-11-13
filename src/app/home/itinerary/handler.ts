@@ -1,6 +1,11 @@
+"use server";
+
+import {
+  AmusementParkModel,
   AquariumModel,
   BikingModel,
   ConcertModel,
+  DiningModel,
   FlightModel,
   GolfModel,
   HikingModel,
@@ -14,23 +19,38 @@
   TheatreModel,
   WaterparkModel,
   ZooModel
+} from "@/models/Event";
+import {
+  Activities,
+  AmusementPark,
   Aquarium,
   Biking,
   Concert,
+  Dining,
+  EventTypes,
   Flight,
   Golf,
   Hiking,
   Hotel,
+  MealPeriodInfo,
+  MealTypes,
   Museum,
   Nightlife,
+  Offer,
   Park,
+  Reservable,
   Shopping,
+  ShowTime,
   Spa,
   SportEvents,
   Sports,
   Theatre,
   Waterpark,
   Zoo
+} from "@/types/Event";
+import { faker } from "@faker-js/faker";
+import { randomInt } from "crypto";
+import { HydratedDocument } from "mongoose";
 
 /**
  * Generate a random Sports event based on the type
