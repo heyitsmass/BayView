@@ -70,8 +70,10 @@ export type Activities =
   | Concert
   | Museum
   | Park
+  | Zoo
   | "Concert"
   | "Park"
+  | "Zoo"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -146,4 +148,30 @@ export interface Park {
   naturalFeatures: NaturalFeature[]; // Features like lakes, trails, etc.
   wildlife: Wildlife[]; // Types of wildlife commonly found in the park
   // ... (other park-specific properties)
+}
+
+type FeedingSchedule = {
+  name: string;
+  time: string;
+};
+
+type InteractiveExperience = {
+  name: string;
+  time: string;
+  description: string;
+};
+
+type ConvservationProgram = {
+  name: string;
+  description: string;
+};
+
+export interface Zoo {
+  animalExhibits: Exhibit[];
+  admissionFee: number;
+  openingHours: string;
+  feedingSchedule: FeedingSchedule[]; // Schedule for animal feeding sessions
+  interactiveExperiences: InteractiveExperience[]; // Interactive activities for visitors
+  conservationPrograms: ConvservationProgram[]; // Information about zoo's conservation programs
+  // ... (other zoo-specific properties)
 }

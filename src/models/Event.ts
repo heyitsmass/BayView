@@ -4,6 +4,7 @@
   Hotel,
   Museum,
   Park,
+  Zoo
 const hotelSchema = new Schema<Reservation<Hotel>>({
   ...reservationSchema.obj,
   checkIn: Date,
@@ -208,9 +209,61 @@ const ParkModel =
   EventModel.discriminators?.Park ||
   EventModel.discriminator<Activity<Park>>('Park', parkSchema);
 
+const zooSchema = new Schema<Activity<Zoo>>({
+  ...activitySchema.obj,
+  feedingSchedule: {
+    type: [
+      {
+        name: String,
+        time: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  interactiveExperiences: {
+    type: [
+      {
+        name: String,
+        time: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  conservationPrograms: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  openingHours: String,
+  animalExhibits: {
+    type: [
+      {
+        name: String,
+        description: String,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  admissionFee: Number
+});
+
+const ZooModel =
+  EventModel.discriminators?.Zoo ||
+  EventModel.discriminator<Activity<Zoo>>('Zoo', zooSchema);
+
   ConcertModel,
   DiningModel,
   FlightModel,
   MuseumModel,
   ParkModel,
   TheatreModel,
+  ZooModel
