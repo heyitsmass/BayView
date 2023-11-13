@@ -74,12 +74,14 @@ export type Activities =
   | Aquarium
   | Waterpark
   | AmusementPark
+  | Sports
   | "Concert"
   | "Park"
   | "Zoo"
   | "Aquarium"
   | "Waterpark"
   | "AmusementPark"
+  | "Sports"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -222,4 +224,23 @@ export interface AmusementPark {
   waterRides: string[];
   // ... (other amusement park-specific properties)
 }
+
+export interface Sports<T extends SportEvents = SportEvents> {
+  type: T;
+  event: string;
+  teams: string[];
+  stadiumName: string;
+  ticketPrice: number;
+  stadiumCapacity: number; // Capacity of the sports stadium
+  broadcastingChannels: string[]; // TV channels broadcasting the event
+  // ... (other sports-specific properties)
+}
+
+export type SportEvents =
+  | "Football"
+  | "Baseball"
+  | "Basketball"
+  | "Hockey"
+  | "Soccer"
+  | "Tennis";
 

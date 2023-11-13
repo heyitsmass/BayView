@@ -5,6 +5,7 @@
   Hotel,
   Museum,
   Park,
+  Sports,
   Waterpark,
 const hotelSchema = new Schema<Reservation<Hotel>>({
   ...reservationSchema.obj,
@@ -325,6 +326,20 @@ const WaterparkModel =
   EventModel.discriminators?.Waterpark ||
   EventModel.discriminator<Activity<Waterpark>>('Waterpark', waterparkSchema);
 
+const sportsSchema = new Schema<Activity<Sports>>({
+  ...activitySchema.obj,
+  type: String,
+  event: String,
+  teams: [String],
+  stadiumName: String,
+  stadiumCapacity: Number,
+  broadcastingChannels: [String]
+});
+
+const SportsModel =
+  EventModel.discriminators?.Sports ||
+  EventModel.discriminator<Activity<Sports>>('Sports', sportsSchema);
+
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -354,6 +369,7 @@ const AmusementParkModel =
   FlightModel,
   MuseumModel,
   ParkModel,
+  SportsModel,
   TheatreModel,
   WaterparkModel,
   ZooModel
