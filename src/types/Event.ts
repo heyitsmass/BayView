@@ -81,6 +81,7 @@ export type Activities =
   | AmusementPark
   | Sports
   | Nightlife
+  | Shopping
   | "Concert"
   | "Park"
   | "Zoo"
@@ -89,6 +90,7 @@ export type Activities =
   | "AmusementPark"
   | "Sports"
   | "Nightlife"
+  | "Shopping"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -266,3 +268,34 @@ export interface Nightlife {
 
   // ... (other nightlife-specific properties)
 }
+
+type Deal = {
+  name: string;
+  description: string;
+};
+
+type Sale = Deal & {
+  date: Date;
+};
+
+type Review = {
+  store: string;
+  comment: string;
+  rating: number;
+};
+
+type DiningOptions = {
+  name: string;
+  description: string;
+};
+export interface Shopping {
+  mall: string;
+  stores: string[];
+  openingHours: string;
+  salesAndDeals: (Deal | Sale)[]; // Information about ongoing sales or deals
+  diningOptions: DiningOptions[]; // Restaurants or food courts in the mall
+  customerReviews: Record<string, Review>; // Customer reviews for the mall or specific stores
+  shoppingBudget: number; // Maximum amount of money to spend on shopping
+  // ... (other shopping-specific properties)
+}
+

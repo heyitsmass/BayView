@@ -6,6 +6,7 @@
   Museum,
   Nightlife,
   Park,
+  Shopping,
   Sports,
   Waterpark,
 const hotelSchema = new Schema<Reservation<Hotel>>({
@@ -360,6 +361,48 @@ const NightlifeModel =
   EventModel.discriminators?.Nightlife ||
   EventModel.discriminator<Activity<Nightlife>>('Nightlife', nightlifeSchema);
 
+const shoppingSchema = new Schema<Activity<Shopping>>({
+  ...activitySchema.obj,
+  mall: String,
+  stores: [String],
+  openingHours: String,
+  salesAndDeals: {
+    type: [
+      {
+        name: String,
+        description: String || undefined,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  diningOptions: {
+    type: [
+      {
+        name: String,
+        description: String || undefined,
+        _id: false
+      }
+    ],
+    default: []
+  },
+  customerReviews: {
+    type: Map,
+    of: {
+      store: String,
+      comment: String,
+      rating: Number,
+      _id: false
+    },
+    default: {}
+  },
+  shoppingBudget: Number
+});
+
+const ShoppingModel =
+  EventModel.discriminators?.Shopping ||
+  EventModel.discriminator<Activity<Shopping>>('Shopping', shoppingSchema);
+
 
 const amusementParkSchema = new Schema<Activity<AmusementPark>>({
   rides: [String],
@@ -390,6 +433,7 @@ const AmusementParkModel =
   MuseumModel,
   NightlifeModel,
   ParkModel,
+  ShoppingModel,
   SportsModel,
   TheatreModel,
   WaterparkModel,
