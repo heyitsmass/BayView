@@ -61,9 +61,7 @@ export interface Dining {
   };
 }
 
+export type Reservable = Hotel | Flight | Dining;
 
-export interface Activity extends Event {
-  activityName: string;
-  activityType: ActivityTypes; //attraction, fireworks, restaurant, entertainment
-  activitySubtype: string; //indoor, outdoor, waterpark, etc...
-}
+export type Reservation<T extends Reservable = Reservable> = Event & T;
+
