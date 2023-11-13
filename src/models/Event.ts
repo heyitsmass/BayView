@@ -1,7 +1,11 @@
+import {
+  Activity,
   AmusementPark,
+  Aquarium,
   Biking,
   Concert,
   Dining,
+  Event,
   Flight,
   Golf,
   Hiking,
@@ -9,10 +13,16 @@
   Museum,
   Nightlife,
   Park,
+  Reservation,
   Shopping,
   Spa,
   Sports,
+  Theatre,
   Waterpark,
+  Zoo
+} from '@/types/Event';
+
+import mongoose, { Schema } from 'mongoose';
 
 const eventSchema = new Schema<Event>({
   name: String,
@@ -26,6 +36,15 @@ const eventSchema = new Schema<Event>({
   },
   description: String
 });
+
+const reservationSchema = new Schema<Reservation<any>>({
+  ...eventSchema.obj
+});
+
+const activitySchema = new Schema<Activity<any>>({
+  ...eventSchema.obj
+});
+
 const EventModel =
   mongoose.models.Event || mongoose.model<Event>('Event', eventSchema);
 
@@ -538,14 +557,17 @@ const AmusementParkModel =
     amusementParkSchema
   );
 
+export {
   AmusementParkModel,
   AquariumModel,
   BikingModel,
   ConcertModel,
   DiningModel,
+  EventModel,
   FlightModel,
   GolfModel,
   HikingModel,
+  HotelModel,
   MuseumModel,
   NightlifeModel,
   ParkModel,
@@ -555,3 +577,4 @@ const AmusementParkModel =
   TheatreModel,
   WaterparkModel,
   ZooModel
+};
