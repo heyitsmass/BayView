@@ -1,3 +1,4 @@
+  AmusementPark,
   Concert,
   Dining,
   Flight,
@@ -324,6 +325,29 @@ const WaterparkModel =
   EventModel.discriminators?.Waterpark ||
   EventModel.discriminator<Activity<Waterpark>>('Waterpark', waterparkSchema);
 
+
+const amusementParkSchema = new Schema<Activity<AmusementPark>>({
+  rides: [String],
+  admissionFee: Number,
+  openingHours: String,
+  rollerCoasters: [String],
+  themedAreas: [String],
+  waterRides: [String],
+  heightRestrictions: {
+    type: Map,
+    of: Number,
+    default: {}
+  }
+});
+
+const AmusementParkModel =
+  EventModel.discriminators?.AmusementPark ||
+  EventModel.discriminator<Activity<AmusementPark>>(
+    'AmusementPark',
+    amusementParkSchema
+  );
+
+  AmusementParkModel,
   AquariumModel,
   ConcertModel,
   DiningModel,

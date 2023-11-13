@@ -73,11 +73,13 @@ export type Activities =
   | Zoo
   | Aquarium
   | Waterpark
+  | AmusementPark
   | "Concert"
   | "Park"
   | "Zoo"
   | "Aquarium"
   | "Waterpark"
+  | "AmusementPark"
 export type ShowTime = {
   date: Date;
   time: string;
@@ -208,5 +210,16 @@ export interface Waterpark {
   lazyRiver: boolean; // Indicates whether there's a lazy river
   waterSlides: Waterslide[]; // Different types of water slides available
   // ... (other waterpark-specific properties)
+}
+
+export interface AmusementPark {
+  rides: string[];
+  admissionFee: number;
+  openingHours: string;
+  rollerCoasters: string[]; // Different types of roller coasters available
+  themedAreas: string[]; // Themed sections within the amusement park
+  heightRestrictions: Record<string, number>; // Height restrictions for certain rides
+  waterRides: string[];
+  // ... (other amusement park-specific properties)
 }
 
