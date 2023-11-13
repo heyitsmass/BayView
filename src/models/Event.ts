@@ -1,6 +1,11 @@
   Flight,
-import mongoose, { Schema } from "mongoose";
-
+  Hotel,
+const hotelSchema = new Schema<Reservation<Hotel>>({
+  ...reservationSchema.obj,
+  checkIn: Date,
+  checkOut: Date,
+  roomNumber: String || Number
+});
 
 
 const helperSchema = { 
@@ -36,6 +41,9 @@ const flightSchema = new Schema<Reservation<Flight>>({
 });
 
     _id: false
+const HotelModel =
+  EventModel.discriminators?.Hotel ||
+  EventModel.discriminator<Reservation<Hotel>>('Hotel', hotelSchema);
 
 const FlightModel =
   EventModel.discriminators?.Flight ||

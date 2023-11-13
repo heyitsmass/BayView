@@ -32,9 +32,11 @@ export interface Flight {
   gate: string;
 }
 
-export interface Hotel extends Event {
-  hotelName: string;
-  roomNumber: string;
+export interface Hotel {
+  checkIn: Date;
+  checkOut: Date;
+  roomNumber: string | number;
+}
 }
 
 export interface Reservation<T extends Hotel | Flight = Hotel | Flight>

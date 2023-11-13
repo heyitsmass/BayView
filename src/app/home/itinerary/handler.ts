@@ -1,8 +1,13 @@
   FlightModel,
+  HotelModel,
   Flight,
+  Hotel,
+    Hotel: HotelModel,
     Flight: FlightModel,
     case "Flight":
       return getFlight();
+    case "Hotel":
+      return getHotel();
 
 /** Generate a random flight. */
 const getFlight = (): Flight => {
@@ -33,5 +38,18 @@ const getFlight = (): Flight => {
     reservationNumber: faker.airline.recordLocator(),
     gate: gate(),
     seats: [seat(), seat()]
+  };
+};
+
+/** Generate a random hotel reservation. */
+const getHotel = (): Hotel => {
+  const { dateTo, dateFrom } = date({ days: 7 });
+
+  const roomNumber = () => faker.number.int({ min: 100, max: 1200 });
+
+  return {
+    checkIn: dateTo,
+    checkOut: dateFrom,
+    roomNumber: roomNumber()
   };
 };
