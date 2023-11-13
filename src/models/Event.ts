@@ -13,6 +13,22 @@
   Spa,
   Sports,
   Waterpark,
+
+const eventSchema = new Schema<Event>({
+  name: String,
+  date: Date,
+  time: String || undefined,
+  location: {
+    street: String,
+    city: String,
+    state: String,
+    zip: String
+  },
+  description: String
+});
+const EventModel =
+  mongoose.models.Event || mongoose.model<Event>('Event', eventSchema);
+
 const hotelSchema = new Schema<Reservation<Hotel>>({
   ...reservationSchema.obj,
   checkIn: Date,
