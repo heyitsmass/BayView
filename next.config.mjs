@@ -5,44 +5,22 @@ const nextConfig = {
   /* config options here */
   experimental: {
     instrumentationHook: true,
-    esmExternals: 'loose'
+    esmExternals: "loose"
   },
-  reactStrictMode: false,
-  redirects: async () => {
-    return [
+  images: {
+    remotePatterns: [
       {
-        source: '/',
-        destination: '/home',
-        permanent: true
+        hostname: "loremflickr.com"
       },
       {
-        source: '/home',
-        missing: [
-          {
-            type: 'cookie',
-            key: 'refresh_token'
-          },
-          {
-            type: 'cookie',
-            key: 'access_token'
-          }
-        ],
-        destination: '/auth/login',
-        permanent: false
+        hostname: "cloudflare-ipfs.com"
       },
       {
-        source: '/auth/login',
-        has: [
-          {
-            type: 'cookie',
-            key: 'refresh_token'
-          }
-        ],
-        destination: '/home',
-        permanent: false
+        hostname: "avatars.githubusercontent.com"
       }
-    ];
-  }
+    ]
+  },
+  reactStrictMode: false
 };
 
 export default nextConfig;
