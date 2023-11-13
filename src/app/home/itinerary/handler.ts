@@ -31,6 +31,36 @@
   Theatre,
   Waterpark,
   Zoo
+
+/**
+ * Generate a random Sports event based on the type
+ * @param event - The type of event to generate (must be Sports)
+ * @param sport - The type of sport to generate
+ * @returns a Hydrated event prepared for the database
+ */
+export async function getRandomEvent(
+  event: "Sports",
+  sport: SportEvents
+): Promise<HydratedDocument<Sports>>;
+/**
+ * Generate a random (Non-Sports) event based on the type
+ * @param event - The type of event to generate
+ * @returns a Hydrated event prepared for the database
+ */
+export async function getRandomEvent(
+  event: Exclude<EventTypes, "Sports">
+): Promise<HydratedDocument<Reservable | Omit<Activities, "Sports">>>;
+/**
+ * Generate a random event based on the type
+ * @param event - The type of event to generate
+ * @param sport - Only used for Sports
+ * @returns A Hydrated event prepared for the database
+ */
+export async function getRandomEvent(
+  event: EventTypes,
+  sport?: SportEvents
+): Promise<HydratedDocument<Reservable | Activities>> {
+  const modelTypes = {
     Hotel: HotelModel,
     Dining: DiningModel,
     Flight: FlightModel,
@@ -39,6 +69,8 @@
     Museum: MuseumModel,
     Park: ParkModel,
     Zoo: ZooModel,
+    Spa: SpaModel,
+    Golf: GolfModel,
     Aquarium: AquariumModel,
     Hiking: HikingModel,
     Biking: BikingModel,
@@ -46,6 +78,46 @@
     AmusementPark: AmusementParkModel,
     Sports: SportsModel,
     Nightlife: NightlifeModel,
+    Shopping: ShoppingModel
+  };
+
+  const data =
+    event === "Sports" ? handleCall(event, sport!) : handleCall(event);
+
+  return new modelTypes[event]({
+    name: faker.lorem.words(),
+    location: location(),
+    description: faker.lorem.words(),
+    ...data
+  });
+}
+
+/**
+ * Generate a random, Sports event based on the type
+ * @param event - The type of event to generate (must be Sports)
+ * @param sport - The type of sport to generate
+ * @returns Returns the pure data for the event
+ */
+export function handleCall(event: "Sports", sport: SportEvents): Sports;
+/**
+ * Generate a random, Non-Sports event based on the type
+ * @param event - The type of event to generate
+ * @returns Returns the pure data for the event
+ */
+export function handleCall(
+  event: Exclude<EventTypes, "Sports">
+): Reservable | Omit<Activities, "Sports">;
+/**
+ * Generate a random event based on the type
+ * @param event - The type of event to generate
+ * @param sport - Only used for Sports
+ * @returns Returns the pure data for the event
+ */
+export function handleCall(
+  event: EventTypes,
+  sport?: SportEvents
+): Reservable | Activities {
+  switch (event) {
     case "AmusementPark":
       return getAmusementPark();
     case "Aquarium":
@@ -66,6 +138,10 @@
       return getNightlife();
     case "Park":
       return getPark();
+    case "Shopping":
+      return getShopping();
+    case "Spa":
+      return getSpa();
     case "Sports":
       return getSports(sport!);
     case "Theatre":
@@ -78,6 +154,10 @@
       return getHiking();
     case "Biking":
       return getBiking();
+    default:
+      throw new Error(`Invalid event type: ${event}`);
+  }
+}
 
 /** Generate a random flight. */
 const getFlight = (): Flight => {
