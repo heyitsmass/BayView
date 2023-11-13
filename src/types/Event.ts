@@ -1,9 +1,14 @@
 export interface Event {
-  eventType: string;
+  //eventType: string;
   date: Date;
   name: string;
-  time: string;
-  location: string;
+  time?: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
   description?: string;
 }
 
