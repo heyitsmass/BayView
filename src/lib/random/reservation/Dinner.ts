@@ -56,7 +56,7 @@ export const dining = (): Dining => {
       'italian',
       'chinese',
       'french',
-      'japenese',
+      'japanese',
       'american',
       'mexican',
       'indian',
