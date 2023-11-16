@@ -7,9 +7,14 @@ export default defineConfig({
 	test: {
 		environment: 'jsdom',
 		globals: true,
+		setupFiles: ['dotenv/config'],
 		coverage: {
+			provider: 'v8',
 			all: true,
 			exclude: ['.next/*', '*.{mjs,cjs}', '*.d.*', '*.config.*', 'src/app/home/flights-testing/**/*'],
+			enabled: true,
+			reporter: ['text', 'html'],
+			include: ['src/**/*'],
 		},
 	},
 	resolve: {

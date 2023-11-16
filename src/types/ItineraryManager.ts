@@ -2,6 +2,12 @@ import { IUser } from "./User";
 import mongoose, { HydratedDocument, Schema } from "mongoose";
 import Itineraries from "@/models/Itinerary";
 import { IItinerary } from "@/types/Itinerary";
+import * as nodemailer from "nodemailer";
+import { waitFor } from "@testing-library/react";
+import baymax from "@/public/images/baymax.png";
+import { H } from "vitest/dist/reporters-5f784f42";
+import Mail from "nodemailer/lib/mailer"; 
+
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -400,11 +406,43 @@ class SMSNotifier implements Notifier {
   }
 }
 
-class EmailNotifier implements Notifier {
+export class EmailNotifier implements Notifier {
   /** Email Notifier implementation */
+
+  private transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.SMTP_EMAIL,        //replace with your email in .env file
+      pass: process.env.SMTP_PASS,        //replace with your password in .env file
+    }
+  });
+  
+  public create_email(message: string, to: string) {
+    return {
+      from: process.env.SMTP_EMAIL,          //replace with your email in .env file
+      to,     //replace with users email address
+      subject: "Sample Email",
+      text: message,
+      html: "<b>Hello HTML SMTP Email</b>",
+      attachments: [{
+        filename: "baymax.png",
+        path: baymax.src
+      }]
+    } as Mail.Options;
+  }
+
+  public async send_email(message: string, to: string) {
+    return this.transporter
+      .sendMail(this.create_email(message, to))
+      .then((res) => {
+        return res;
+      });
+  }
+
   public send_notification() {
     /** Sends a notification to the users email */
   }
+
 }
 
 class TwitterNotifier implements Notifier {
