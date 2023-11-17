@@ -1,11 +1,15 @@
 import SuperTokens from "supertokens-node";
-import ThirdPartyEmailPasswordNode from "supertokens-node/recipe/thirdpartyemailpassword";
-import SessionNode from "supertokens-node/recipe/session";
-import { appInfo } from "./appInfo";
-import { TypeInput } from "supertokens-node/types";
 import Dashboard from "supertokens-node/recipe/dashboard";
+import SessionNode from "supertokens-node/recipe/session";
+import ThirdPartyEmailPasswordNode from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserMetadata from "supertokens-node/recipe/usermetadata";
-import ItineraryModel from "@/models/Itinerary";
+import { TypeInput } from "supertokens-node/types";
+import { appInfo } from "./appInfo";
+
+import {
+  emailPasswordSignUpPOST,
+  thirdPartySignInUpPOST,
+} from "./handlers";
 
 export const backendConfig = (): TypeInput => {
   return {
@@ -28,6 +32,11 @@ export const backendConfig = (): TypeInput => {
                 {
                   clientId: process.env.GOOGLE_CLIENT_ID!,
                   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+                  scope: [
+                    "openid",
+                    "https://www.googleapis.com/auth/userinfo.email",
+                    "https://www.googleapis.com/auth/userinfo.profile",
+                  ],
                 },
               ],
             },
@@ -39,6 +48,7 @@ export const backendConfig = (): TypeInput => {
                 {
                   clientId: process.env.GITHUB_CLIENT_ID!,
                   clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+                  scope: ["user"],
                 },
               ],
             },
@@ -50,6 +60,7 @@ export const backendConfig = (): TypeInput => {
                 {
                   clientId: process.env.DISCORD_CLIENT_ID!,
                   clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+                  scope: ["email", "identify"],
                 },
               ],
             },
@@ -61,6 +72,10 @@ export const backendConfig = (): TypeInput => {
                 {
                   clientId: process.env.FACEBOOK_CLIENT_ID!,
                   clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+                  scope: ["public_profile", "email", "user_age_range"],
+                  additionalConfig: {
+                    fields: "id,first_name,last_name,email,user_age_range",
+                  },
                 },
               ],
             },
@@ -85,55 +100,16 @@ export const backendConfig = (): TypeInput => {
             },
           ],
         },
+
         override: {
           apis: (oi) => {
             return {
               ...oi,
-              emailPasswordSignUpPOST: async function (input) {
-                // First we call the original implementation of signUpPOST.
-                let response = await oi.emailPasswordSignUpPOST!(input);
+              emailPasswordSignUpPOST: async (input) =>
+                emailPasswordSignUpPOST(input, oi),
 
-                // Post sign up response, we check if it was successful
-                if (
-                  response.status === "OK" &&
-                  response.user.loginMethods.length === 1
-                ) {
-                  let { id, emails } = response.user;
-                  // TODO: sign up successful
-
-                  // here we fetch a custom form field for the user's name.
-                  // Note that for this to be available, you need to define
-                  // this custom form field.
-                  for (let i = 0; i < input.formFields.length; i++) {
-                    const name = input.formFields[i].id;
-                    const value = input.formFields[i].value;
-
-                    if (name === "email" || name === "password") continue;
-                    else if (name === "phone") {
-                      response.user.phoneNumbers.push(value);
-                      continue;
-                    }
-
-                    await UserMetadata.updateUserMetadata(id, {
-                      [name]: value,
-                    });
-                  }
-
-                  let itinerary = await ItineraryModel.exists({
-                    id,
-                  });
-
-                  if (!itinerary) {
-                    console.log("Created itinerary for user");
-                    await ItineraryModel.create({
-                      id,
-                      events: [],
-                    });
-                  }
-                }
-
-                return response;
-              },
+              thirdPartySignInUpPOST: async (input) =>
+                thirdPartySignInUpPOST(input, oi),
             };
           },
         },
