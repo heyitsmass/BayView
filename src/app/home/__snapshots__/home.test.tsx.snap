@@ -340,6 +340,216 @@ exports[`Page Component > matches the snapshot 1`] = `
           </form>
         </div>
       </div>
+      <div
+        class="undefined _defaultCard_c57b5c max-h-[45rem] overflow-scroll"
+      >
+        <button
+          class="flex items-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-angle-down fa-lg _icon_c57b5c w-4 pr-2 icon"
+            data-icon="angle-down"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+              fill="currentColor"
+            />
+          </svg>
+          <h1
+            class="text-2xl font-bold"
+          >
+            Dining
+          </h1>
+        </button>
+        <h2
+          class="pl-6 text-zinc-400"
+        >
+          search dining availability and add to itinerary
+        </h2>
+        <div
+          class="px-3 pb-2 pt-3"
+        >
+          <form>
+            <div>
+              <label
+                class="_label_f5db26"
+              >
+                Party Size
+              </label>
+              <div
+                class="_inputWrapper_f5db26"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-user-group _icon_f5db26"
+                  data-icon="user-group"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 640 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <input
+                  class="_input_f5db26"
+                  icon="[object Object]"
+                  label="Party Size"
+                  max="10"
+                  placeholder="Party Size"
+                  type="number"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                class="_label_f5db26"
+              >
+                Booking Date
+              </label>
+              <div
+                class="_inputWrapper_f5db26"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-calendar-days _icon_f5db26"
+                  data-icon="calendar-days"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <input
+                  class="_input_f5db26"
+                  icon="[object Object]"
+                  label="Booking Date"
+                  placeholder="Booking Date"
+                />
+              </div>
+            </div>
+            <div
+              class="undefined flex items-center justify-between w-100"
+            >
+              <div
+                class="w-full"
+              >
+                <div>
+                  <label
+                    class="_label_f5db26"
+                  >
+                    Start Time
+                  </label>
+                  <div
+                    class="_inputWrapper_f5db26"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-clock _icon_f5db26"
+                      data-icon="clock"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <input
+                      class="_input_f5db26"
+                      icon="[object Object]"
+                      label="Start Time"
+                      placeholder="Start time"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="_inlineIcon_919a0b"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-arrow-right fa-lg dark:text-white text-black w-3"
+                  data-icon="arrow-right"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div
+                class="w-full"
+              >
+                <div>
+                  <label
+                    class="_label_f5db26"
+                  >
+                    End Time
+                  </label>
+                  <div
+                    class="_inputWrapper_f5db26"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-clock _icon_f5db26"
+                      data-icon="clock"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <input
+                      class="_input_f5db26"
+                      icon="[object Object]"
+                      label="End Time"
+                      placeholder="End time"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              class="mt-4 _secondary_c8148e _button_c8148e"
+              variant="secondary"
+            >
+              <div
+                class="w-full justify-self-center"
+              >
+                Find Availability
+              </div>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
