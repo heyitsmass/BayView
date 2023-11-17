@@ -1,5 +1,5 @@
 .inputWrapper {
-	@apply w-full pb-2 relative;
+  @apply w-full pb-4 relative;
 }
 
 .inputWrapper * {
@@ -10,16 +10,28 @@
   @apply block pl-3 h-7 text-base;
 }
 
-.input {	
+.input {
   @apply w-full text-base rounded-full focus:outline-none;
-  @apply bg-zinc-50 border dark:border-zinc-600 border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
-  padding: 0.75rem 1rem 0.75rem 3.1rem;
-} 
+  @apply bg-zinc-50 border border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
+  padding: 0.65rem 1rem 0.65rem 3.1rem;
+}
+
+/* .input::-webkit-calendar-picker-indicator {
+  display: none;
+} */
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover, 
+.input:-webkit-autofill:focus, 
+.input:-webkit-autofill:active{
+    -webkit-text-fill-color: var(--text-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--input-background-color) inset !important;
+}
 
 .icon {
-	@apply text-lg;
-    padding: 0.5rem 0 0.4rem 1rem;
-	position: absolute;
-	left: 0.2rem;
-	top: 0.55rem;
+  @apply text-lg;
+  padding: 0.45rem 0 0.4rem 1rem;
+  position: absolute;
+  left: 0.2rem;
+  top: 0.53rem;
 }
