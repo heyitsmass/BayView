@@ -1,19 +1,20 @@
 "use server";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { ReactNode } from "react";
-import "./globals.css";
 import { barlow } from "./fonts";
+import "./globals.css";
 
-import OAuthProvider from "./GoogleProvider";
-
-export default async function Layout({ children }: { children: ReactNode }) {
-	return (
-		<html className={barlow.variable}>
-			<body>
-				<OAuthProvider clientId={process.env.GOOGLE_CLIENT_ID!}>
-          {children}
-        </OAuthProvider>
-			</body>
-		</html>
-	);
+import { SuperTokensProvider } from "@/components/SuperTokens/SuperTokensProvider";
+export default async function Layout({
+  children,
+}: {
+  children?: ReactNode;
+}) {
+  return (
+    <html className={barlow.variable}>
+      <body>
+        <SuperTokensProvider>{children}</SuperTokensProvider>
+      </body>
+    </html>
+  );
 }
