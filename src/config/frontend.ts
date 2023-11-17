@@ -63,7 +63,26 @@ export const frontendConfig = (): SuperTokensConfig => {
             ],
           },
         },
-        override: {},
+        getRedirectionURL: async (context) => {
+          switch (context.action) {
+            case "SUCCESS":
+              const { redirectToPath } = context;
+              if (redirectToPath !== undefined) {
+                return redirectToPath;
+              }
+
+              /* 
+              if (context.isNewRecipeUser && context.user.loginMethods.length === 1) { 
+
+              } else { 
+
+              } */
+              return "/home";
+
+            default:
+              return undefined;
+          }
+        },
       }),
       SessionReact.init(),
     ],
