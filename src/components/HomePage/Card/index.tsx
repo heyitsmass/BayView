@@ -28,8 +28,8 @@ export default function Card(props: CardProps) {
 	};
 
 	const variantParams = {
-		closed: { opacity: 0, maxHeight: 0, filter: 'blur(10px)' },
-		open: { opacity: 1, maxHeight: 500, filter: 'blur(0px)' },
+		closed: { opacity: 0, maxHeight: 0, overflow: "hidden", filter: 'blur(10px)' },
+		open: { opacity: 1, maxHeight: 500, overflow: "auto", filter: 'blur(0px)' },
 	};
 
 	const toggleOpen = () => {

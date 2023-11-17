@@ -15,11 +15,7 @@ import React from 'react';
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
-	<FlightCard />,
-	<FlightCard />,
-	<FlightCard />,
-	<FlightCard />,
-	<FlightCard />,
+	<FlightCard />
 	// ... Add cards here
 ];
 

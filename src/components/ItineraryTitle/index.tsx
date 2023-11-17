@@ -13,7 +13,7 @@ export default function ItineraryTitle() {
         </div>
         <div className="pt-10">
           <FontAwesomeIcon icon={faLocationDot} className="inline" />
-          <p className="inline ml-1"> Disneyland</p>
+          <p className="inline ml-1">Somewhere Magical</p>
         </div>
         <div>
           <FontAwesomeIcon icon={faCalendar} className="inline" />
