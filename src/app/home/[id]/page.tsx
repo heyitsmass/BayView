@@ -9,10 +9,7 @@ import FlightCard from "@/components/HomePage/Card/FlightCard";
 export default function Page() {
   return (
 	<AnimatePresence>
-		<AnimationComponent transition={{duration: 0.5}}>
-			<div className={styles.contentGrid}>
-				{/* Card Components here */}
-				<FlightCard></FlightCard>
+				<Banner src={bannerImg.src} />
 			</div>
 		</AnimationComponent>
 	</AnimatePresence>
