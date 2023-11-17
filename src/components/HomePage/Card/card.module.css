@@ -1,8 +1,13 @@
 .defaultCard {
-    @apply w-full p-5 bg-white border border-zinc-200 rounded-xl dark:bg-zinc-800 dark:border-zinc-700;
+    @apply w-full px-3 py-4 bg-white border border-zinc-200 rounded-2xl dark:bg-zinc-800 dark:border-zinc-700;
     @apply transition-all duration-300 ease-in-out;
 }
 
 .defaultCard .icon * {
     @apply transition-all duration-300 ease-in-out;
+}
+
+.extraCardPadding {
+    @apply !px-8;
+    @apply pb-7;
 }
