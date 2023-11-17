@@ -10,6 +10,9 @@ export default function Page() {
   return (
 	<AnimatePresence>
 				<Banner src={bannerImg.src} />
+					<div className="w-[600px] -mt-52 absolute">
+						<ItineraryTitle></ItineraryTitle>
+					</div>
 			</div>
 		</AnimationComponent>
 	</AnimatePresence>
