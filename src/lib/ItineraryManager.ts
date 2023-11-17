@@ -1,7 +1,6 @@
 import Itineraries from "@/models/Itinerary";
 import { IItinerary } from "@/types/Itinerary";
 import { HydratedDocument } from "mongoose";
-import { IUser } from "../types/User";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -42,7 +41,7 @@ export class ItineraryFlow {
     username: string;
   };
 
-  private constructor(user: HydratedDocument<IUser>) {
+  private constructor(user: HydratedDocument<{}>) {
     console.log("In the flow.");
   }
 
@@ -51,7 +50,7 @@ export class ItineraryFlow {
 
     console.log("Finding user...", username);
 
-    const user = {} as HydratedDocument<IUser>;
+    const user = {} as HydratedDocument<{}>;
     console.log("Found user...");
     return new ItineraryFlow(user);
   }
