@@ -145,12 +145,12 @@ function ProfileDropdown() {
 
 	return (
 		<AnimationComponent>
-			<div className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600">
+			<div className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-2xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600">
 				<ul className="w-full">
 					{links.map((link) => (
 						<li key={link.href}>
 							<Link href={link.href}>
-								<p className="px-4 py-2 w-full cursor-pointer font-medium hover:dark:bg-zinc-600 hover:bg-zinc-100 rounded-xl">
+								<p className="px-4 py-2 w-full cursor-pointer font-medium hover:dark:bg-zinc-600 hover:bg-zinc-100 rounded-2xl">
 									{link.label}
 								</p>
 							</Link>
