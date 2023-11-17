@@ -1,0 +1,14 @@
+.data-request-dropdown {}
+
+.data-request-dropdown select {
+  background: "zinc-800"
+}
+
+.data-request-dropdown textarea:active {
+  outline: none;
+  border: solid 1px var(--blue);
+}
+
+.data-request-form button:disabled {
+  color: black;
+}
