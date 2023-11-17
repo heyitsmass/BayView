@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, HTMLProps } from "react";
-import styles from "./itineraryevent.module.css";
+import styles from "./itineraryEvent.module.css";
 
 type ItineraryEventProps = { 
   date:Date, 
