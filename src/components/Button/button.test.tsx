@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { getByTestId, render, screen } from '@testing-library/react';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import Button from './index';
 
@@ -36,5 +36,9 @@ describe('<Button />', () => {
 		expect(spinner).toBeFalsy(); // Check that the spinner element is not present
 	});
 
-    // TODO: Test for isPending spinner when we decide how / if to use this
+	it('renders a spinner when isPending state is true', () => {
+		const { container } = render(<Button isPending={true}>User</Button>);
+		const spinner = getByTestId(container, 'spinner');
+		expect(spinner).toBeTruthy();
+	});	  
 });
