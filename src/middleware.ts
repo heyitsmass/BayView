@@ -3,14 +3,17 @@ import { NextResponse } from "next/server";
 export async function middleware() {
   const res = NextResponse.next();
 
-  res.headers.set("Access-Control-Allow-Origin", "*");
+  const origin =
+    process.env.NODE_ENV === "production"
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL!}`
+      : "*";
+  res.headers.set("Access-Control-Allow-Origin", origin);
   res.headers.set("Access-Control-Allow-Credentials", "true");
-  /*
+
   res.headers.set(
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE"
-  ); */
-
+  );
   res.headers.set(
     "Access-Control-Allow-Headers",
     "Content-Type, anti-csrf, rid, fdi-version, authorization, st-auth-mode"
@@ -20,5 +23,5 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: "/auth/:path*"
+  matcher: "/(api)?/auth/:path*",
 };
