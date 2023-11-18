@@ -1,19 +1,27 @@
-version: '2'
+version: "2"
 services:
-    app:
-        container_name: bayview-development
-        build: 
-          context: .
-          target: dev
-        command: 
-            ash -c "npm run build && npm run test"
-        ports:
-            - 51204:51204
-        volumes:
-            - .:/app
-            - /app/node_modules
-            - /app/.next
-            - /app/__vitest__/
+  app:
+    container_name: "bayview-development"
+    build:
+      context: .
+      target: build
+    command: npm run test
+    networks:
+      - app_network
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: development
+    volumes:
+      - app:/app
+      - node_modules:/app/node_modules
+      - next:/app/.next
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
-    bayview-nodemodules: {}
+  app: {}
+  next: {}
+  node_modules: {}

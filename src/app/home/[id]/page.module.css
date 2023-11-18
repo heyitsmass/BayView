@@ -1,6 +1,5 @@
 .contentGrid {
-    @apply grid gap-4 px-8 py-10;
-    @apply grid-cols-1 md:grid-cols-2 2xl:grid-cols-3;
+    @apply grid gap-4 px-4 2xl:px-16 2xl:px-10 py-16 items-start;
     @apply mx-auto max-w-[130rem];
+    grid-template-columns: repeat(auto-fill, minmax(510px, 1fr));
 }
-  

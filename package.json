@@ -11,6 +11,7 @@
     "coverage": "vitest --coverage --ui"
   },
   "dependencies": {
+    "@duffel/api": "^2.5.10",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
@@ -22,6 +23,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "^10.4.15",
+    "aws4": "^1.12.0",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.7",
     "chalk": "^5.3.0",
@@ -42,6 +44,7 @@
     "supertokens-auth-react": "^0.35.6",
     "supertokens-node": "^16.4.0",
     "supertokens-web-js": "^0.8.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "tailwindcss": "^3.3.3",
     "typescript": "5.2.2",
     "utf-8-validate": "^6.0.3",

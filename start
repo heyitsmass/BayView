@@ -44,15 +44,12 @@ b=''
 
 if [[ $start == 1 ]]; then
     if [[ $build == 1 ]]; then
-        b='--build'
-    elif [[ $validate == 1 ]]; then
-        f='-f ./docker-compose.validate.yml'
+        docker compose down -V 
+        docker image rm bayview-app --force 
         b='--build'
     elif [[ $test == 1 ]]; then
         f='-f ./docker-compose.test.yml'
-        b='--build'
     fi;
-    docker compose $f up $b --force-recreate -V
+    docker compose $f up $b -V
 fi;
 
-docker compose down -v

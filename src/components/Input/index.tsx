@@ -38,7 +38,9 @@ const UserInput = ({ ...props }: UserInputProps) => {
   const {icon, label, id, children, className} = props; 
 	
   const [input, validateInput] = useInputValidation();
-  const onKeyUp = useCallback((event: SyntheticEvent) => validateInput((event.currentTarget as HTMLInputElement).value), [validateInput]);
+  const onKeyUp = useCallback((event: SyntheticEvent) => {
+    validateInput((event.currentTarget as HTMLInputElement).value);
+  }, [validateInput]);
 
   return (
     <div className={className}>
