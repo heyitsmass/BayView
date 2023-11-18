@@ -11,11 +11,12 @@ type BannerProps = {
     blurHeight?: number;
     className?: string;
     style?: CSSProperties;
-    children?: ReactNode
+    children?: ReactNode,
+    bannerHeight?: string;
 };
 
 export default function Banner(props: BannerProps) {
-    const {src, className, style, children, ...spread_props } = props;
+    const {src, className, style, children, bannerHeight, ...spread_props } = props;
     
     // Combine the provided style with default styles
     const combinedClasses = `-z-20  ${className}`;
@@ -26,7 +27,7 @@ export default function Banner(props: BannerProps) {
     };
     
 	return (
-		<div className="relative w-full h-72">
+		<div className={`relative w-full h-52 ${bannerHeight}`}>
 			<Image
                 src={src}
 				fill
