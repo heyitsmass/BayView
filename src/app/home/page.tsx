@@ -7,7 +7,7 @@ import styles from './page.module.css';
 import { useRef, useState } from 'react';
 import { CardCollapseContext } from '@/components/HomePage/Card/cardCollapseContext';
 import Banner from '@/components/Banner';
-import bannerImg from '../../../../public/images/1.png';
+import bannerImage from '../../../public/images/1.png';
 import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';
 import ItineraryTitle from '@/components/ItineraryTitle';
 import DiningCard from '@/components/HomePage/Card/DiningCard';
@@ -20,7 +20,7 @@ const initialCards = [
   <DiningCard />
 	// ... Add cards here
 ];
-
+ 
 export default function Page() {
 	// State to store the order of the card IDs
 	const [cardOrder, setCardOrder] = useState(initialCards.map((_, index) => `card-${index}`));
@@ -55,7 +55,7 @@ export default function Page() {
 	return (
 		<AnimatePresence>
 			<AnimationComponent transition={{ duration: 0.5 }}>
-				<Banner bannerHeight="!h-52" src={bannerImg.src} />
+				<Banner bannerHeight="!h-52" src={bannerImage.src} />
 				<div className={`${styles.contentGrid}`}>
 					<div className="w-[600px] -mt-52 absolute">
 						<ItineraryTitle></ItineraryTitle>
