@@ -193,7 +193,7 @@ function ProfileDropdown() {
     <AnimationComponent>
       <div
         data-testid="logout-button"
-        className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600"
+        className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-2xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600"
       >
         <ul className="w-full">
           <li>
