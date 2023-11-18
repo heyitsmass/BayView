@@ -53,7 +53,7 @@ export default function Page() {
 	return (
 		<AnimatePresence>
 			<AnimationComponent transition={{ duration: 0.5 }}>
-				<Banner src={bannerImg.src} />
+				<Banner bannerHeight="!h-52" src={bannerImg.src} />
 				<div className={`${styles.contentGrid}`}>
 					<div className="w-[600px] -mt-52 absolute">
 						<ItineraryTitle></ItineraryTitle>
