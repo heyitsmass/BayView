@@ -1,0 +1,47 @@
+.selectWrapper {
+    @apply w-full pb-4 relative;
+}
+
+.selectWrapper * {
+    transition: all 0.25s ease-in-out;
+}
+
+.label {
+    @apply block pl-3 h-7 text-base;
+}
+
+.select {
+    @apply w-full text-base rounded-full focus:outline-none;
+    @apply bg-zinc-50 border border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
+    @apply appearance-none;
+    padding: 0.65rem 1rem 0.65rem 3.1rem;
+}
+
+.selectArrow {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.4rem;
+    pointer-events: none;
+    padding: 0.4rem 0 0 0;
+    @apply text-lg;
+}
+
+.selectArrowWrapper {
+    position: absolute;
+    right: 0.09rem;
+    top: 0.1rem;
+    bottom: 0.02;
+    width: 2.5rem;
+    height: 70%;
+    @apply rounded-tr-full rounded-br-full;
+    pointer-events: none;
+    @apply bg-zinc-200 dark:bg-zinc-800;
+}
+
+.icon {
+    @apply text-lg;
+    padding: 0.45rem 0 0.4rem 1rem;
+    position: absolute;
+    left: 0.2rem;
+    top: 0.53rem;
+}

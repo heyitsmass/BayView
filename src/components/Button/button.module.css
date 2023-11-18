@@ -1,11 +1,11 @@
 /* Common Button Styles */
 .button {
-  @apply text-white font-bold rounded-full py-3 px-8 cursor-pointer transition ease-in duration-200;
+  @apply text-white font-bold rounded-full py-2 px-5 my-auto cursor-pointer transition ease-in duration-200;
   @apply flex align-middle justify-items-center outline-none ring-2 ring-transparent;
 }
 
 .button:disabled {
-  @apply opacity-25 cursor-not-allowed;
+  @apply opacity-50 cursor-not-allowed;
 }
 
 /* Primary (Black) Button Styles */
@@ -14,7 +14,7 @@
 }
 
 .button.primary:not(:disabled) {
-  @apply hover:bg-zinc-800 active:bg-zinc-700 focus:ring-zinc-700;
+  @apply hover:bg-zinc-900 active:bg-zinc-700 focus:ring-zinc-700;
 }
 
 /* Secondary (Red) Button Styles */
@@ -27,11 +27,11 @@
 }
 
 .inlineIcon {
-    @apply pr-3;
+    @apply pr-2;
 }
 
 .inlineIcon svg {
-  @apply w-[1.2rem] h-[1.2rem] pb-[0.05rem];
+  @apply w-[1.1rem] h-[1.1rem] pb-[0.1rem];
 }
 
 .spinner {
@@ -43,22 +43,29 @@
   border-radius: 100%;
   margin-top: 2px;
   animation: clockwise 0.7s linear infinite;
+  flex: none;
+  @apply ml-3;
 }
 
 @keyframes clockwise {
   0% {
     transform: rotate(0deg);
+    animation-timing-function: ease-in;
   }
-  20% {
-    transform: rotate(72deg);
+  25% {
+    transform: rotate(90deg);
+    animation-timing-function: ease-in;
   }
   50% {
     transform: rotate(180deg);
+    animation-timing-function: ease-out;
   }
-  80% {
-    transform: rotate(288deg);
+  75% {
+    transform: rotate(270deg);
+    animation-timing-function: ease-out;
   }
   100% {
     transform: rotate(360deg);
+    animation-timing-function: ease-out;
   }
 }

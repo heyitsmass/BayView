@@ -10,24 +10,24 @@ type ButtonProps = ({
     variant?:
       | 'primary'
       | 'secondary';
+    pending?: string;
   });
 
 export default function Button({
   ...props
 }: ButtonProps) {
-  const [isPending, setIsPending] = useState(false); 
   const classNames = [props.className, props.variant ? styles[props.variant] : styles.primary, styles.button].join(' ');
-  
+
   return (
-  <button {...props} className={`${classNames}`}>
+  <button {...props} {... props.pending && ({"disabled": true, "aria-disabled": true})} className={`${classNames}`}>
     	{ props.icon && 
         <div className={styles.inlineIcon}>
 				  <FontAwesomeIcon className="text-white w-3" size="lg" icon={props.icon}/>
         </div> 
       }
       <div className='w-full justify-self-center'>{props.children}</div>
-      { isPending && 
-        <div className={[styles.spinner].join('ml-3 fex-none')}></div> 
+      { props.pending && 
+        <div data-testid="spinner" className={styles.spinner}></div> 
       }
   </button>)
 }
