@@ -7,7 +7,9 @@ import { waitFor } from "@testing-library/react";
 import baymax from "@/public/images/baymax.png";
 import { H } from "vitest/dist/reporters-5f784f42";
 import Mail from "nodemailer/lib/mailer"; 
+import { Twilio } from "twilio";
 
+import { CourierClient } from "@trycourier/courier";
 
 type IdentityState = "anonymous" | "registered" | "authenticated";
 type FlowState =
@@ -322,8 +324,28 @@ interface Notifier {
   send_notification(): void;
 }
 
-class SMSNotifier implements Notifier {
+export class SMSNotifier implements Notifier {
   /** SMS Notifier implementation */
+  public async sendSMS(userMessage: string, userNum: string) {
+        /** Sends an SMS to the users phone */
+      const courier = CourierClient(
+        { authorizationToken: process.env.COURIER_AUTH_TOKEN });
+      const { requestId } = await courier.send({
+        message: {
+          to: {
+            phone_number: userNum
+          },
+          content: {
+            body: userMessage
+          },
+        }
+      });
+
+      return requestId;
+
+  
+  };
+
   public send_notification() {
     /** Sends a notification to the users phone */
   }
@@ -336,7 +358,7 @@ export class EmailNotifier implements Notifier {
     service: "gmail",
     auth: {
       user: process.env.SMTP_EMAIL,        //replace with your email in .env file
-      pass: process.env.SMTP_PASS,        //replace with your password in .env file
+      pass: process.env.SMTP_PASSWORD,        //replace with your password in .env file
     }
   });
   
