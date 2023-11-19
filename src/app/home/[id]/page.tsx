@@ -16,7 +16,7 @@ import LodgingCard from '@/components/HomePage/Card/LodgingCard';
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
-	<><FlightCard /><LodgingCard /></>
+	<FlightCard/>
 	// ... Add cards here
 ];
 
