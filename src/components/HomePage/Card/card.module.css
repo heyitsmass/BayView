@@ -1,5 +1,5 @@
 .defaultCard {
-    @apply w-full px-2 py-3 bg-white border border-zinc-200 rounded-2xl dark:bg-zinc-800 dark:border-zinc-700;
+    @apply w-full h-full px-2 py-3 bg-white border border-zinc-200 rounded-2xl dark:bg-zinc-800 dark:border-zinc-700;
     @apply transition-all duration-300 ease-in-out;
 }
 
@@ -10,4 +10,8 @@
 .extraCardPadding {
     @apply !px-7;
     @apply !pb-7;
+}
+
+.closedCardPadding {
+    @apply !px-7;
 }
