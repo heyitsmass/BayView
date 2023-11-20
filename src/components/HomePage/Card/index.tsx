@@ -76,7 +76,7 @@ export default function Card(props: CardProps) {
 					<h2 className="pl-6 pb-3 -mx-3 text-zinc-400 p-1">{props.subtitle}</h2>
 				</motion.div>
 			)}
-			<div className={`px-1 ${isOpen && "py-1"}`}>
+			<div className={`px-1 py-0 ${styles.paddingTransition} ${isOpen && "!py-1"}`}>
 				<AnimatePresence>
 					{isOpen && (
 						<motion.div
