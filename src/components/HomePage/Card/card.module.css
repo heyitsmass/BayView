@@ -3,10 +3,6 @@
     @apply transition-all duration-300 ease-in-out;
 }
 
-.paddingTransition {
-    transition: padding 0.3s ease-in-out;
-}
-
 .defaultCard .icon * {
     @apply transition-all duration-300 ease-in-out;
 }
