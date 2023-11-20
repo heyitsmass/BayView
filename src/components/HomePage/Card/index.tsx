@@ -29,7 +29,7 @@ export default function Card(props: CardProps) {
 
 	const variantParams = {
 		closed: { opacity: 0, maxHeight: 0, overflow: "hidden", filter: 'blur(10px)' },
-		open: { opacity: 1, maxHeight: 500, overflow: "auto", filter: 'blur(0px)' },
+		open: { opacity: 1, maxHeight: 600, overflow: "auto", filter: 'blur(0px)' },
 	};
 
 	const toggleOpen = () => {
@@ -45,7 +45,7 @@ export default function Card(props: CardProps) {
 	return (
 		<div className={`${props.className} ${styles.defaultCard} ${props.title && styles.extraCardPadding}`}>
 			{props.title && (
-				<button className="flex items-center -mx-3" onClick={() => toggleOpen()}>
+				<button className="flex items-center -mx-3 px-1 pt-2" onClick={() => toggleOpen()}>
 					<FontAwesomeIcon className={`${styles.icon} w-4 pr-2 icon`} size="lg" icon={isOpen ? faAngleDown : faAngleUp} />
 					<motion.div
 						key={props.title}
@@ -67,13 +67,14 @@ export default function Card(props: CardProps) {
 					exit="exit"
 					transition={titleTransitionParams}
 					variants={titleTransitions}
+					className="px-1"
 				>
-					<h2 className="pl-6 pb-3 -mx-3 text-zinc-400">{props.subtitle}</h2>
+					<h2 className="pl-6 pb-3 -mx-3 text-zinc-400 p-1">{props.subtitle}</h2>
 				</motion.div>
 			)}
 			<AnimatePresence>
 				{isOpen && (
-					<motion.div initial="closed" animate="open" exit="closed" variants={variantParams} transition={transition}>
+					<motion.div className="p-1" initial="closed" animate="open" exit="closed" variants={variantParams} transition={transition}>
 						{props.children}
 					</motion.div>
 				)}
