@@ -3,8 +3,9 @@ import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import styles from './card.module.css';
-import { motion, AnimatePresence, cubicBezier } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCardCollapse } from './cardCollapseContext';
+import { easeOutExpoTransition, blurFadeVariant, titleTransitionVariant, titleTransitionParams} from '@/components/Animations/AnimatePresenceComponent';
 
 type CardProps = {
 	title?: string;
@@ -15,32 +16,12 @@ export default function Card(props: CardProps) {
 	const [isOpen, setIsOpen] = useState(true);
 	const { onCollapse } = useCardCollapse();
 
-	const titleTransitions = {
-		initial: { opacity: 0, x: 0, filter: 'blur(5px)' },
-		animate: { opacity: 1, x: 0, filter: 'blur(0px)' },
-		exit: { opacity: 0, x: 20, filter: 'blur(10px)' },
-	};
-
-	const titleTransitionParams = {
-		type: 'tween',
-		ease: 'easeInOut',
-		duration: 0.5,
-	};
-
-	const variantParams = {
-		closed: { opacity: 0, maxHeight: 0, overflow: 'hidden', filter: 'blur(10px)' },
-		open: { opacity: 1, maxHeight: 600, overflow: 'auto', filter: 'blur(0px)' },
-	};
-
 	const toggleOpen = () => {
 		setIsOpen(!isOpen);
 		if (isOpen) {
 			onCollapse();
 		}
 	};
-
-	const easeOutExpo = cubicBezier(0.16, 1, 0.3, 1);
-	const transition = { type: 'tween', ease: easeOutExpo, duration: 0.5 };
 
 	return (
 		<div
@@ -57,7 +38,7 @@ export default function Card(props: CardProps) {
 						animate="animate"
 						exit="exit"
 						transition={titleTransitionParams}
-						variants={titleTransitions}
+						variants={titleTransitionVariant}
 					>
 						<h1 className="text-2xl font-bold">{props.title}</h1>
 					</motion.div>
@@ -70,7 +51,7 @@ export default function Card(props: CardProps) {
 					animate="animate"
 					exit="exit"
 					transition={titleTransitionParams}
-					variants={titleTransitions}
+					variants={titleTransitionVariant}
 					className="px-1"
 				>
 					<h2 className="pl-6 pb-2 -mx-3 text-zinc-400 p-1">{props.subtitle}</h2>
@@ -83,8 +64,8 @@ export default function Card(props: CardProps) {
 							initial="closed"
 							animate="open"
 							exit="closed"
-							variants={variantParams}
-							transition={transition}
+							variants={blurFadeVariant}
+							transition={easeOutExpoTransition}
 						>
 							{props.children}
 						</motion.div>

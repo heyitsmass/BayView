@@ -1,5 +1,5 @@
 'use client';
-import { animations, motion, MotionProps } from 'framer-motion';
+import { animations, cubicBezier, motion, MotionProps } from 'framer-motion';
 
 type AnimationProps = {
 	type?: keyof typeof animations;
@@ -8,6 +8,26 @@ type AnimationProps = {
 type AnimationTypes = {
 	[key: string]: any;
 };
+
+export const blurFadeVariant = {
+	closed: { opacity: 0, maxHeight: 0, overflow: 'hidden', filter: 'blur(10px)' },
+	open: { opacity: 1, maxHeight: 600, overflow: 'auto', filter: 'blur(0px)' },
+};
+
+export const titleTransitionVariant = {
+	initial: { opacity: 0, x: 0, filter: 'blur(5px)' },
+	animate: { opacity: 1, x: 0, filter: 'blur(0px)' },
+	exit: { opacity: 0, x: 20, filter: 'blur(10px)' },
+};
+
+export const titleTransitionParams = {
+	type: 'tween',
+	ease: 'easeInOut',
+	duration: 0.5,
+};
+
+const easeOutExpo = cubicBezier(0.16, 1, 0.3, 1);
+export const easeOutExpoTransition = { type: 'tween', ease: easeOutExpo, duration: 0.5 };
 
 export default function AnimationComponent({ ...props }: AnimationProps) {
 	const defaultTransition = {
