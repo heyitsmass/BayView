@@ -14,9 +14,9 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import styles from "./input.module.css";
 
-type UserInputProps = {
+export type UserInputProps = {
   icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
-  label?:string; 
+  label?: string;
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -34,26 +34,29 @@ function useInputValidation(initialValue: string = "") {
 }
 
 const UserInput = ({ ...props }: UserInputProps) => {
-	
-  const {icon, label, id, children, className} = props; 
-	
+  const { icon, label, id, children, className } = props;
+
   const [input, validateInput] = useInputValidation();
-  const onKeyUp = useCallback((event: SyntheticEvent) => {
-    validateInput((event.currentTarget as HTMLInputElement).value);
-  }, [validateInput]);
+  const onKeyUp = useCallback(
+    (event: SyntheticEvent) =>
+      validateInput((event.currentTarget as HTMLInputElement).value),
+    [validateInput]
+  );
+
+  const style = [styles.input, className].join(" ");
 
   return (
     <div className={className}>
-      { label ? (
+      {label ? (
         <label className={styles.label} htmlFor={id}>
           {label}
-        </label>)
-        :
+        </label>
+      ) : (
         <div className="w-full h-7"></div>
-      }
+      )}
       <div className={styles.inputWrapper}>
         {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
-        <input className={styles.input} {...props} />
+        <input {...props} className={style} />
         {children}
       </div>
     </div>

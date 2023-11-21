@@ -5,22 +5,31 @@ const nextConfig = {
   /* config options here */
   experimental: {
     instrumentationHook: true,
-    esmExternals: "loose"
+    esmExternals: "loose",
   },
   images: {
     remotePatterns: [
       {
-        hostname: "loremflickr.com"
+        hostname: "loremflickr.com",
       },
       {
-        hostname: "cloudflare-ipfs.com"
+        hostname: "cloudflare-ipfs.com",
       },
       {
-        hostname: "avatars.githubusercontent.com"
-      }
-    ]
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
-  reactStrictMode: false
+  reactStrictMode: false,
+  redirects: () => {
+    return [
+      {
+        source: "/",
+        destination: "/home",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

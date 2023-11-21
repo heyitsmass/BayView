@@ -21,7 +21,7 @@ import {
   TheatreModel,
   WaterparkModel,
   ZooModel
-} from '@/models/Event';
+} from '@/models';
 import {
   Activities,
   EventTypes,
