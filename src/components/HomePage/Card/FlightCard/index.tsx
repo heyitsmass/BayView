@@ -4,11 +4,18 @@ import InputPair from '@/components/Input/InputPair';
 import Button from '@/components/Button';
 import Card from '@/components/HomePage/Card';
 import Calendar from "react-calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ReactCalendarDemo from '@/components/Input/Calendar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
+type ValuePiece = Date | null;
 export default function FlightCard() {
-	const [date, setDate] = useState(new Date());
+	const [departureDate, setDepartureDate] = useState<ValuePiece | [ValuePiece, ValuePiece]>(
+    new Date()
+  );
+  const [returnDate, setReturnDate] = useState<ValuePiece | [ValuePiece, ValuePiece]>(
+    new Date()
+  );
 	return (
     <Card title="Flights" subtitle="search, book, and add to itinerary">
       <form>
@@ -29,19 +36,19 @@ export default function FlightCard() {
           />
         </InputPair>
         <InputPair icon={faArrowRight}>
-          <Input
+          <ReactCalendarDemo
             label="Departure Date"
+            placeholder="Date"
             name="departure-date"
-            icon={{ icon: faCalendarDays }}
-            placeholder="Date"
-            required
+            date={departureDate}
+            setDate={setDepartureDate}
           />
-          <Input
+          <ReactCalendarDemo
             label="Return Date"
-            name="return-date"
-            icon={{ icon: faCalendarDays }}
             placeholder="Date"
-            required
+            name="return-date"
+            date={returnDate}
+            setDate={setReturnDate}
           />
         </InputPair>
         <InputPair>
@@ -60,14 +67,11 @@ export default function FlightCard() {
           />
         </InputPair>
 
-        <div className="calendar-container">
-          <Calendar onChange={setDate} value={date} />
-        </div>
-
         <Button variant="secondary" className="mt-4">
           Find Flights
         </Button>
       </form>
     </Card>
   );
+
 }
