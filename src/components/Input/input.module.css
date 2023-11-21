@@ -12,9 +12,10 @@
 
 .input {
   @apply w-full text-base rounded-full focus:outline-none;
-  @apply bg-zinc-50 border border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
+  @apply bg-zinc-50 border placeholder-zinc-400 border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
   padding: 0.65rem 1rem 0.65rem 3.1rem;
 }
+
 
 /* .input::-webkit-calendar-picker-indicator {
   display: none;
