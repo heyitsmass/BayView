@@ -3,12 +3,20 @@ FROM node:20.9.0-alpine3.18 AS base
 FROM base AS deps
 
 RUN apk add --no-cache libc6-compat
+# Legacy Support
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
+# Legacy Support
 RUN apk add build-base
 
 WORKDIR /app
-COPY package.json package-lock.json ./
 
-RUN npm ci; 
+# Legacy Support
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Legacy Support
+
+RUN npm ci 
 
 FROM base AS dev
 

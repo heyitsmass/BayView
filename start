@@ -44,7 +44,7 @@ b=''
 
 if [[ $start == 1 ]]; then
     if [[ $build == 1 ]]; then
-        docker compose down -V 
+        docker compose down -v 
         docker image rm bayview-app --force 
         b='--build'
     elif [[ $test == 1 ]]; then
