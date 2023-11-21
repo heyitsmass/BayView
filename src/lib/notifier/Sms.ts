@@ -1,3 +1,4 @@
+
 import { Twilio } from "twilio";
 
 import { CourierClient } from "@trycourier/courier";
@@ -6,6 +7,7 @@ import { Notifier } from ".";
 
 export class SMSNotifier implements Notifier {
   /** SMS Notifier implementation */
+
   public async sendSMS(userMessage: string, userNum: string) {
         /** Sends an SMS to the users phone */
       const courier = CourierClient(
