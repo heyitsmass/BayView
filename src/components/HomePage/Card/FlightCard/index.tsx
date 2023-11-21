@@ -1,30 +1,17 @@
-import { faCalendarDays, faLocationArrow, faArrowRight, faUser, faChair } from '@fortawesome/free-solid-svg-icons';
-import Input from '@/components/Input';
-import InputPair from '@/components/Input/InputPair';
-import Button from '@/components/Button';
-import Card from '@/components/HomePage/Card';
-import { useState, useEffect } from "react";
-import BayviewCalendar from "@/components/Input/BayviewCalendar";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCalendarDays,
+  faLocationArrow,
+  faArrowRight,
+  faUser,
+  faChair,
+} from "@fortawesome/free-solid-svg-icons";
+import Input from "@/components/Input";
+import InputPair from "@/components/Input/InputPair";
+import Button from "@/components/Button";
+import Card from "@/components/HomePage/Card";
 
-type ValuePiece = Date | null;
 export default function FlightCard() {
-	const [departureDate, setDepartureDate] = useState<ValuePiece | [ValuePiece, ValuePiece]>(
-    null
-  );
-  const [returnDate, setReturnDate] = useState<ValuePiece | [ValuePiece, ValuePiece]>(
-    null
-  );
-   const [disabled, setDisabled] = useState(false);
-   const checkDate = (departureDate) => {
-      if (departureDate != null) {
-        setDisabled(false);
-      }
-      else {
-        setDisabled(true);
-      }
-    }
-	return (
+  return (
     <Card title="Flights" subtitle="search, book, and add to itinerary">
       <form>
         <InputPair icon={faArrowRight}>
@@ -44,23 +31,19 @@ export default function FlightCard() {
           />
         </InputPair>
         <InputPair icon={faArrowRight}>
-          <BayviewCalendar
+          <Input
             label="Departure Date"
+            name="departure-date"
+            icon={{ icon: faCalendarDays }}
             placeholder="Date"
-            title="Departure"
-            date={departureDate}
-            minDate={new Date()}
-            setDate={setDepartureDate}
-            disabled={false}
+            required
           />
-          <BayviewCalendar
+          <Input
             label="Return Date"
+            name="return-date"
+            icon={{ icon: faCalendarDays }}
             placeholder="Date"
-            title="Return"
-            date={returnDate}
-            minDate={departureDate}
-            setDate={setReturnDate}
-            disabled={departureDate === null ? true : false}
+            required
           />
         </InputPair>
         <InputPair>
@@ -78,13 +61,10 @@ export default function FlightCard() {
             placeholder="Cabin Preference"
           />
         </InputPair>
-
         <Button variant="secondary" className="mt-4">
           Find Flights
         </Button>
       </form>
     </Card>
   );
-    
-
 }
