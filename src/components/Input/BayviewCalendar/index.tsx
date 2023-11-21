@@ -1,30 +1,15 @@
-import React, { SyntheticEvent, useState, Fragment } from "react";
+import React, {useState, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendar.css";
 import styles from "../input.module.css"
-
 import {
-  faCalendarDays,
-  faClose,
-  faLocationArrow,
-  faArrowRight,
-  faUser,
-  faChair,
+  faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 import { Dialog, Transition } from "@headlessui/react";
 
-type LocationModalProps = {
-  open: boolean;
-  onClose: (e?: SyntheticEvent) => void;
-}; 
-
-const ReactCalendarDemo = ({ date, setDate, label, name, placeholder, title, minDate, disabled}) => {
-    const initialState = {
-      value: "",
-    };
+const BayviewCalendar = ({ date, setDate, label, placeholder, title, minDate, disabled}) => {
 
   let [isOpen, setIsOpen] = useState(false);
 
@@ -86,7 +71,6 @@ const ReactCalendarDemo = ({ date, setDate, label, name, placeholder, title, min
                   </div>
                   <div></div>
                   <Calendar
-                    /*className={`${styles.reactCalendar}`}*/
                     minDate={minDate}
                     value={date}
                     onChange={handleChange}
@@ -101,4 +85,4 @@ const ReactCalendarDemo = ({ date, setDate, label, name, placeholder, title, min
   );
 };
 
-export default ReactCalendarDemo;
+export default BayviewCalendar;
