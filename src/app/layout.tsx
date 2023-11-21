@@ -1,7 +1,6 @@
 "use server";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { ReactNode } from "react";
-import { barlow } from "./fonts";
 import "./globals.css";
 import { barlow, barlowCondensed, barlowSemiCondensed } from "./fonts";
 import { SuperTokensProvider } from "@/components/SuperTokens/SuperTokensProvider";
