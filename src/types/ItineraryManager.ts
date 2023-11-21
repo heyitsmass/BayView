@@ -435,7 +435,7 @@ export class EmailNotifier implements Notifier {
     service: "gmail",
     auth: {
       user: process.env.SMTP_EMAIL,        //replace with your email in .env file
-      pass: process.env.SMTP_PASSWORD,        //replace with your password in .env file
+      pass: process.env.SMTP_PASSWORD || process.env.SMTP_PASS,        //replace with your password in .env file
     }
   });
   
