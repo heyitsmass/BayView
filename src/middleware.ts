@@ -5,7 +5,7 @@ export async function middleware() {
 
   const origin =
     process.env.NODE_ENV === "production"
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL!}`
+      ? `https://bayview.dev/`
       : "*";
   res.headers.set("Access-Control-Allow-Origin", origin);
   res.headers.set("Access-Control-Allow-Credentials", "true");
