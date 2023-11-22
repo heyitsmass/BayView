@@ -4,6 +4,8 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../Button";
 import { SyntheticEvent } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
 
 type LocationModalProps = { 
   open: boolean
@@ -35,13 +37,12 @@ export default function SetLocationModal({open, onClose}:LocationModalProps) {
             </div>
             <div className="block mt-7">
               <label className="block">
-                <input type="radio" value="Disneyland" name="Location" />{" "}
-                Disneyland
+                <input type="radio" value="magicalWorld" name="Location" />{" "}
+                Magical Land
               </label>
               <label className="block mt-3">
-                <input type="radio" value="WaltDisneyWorld" name="Location" />{" "}
-                Walt Disney World
-              </label>
+                <input type="radio" value="magicalLand" name="Location" />{" "}
+                Magical World              </label>
               <Button type="submit" className="mt-8">
                 {" "}
                 Confirm{" "}
