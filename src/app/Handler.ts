@@ -25,6 +25,24 @@ export default async function Handler(
     },
   };
 
+  try {
+    switch (action.type) {
+      case "itinerary":
+        if (action.mode === "actions") {
+          body = await handleItineraryActionRequest(action.payload);
+        }
+        break;
+    }
+  } catch (err) {
+    console.error(err);
+    body = {
+      statusCode: 500,
+      body: {
+        message: "Internal Server Error",
+      },
+    };
+  }
+
   return {
     statusCode: 200,
     body,
