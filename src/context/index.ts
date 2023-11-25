@@ -1,5 +1,6 @@
 "use client";
 
+import { RequestActions } from "@/handlers/Itinerary/actions/helpers";
 import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
 import { createContext, useContext } from "react";
@@ -12,10 +13,17 @@ export type THomepageContext = {
   itinerary: FlattenedItinerary;
 };
 
-export type HomepageAction = {
-  type: string;
-  payload?: any;
-};
+export type HomepageAction =
+  | {
+      type: "itinerary";
+      mode: "actions";
+      payload: RequestActions;
+    }
+  | {
+      type: string;
+      mode: string;
+      payload: any;
+    };
 
 export type THomepageDispatch = (action: HomepageAction) => void;
 export type THomepageManager = (action: HomepageAction) => Promise<void>;
