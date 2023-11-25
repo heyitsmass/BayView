@@ -1,22 +1,25 @@
 "use server";
 
+import { Notifiers } from ".";
 import { EmailNotifier } from "./Email";
 
 const cache = new Map<string, EmailNotifier>();
 
-export const HandleCall = async ({
+type NotifierCallProps = {
+  _id: string;
+  delay?: number;
+  type: Notifiers;
+  mode: "create" | "cancel";
+};
+
+export const handleNotifierCall = async ({
   _id,
   delay,
   type,
   mode, // "create" | "cancel"
-}: {
-  _id: string;
-  delay?: number;
-  type: "Facebook" | "Email";
-  mode: "create" | "cancel";
-}) => {
+}: NotifierCallProps) => {
   switch (type) {
-    case "Email":
+    case "email":
       if (mode === "create") {
         console.log(`Set the timer for ${delay} seconds`);
         const notifier = new EmailNotifier();
@@ -31,7 +34,12 @@ export const HandleCall = async ({
         }
       }
       break;
-    case "Facebook":
+    case "slack":
+    case "twitter":
+    case "sms":
+    case "discord":
+    case "facebook":
+      console.log("Not implemented yet");
       break;
   }
 };

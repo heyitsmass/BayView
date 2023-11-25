@@ -10,7 +10,7 @@ export interface Notifier {
   /** Sends a notification to the user */
   send_notification(): void;
   /** Delay in seconds */
-  notify(delay:number): void; 
+  notify(delay: number): void;
 }
 
 const notifier = {
@@ -19,7 +19,9 @@ const notifier = {
   twitter: TwitterNotifier,
   email: EmailNotifier,
   sms: SMSNotifier,
-  discord: DiscordNotifier
+  discord: DiscordNotifier,
 };
+
+export type Notifiers = keyof typeof notifier;
 
 export default notifier;

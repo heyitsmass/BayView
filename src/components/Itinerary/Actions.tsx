@@ -63,6 +63,7 @@ type ActionProps = {
   largeLabel: string;
   smallLabel: string;
   children: IconDefinition[] | ReactNode;
+  handlers?: ((...args: any[]) => void)[];
   className?: string;
 };
 
@@ -76,9 +77,13 @@ const Action = ({ ...props }: ActionProps) => {
     return setOpen(!isOpen);
   };
 
+  const handlers = props.handlers || [];
+
   const display =
     children instanceof Array
-      ? children.map((icon, i) => <FontAwesomeIcon key={i} icon={icon} />)
+      ? children.map((icon, i) => (
+          <FontAwesomeIcon key={i} icon={icon} onClick={handlers.at(i)} />
+        ))
       : children;
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 import { useHomepage } from "@/context";
-import { HandleCall } from "@/lib/notifier/Handler";
+import { handleNotifierCall } from "@/lib/notifier/Handler";
 
 export default function Page() {
   const ctx = useHomepage();
@@ -20,9 +20,9 @@ export default function Page() {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={async (e) => {
               e.preventDefault();
-              await HandleCall({
+              await handleNotifierCall({
                 _id,
-                type: "Email",
+                type: "email",
                 delay: 10,
                 mode: "create",
               });
@@ -35,7 +35,11 @@ export default function Page() {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={async (e) => {
               e.preventDefault();
-              await HandleCall({ _id, type: "Email", mode: "cancel" });
+              await handleNotifierCall({
+                _id,
+                type: "email",
+                mode: "cancel",
+              });
             }}
           >
             Cancel the timer!
