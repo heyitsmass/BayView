@@ -25,3 +25,4 @@ export async function middleware() {
 export const config = {
   matcher: "/(api/)?auth/:path*",
 };
+export default middleware;
