@@ -321,7 +321,9 @@ export interface Shopping {
   openingHours: string;
   salesAndDeals: (Deal | Sale)[]; // Information about ongoing sales or deals
   diningOptions: DiningOptions[]; // Restaurants or food courts in the mall
-  customerReviews: Record<string, Review>; // Customer reviews for the mall or specific stores
+  customerReviews: {
+    [x: string]: Review;
+  }; // Customer reviews for the mall or specific stores
   shoppingBudget: number; // Maximum amount of money to spend on shopping
   // ... (other shopping-specific properties)
 }
@@ -360,9 +362,16 @@ export interface Golf {
   // ... (other golf-specific properties)
 }
 
+export type Difficulty =
+  | "Easy"
+  | "Moderate"
+  | "Difficult"
+  | "Extreme"
+  | "Expert";
+
 export interface Hiking {
   trail: string; // Name of the hiking trail
-  difficulty: string; // Difficulty level of the trail (e.g., easy, moderate, difficult)
+  difficulty: Difficulty; // Difficulty level of the trail (e.g., easy, moderate, difficult)
   length: number; // Length of the hiking trail in kilometers
   rating: number; // Rating of the hiking trail
   distance: number; // Length of the hiking trail in kilometers
