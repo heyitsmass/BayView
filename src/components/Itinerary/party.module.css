@@ -8,10 +8,6 @@
   box-shadow: 0 0 8px -2px black;
 }
 
-.party_member svg {
-  cursor: pointer;
-}
-
 .party_member svg:hover {
   opacity: .8;
 }
@@ -21,16 +17,13 @@
   cursor: pointer;
 }
 
-.party svg:hover {
+.party>svg:hover {
   transform: rotate(90deg);
 
 }
 
-.wrapper {
-  display: flex;
-}
 
-@media screen and (max-height:950px) and (min-width:1200px){
+@media screen and (max-height:950px) and (min-width:1200px) {
   .members {
     display: flex !important;
     gap: 1rem;
@@ -68,30 +61,31 @@
     cursor: pointer;
   }
 
-  .wrapper {
-    display: none;
-    width: 0;
-  }
 
 }
 
-@media screen and (min-width:901px) and (max-width:1200px){
-  .wrapper {
+@media screen and (max-width: 600px),
+screen and (min-width:901px) and (max-width:1200px) {
+
+  .party_member {
+    justify-content: center;
+  }
+
+  .party_member *:not(:first-child) {
     display: none;
     width: 0;
   }
-  .party_member { 
+
+  .party_member {
     cursor: pointer;
   }
 }
 
-@media screen and (max-width: 600px){
-  .wrapper {
-    display: none;
-    width: 0;
-  }
+@media screen and (max-width: 600px) {
 
-  .party_member { 
+
+
+  .party_member {
     cursor: pointer;
   }
 }

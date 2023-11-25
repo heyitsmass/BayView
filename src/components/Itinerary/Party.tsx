@@ -1,48 +1,31 @@
 "use client";
-import {
-  faBars,
-  faEnvelope,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+
+import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import styles from "./party.module.css";
-import { faker } from "@faker-js/faker";
+import { PartyMember } from "@/types/User";
 
-export type PartyMember = {
-  avatar: string;
-  name: string;
-  age: "Adult" | "Child";
-  primary: boolean;
-  notifications: ("email" | "phone" | "discord")[];
-};
-
-const PartyMember = ({ children }: { children: PartyMember }) => {
-  const { avatar, name, age, primary, notifications } = children;
+const Member = ({ children }: { children: PartyMember }) => {
+  const { avatar, name } = children;
 
   return (
     <div
       className={
         styles.party_member +
-        " flex items-center bg-zinc-800 shadow-lg rounded-lg relative p-1 mt-2"
+        " flex items-center bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full"
       }
     >
-      <span className="w-max p-2">
-        <Image
-          src={avatar}
-          height={30}
-          width={30}
-          alt="avatar"
-          className="rounded-full"
-        />
-      </span>
-      <span className={styles.wrapper + " flex w-full"}>
-        <span className="w-full">
-          <p>{name}</p>
-        </span>
-        <span className="px-4 self-end">
-          <FontAwesomeIcon icon={faBars} />
-        </span>
+      <Image
+        src={avatar}
+        height={30}
+        width={30}
+        alt={name[0].toLocaleUpperCase()}
+        className="rounded-full m-2 "
+      />
+      <p className="w-full truncate ellipsis">{name}</p>
+      <span className="px-2">
+        <FontAwesomeIcon icon={faBars} />
       </span>
     </div>
   );
@@ -66,7 +49,7 @@ export const Party = ({ members }: PartyProps) => {
       <FontAwesomeIcon icon={faPlus} className="absolute right-4 top-4" />
       <div className={styles.members + " h-min"}>
         {members.map((user, i) => (
-          <PartyMember key={i}>{user}</PartyMember>
+          <Member key={i}>{user}</Member>
         ))}
       </div>
     </div>
