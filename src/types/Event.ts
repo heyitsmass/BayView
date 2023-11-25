@@ -38,6 +38,10 @@ export interface Flight {
 }
 
 export interface Hotel {
+  cabinType: {
+    name: string;
+    description: string;
+  };
   checkIn: Date;
   checkOut: Date;
   roomNumber: string | number;
