@@ -1,6 +1,6 @@
-import { ShowTime } from '@/types/Event';
-import { faker } from '@faker-js/faker';
-import { randomInt } from 'crypto';
+import { Difficulty, ShowTime } from "@/types/Event";
+import { faker } from "@faker-js/faker";
+import { randomInt } from "crypto";
 
 /**
  * Generate a random street, city, state, and zip code for a location
@@ -11,7 +11,7 @@ const location = () => {
     street: faker.location.streetAddress(),
     city: faker.location.city(),
     state: faker.location.state(),
-    zip: faker.location.zipCode()
+    zip: faker.location.zipCode(),
   };
 };
 
@@ -29,18 +29,47 @@ type DateOptions = {
 const date = (options?: DateOptions) => {
   return {
     dateTo: faker.date.soon(),
-    dateFrom: faker.date.future(options)
+    dateFrom: faker.date.future(options),
   };
 };
 
 /**
  * Generate a random opening hours string
- * - It is guarenteed the closing date will be in the future but the time is not guarenteed to be in order
  */
 const openingHours = () => {
-  return `${faker.date.soon().toLocaleTimeString('it-IT')} - ${faker.date
-    .future()
-    .toLocaleTimeString('it-IT')}`;
+  const closeTimes = [
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "5:00 PM",
+    "6:00 PM",
+    "7:00 PM",
+    "8:00 PM",
+    "9:00 PM",
+    "10:00 PM",
+    "11:00 PM",
+    "12:00 AM",
+    "1:00 AM",
+    "2:00 AM",
+    "3:00 AM",
+    "4:00 AM",
+  ];
+
+  const openTimes = [
+    "5:00 AM",
+    "6:00 AM",
+    "7:00 AM",
+    "8:00 AM",
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+  ];
+
+  return `${openTimes[randomInt(openTimes.length)]} - ${
+    closeTimes[randomInt(closeTimes.length)]
+  }`;
 };
 
 /**
@@ -57,7 +86,7 @@ const nameAndRandomPrice = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 10); i++) {
     experiences.push({
       name: names[randomInt(0, names.length)],
-      price: faker.number.float({ min: 1, max: 100 })
+      price: faker.number.float({ min: 1, max: 100 }),
     });
   }
 
@@ -69,7 +98,7 @@ const nameAndRandomPrice = (names: string[]) => {
  * @param names - The list of names to choose from
  * @returns - Returns a list of names and descriptions
  */
-const nameAndRandomDescription = (names: string[]) => {
+const nameAndRandomDescriptions = (names: string[]) => {
   const facilities = [] as {
     name: string;
     description: string;
@@ -78,11 +107,18 @@ const nameAndRandomDescription = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 5); i++) {
     facilities.push({
       name: names[randomInt(0, names.length)],
-      description: faker.lorem.words()
+      description: faker.lorem.words(),
     });
   }
 
   return facilities;
+};
+
+const nameAndRandomDescription = (names: string[]) => {
+  return {
+    name: names[randomInt(0, names.length)],
+    description: faker.lorem.words(),
+  };
 };
 
 /**
@@ -101,8 +137,12 @@ const nameAndRandomDescriptionWithTime = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 10); i++) {
     experiences.push({
       name: names[randomInt(0, names.length)],
-      time: faker.date.soon().toLocaleTimeString('it-IT'),
-      description: faker.lorem.words()
+      time: faker.date.soon().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
+      description: faker.lorem.words(),
     });
   }
 
@@ -122,10 +162,11 @@ const nameAndRandomTime = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 10); i++) {
     experiences.push({
       name: names[randomInt(0, names.length)],
-      time: faker.date.soon().toLocaleTimeString('it-IT', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
+      time: faker.date.soon().toLocaleTimeString("it-IT", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
     });
   }
   return experiences;
@@ -142,10 +183,11 @@ const showTimes = (): ShowTime[] => {
   for (let i = 0; i < randomInt(1, 5); i++) {
     times.push({
       date: faker.date.soon(),
-      time: faker.date.soon().toLocaleTimeString('it-IT', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
+      time: faker.date.soon().toLocaleTimeString("it-IT", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
     });
   }
 
@@ -184,10 +226,11 @@ const nameDescriptionDateTime = (names: string[]) => {
       name: names[randomInt(0, names.length)],
       description: faker.lorem.words(),
       date: faker.date.soon(),
-      time: faker.date.soon().toLocaleTimeString('it-IT', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
+      time: faker.date.soon().toLocaleTimeString("it-IT", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
     });
   }
 
@@ -199,20 +242,35 @@ const nameDescriptionDateTime = (names: string[]) => {
  * @param words - The list of words to choose from
  * @returns A random word from the list
  */
-const wordFromList = (words: string[]) => {
-  return words[randomInt(0, words.length)];
-};
+const wordFromList = (words: string[]) => words[randomInt(0, words.length)];
+
+const difficulty = [
+  "Easy",
+  "Moderate",
+  "Difficult",
+  "Extreme",
+  "Expert",
+] as Difficulty[];
+
+const randomDifficulty = (): Difficulty =>
+  difficulty[randomInt(difficulty.length)];
+
+const roundedFloat = (min: number, max: number, precision: number = 2) =>
+  Number(faker.number.float({ min, max }).toFixed(precision));
 
 export {
   location,
   date,
   openingHours,
-  nameAndRandomPrice,
   nameAndRandomDescription,
+  nameAndRandomPrice,
+  nameAndRandomDescriptions,
   nameAndRandomDescriptionWithTime,
   nameAndRandomTime,
   showTimes,
   randomWordList,
   nameDescriptionDateTime,
-  wordFromList
+  wordFromList,
+  randomDifficulty,
+  roundedFloat,
 };
