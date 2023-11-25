@@ -1,11 +1,11 @@
 import { faker } from "@faker-js/faker";
-import { nameAndRandomDescription, nameDescriptionDateTime, openingHours } from "../utils";
+import { nameAndRandomDescription, nameAndRandomDescriptions, nameDescriptionDateTime, openingHours, roundedFloat } from "../utils";
 import { Museum } from "@/types/Event";
 
 /** Generate a random museum activity */
 export const museum = (): Museum => {
   return {
-    exhibits: nameAndRandomDescription([
+    exhibits: nameAndRandomDescriptions([
       "Ancient Civilizations",
       "Modern Art Masterpieces",
       "Dinosaur Discovery",
@@ -17,7 +17,7 @@ export const museum = (): Museum => {
       "Famous Paintings Collection",
       "Technology Through the Ages"
     ]),
-    admissionFee: faker.number.float({ min: 1, max: 100 }),
+    admissionFee: roundedFloat(0, 100),
     openingHours: openingHours(),
     specialEvents: nameDescriptionDateTime([
       "Artists' Night",

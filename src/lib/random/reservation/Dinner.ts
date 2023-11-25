@@ -75,6 +75,10 @@ export const dining = (): Dining => {
 
   const { key, values } = offers();
 
+
+  const mealPeriod = mealPeriodInfo(); 
+
+  console.log(mealPeriod);
   return {
     priceRange: priceLegend(),
     mealPeriodInfo: mealPeriodInfo(),

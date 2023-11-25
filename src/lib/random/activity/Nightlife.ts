@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { openingHours, randomWordList, wordFromList } from "../utils";
+import { openingHours, randomWordList, roundedFloat, wordFromList } from "../utils";
 import { Nightlife } from "@/types/Event";
 
 /** Generate a random night life event. */
@@ -149,7 +149,7 @@ export const nightlife = (): Nightlife => {
       "Whimsical Wonderland"
     ]),
     ageRestriction: faker.number.int({ min: 16, max: 21 }),
-    coverCharge: faker.number.float({ min: 1, max: 100 }),
+    coverCharge: roundedFloat(0, 100),
     livePerformances: faker.datatype.boolean(),
     music: randomWordList([
       "Electronic Dance Music (EDM)",
