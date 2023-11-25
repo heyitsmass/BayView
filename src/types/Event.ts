@@ -1,16 +1,19 @@
-export interface Event {
-  //eventType: string;
+export type Location = {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+};
+
+export type Event<T = Activities | Reservable> = {
   date: Date;
   name: string;
   time?: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   description?: string;
-}
+  picture_url: string;
+  partySize: number;
+} & T;
 
 export type Airport = {
   name: string;
