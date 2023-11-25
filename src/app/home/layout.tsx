@@ -4,17 +4,22 @@ import { ReactNode } from "react";
 
 import Provider from "../Provider";
 
+import { Footer } from "@/components/HomePage/Footer";
 import TopBar from "@/components/HomePage/TopBar";
 import { SessionAuthForNextJS } from "@/components/SuperTokens/sessionAuthForNextJS";
 import { TryRefreshComponent } from "@/components/SuperTokens/tryRefreshClientComponent";
-import { THomepageContext } from "@/context";
 import ItineraryModel from "@/models/Itinerary";
 import { ItineraryWithMongo } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
 import { getSSRSession } from "@/utils/session/getSSRSession";
 import { redirect } from "next/navigation";
 import { getUserMetadata } from "supertokens-node/recipe/usermetadata";
-import { Footer } from "@/components/HomePage/Footer";
+
+import Banner from "@/components/Banner";
+import { modelTypes } from "@/lib/constants";
+import { DocumentWithDisplayData } from "@/types";
+import { Animator } from "./Animator";
+
 export default async function Layout({
   children,
 }: {
@@ -34,11 +39,15 @@ export default async function Layout({
     }
   }
 
-  const _id = session.getUserId();
+  let _id = session.getUserId();
 
   const { metadata } = (await getUserMetadata(_id)) as {
     metadata: UserMetadata;
   };
+
+  if (process.env.NODE_ENV === "development") {
+    _id = process.env.TEST_ID!;
+  }
 
   let itinerary = (await ItineraryModel.findOne({
     _id,
@@ -50,18 +59,34 @@ export default async function Layout({
     })) as ItineraryWithMongo;
   }
 
-  const ctx: THomepageContext = {
-    user: {
-      _id,
-      metadata,
-    },
-    itinerary: itinerary.toJSON({
-      flattenObjectIds: true,
-    }),
-  };
-
   return (
-    <Provider value={ctx}>
+    <Provider
+      value={{
+        user: {
+          _id,
+          metadata,
+        },
+        itinerary: {
+          ...itinerary.toJSON({
+            flattenObjectIds: true,
+          }),
+          events: itinerary.events.map((event: DocumentWithDisplayData) => {
+            const flat = event.toJSON({ flattenObjectIds: true });
+
+            const e = new modelTypes[flat.__t](flat);
+
+            const { peek, displayData, upgradeOptions } = e;
+
+            return {
+              ...flat,
+              peek,
+              displayData,
+              upgradeOptions,
+            };
+          }),
+        },
+      }}
+    >
       <div className="flex-start w-screen h-screen relative">
         <TopBar />
         <div
@@ -80,3 +105,4 @@ export default async function Layout({
     </Provider>
   );
 }
+//<Banner bannerHeight="!h-52" src="/images/banner.png" />
