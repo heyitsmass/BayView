@@ -1,0 +1,7 @@
+.upgrade_card {
+  transition: all 0.2s ease-in-out;
+}
+
+.upgrade_card:hover {
+  transform: scale(105%);
+}
