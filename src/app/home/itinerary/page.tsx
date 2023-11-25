@@ -34,6 +34,7 @@ export default function Page() {
       <div className={styles.content + "  w-full flex gap-8"}>
         <CurrentEvent {...currentEvent} />
 
+        <EventList events={events} handleClick={handleClick}></EventList>
       </div>
     </div>
   );

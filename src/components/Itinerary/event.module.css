@@ -1,0 +1,187 @@
+.event {
+  transform: scale(90%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.event:hover {
+  transform: scale(100%);
+}
+
+.icon {
+  font-size: 2.5rem !important;
+  width: 30%;
+}
+
+.info p span:not(.name span)::after {
+  content: ": ";
+}
+
+.info p:not(.name) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+  .info {
+    width: 100%;
+  }
+
+  .img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info p {
+    display: none;
+  }
+
+  .img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 950px) and (min-height: 1050px) {
+  .name {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1350px) and (max-height: 1050px) {
+  .name {
+    display: none;
+  }
+}
+
+
+
+@media screen and (max-width: 850px) and (min-height: 850px) {
+  .icon {
+
+    width: 100%;
+    min-width: 90px;
+  }
+
+  .info {
+    display: none;
+  }
+
+  .info p {
+    display: none;
+  }
+
+  .img {
+    display: none;
+  }
+
+  .wrapper {
+    border-color: red;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1250px) and (max-height: 850px) {
+
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapper p:not(.name) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 850px) {
+
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapper {
+    display: none;
+  }
+
+  .icon {
+    border: none;
+    width: 100%;
+    min-width: 90px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .info {
+    display: block !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+  }
+
+  .wrapper { 
+    width: 100%;
+  }
+
+  .info p {
+    display: block !important;
+  }
+
+  .img {
+    display: block;
+  }
+
+  .icon {
+    border-right: solid 2px white; 
+    width: min-content;
+    min-width: 90px; 
+  }
+
+  .wrapper {
+    display: flex;
+
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .img {
+    display: none;
+  }
+
+  .info {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  
+  }
+
+
+
+  .info p {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .wrapper{ 
+    display: none; 
+  }
+
+  .icon { 
+    border: none;
+    width: 100%; 
+
+  }
+}
