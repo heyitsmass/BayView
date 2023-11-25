@@ -22,6 +22,8 @@ const flightSchema = new Schema<Reservation<Flight>>({
   arrivalTime: Date,
   flightNumber: String,
   reservationNumber: String,
+  currentUpgrade: String,
+  currentPrice: Number,
   seats: {
     type: [
       {

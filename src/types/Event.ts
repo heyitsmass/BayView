@@ -32,6 +32,8 @@ export interface Flight {
   departureTime: Date;
   arrivalTime: Date;
   flightNumber: number;
+  currentUpgrade: string;
+  currentPrice: number;
   reservationNumber: string;
   seats: AirlineSeat[];
   gate: string;
