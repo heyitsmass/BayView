@@ -66,10 +66,14 @@ export default async function Layout({
         <TopBar />
         <div
           style={{ height: "calc(100vh - 7.5rem)" }}
-          className="mt-20 overflow-y-scroll"
+          className="mt-20 relative"
         >
-          {children}
-          
+          <Banner />
+          <Animator>
+            <div className="relative h-full overflow-y-scroll">
+              {children}
+            </div>
+          </Animator>
         </div>
         <Footer></Footer>
       </div>

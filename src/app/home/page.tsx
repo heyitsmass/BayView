@@ -6,8 +6,6 @@ import { CardCollapseContext } from "@/components/HomePage/Card/cardCollapseCont
 import { AnimatePresence, motion } from "framer-motion";
 import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
 import FlightCard from "@/components/HomePage/Card/FlightCard";
-import Banner from "@/components/Banner";
-import bannerImg from "../../../public/images/1.png";
 import ItineraryTitle from "@/components/ItineraryTitle";
 import { useRef, useState } from "react";
 import React from "react";
@@ -55,24 +53,21 @@ export default function Page() {
   const enhancedCards = enhanceCards(initialCards);
 
   return (
-    <AnimatePresence>
-      <AnimationComponent transition={{ duration: 0.5 }}>
-        <Banner bannerHeight="!h-52" src={bannerImg.src} />
-        <div className={`${styles.contentGrid}`}>
-          <div className="w-[600px] -mt-52 absolute">
-            <ItineraryTitle></ItineraryTitle>
-          </div>
-          {cardOrder.map((cardId) => (
-            <motion.div layout key={cardId}>
-              <CardCollapseContext.Provider
-                value={{ onCollapse: () => handleCollapse(cardId) }}
-              >
-                {enhancedCards.find((card) => card.props.cardId === cardId)}
-              </CardCollapseContext.Provider>
-            </motion.div>
-          ))}
+    <AnimationComponent transition={{ duration: 0.5 }}>
+      <div className={styles.contentGrid}>
+        <div className="w-[600px] border border-white">
+          <ItineraryTitle></ItineraryTitle>
         </div>
-      </AnimationComponent>
-    </AnimatePresence>
+        {cardOrder.map((cardId) => (
+          <motion.div layout key={cardId}>
+            <CardCollapseContext.Provider
+              value={{ onCollapse: () => handleCollapse(cardId) }}
+            >
+              {enhancedCards.find((card) => card.props.cardId === cardId)}
+            </CardCollapseContext.Provider>
+          </motion.div>
+        ))}
+      </div>
+    </AnimationComponent>
   );
 }
