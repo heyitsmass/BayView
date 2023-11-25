@@ -7,7 +7,6 @@ import { easeInOut, motion } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 import { FlightContext } from '../flightState';
 import { flightSearchAction } from '../flightActions';
-import { Flight } from '@/types/ItineraryManager';
 import { stepDetails } from '..';
 import { BlurOpacityAnimation } from '@/components/Animations/AnimatePresenceComponent';
 
