@@ -1,13 +1,11 @@
-"use client";
-import AnimationComponent from "@/components/Animations/AnimatePresenceComponent";
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import style from "./topbar.module.css";
+'use client';
+import style from './topbar.module.css';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState, useRef, useCallback, useEffect, useMemo, useLayoutEffect } from 'react';
+import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import { useHomepage } from "@/context";
-import Session from "supertokens-web-js/recipe/session";
 type LinkType = {
   href: string;
   label: string;

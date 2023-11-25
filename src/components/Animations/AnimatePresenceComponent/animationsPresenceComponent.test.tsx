@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import AnimationComponent from './index'; // Adjust the path to your component
+import { AnimationComponent } from './index'; // Adjust the path to your component
 import { motion } from 'framer-motion';
 
 // Mock the framer-motion motion component

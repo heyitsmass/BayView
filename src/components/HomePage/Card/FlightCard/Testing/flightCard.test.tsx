@@ -1,10 +1,10 @@
 import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import FlightCard from './index';
+import FlightCard from '../../index';
 
 describe('FlightCard', () => {
 	test('FlightCard component snapshot', () => {
-		const { container } = render(<FlightCard />);
+		const { container } = render(<FlightCard title='Test'/>);
 		expect(container).toMatchSnapshot();
 	});
 

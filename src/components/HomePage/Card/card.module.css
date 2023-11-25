@@ -1,6 +1,7 @@
 .defaultCard {
-    @apply w-full px-3 py-4 bg-white border border-zinc-200 rounded-2xl dark:bg-zinc-800 dark:border-zinc-700;
+    @apply w-full h-full px-2 py-3 bg-white border border-zinc-200 rounded-2xl dark:bg-zinc-800 dark:border-zinc-700;
     @apply transition-all duration-300 ease-in-out;
+    @apply box-border;
 }
 
 .defaultCard .icon * {
@@ -8,6 +9,40 @@
 }
 
 .extraCardPadding {
-    @apply !px-8;
-    @apply pb-7;
+    @apply !px-7;
+    @apply !pb-7;
+}
+
+.closedCardPadding {
+    @apply !px-7;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.dot {
+    animation: blink 1.5s infinite;
+    display: inline-block;
+    opacity: 0;
+}
+
+.dot1 {
+    animation-delay: 0s;
+}
+
+.dot2 {
+    animation-delay: 0.5s;
+}
+
+.dot3 {
+    animation-delay: 1s;
 }
