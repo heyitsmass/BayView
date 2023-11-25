@@ -55,7 +55,7 @@ export default function Page() {
   return (
     <AnimationComponent transition={{ duration: 0.5 }}>
       <div className={styles.contentGrid}>
-        <div className="w-[600px] border border-white">
+        <div className="w-[600px] col-span-full">
           <ItineraryTitle></ItineraryTitle>
         </div>
         {cardOrder.map((cardId) => (
