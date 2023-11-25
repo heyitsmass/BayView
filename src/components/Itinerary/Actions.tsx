@@ -5,6 +5,7 @@ import {
   faArrowsRotate,
   faBars,
   faCar,
+  faCloud,
   faEnvelope,
   faMapPin,
   faPhone,
@@ -31,7 +32,7 @@ export const Actions = ({ notify }: ActionsProps) => {
   return (
     <div className={styles.actions}>
       <Action largeLabel="Get Directions!" smallLabel="Map">
-        {[faCar, faMapPin]}
+        {[faCar, faMapPin, faCloud]}
       </Action>
 
       <Action largeLabel="Get Notified!" smallLabel="Notify!">
