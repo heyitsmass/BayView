@@ -1,37 +1,25 @@
-'use server';
+"use server";
 
-import { handleCall } from '@/lib/random/handleCall';
-import { location } from '@/lib/random/utils';
-import {
-  AmusementParkModel,
-  AquariumModel,
-  BikingModel,
-  ConcertModel,
-  DiningModel,
-  FlightModel,
-  GolfModel,
-  HikingModel,
-  HotelModel,
-  MuseumModel,
-  NightlifeModel,
-  ParkModel,
-  ShoppingModel,
-  SpaModel,
-  SportsModel,
-  TheatreModel,
-  WaterparkModel,
-  ZooModel
-} from '@/models';
+import { handleCall } from "@/lib/random/handleCall";
+import { location } from "@/lib/random/utils";
+
+import { DocumentWithDisplayData } from "@/types";
 import {
   Activities,
+  Event,
   EventTypes,
   Reservable,
   SportEvents,
-  Sports
-} from '@/types/Event';
-import { faker } from '@faker-js/faker';
-import { HydratedDocument } from 'mongoose';
+  Sports,
+} from "@/types/Event";
+import { faker } from "@faker-js/faker";
+import { randomInt } from "crypto";
+import { HydratedDocument } from "mongoose";
+import { modelTypes } from "../constants";
 
+export async function getRandomEvent(): Promise<
+  DocumentWithDisplayData<Event>
+>;
 /**
  * Generate a random Sports event based on the type
  * @param event - The type of event to generate (must be Sports)
@@ -39,17 +27,20 @@ import { HydratedDocument } from 'mongoose';
  * @returns a Hydrated event prepared for the database
  */
 export async function getRandomEvent(
-  event: 'Sports',
+  event: "Sports",
   sport: SportEvents
-): Promise<HydratedDocument<Sports>>;
+): Promise<DocumentWithDisplayData<HydratedDocument<Event<Sports>>>>;
 /**
  * Generate a random (Non-Sports) event based on the type
  * @param event - The type of event to generate
  * @returns a Hydrated event prepared for the database
  */
 export async function getRandomEvent(
-  event: Exclude<EventTypes, 'Sports'>
-): Promise<HydratedDocument<Reservable | Omit<Activities, 'Sports'>>>;
+  event: Exclude<EventTypes, "Sports">
+): Promise<
+  DocumentWithDisplayData<Event<Reservable | Omit<Activities, "Sports">>>
+>;
+
 /**
  * Generate a random event based on the type
  * @param event - The type of event to generate
@@ -57,37 +48,61 @@ export async function getRandomEvent(
  * @returns A Hydrated event prepared for the database
  */
 export async function getRandomEvent(
-  event: EventTypes,
+  event?: EventTypes,
   sport?: SportEvents
-): Promise<HydratedDocument<Reservable | Activities>> {
-  const modelTypes = {
-    Hotel: HotelModel,
-    Dining: DiningModel,
-    Flight: FlightModel,
-    Theatre: TheatreModel,
-    Concert: ConcertModel,
-    Museum: MuseumModel,
-    Park: ParkModel,
-    Zoo: ZooModel,
-    Spa: SpaModel,
-    Golf: GolfModel,
-    Aquarium: AquariumModel,
-    Hiking: HikingModel,
-    Biking: BikingModel,
-    Waterpark: WaterparkModel,
-    AmusementPark: AmusementParkModel,
-    Sports: SportsModel,
-    Nightlife: NightlifeModel,
-    Shopping: ShoppingModel
-  };
+): Promise<DocumentWithDisplayData<Event>> {
+  const types: EventTypes[] = [
+    "Hotel",
+    "Dining",
+    "Flight",
+    "Theatre",
+    "Concert",
+    "Museum",
+    "Park",
+    "Zoo",
+    "Aquarium",
+    "Waterpark",
+    "AmusementPark",
+    "Nightlife",
+    "Shopping",
+    "Spa",
+    "Golf",
+    "Hiking",
+    "Biking",
+  ];
+
+  const sports: SportEvents[] = [
+    "Baseball",
+    "Basketball",
+    "Football",
+    "Hockey",
+    "Soccer",
+    "Tennis",
+  ];
+
+  if (!event) {
+    event = types[randomInt(types.length)];
+    if (event === "Sports") {
+      sport = sports[randomInt(sports.length)];
+    }
+  }
 
   const data =
-    event === 'Sports' ? handleCall(event, sport!) : handleCall(event);
+    event === "Sports" ? handleCall(event, sport!) : handleCall(event);
 
   return new modelTypes[event]({
     name: faker.lorem.words(),
     location: location(),
     description: faker.lorem.words(),
-    ...data
+    date: faker.date.future().toLocaleString("en-US", {
+      day: "numeric",
+      month: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }),
+    partySize: faker.number.int({ min: 1, max: 3 }),
+    picture_url: `/assets/events/${event.toLowerCase()}.png`,
+    ...data,
   });
 }
