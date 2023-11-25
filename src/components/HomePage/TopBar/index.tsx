@@ -3,7 +3,7 @@ import style from './topbar.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useCallback, useEffect, useMemo, useLayoutEffect } from 'react';
-import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';
+import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
 import { AnimatePresence, motion } from 'framer-motion';
 
 type LinkType = {
