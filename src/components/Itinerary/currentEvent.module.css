@@ -20,7 +20,7 @@
 }
 
 
-@media screen and (max-width: 1300px) and (max-height: 850px) {
+@media screen and (max-width: 1300px) and (max-height: 1200px) {
 
   .mid_card {
     display: block !important;
@@ -131,4 +131,17 @@
 
 
 
+}
+
+@media screen and (min-height: 951px) and (max-width:900px){
+  .modify {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+    border-radius: 1em;
+    margin-top: 1em;
+    flex-direction: column;
+    height: min-content;
+  }
 }
