@@ -11,6 +11,7 @@ import {
   faRss,
   faShare,
   faShareNodes,
+  faTrashCan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faDiscord, faFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -130,10 +131,10 @@ export const Actions = ({ notify }: ActionProps) => {
       </div>
       <div className="flex flex-col items-center w-1/6">
         <label className={styles.lg_label + " text-sm mb-2 min-w-max"}>
-          Check for Updates
+          Quick Updates
         </label>
         <label className={styles.sm_label + " text-sm mb-2 min-w-max"}>
-          Updates?
+          Updates
         </label>
         <span
           className={[
@@ -149,6 +150,7 @@ export const Actions = ({ notify }: ActionProps) => {
             />
           </span>
           <FontAwesomeIcon icon={faArrowsRotate} />
+          <FontAwesomeIcon icon={faTrashCan} />
         </span>
       </div>
     </div>
