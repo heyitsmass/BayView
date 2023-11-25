@@ -4,7 +4,7 @@
 import styles from './page.module.css';
 import { CardCollapseContext } from '@/components/HomePage/Card/cardCollapseContext';
 import { AnimatePresence, motion } from 'framer-motion';
-import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';
+import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
 import FlightCard from '@/components/HomePage/Card/FlightCard';
 import Banner from '@/components/Banner';
 import bannerImg from '../../../../public/images/1.png';
