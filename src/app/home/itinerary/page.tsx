@@ -19,6 +19,16 @@ export default function Page() {
 
   const { events } = itinerary;
 
+  const [currentEvent, setEvent] = useState(events[0]);
+
+  console.log(currentEvent);
+
+  const handleClick = (index: number) => {
+    if (index >= events.length) return;
+
+    setEvent(events[index]);
+  };
+
   return (
     <div className="flex h-full justify-center items-center overflow-y-scroll ">
       <div className={styles.content + "  w-full flex gap-8"}>
