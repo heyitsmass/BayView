@@ -22,6 +22,7 @@ import { Animator } from "./Animator";
 import mongoose, { FlattenMaps, HydratedDocument } from "mongoose";
 import { EventModel } from "@/models/Event";
 import { FlattenedEvent } from "./itinerary/page";
+import models from "@/models";
 
 export default async function Layout({
   children,
@@ -59,9 +60,9 @@ export default async function Layout({
   ).toJSON({ flattenObjectIds: true, flattenMaps: true });
 
   itinerary.events = itinerary.events.map((event) => {
-    const rebuilt = new EventModel.discriminators![event.__t](
-      event
-    ) as HydratedDocument<unknown & DisplayData>;
+    const rebuilt = new models[event.__t](event) as HydratedDocument<
+      unknown & DisplayData
+    >;
 
     const { peek, displayData, upgradeOptions } = rebuilt;
 
