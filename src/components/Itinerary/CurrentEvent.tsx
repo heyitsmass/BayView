@@ -1,33 +1,26 @@
-import { faker } from "@faker-js/faker";
-import { InfoCard, InfoMap } from "./InfoCard";
-import { Party, PartyMember } from "./Party";
-import styles from "./currentEvent.module.css";
 import { DisplayData } from "@/types";
 import { Event } from "@/types/Event";
+import { InfoCard, InfoMap } from "./InfoCard";
+import { Party } from "./Party";
 import { Upgrades } from "./Upgrades";
-import { randomInt } from "crypto";
-type CurrentEventProps = DisplayData &
-  Pick<Event, "date" | "location" | "name">;
+import styles from "./currentEvent.module.css";
+import { PartyMember } from "@/types/User";
 
-const member = () => {
-  return {
-    avatar: faker.image.avatar(),
-    name: faker.person.firstName(),
-    age: "Adult",
-    primary: false,
-    notifications: ["email", "phone", "discord"],
-  } as PartyMember;
-};
+type CurrentEventProps = DisplayData &
+  Pick<Event, "date" | "location" | "name"> & {
+    members: PartyMember[];
+  };
 
 export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
-  const { displayData, upgradeOptions, picture_url, location, date, name } =
-    props;
-
-  const members = [] as PartyMember[];
-
-  for (let i = 0; i < faker.number.int({ min: 1, max: 4 }); i++) {
-    members.push(member());
-  }
+  const {
+    displayData,
+    upgradeOptions,
+    picture_url,
+    location,
+    date,
+    name,
+    members,
+  } = props;
 
   return (
     <div
