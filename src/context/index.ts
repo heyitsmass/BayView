@@ -1,6 +1,6 @@
 "use client";
 
-import { ItineraryWithMongo } from "@/types/Itinerary";
+import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
 import { createContext, useContext } from "react";
 
@@ -9,7 +9,7 @@ export type THomepageContext = {
     _id: string;
     metadata: UserMetadata;
   };
-  itinerary: ItineraryWithMongo;
+  itinerary: FlattenedItinerary;
 };
 
 export type HomepageAction = {
