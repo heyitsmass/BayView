@@ -6,7 +6,7 @@ import { useState, useRef, useCallback, useEffect, useMemo, useLayoutEffect } fr
 import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useHomepage } from '@/context';
-
+import Session from "supertokens-web-js/recipe/session";
 type LinkType = {
   href: string;
   label: string;
