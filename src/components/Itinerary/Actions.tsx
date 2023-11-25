@@ -31,7 +31,7 @@ type ActionsProps = {
 export const Actions = ({ notify }: ActionsProps) => {
   return (
     <div className={styles.actions}>
-      <Action largeLabel="Get Directions!" smallLabel="Map">
+      <Action largeLabel="Get Infomation!" smallLabel="Info">
         {[faCar, faMapPin, faCloud]}
       </Action>
 
