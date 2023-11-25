@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useRef, useCallback, useEffect, useMemo, useLayoutEffect } from 'react';
 import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useHomepage } from '@/context';
 
 type LinkType = {
   href: string;

@@ -31,7 +31,6 @@ export async function getSingleOfferById(id: string) {
 
 		return { offer: response.data };
 	} catch (error: unknown) {
-		console.log("ID IS: ", id);
 		if (error instanceof DuffelError) {
 			throw error;
 		}

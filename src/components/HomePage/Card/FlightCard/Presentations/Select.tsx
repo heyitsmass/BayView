@@ -4,7 +4,6 @@ import { faArrowDownShortWide, faArrowRight, faArrowRightArrowLeft, faListUl, fa
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { Offer } from '@duffel/api/types';
-import styles from '../flightStyles.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Button from '@/components/Button';
@@ -763,6 +762,6 @@ const OfferItem = React.memo(({ onToggleSelect, isSelected, isDepartingPresentat
 OfferItem.displayName = 'OfferItem';
 
 const InlineSVG = React.memo(({ src }: InlineSVGProps) => {
-	return <object className={styles.airlineLogo} width={28} height={28} data={src} type="image/svg+xml" aria-label="Airline logo"></object>;
+	return <object width={28} height={28} data={src} type="image/svg+xml" aria-label="Airline logo"></object>;
 });
 InlineSVG.displayName = 'InlineSVG';
