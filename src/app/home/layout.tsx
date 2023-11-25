@@ -8,21 +8,12 @@ import { Footer } from "@/components/HomePage/Footer";
 import TopBar from "@/components/HomePage/TopBar";
 import { SessionAuthForNextJS } from "@/components/SuperTokens/sessionAuthForNextJS";
 import { TryRefreshComponent } from "@/components/SuperTokens/tryRefreshClientComponent";
-import ItineraryModel from "@/models/Itinerary";
-import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
-import { UserMetadata } from "@/types/User";
 import { getSSRSession } from "@/utils/session/getSSRSession";
 import { redirect } from "next/navigation";
-import { getUserMetadata } from "supertokens-node/recipe/usermetadata";
 
 import Banner from "@/components/Banner";
-import { modelTypes } from "@/lib/constants";
-import { DisplayData, DocumentWithDisplayData } from "@/types";
 import { Animator } from "./Animator";
-import mongoose, { FlattenMaps, HydratedDocument } from "mongoose";
-import { EventModel } from "@/models/Event";
-import { FlattenedEvent } from "./itinerary/page";
-import models from "@/models";
+import { getItinerary } from "@/utils/session/getItinerary";
 
 export default async function Layout({
   children,
@@ -41,51 +32,10 @@ export default async function Layout({
     );
   }
 
-  const _id =
-    process.env.NODE_ENV !== "production"
-      ? process.env.TEST_ID!
-      : session.getUserId();
-
-  let itinerary: FlattenedItinerary = (
-    (await ItineraryModel.findOneAndUpdate(
-      {
-        _id,
-      },
-      {},
-      {
-        upsert: true,
-        new: true,
-      }
-    )) as ItineraryWithMongo
-  ).toJSON({ flattenObjectIds: true, flattenMaps: true });
-
-  itinerary.events = itinerary.events.map((event) => {
-    const rebuilt = new models[event.__t](event) as HydratedDocument<
-      unknown & DisplayData
-    >;
-
-    const { peek, displayData, upgradeOptions } = rebuilt;
-
-    return {
-      ...event,
-      peek,
-      displayData,
-      upgradeOptions,
-    } as FlattenedEvent;
-  });
-
-  const { metadata } = await getUserMetadata(_id);
+  const ctx = await getItinerary(session);
 
   return (
-    <Provider
-      value={{
-        user: {
-          _id,
-          metadata,
-        },
-        itinerary,
-      }}
-    >
+    <Provider value={ctx}>
       <div className="flex-start w-screen h-screen relative">
         <TopBar />
         <div
