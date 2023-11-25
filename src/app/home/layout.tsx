@@ -2,7 +2,7 @@
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { ReactNode } from "react";
 
-import Provider from "../Provider";
+import HomepageProvider from "../HomepageProvider";
 
 import { Footer } from "@/components/HomePage/Footer";
 import TopBar from "@/components/HomePage/TopBar";
@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import Banner from "@/components/Banner";
 import { Animator } from "./Animator";
 import { getItinerary } from "@/utils/session/getItinerary";
+import { PopupProvider } from "../PopupProvider";
 
 export default async function Layout({
   children,
@@ -35,22 +36,24 @@ export default async function Layout({
   const ctx = await getItinerary(session);
 
   return (
-    <Provider value={ctx}>
-      <div className="flex-start w-screen h-screen relative">
-        <TopBar />
-        <div
-          style={{ height: "calc(100vh - 7.5rem)" }}
-          className="mt-20 relative"
-        >
-          <Banner />
-          <Animator>
-            <div className="relative h-full overflow-y-scroll">
-              {children}
-            </div>
-          </Animator>
+    <HomepageProvider value={ctx}>
+      <PopupProvider>
+        <div className="flex-start w-screen h-screen relative">
+          <TopBar />
+          <div
+            style={{ height: "calc(100vh - 7.5rem)" }}
+            className="mt-20 relative"
+          >
+            <Banner />
+            <Animator>
+              <div className="relative h-full overflow-y-scroll">
+                {children}
+              </div>
+            </Animator>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Provider>
+      </PopupProvider>
+    </HomepageProvider>
   );
 }

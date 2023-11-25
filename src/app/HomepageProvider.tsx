@@ -10,6 +10,7 @@ import {
 import { useReducer } from "react";
 import { SessionAuth } from "supertokens-auth-react/recipe/session";
 import Handler from "./Handler";
+import { usePopupDispatch } from "@/context/popup";
 
 type HomepageProviderProps = {
   value: THomepageContext;
@@ -20,12 +21,16 @@ export default function Provider({ ...props }: HomepageProviderProps) {
   const { value, children } = props;
 
   const [ctx, dispatch] = useReducer(Reducer, value);
+  const createPopup = usePopupDispatch();
 
   const Manager = async (action: HomepageAction) => {
-    try {
-      const res = await Handler(action);
-    } catch (err) {
-      return console.log(err);
+    const { statusCode, body } = await Handler(action);
+
+    if (statusCode !== 200) {
+      return createPopup({
+        variant: "error",
+        message: body.message,
+      });
     }
 
     return dispatch(action);

@@ -143,3 +143,10 @@ div {
   font-family: var(--font);
   color: var(--text-color);
 }
+
+#popup-portal { 
+  position: absolute; 
+  bottom: 4rem; 
+  height: 0;  
+  width: 100%; 
+}
