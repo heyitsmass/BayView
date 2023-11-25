@@ -1,6 +1,7 @@
 import { createTransport } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import { Notifier } from ".";
+import { NotifierPayload } from "./Handler";
 
 export class EmailNotifier implements Notifier {
   /** Email Notifier implementation */
@@ -41,7 +42,7 @@ export class EmailNotifier implements Notifier {
       });
   }
 
-  public send_notification() {
+  public send_notification({ ...props }: NotifierPayload) {
     /** Sends a notification to the users email */
   }
 

@@ -4,11 +4,12 @@ import { TwitterNotifier } from "./Twitter";
 import { EmailNotifier } from "./Email";
 import { SMSNotifier } from "./Sms";
 import { DiscordNotifier } from "./Discord";
+import { NotifierPayload } from "./Handler";
 
 /** Notifier interface for the Notifiers */
 export interface Notifier {
   /** Sends a notification to the user */
-  send_notification(): void;
+  send_notification({ ...props }: NotifierPayload): void;
   /** Delay in seconds */
   notify(delay: number): void;
 }

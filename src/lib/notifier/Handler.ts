@@ -5,7 +5,7 @@ import { EmailNotifier } from "./Email";
 
 const cache = new Map<string, EmailNotifier>();
 
-type NotifierCallProps = {
+export type NotifierPayload = {
   _id: string;
   delay?: number;
   type: Notifiers;
@@ -17,7 +17,7 @@ export const handleNotifierCall = async ({
   delay,
   type,
   mode, // "create" | "cancel"
-}: NotifierCallProps) => {
+}: NotifierPayload) => {
   switch (type) {
     case "email":
       if (mode === "create") {
