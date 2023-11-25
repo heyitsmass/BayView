@@ -9,7 +9,7 @@ import TopBar from "@/components/HomePage/TopBar";
 import { SessionAuthForNextJS } from "@/components/SuperTokens/sessionAuthForNextJS";
 import { TryRefreshComponent } from "@/components/SuperTokens/tryRefreshClientComponent";
 import ItineraryModel from "@/models/Itinerary";
-import { ItineraryWithMongo } from "@/types/Itinerary";
+import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
 import { getSSRSession } from "@/utils/session/getSSRSession";
 import { redirect } from "next/navigation";
@@ -17,8 +17,11 @@ import { getUserMetadata } from "supertokens-node/recipe/usermetadata";
 
 import Banner from "@/components/Banner";
 import { modelTypes } from "@/lib/constants";
-import { DocumentWithDisplayData } from "@/types";
+import { DisplayData, DocumentWithDisplayData } from "@/types";
 import { Animator } from "./Animator";
+import mongoose, { FlattenMaps, HydratedDocument } from "mongoose";
+import { EventModel } from "@/models/Event";
+import { FlattenedEvent } from "./itinerary/page";
 
 export default async function Layout({
   children,
@@ -28,36 +31,49 @@ export default async function Layout({
   const { session, hasToken, hasInvalidClaims } = await getSSRSession();
 
   if (!session) {
-    if (!hasToken) {
-      return redirect("/auth");
-    }
+    if (!hasToken) return redirect("/auth");
 
-    if (hasInvalidClaims) {
-      return <SessionAuthForNextJS />;
-    } else {
-      return <TryRefreshComponent />;
-    }
+    return hasInvalidClaims ? (
+      <SessionAuthForNextJS />
+    ) : (
+      <TryRefreshComponent />
+    );
   }
 
-  let _id = session.getUserId();
+  const _id =
+    process.env.NODE_ENV !== "production"
+      ? process.env.TEST_ID!
+      : session.getUserId();
 
-  const { metadata } = (await getUserMetadata(_id)) as {
-    metadata: UserMetadata;
-  };
+  let itinerary: FlattenedItinerary = (
+    (await ItineraryModel.findOneAndUpdate(
+      {
+        _id,
+      },
+      {},
+      {
+        upsert: true,
+        new: true,
+      }
+    )) as ItineraryWithMongo
+  ).toJSON({ flattenObjectIds: true, flattenMaps: true });
 
-  if (process.env.NODE_ENV === "development") {
-    _id = process.env.TEST_ID!;
-  }
+  itinerary.events = itinerary.events.map((event) => {
+    const rebuilt = new EventModel.discriminators![event.__t](
+      event
+    ) as HydratedDocument<unknown & DisplayData>;
 
-  let itinerary = (await ItineraryModel.findOne({
-    _id,
-  })) as ItineraryWithMongo;
+    const { peek, displayData, upgradeOptions } = rebuilt;
 
-  if (!itinerary) {
-    itinerary = (await ItineraryModel.create({
-      _id,
-    })) as ItineraryWithMongo;
-  }
+    return {
+      ...event,
+      peek,
+      displayData,
+      upgradeOptions,
+    } as FlattenedEvent;
+  });
+
+  const { metadata } = await getUserMetadata(_id);
 
   return (
     <Provider
@@ -66,25 +82,7 @@ export default async function Layout({
           _id,
           metadata,
         },
-        itinerary: {
-          ...itinerary.toJSON({
-            flattenObjectIds: true,
-          }),
-          events: itinerary.events.map((event: DocumentWithDisplayData) => {
-            const flat = event.toJSON({ flattenObjectIds: true });
-
-            const e = new modelTypes[flat.__t](flat);
-
-            const { peek, displayData, upgradeOptions } = e;
-
-            return {
-              ...flat,
-              peek,
-              displayData,
-              upgradeOptions,
-            };
-          }),
-        },
+        itinerary,
       }}
     >
       <div className="flex-start w-screen h-screen relative">
@@ -100,9 +98,8 @@ export default async function Layout({
             </div>
           </Animator>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     </Provider>
   );
 }
-//<Banner bannerHeight="!h-52" src="/images/banner.png" />
