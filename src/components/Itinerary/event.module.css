@@ -1,6 +1,7 @@
 .event {
   transform: scale(90%);
   transition: transform 0.2s ease-in-out;
+  @apply border h-28 rounded-2xl m-3 flex shadow-lg bg-zinc-700 border-zinc-600 cursor-pointer;
 }
 
 .event:hover {
@@ -10,6 +11,15 @@
 .icon {
   font-size: 2.5rem !important;
   width: 30%;
+  @apply border-r-2 dark:border-white h-2/3 flex items-center justify-center text-4xl text-rose-800;
+}
+
+.wrapper { 
+  @apply w-5/6 flex relative h-full; 
+}
+
+.info { 
+  @apply w-3/4 h-full pl-4 grid grid-cols-2 text-sm rounded-r-2xl gap-2 p-2;
 }
 
 .info p span:not(.name span)::after {
@@ -22,6 +32,14 @@
   text-overflow: ellipsis;
   text-transform: capitalize;
   width: 100%;
+}
+
+.name { 
+  @apply ml-1 truncate;
+}
+
+.img { 
+  @apply absolute h-full right-0 rounded-r-2xl w-1/4;
 }
 
 @media screen and (max-width: 1400px) {

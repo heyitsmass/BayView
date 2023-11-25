@@ -93,38 +93,22 @@ export const ItineraryEvent = ({ ...props }: ItineraryEventProps) => {
   const [title, name] = peek;
 
   return (
-    <div
-      className={
-        styles.event +
-        " border h-28 rounded-2xl m-3 flex shadow-lg bg-zinc-700 border-zinc-600 cursor-pointer"
-      }
-      onClick={onClick}
-    >
+    <div className={styles.event} onClick={onClick}>
       <div className="relative w-full flex flex-row items-center">
-        <div
-          className={
-            styles.icon +
-            " border-r-2 dark:border-white h-2/3 flex items-center justify-center text-4xl text-rose-800"
-          }
-        >
+        <div className={styles.icon}>
           <FontAwesomeIcon
             icon={IconMap[__t]}
-            className={"!drop-shadow-3xl min-w-[66px] w-full mx-4"}
+            className="!drop-shadow-3xl min-w-[66px] w-full mx-4"
           />
         </div>
-        <div className={styles.wrapper + " w-5/6 flex relative h-full"}>
-          <div
-            className={
-              styles.info +
-              " w-3/4 h-full pl-4 grid grid-cols-2 text-sm rounded-r-2xl gap-2 p-2"
-            }
-          >
+        <div className={styles.wrapper}>
+          <div className={styles.info}>
             <h2 className="col-span-full !text-base capitalize flex">
               <span className="w-max min-w-max">
                 <b>{title.label} </b> - <span>{title.value}</span>
               </span>
 
-              <p className={styles.name + " ml-1 truncate ellipsis"}>
+              <p className={styles.name}>
                 - <span>{name.value}</span>
               </p>
             </h2>
@@ -138,10 +122,7 @@ export const ItineraryEvent = ({ ...props }: ItineraryEventProps) => {
             })}
           </div>
           <div
-            className={
-              styles.img +
-              " absolute h-full right-0 rounded-r-2xl w-1/4 !min-w-1/4"
-            }
+            className={styles.img}
             style={{
               background: `url(${picture_url})`,
               backgroundSize: "cover",

@@ -42,14 +42,9 @@ export const InfoCard = ({
 
   return (
     <>
-      <div
-        className={[
-          styles.info,
-          "flex flex-col overflow-hidden relative min-h-max",
-        ].join(" ")}
-      >
-        <div className={styles.infoTop + " flex"}>
-          <div className={styles.infoLeft + " min-w-max flex"}>
+      <div className={styles.info}>
+        <div className={styles.infoTop}>
+          <div className={styles.infoLeft}>
             <div className="flex flex-col min-w-80 w-full">
               <div
                 className="h-48 rounded-2xl shadow-xl border border-zinc-700"
@@ -64,7 +59,6 @@ export const InfoCard = ({
               </div>
             </div>
           </div>
-
           <InfoMap data={displayData} />
         </div>
         <Actions notify={notify} />
@@ -82,19 +76,15 @@ export const InfoMap = ({
   const values = Object.values(data);
 
   return (
-    <div className={styles.data + " w-full p-4 flex gap-4 min-w-max"}>
-      <article className={styles.keys + " h-full flex flex-col w-max"}>
+    <div className="w-full p-4 flex gap-4 min-w-max">
+      <article className="h-full flex flex-col w-max">
         {keys.map((key, i) => (
           <p key={i} className="flex grow min-w-max justify-end">
             <b>{key} :</b>
           </p>
         ))}
       </article>
-      <article
-        className={
-          styles.values + " w-full h-full flex flex-col capitalize"
-        }
-      >
+      <article className="w-full h-full flex flex-col capitalize">
         {values.map((value, i) => (
           <p className="flex grow" key={i}>
             {value}

@@ -1,8 +1,17 @@
 .wrapper {
+  @apply w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-4 dark:text-white;
   background: var(--card-bg-color-glass);
   background-blend-mode: overlay;
   backdrop-filter: blur(10px);
   border: solid 1px var(--card-border-color);
+}
+
+.subWrapper { 
+  @apply h-full;
+}
+
+.eventsHeader { 
+  @apply text-4xl font-bold px-8 z-[999];
 }
 
 @media screen and (max-width: 850px) {

@@ -10,12 +10,7 @@ const Member = ({ children }: { children: PartyMember }) => {
   const { avatar, name } = children;
 
   return (
-    <div
-      className={
-        styles.party_member +
-        " flex items-center bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full"
-      }
-    >
+    <div className={styles.party_member}>
       <Image
         src={avatar}
         height={30}
@@ -37,17 +32,12 @@ type PartyProps = {
 
 export const Party = ({ members }: PartyProps) => {
   return (
-    <div
-      className={
-        styles.party +
-        " h-5/6 w-full text-white bg-zinc-700 border border-zinc-600 rounded-2xl relative p-4 pt-2 mt-2"
-      }
-    >
+    <div className={styles.party}>
       <h2 className="text-lg">
         <b>Party</b>
       </h2>
       <FontAwesomeIcon icon={faPlus} className="absolute right-4 top-4" />
-      <div className={styles.members + " h-min"}>
+      <div className={styles.members}>
         {members.map((user, i) => (
           <Member key={i}>{user}</Member>
         ))}

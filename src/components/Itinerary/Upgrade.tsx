@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import styles from "./upgrade.module.css";
 import { UpgradeProps } from "@/types";
 
@@ -17,20 +17,13 @@ export const Upgrade = ({ ...props }: UpgradeProps) => {
   const totalPrice = partySize * pricePerUpgrade;
 
   return (
-    <div
-      className={
-        styles.upgrade_card +
-        " border border-zinc-700 rounded-xl bg-zinc-800 shadow-xl max-w-1/3 h-max"
-      }
-    >
+    <div className={styles.upgrade_card}>
       <div
-        className="min-h-[80px] min-w-[200px] rounded-t-xl"
+        className={styles.image}
         style={{
           backgroundImage: `url(${picture_url})`,
-          backgroundSize: "cover",
-          backgroundPositionY: "-3rem",
         }}
-      ></div>
+      />
       <div className="text-white p-2 flex flex-col justify-center h-max min-w-max">
         <div className="flex flex-col items-center">
           <h1>

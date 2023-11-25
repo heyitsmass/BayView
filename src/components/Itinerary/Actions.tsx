@@ -46,24 +46,14 @@ export const Actions = ({ notify }: ActionProps) => {
   };
 
   return (
-    <div
-      className={
-        styles.actions +
-        " flex flex-row w-full max-w-1/2 justify-around text-lg z-1"
-      }
-    >
+    <div className={styles.actions}>
       <div className="flex flex-col items-center w-1/6">
-        <label className={styles.lg_label + " text-sm mb-2"}>
-          Get Directions!
-        </label>
-        <label className={styles.sm_label + " text-sm mb-2 min-w-max"}>
-          Map!
-        </label>
+        <label className={styles.lg_label}>Get Directions!</label>
+        <label className={styles.sm_label}>Map!</label>
         <span
           className={[
             styles.icons,
             states.map ? styles.open : styles.closed,
-            "bg-rose-800 map flex gap-x-3 items-center w-full justify-around p-2 rounded-full",
           ].join(" ")}
         >
           <span className={styles.bars}>
@@ -78,17 +68,12 @@ export const Actions = ({ notify }: ActionProps) => {
       </div>
 
       <div className="flex flex-col items-center w-1/4">
-        <label className={styles.lg_label + " text-sm mb-2"}>
-          Get Notified!
-        </label>
-        <label className={styles.sm_label + " text-sm mb-2 min-w-max"}>
-          Notify!
-        </label>
+        <label className={styles.lg_label}>Get Notified!</label>
+        <label className={styles.sm_label}>Notify!</label>
         <span
           className={[
             styles.icons,
             states.notify ? styles.open : styles.closed,
-            "bg-rose-800 notify flex gap-x-3 items-center w-full justify-around p-2 rounded-full",
           ].join(" ")}
         >
           <span className={styles.bars}>
@@ -104,18 +89,13 @@ export const Actions = ({ notify }: ActionProps) => {
         </span>
       </div>
       <div className="flex flex-col items-center w-1/6">
-        <label className={styles.lg_label + " text-sm mb-2"}>
-          Share Your Trip!
-        </label>
-        <label className={styles.sm_label + " text-sm mb-2 min-w-max"}>
-          Share!
-        </label>
+        <label className={styles.lg_label}>Share Your Trip!</label>
+        <label className={styles.sm_label}>Share!</label>
 
         <span
           className={[
             styles.icons,
             states.share ? styles.open : styles.closed,
-            "bg-rose-800 social flex gap-x-3 items-center min-w-max w-full justify-around p-2 rounded-full",
           ].join(" ")}
         >
           <span className={styles.bars}>
@@ -130,17 +110,14 @@ export const Actions = ({ notify }: ActionProps) => {
         </span>
       </div>
       <div className="flex flex-col items-center w-1/6">
-        <label className={styles.lg_label + " text-sm mb-2 min-w-max"}>
+        <label className={styles.lg_label + " min-w-max"}>
           Quick Updates
         </label>
-        <label className={styles.sm_label + " text-sm mb-2 min-w-max"}>
-          Updates
-        </label>
+        <label className={styles.sm_label}>Updates</label>
         <span
           className={[
             styles.icons,
             states.updates ? styles.open : styles.closed,
-            "bg-rose-800 misc flex gap-x-4 items-center min-w-max w-full justify-around p-2 rounded-full",
           ].join(" ")}
         >
           <span className={styles.bars}>

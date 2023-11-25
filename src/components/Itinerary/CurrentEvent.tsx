@@ -23,14 +23,9 @@ export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
   } = props;
 
   return (
-    <div
-      className={
-        styles.card +
-        " h-min w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px]"
-      }
-    >
-      <section className={styles.sub_card + " h-max"}>
-        <h2 className=" text-2xl font-bold capitalize w-full pb-2 truncate ellipsis">
+    <div className={styles.card}>
+      <section className={styles.sub_card}>
+        <h2 className="text-2xl font-bold capitalize w-full pb-2 truncate ellipsis">
           Upcoming - {name}
         </h2>
         <InfoCard
@@ -50,23 +45,14 @@ export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
         <InfoMap data={displayData} />
       </section>
 
-      <section
-        className={
-          styles.modify + " rounded-b-2xl flex min-w-[450px] gap-4"
-        }
-      >
+      <section className={styles.modify}>
         <div className={styles.header}>
           <h1 className="text-2xl font-bold min-w-max self-baseline pb-2">
             Modify Reservation
           </h1>
           <Party members={members} />
         </div>
-        <div
-          className={
-            styles.wrapper +
-            " bg-zinc-700 rounded-2xl border border-zinc-600 w-full p-4"
-          }
-        >
+        <div className={styles.wrapper}>
           <Upgrades options={upgradeOptions} />
         </div>
       </section>

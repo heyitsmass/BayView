@@ -1,3 +1,16 @@
+.info { 
+  @apply flex flex-col overflow-hidden relative min-h-max;
+}
+
+.infoTop { 
+  display: flex; 
+}
+
+.infoLeft { 
+  @apply  min-w-max flex;
+}
+
+
 @media screen and (max-width: 1100px) {
 
   .info {
