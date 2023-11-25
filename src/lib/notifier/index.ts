@@ -9,6 +9,8 @@ import { DiscordNotifier } from "./Discord";
 export interface Notifier {
   /** Sends a notification to the user */
   send_notification(): void;
+  /** Delay in seconds */
+  notify(delay:number): void; 
 }
 
 const notifier = {

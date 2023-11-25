@@ -1,17 +1,20 @@
-import baymax from "@/public/images/baymax.png";
 import { createTransport } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import { Notifier } from ".";
 
 export class EmailNotifier implements Notifier {
   /** Email Notifier implementation */
+  private id: NodeJS.Timer | null = null;
 
+  private setId(id: NodeJS.Timer) {
+    this.id = id;
+  }
   private transporter = createTransport({
     service: "gmail",
     auth: {
       user: process.env.SMTP_EMAIL,
-      pass: process.env.SMTP_PASSWORD
-    }
+      pass: process.env.SMTP_PASSWORD,
+    },
   });
 
   public create_email(message: string, to: string) {
@@ -24,9 +27,9 @@ export class EmailNotifier implements Notifier {
       attachments: [
         {
           filename: "baymax.png",
-          path: baymax.src
-        }
-      ]
+          path: "/images/baymax.png",
+        },
+      ],
     } as Mail.Options;
   }
 
@@ -40,5 +43,22 @@ export class EmailNotifier implements Notifier {
 
   public send_notification() {
     /** Sends a notification to the users email */
+  }
+
+  public async cancel() {
+    "use server";
+    /** Cancels the notification */
+    console.log("Cancelling...");
+    return this.id ? clearTimeout(this.id) : null;
+  }
+
+  public async notify(delay: number) {
+    "use server";
+    /** Sends a notification to the users email */
+    return this.setId(
+      setTimeout(() => {
+        console.log("Notified!");
+      }, delay * 1000)
+    );
   }
 }
