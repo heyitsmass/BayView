@@ -5,4 +5,6 @@ export class TwitterNotifier implements Notifier {
   public send_notification() {
     /** Sends a notification to the users twitter account */
   }
+
+  public notify = async () => {};
 }

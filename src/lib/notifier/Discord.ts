@@ -88,4 +88,8 @@ export class DiscordNotifier implements Notifier {
 
     return new DiscordNotifier(recipient_id, channel_id);
   }
+
+  public notify = async () => { 
+
+  }
 }

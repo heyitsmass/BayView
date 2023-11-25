@@ -5,4 +5,7 @@ export class FacebookNotifier implements Notifier {
   public send_notification() {
     /** Sends a notification to the users facebook account */
   }
+  public notify = async () => { 
+
+  }
 }

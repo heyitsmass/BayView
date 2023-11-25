@@ -31,4 +31,9 @@ export class SMSNotifier implements Notifier {
   public send_notification() {
     /** Sends a notification to the users phone */
   }
+
+  public notify = async () => { 
+
+  }
+  
 }
