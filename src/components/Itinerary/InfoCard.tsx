@@ -9,17 +9,19 @@ import { Location } from "@/types/Event";
 import { Actions } from "./Actions";
 import { ReactNode } from "react";
 
+export type InfoCardProps = {
+  picture_url: string;
+  location: Location;
+  date: Date;
+  displayData: Record<string, string>;
+};
+
 export const InfoCard = ({
   picture_url,
   location,
   date,
   displayData,
-}: {
-  picture_url: string;
-  location: Location;
-  date: Date;
-  displayData: Record<string, string>;
-}) => {
+}: InfoCardProps) => {
   const locationStr = [location.street, location.city, location.state].join(
     ", "
   );
@@ -67,43 +69,47 @@ export const InfoCard = ({
   );
 };
 
-export const InfoMap = ({
-  data,
-}: {
-  data: Record<string, string | number | JSX.Element | ReactNode>;
-}) => {
+type InfoMapProps = {
+  data: Record<string, ReactNode>;
+};
+export const InfoMap = ({ data }: InfoMapProps) => {
   const keys = Object.keys(data);
   const values = Object.values(data);
 
   return (
-    <div className="w-full p-4 flex gap-4 min-w-max">
-      <article className="h-full flex flex-col w-max">
-        {keys.map((key, i) => (
-          <p key={i} className="flex grow min-w-max justify-end">
-            <b>{key} :</b>
-          </p>
-        ))}
-      </article>
-      <article className="w-full h-full flex flex-col capitalize">
-        {values.map((value, i) => (
-          <p className="flex grow" key={i}>
-            {value}
-          </p>
-        ))}
-      </article>
+    <div className="pl-4 pb-4 w-full truncate">
+      <div className="h-full flex">
+        <div className="flex flex-col h-full min-w-max">
+          {keys.map((key, i) => (
+            <>
+              <p
+                key={i}
+                className="flex flex-grow min-w-max justify-end items-center"
+              >
+                <b>{key} :</b>
+              </p>
+            </>
+          ))}
+        </div>
+        <div className="flex flex-col pl-2 h-full">
+          {values.map((value, i) => (
+            <p className="flex flex-grow capitalize items-center" key={i}>
+              {value}
+            </p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
-const IconText = ({
-  icon,
-  className,
-  children,
-}: {
+type IconTextProps = {
   icon: IconDefinition;
   className?: string;
   children: string;
-}) => {
+};
+
+const IconText = ({ icon, className, children }: IconTextProps) => {
   return (
     <div className="flex">
       <span className="w-8 flex items-center justify-center truncate ellipsis">

@@ -24,15 +24,13 @@ export const Popup = () => {
   }, [popup]);
 
   const cancelTimer = () =>
-    setPopup.current(() => {
-      if (timer) {
+    setPopup.current(
+      () =>
         setTimer((timer) => {
           clearTimeout(timer);
           return undefined;
-        });
-      }
-      return undefined;
-    });
+        }) as undefined
+    );
 
   if (popup) {
     let { variant = "info", message } = popup;

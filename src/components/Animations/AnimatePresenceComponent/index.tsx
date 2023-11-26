@@ -3,7 +3,7 @@ import { animations, cubicBezier, easeIn, easeInOut, motion, MotionProps } from 
 import { ReactNode, ReactNodeArray } from 'react';
 
 type AnimationProps = {
-	type?: keyof typeof animations;
+  className?: string;
 } & MotionProps;
 
 type AnimationTypes = {
@@ -97,7 +97,7 @@ export function AnimationComponent({ ...props }: AnimationProps) {
 
 	return (
 		<motion.div
-			className="w-full h-full"
+      className={[props.className, "w-full h-full"].join(" ")}
 			initial={animationVariant.hidden}
 			animate={animationVariant.visible}
 			exit={animationVariant.exit}

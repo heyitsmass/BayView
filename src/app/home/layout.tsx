@@ -12,7 +12,7 @@ import { getSSRSession } from "@/utils/session/getSSRSession";
 import { redirect } from "next/navigation";
 
 import Banner from "@/components/Banner";
-import { Animator } from "./Animator";
+import { Animator } from "../../components/Animator";
 import { getItinerary } from "@/utils/session/getItinerary";
 import { PopupProvider } from "../PopupProvider";
 
