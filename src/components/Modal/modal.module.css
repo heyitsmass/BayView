@@ -1,0 +1,24 @@
+
+
+.modal {
+  max-width: 50%;
+  @apply bg-zinc-800 p-4 min-h-max rounded-2xl;
+  position: relative;
+}
+
+.modalHeader {
+  border-bottom: solid 1px white;
+}
+
+.modalBody {
+  @apply py-4;
+  min-height: max-content;
+}
+
+.modalFooter {
+  position: static; 
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-top: solid 1px white;
+}

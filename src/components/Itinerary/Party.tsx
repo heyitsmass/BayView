@@ -5,12 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import styles from "./party.module.css";
 import { PartyMember } from "@/types/User";
+import { Modal, useOpen } from "../Modal";
 
-const Member = ({ children }: { children: PartyMember }) => {
+const Member = ({
+  children,
+  open,
+}: {
+  children: PartyMember;
+  open: () => void;
+}) => {
   const { avatar, name } = children;
 
   return (
-    <div className={styles.party_member}>
+    <div className={styles.party_member} onClick={open}>
       <Image
         src={avatar}
         height={30}
@@ -31,6 +38,8 @@ type PartyProps = {
 };
 
 export const Party = ({ members }: PartyProps) => {
+  const { isOpen, open, close } = useOpen();
+
   return (
     <div className={styles.party}>
       <h2 className="text-lg">
@@ -39,9 +48,42 @@ export const Party = ({ members }: PartyProps) => {
       <FontAwesomeIcon icon={faPlus} className="absolute right-4 top-4" />
       <div className={styles.members}>
         {members.map((user, i) => (
-          <Member key={i}>{user}</Member>
+          <Member key={i} open={open}>
+            {user}
+          </Member>
         ))}
       </div>
+      <PartyMemberModal isOpen={isOpen} close={close}>
+        {
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-center">
+              <b>Coming Soon!</b>
+            </p>
+          </div>
+        }
+      </PartyMemberModal>
     </div>
+  );
+};
+
+const PartyMemberModal = ({
+  isOpen,
+  close,
+  children,
+}: {
+  isOpen: boolean;
+  close: () => void;
+  children: React.ReactNode;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <Modal>
+      <Modal.Header title="Update Party Member" />
+      <Modal.Body>{children}</Modal.Body>
+      <Modal.Footer>
+        <button onClick={close}>Close</button>
+      </Modal.Footer>
+    </Modal>
   );
 };
