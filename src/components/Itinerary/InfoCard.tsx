@@ -40,6 +40,9 @@ export const InfoCard = ({
     phone: true,
     discord: true,
     facebook: true,
+    slack: true,
+    twitter: true,
+    sms: true,
   };
 
   return (
