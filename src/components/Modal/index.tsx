@@ -1,44 +1,89 @@
 "use client";
 import { Animator } from "@/components/Animator";
+import { PropsWithChildren, cloneElement, useState } from "react";
 import AnimationComponent from "../Animations/AnimatePresenceComponent";
 import ReactPortal from "../ReactPortal";
-import React, { PropsWithChildren, ReactNode, useState } from "react";
 import styles from "./modal.module.css";
 
-export type OpenUtils = [isOpen: boolean, open: () => void, close: () => void];
-
-export const useOpen = (): OpenUtils => {
-  const [isOpen, setIsOpen] = useState(false);
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
-
-  return [isOpen, open, close];
+export type PrebuiltManagedModalProps = {
+  btn: JSX.Element;
 };
 
-export type ModalProps = PropsWithChildren<{
-  isOpen: boolean;
-  close: () => void;
+export type ManagedModalProps = PropsWithChildren<{
+  btnStyles?: string;
+  /** The button to open the modal */
+  btn: JSX.Element;
 }>;
 
-function Modal({ children }: { children: any; wrapperId?: string }) {
+const useOpen = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  const open = () => setOpen(true);
+  const close = () => setOpen(false);
+
+  return [isOpen, open, close] as const;
+};
+
+function ManagedModal({ children, btn }: ManagedModalProps) {
+  const [isOpen, open, close] = useOpen();
+
+  return (
+    <>
+      {cloneElement(btn, { onClick: open })}
+      <Modal isOpen={isOpen} close={close}>
+        {children}
+      </Modal>
+    </>
+  );
+}
+
+function Modal({
+  children,
+  isOpen,
+  close,
+}: PropsWithChildren<{
+  isOpen: boolean;
+  close: () => void;
+}>) {
+  const getElem = (
+    type: (...args: any) => JSX.Element
+  ): JSX.Element | null => {
+    return children instanceof Array
+      ? children.find((child) => child.type === type)
+      : (children as JSX.Element).type === type
+      ? children
+      : null;
+  };
+
+  const Header = getElem(Modal.Header);
+  const Body = getElem(Modal.Body);
+  const Footer = getElem(Modal.Footer);
+
+  if (!isOpen) return null;
+
   return (
     <ReactPortal wrapperId="modal-portal">
       <Animator>
         <AnimationComponent className="flex items-center justify-center">
-          <div className={styles.modal}>{children}</div>
+          <div className={styles.modal}>
+            {Header}
+            {Body}
+            <div className={styles.modalFooter}>
+              {Footer}
+              <button onClick={close}>Close</button>
+            </div>
+          </div>
         </AnimationComponent>
       </Animator>
     </ReactPortal>
   );
 }
 
-const Header = ({
-  title,
-  children,
-}: {
+type ModalHeaderProps = PropsWithChildren<{
   title: string;
-  children?: React.ReactNode;
-}) => {
+}>;
+
+const Header = ({ title, children }: ModalHeaderProps) => {
   return (
     <div className={styles.modalHeader}>
       <h2>{title}</h2>
@@ -47,16 +92,16 @@ const Header = ({
   );
 };
 
-const Body = ({ children }: { children: React.ReactNode }) => {
+const Body = ({ children }: PropsWithChildren) => {
   return <div className={styles.modalBody}>{children}</div>;
 };
 
-const Footer = ({ children }: { children: React.ReactNode }) => {
-  return <div className={styles.modalFooter}>{children}</div>;
+const Footer = ({ children }: PropsWithChildren) => {
+  return <>{children}</>;
 };
 
 Modal.Header = Header;
 Modal.Body = Body;
 Modal.Footer = Footer;
 
-export { Modal };
+export { Modal, useOpen, ManagedModal };
