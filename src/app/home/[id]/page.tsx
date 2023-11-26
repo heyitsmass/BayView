@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 'use client';
 
-import styles from './page.module.css';
+import styles from '../page.module.css';
 import { CardCollapseContext } from '@/components/HomePage/Card/cardCollapseContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import AnimationComponent from '@/components/Animations/AnimatePresenceComponent';

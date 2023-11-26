@@ -10,12 +10,14 @@ import Banner from "@/components/Banner";
 import bannerImg from "../../../public/images/1.png";
 import ItineraryTitle from "@/components/ItineraryTitle";
 import { useRef, useState } from "react";
+import LodgingCard from "@/components/HomePage/Card/LodgingCard";
 import React from "react";
 
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
   <FlightCard />,
+  <LodgingCard />
   // ... Add cards here
 ];
 
