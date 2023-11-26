@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import styles from "./party.module.css";
 import { PartyMember } from "@/types/User";
-import { Modal, useOpen } from "../Modal";
+import { Modal, ModalProps, OpenUtils, useOpen } from "../Modal";
 
 const Member = ({
   children,
@@ -38,48 +38,68 @@ type PartyProps = {
 };
 
 export const Party = ({ members }: PartyProps) => {
-  const { isOpen, open, close } = useOpen();
+  const [isOpen_A, open_A, close_A] = useOpen();
+  const [isOpen_B, open_B, close_B] = useOpen();
 
   return (
     <div className={styles.party}>
       <h2 className="text-lg">
         <b>Party</b>
       </h2>
-      <FontAwesomeIcon icon={faPlus} className="absolute right-4 top-4" />
+      <FontAwesomeIcon
+        icon={faPlus}
+        className="absolute right-4 top-4"
+        onClick={open_B}
+      />
       <div className={styles.members}>
         {members.map((user, i) => (
-          <Member key={i} open={open}>
+          <Member key={i} open={open_A}>
             {user}
           </Member>
         ))}
       </div>
-      <PartyMemberModal isOpen={isOpen} close={close}>
+      <PartyMemberModal isOpen={isOpen_A} close={close_A}>
         {
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center p-4">
             <p className="text-center">
               <b>Coming Soon!</b>
             </p>
           </div>
         }
       </PartyMemberModal>
+      <AddPartyMemberModal isOpen={isOpen_B} close={close_B}>
+        {
+          <div className="flex flex-col items-center justify-center p-4">
+            <p className="text-center">
+              <b>Coming Soon!</b>
+            </p>
+          </div>
+        }
+      </AddPartyMemberModal>
     </div>
   );
 };
 
-const PartyMemberModal = ({
-  isOpen,
-  close,
-  children,
-}: {
-  isOpen: boolean;
-  close: () => void;
-  children: React.ReactNode;
-}) => {
+const PartyMemberModal = ({ isOpen, close, children }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
     <Modal>
       <Modal.Header title="Update Party Member" />
+      <Modal.Body>{children}</Modal.Body>
+      <Modal.Footer>
+        <button onClick={close}>Close</button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+const AddPartyMemberModal = ({ isOpen, close, children }: ModalProps) => {
+  if (!isOpen) return null;
+
+  return (
+    <Modal>
+      <Modal.Header title="Add Party Member" />
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
         <button onClick={close}>Close</button>

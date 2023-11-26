@@ -3,7 +3,7 @@ import styles from "./upgrade.module.css";
 import { UpgradeProps } from "@/types";
 
 export const Upgrade = ({ ...props }: UpgradeProps) => {
-  const { isOpen, open, close } = useOpen();
+  const [isOpen, open, close] = useOpen();
   const {
     name,
     priceRange,

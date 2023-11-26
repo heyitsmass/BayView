@@ -5,12 +5,14 @@ import ReactPortal from "../ReactPortal";
 import React, { PropsWithChildren, ReactNode, useState } from "react";
 import styles from "./modal.module.css";
 
-export const useOpen = () => {
+export type OpenUtils = [isOpen: boolean, open: () => void, close: () => void];
+
+export const useOpen = (): OpenUtils => {
   const [isOpen, setIsOpen] = useState(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
-  return { isOpen, open, close };
+  return [isOpen, open, close];
 };
 
 export type ModalProps = PropsWithChildren<{
