@@ -26,7 +26,7 @@ export const hikingSchema = new Schema<Activity<Hiking>>({
 hikingSchema.virtual("displayData").get(function (this: Activity<Hiking>) {
   const unit = "km";
   return {
-    "Hiking Name": this.name,
+    Name: this.name,
     Address: [this.location.street, this.location.street].join(", "),
     Trail: this.trail,
     Difficulty: this.difficulty,
