@@ -1,9 +1,8 @@
-import { Modal, ModalProps, useOpen } from "../Modal";
-import styles from "./upgrade.module.css";
 import { UpgradeProps } from "@/types";
+import { ManagedModal, Modal } from "../Modal";
+import styles from "./upgrade.module.css";
 
 export const Upgrade = ({ ...props }: UpgradeProps) => {
-  const [isOpen, open, close] = useOpen();
   const {
     name,
     priceRange,
@@ -38,31 +37,24 @@ export const Upgrade = ({ ...props }: UpgradeProps) => {
           <small>{subtitle}</small>
         </div>
 
-        <button
-          className="text-center p-1 rounded-xl bg-rose-800 text-sm"
-          onClick={open}
+        <ManagedModal
+          btn={
+            <button className="text-center p-1 rounded-xl bg-rose-800 text-sm">
+              {altText} - {currency}
+              {totalPrice}
+            </button>
+          }
         >
-          {altText} - {currency}
-          {totalPrice}
-        </button>
+          <Modal.Header title="Request Upgrade" />
+          <Modal.Body>
+            <div className="flex flex-col items-center justify-center p-4">
+              <p className="text-center">
+                <b>Coming Soon!</b>
+              </p>
+            </div>
+          </Modal.Body>
+        </ManagedModal>
       </div>
-      <UpgradeModal isOpen={isOpen} close={close}>
-        {"Coming Soon"}
-      </UpgradeModal>
     </div>
-  );
-};
-
-const UpgradeModal = ({ isOpen, close, children }: ModalProps) => {
-  if (!isOpen) return null;
-
-  return (
-    <Modal>
-      <Modal.Header title="Request Upgrade" />
-      <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <button onClick={close}>Close</button>
-      </Modal.Footer>
-    </Modal>
   );
 };

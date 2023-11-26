@@ -1,11 +1,11 @@
 "use client";
 
+import { PartyMember } from "@/types/User";
 import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import { ManagedModal, Modal, useOpen } from "../Modal";
 import styles from "./party.module.css";
-import { PartyMember } from "@/types/User";
-import { Modal, ModalProps, OpenUtils, useOpen } from "../Modal";
 
 const Member = ({
   children,
@@ -38,72 +38,48 @@ type PartyProps = {
 };
 
 export const Party = ({ members }: PartyProps) => {
-  const [isOpen_A, open_A, close_A] = useOpen();
-  const [isOpen_B, open_B, close_B] = useOpen();
+  const [isOpen, open, close] = useOpen();
 
   return (
     <div className={styles.party}>
       <h2 className="text-lg">
         <b>Party</b>
       </h2>
-      <FontAwesomeIcon
-        icon={faPlus}
-        className="absolute right-4 top-4"
-        onClick={open_B}
-      />
+
+      <ManagedModal
+        btn={
+          <FontAwesomeIcon
+            icon={faPlus}
+            className="absolute right-4 top-4"
+          />
+        }
+      >
+        <Modal.Header title="Add Party Member" />
+        <Modal.Body>
+          <div className="flex flex-col items-center justify-center p-4">
+            <p className="text-center">
+              <b>Coming Soon!</b>
+            </p>
+          </div>
+        </Modal.Body>
+      </ManagedModal>
       <div className={styles.members}>
         {members.map((user, i) => (
-          <Member key={i} open={open_A}>
+          <Member key={i} open={open}>
             {user}
           </Member>
         ))}
       </div>
-      <PartyMemberModal isOpen={isOpen_A} close={close_A}>
-        {
+      <Modal isOpen={isOpen} close={close}>
+        <Modal.Header title="Update Member" />
+        <Modal.Body>
           <div className="flex flex-col items-center justify-center p-4">
             <p className="text-center">
               <b>Coming Soon!</b>
             </p>
           </div>
-        }
-      </PartyMemberModal>
-      <AddPartyMemberModal isOpen={isOpen_B} close={close_B}>
-        {
-          <div className="flex flex-col items-center justify-center p-4">
-            <p className="text-center">
-              <b>Coming Soon!</b>
-            </p>
-          </div>
-        }
-      </AddPartyMemberModal>
+        </Modal.Body>
+      </Modal>
     </div>
-  );
-};
-
-const PartyMemberModal = ({ isOpen, close, children }: ModalProps) => {
-  if (!isOpen) return null;
-
-  return (
-    <Modal>
-      <Modal.Header title="Update Party Member" />
-      <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <button onClick={close}>Close</button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
-const AddPartyMemberModal = ({ isOpen, close, children }: ModalProps) => {
-  if (!isOpen) return null;
-
-  return (
-    <Modal>
-      <Modal.Header title="Add Party Member" />
-      <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <button onClick={close}>Close</button>
-      </Modal.Footer>
-    </Modal>
   );
 };
