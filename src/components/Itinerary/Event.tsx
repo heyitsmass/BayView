@@ -1,4 +1,4 @@
-import { FlattenedEvent } from "@/app/home/itinerary/page";
+import { FlattenedEvent } from "@/types";
 import { EventTypes, SportEvents } from "@/types/Event";
 import {
   IconDefinition,
@@ -28,11 +28,11 @@ import {
   faSpa,
   faTableTennisPaddleBall,
   faTicket,
-  faUtensils,
+  faUtensils
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./event.module.css";
 import { SyntheticEvent } from "react";
+import styles from "./event.module.css";
 
 type DiningOptions = "Breakfast" | "Lunch" | "Dinner";
 
@@ -41,7 +41,7 @@ const DiningMap: {
 } = {
   Breakfast: faMugSaucer,
   Lunch: faBurger,
-  Dinner: faPlateWheat,
+  Dinner: faPlateWheat
 };
 
 const EventMap: {
@@ -64,7 +64,7 @@ const EventMap: {
   Sports: faMedal,
   Nightlife: faChampagneGlasses,
   Spa: faSpa,
-  Golf: faGolfBallTee,
+  Golf: faGolfBallTee
 };
 
 const SportMap: {
@@ -75,7 +75,7 @@ const SportMap: {
   Baseball: faBaseball,
   Hockey: faHockeyPuck,
   Soccer: faFutbol,
-  Tennis: faTableTennisPaddleBall,
+  Tennis: faTableTennisPaddleBall
 };
 
 const IconMap: {
@@ -125,7 +125,7 @@ export const ItineraryEvent = ({ ...props }: ItineraryEventProps) => {
             className={styles.img}
             style={{
               background: `url(${picture_url})`,
-              backgroundSize: "cover",
+              backgroundSize: "cover"
             }}
           ></div>
         </div>

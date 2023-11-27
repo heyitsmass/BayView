@@ -1,10 +1,10 @@
 "use client";
-import { FlattenedEvent, useCurrentEvent } from "@/app/home/itinerary/page";
 import { PartyMember } from "@/types/User";
 import { InfoCard, InfoMap } from "./InfoCard";
 import { Party } from "./Party";
 import { Upgrades } from "./Upgrades";
 import styles from "./currentEvent.module.css";
+import { useCurrentEvent } from "@/hooks";
 
 type CurrentEventProps = {
   members: PartyMember[];
@@ -26,7 +26,7 @@ export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
             picture_url,
             location,
             date,
-            displayData,
+            displayData
           }}
         />
       </section>

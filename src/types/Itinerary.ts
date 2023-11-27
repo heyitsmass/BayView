@@ -1,8 +1,8 @@
 import { Document, FlattenMaps, HydratedDocument } from "mongoose";
 import { Event } from "./Event";
 
-import { FlattenedEvent } from "@/app/home/itinerary/page";
 import { PartyMember } from "./User";
+import { FlattenedEvent } from ".";
 
 export interface IItinerary {
   readonly _id: string;

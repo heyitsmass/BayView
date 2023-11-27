@@ -1,14 +1,11 @@
 "use client";
 
-import {
-  FlattenedEvent,
-  useCurrentEventDispatch,
-} from "@/app/home/itinerary/page";
+import {} from "@/app/home/itinerary/page";
 
-import styles from "./eventlist.module.css";
+import { useCurrentEventDispatch, useHomepage } from "@/hooks";
 import { SyntheticEvent } from "react";
 import { ItineraryEvent } from "./Event";
-import { useHomepage } from "@/context";
+import styles from "./eventlist.module.css";
 
 export const EventList = () => {
   const events = useHomepage().itinerary.events;

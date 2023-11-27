@@ -1,4 +1,12 @@
 import { HydratedDocument } from "mongoose";
+import { Event, EventTypes } from "./Event";
+
+
+export type FlattenedEvent = Event &
+  DisplayData & {
+    _id: string;
+    __t: EventTypes;
+  };
 
 export type Currency = "$" | "€" | "£" | "¥" | "₹";
 

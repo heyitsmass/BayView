@@ -1,10 +1,9 @@
 "use server";
 
-import { FlattenedEvent } from "@/app/home/itinerary/page";
 import { THomepageContext } from "@/context";
 import models from "@/models";
 import ItineraryModel from "@/models/Itinerary";
-import { DisplayData } from "@/types";
+import { DisplayData, FlattenedEvent } from "@/types";
 import { Event } from "@/types/Event";
 import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
 import { HydratedDocument } from "mongoose";
@@ -22,12 +21,12 @@ export const getItinerary = async (
   let itinerary: FlattenedItinerary = (
     (await ItineraryModel.findOneAndUpdate(
       {
-        _id,
+        _id
       },
       {},
       {
         upsert: true,
-        new: true,
+        new: true
       }
     )) as ItineraryWithMongo
   ).toJSON({ flattenObjectIds: true, flattenMaps: true });
@@ -43,7 +42,7 @@ export const getItinerary = async (
       ...event,
       peek,
       displayData,
-      upgradeOptions,
+      upgradeOptions
     } as FlattenedEvent;
   });
 
@@ -52,8 +51,8 @@ export const getItinerary = async (
   return {
     user: {
       _id,
-      metadata,
+      metadata
     },
-    itinerary,
+    itinerary
   };
 };
