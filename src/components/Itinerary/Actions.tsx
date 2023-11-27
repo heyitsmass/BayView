@@ -25,10 +25,10 @@ import { PropsWithChildren, SyntheticEvent, useState } from "react";
 
 import { Notifiers } from "@/lib/notifier";
 import {
-  ActionModalProps,
   InfoMethods,
   InfoModal,
   NotificationModal,
+  PrebuiltModalPropsWithType,
   ShareMethods,
   ShareModal,
   UpdateMethods,
@@ -47,7 +47,7 @@ export type ActionMethods =
   | Notifiers
   | ShareMethods;
 
-type ActionsArr<T extends ActionMethods = ActionMethods> = {
+type ActionsArr<T extends ActionMethods> = {
   type: T;
   icon: IconDefinition;
 }[];
@@ -59,41 +59,41 @@ type ActionDefinition<T extends ActionMethods = ActionMethods> = {
   };
   methods: ActionsArr<T>;
   className?: string;
-  Component: ({ ...props }: ActionModalProps<T>) => JSX.Element;
+  Component: ({ ...props }: PrebuiltModalPropsWithType<T>) => JSX.Element;
 };
 
-const updateActions = {
+const updateActions: ActionDefinition<UpdateMethods> = {
   labels: { lg: "Quick Updates", sm: "Updates" },
   methods: [
     { type: "delete", icon: faTrashCan },
     { type: "refresh", icon: faArrowsRotate },
-  ] as ActionsArr<UpdateMethods>,
+  ],
   Component: UpdateModal,
 };
 
-const infomationActions = {
+const infomationActions: ActionDefinition<InfoMethods> = {
   labels: { lg: "Get Infomation!", sm: "Info" },
   methods: [
     { type: "map", icon: faMapPin },
     { type: "directions", icon: faCar },
     { type: "weather", icon: faCloud },
-  ] as ActionsArr<InfoMethods>,
+  ],
   Component: InfoModal,
 };
 
-const shareActions = {
+const shareActions: ActionDefinition<ShareMethods> = {
   labels: { lg: "Share Your Trip!", sm: "Share!" },
   methods: [
     { type: "rss", icon: faRss },
     { type: "social", icon: faShareNodes },
     { type: "link", icon: faShare },
-  ] as ActionsArr<ShareMethods>,
+  ],
   className: "min-w-max",
   Component: ShareModal,
 };
 
 export const Actions = ({ notify }: ActionsProps) => {
-  const notificationActions = {
+  const notificationActions: ActionDefinition<Partial<Notifiers>> = {
     labels: { lg: "Get Notified!", sm: "Notify!" },
     methods: [
       { type: "email", icon: faEnvelope },
@@ -102,7 +102,7 @@ export const Actions = ({ notify }: ActionsProps) => {
       { type: "facebook", icon: faFacebook },
       { type: "slack", icon: faSlack },
       { type: "twitter", icon: faTwitter },
-    ].filter(({ type }) => notify[type]) as Partial<ActionsArr<Notifiers>>,
+    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>,
     Component: NotificationModal,
   };
 
