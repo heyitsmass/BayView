@@ -48,3 +48,64 @@ export type PeekInfo = {
   label?: string;
   value: any;
 };
+
+type AddressComponent = {
+  long_name: string;
+  short_name: string;
+  types: string;
+};
+
+export type Geocode = {
+  lat: number;
+  lng: number;
+};
+
+type GeometryComponent = {
+  location: Geocode;
+  location_type: string;
+  viewport: {
+    northeast: {
+      lat: number;
+      lng: number;
+    };
+    southwest: {
+      lat: number;
+      lng: number;
+    };
+  };
+};
+
+type PlusCodeComponent = {
+  compound_code: string;
+  global_code: string;
+};
+
+export type SuccessResponse = {
+  results: [
+    {
+      address_components: AddressComponent[];
+      formatted_address: string;
+      geometry: GeometryComponent;
+      place_id: string;
+      plus_code: PlusCodeComponent;
+      types: string[];
+    }
+  ];
+  status: "OK";
+};
+
+export type BadRequestResponse = {
+  error_message: "The provided API key is invalid. ";
+  results: [];
+  status: "REQUEST_DENIED";
+};
+
+export type ZeroResultsResponse = {
+  results: [];
+  status: "ZERO_RESULTS";
+};
+
+export type GoogleGeoCodeResponse =
+  | SuccessResponse
+  | BadRequestResponse
+  | ZeroResultsResponse;
