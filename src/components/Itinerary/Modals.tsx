@@ -2,32 +2,77 @@
 import { Notifiers } from "@/lib/notifier";
 import { ManagedModal, Modal, PrebuiltManagedModalProps } from "../Modal";
 import { ActionMethods } from "./Actions";
+import { PropsWithChildren } from "react";
 
 export type InfoMethods = "map" | "directions" | "weather";
 
-type InfoModalProps<T extends InfoMethods = InfoMethods> = {
+type RequiredPropsWithChildren<T> = PropsWithChildren<Required<T>>;
+export type PrebuiltModalPropsWithType<T> = PrebuiltManagedModalProps<{
   type: T;
-} & PrebuiltManagedModalProps;
+}>;
+
+type InfoModalProps = PrebuiltModalPropsWithType<InfoMethods>;
 
 function InfoModal({ ...props }: InfoModalProps) {
+  const { type } = props;
+
+  const bodies = {
+    map: Map,
+    directions: Directions,
+    weather: Weather,
+  } as {
+    [P in InfoMethods]: () => JSX.Element;
+  };
+
+  const Body = bodies[type];
+
   return (
     <ManagedModal {...props}>
       <Modal.Header title={props.type} />
       <Modal.Body>
-        <div className="flex flex-col items-center justify-center p-4">
-          <p className="text-center">
-            <b>Coming Soon!</b>
-          </p>
-        </div>
+        <Body />
       </Modal.Body>
     </ManagedModal>
   );
 }
 
-type NotificationModalProps<T extends Notifiers = Notifiers> =
-  PrebuiltManagedModalProps & {
-    type: T;
-  };
+type WeatherProps = RequiredPropsWithChildren<{}>;
+
+const Weather = ({ ...props }: WeatherProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center p-4">
+      <p className="text-center">
+        <b>Coming Soon!</b>
+      </p>
+    </div>
+  );
+};
+
+type DirectionsProps = RequiredPropsWithChildren<{}>;
+
+const Directions = ({ ...props }: DirectionsProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center p-4">
+      <p className="text-center">
+        <b>Coming Soon!</b>
+      </p>
+    </div>
+  );
+};
+
+type MapProps = RequiredPropsWithChildren<{}>;
+
+const Map = ({ ...props }: MapProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center p-4">
+      <p className="text-center">
+        <b>Coming Soon!</b>
+      </p>
+    </div>
+  );
+};
+
+type NotificationModalProps = PrebuiltModalPropsWithType<Notifiers>;
 
 function NotificationModal({ ...props }: NotificationModalProps) {
   const { type } = props;
@@ -48,9 +93,7 @@ function NotificationModal({ ...props }: NotificationModalProps) {
 
 export type ShareMethods = "rss" | "social" | "link";
 
-type ShareModalProps<T extends ShareMethods = ShareMethods> = {
-  type: T;
-} & PrebuiltManagedModalProps;
+type ShareModalProps = PrebuiltModalPropsWithType<ShareMethods>;
 
 function ShareModal({ ...props }: ShareModalProps) {
   const { type } = props;
@@ -71,9 +114,7 @@ function ShareModal({ ...props }: ShareModalProps) {
 
 export type UpdateMethods = "delete" | "refresh";
 
-type UpdateModalProps<T extends UpdateMethods = UpdateMethods> = {
-  type: T;
-} & PrebuiltManagedModalProps;
+type UpdateModalProps = PrebuiltModalPropsWithType<UpdateMethods>;
 
 function UpdateModal({ ...props }: UpdateModalProps) {
   const { type } = props;
@@ -92,16 +133,11 @@ function UpdateModal({ ...props }: UpdateModalProps) {
   );
 }
 
-export type ActionModalProps<T extends ActionMethods = ActionMethods> =
-  T extends UpdateMethods
-    ? UpdateModalProps
-    : T extends InfoMethods
-    ? InfoModalProps
-    : T extends Notifiers
-    ? NotificationModalProps
-    : T extends ShareMethods
-    ? ShareModalProps
-    : never;
+export type ActionModalProps =
+  | UpdateModalProps
+  | InfoModalProps
+  | NotificationModalProps
+  | ShareModalProps;
 
 export {
   ManagedModal,
