@@ -1,16 +1,19 @@
-import { FlattenedEvent } from "@/app/home/itinerary/page";
+"use client";
+
+import {
+  FlattenedEvent,
+  useCurrentEventDispatch,
+} from "@/app/home/itinerary/page";
 
 import styles from "./eventlist.module.css";
 import { SyntheticEvent } from "react";
 import { ItineraryEvent } from "./Event";
+import { useHomepage } from "@/context";
 
-export const EventList = ({
-  events,
-  handleClick,
-}: {
-  events: FlattenedEvent[];
-  handleClick: (index: number) => void;
-}) => {
+export const EventList = () => {
+  const events = useHomepage().itinerary.events;
+  const setEvent = useCurrentEventDispatch();
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.subWrapper}>
@@ -25,7 +28,7 @@ export const EventList = ({
                 {...event}
                 onClick={(e: SyntheticEvent) => {
                   e.preventDefault();
-                  handleClick(i);
+                  setEvent(i);
                 }}
               />
             ))}

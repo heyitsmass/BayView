@@ -1,26 +1,19 @@
-import { DisplayData } from "@/types";
-import { Event } from "@/types/Event";
+"use client";
+import { FlattenedEvent, useCurrentEvent } from "@/app/home/itinerary/page";
+import { PartyMember } from "@/types/User";
 import { InfoCard, InfoMap } from "./InfoCard";
 import { Party } from "./Party";
 import { Upgrades } from "./Upgrades";
 import styles from "./currentEvent.module.css";
-import { PartyMember } from "@/types/User";
 
-type CurrentEventProps = DisplayData &
-  Pick<Event, "date" | "location" | "name"> & {
-    members: PartyMember[];
-  };
+type CurrentEventProps = {
+  members: PartyMember[];
+};
 
 export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
-  const {
-    displayData,
-    upgradeOptions,
-    picture_url,
-    location,
-    date,
-    name,
-    members,
-  } = props;
+  const { members } = props;
+  const { displayData, upgradeOptions, picture_url, location, date, name } =
+    useCurrentEvent();
 
   return (
     <div className={styles.card}>
