@@ -2,42 +2,17 @@
 
 import { CurrentEvent } from "@/components/Itinerary/CurrentEvent";
 import { EventList } from "@/components/Itinerary/EventList";
-import { useHomepage } from "@/context";
-import { DisplayData } from "@/types";
-import { Event, EventTypes } from "@/types/Event";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+
+import { useState } from "react";
 import styles from "./itinerary.module.css";
 
+import {
+  CurrentEventContext,
+  CurrentEventDispatch
+} from "@/context/currentEvent";
 import random from "@/lib/random";
 
-export type FlattenedEvent = Event &
-  DisplayData & {
-    _id: string;
-    __t: EventTypes;
-  };
-
-const CurrentEventContext = createContext<FlattenedEvent>(
-  {} as FlattenedEvent
-);
-
-const CurrentEventDispatch = createContext<
-  Dispatch<SetStateAction<number>>
->(() => {});
-
-export const useCurrentEvent = () => {
-  return useContext(CurrentEventContext);
-};
-
-export const useCurrentEventDispatch = () => {
-  return useContext(CurrentEventDispatch);
-};
+import { useHomepage } from "@/hooks";
 
 export default function Page() {
   const { itinerary } = useHomepage();
@@ -46,7 +21,7 @@ export default function Page() {
 
   const members = random.member({
     min: 1,
-    max: 4,
+    max: 4
   });
 
   return (
