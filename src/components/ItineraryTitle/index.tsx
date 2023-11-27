@@ -49,7 +49,7 @@ export default function ItineraryTitle() {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-xs max-h-min rounded-2xl bg-white pl-5 pb-5 pr-5 pt-3 border-4 border-gray-200">
+                  <Dialog.Panel className="w-full max-w-xs max-h-min rounded-2xl bg-white pl-5 pb-5 pr-5 pt-3 border-4 border-gray-200 dark:bg-zinc-800 dark:border-zinc-700">
                     <div className="text-2xl font-bold text-center">
                       <Dialog.Title>Select Location</Dialog.Title>
                     </div>

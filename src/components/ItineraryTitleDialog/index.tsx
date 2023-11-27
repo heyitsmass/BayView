@@ -20,7 +20,7 @@ export default function SetLocationModal({open, onClose}:LocationModalProps) {
           <div
             data-testid="dialogTest"
             className={
-              "block bg-white fixed max-w-xl -translate-x-1/2 -translate-y-1/2 top-1/3 left-1/2 border-zinc-200 rounded-xl pl-4 py-4 pr-20 shadow-red-600 z-0"
+              "block bg-white fixed max-w-xl -translate-x-1/2 -translate-y-1/2 top-1/3 left-1/2 border-zinc-200 rounded-xl pl-4 py-4 pr-20 shadow-red-600 z-0 dark:bg-zinc-800 dark:border-zinc-700"
             }
           >
             <div className="inline">
@@ -28,12 +28,12 @@ export default function SetLocationModal({open, onClose}:LocationModalProps) {
                 {" "}
                 Select Location{" "}
               </h1>
-                <FontAwesomeIcon
-                  data-testid="closeButtonTest"
-                  className="absolute ml-10 mt-2"
-                  icon={faClose}
-                  onClick={onClose}
-                />
+              <FontAwesomeIcon
+                data-testid="closeButtonTest"
+                className="absolute ml-10 mt-2"
+                icon={faClose}
+                onClick={onClose}
+              />
             </div>
             <div className="block mt-7">
               <label className="block">
@@ -42,7 +42,8 @@ export default function SetLocationModal({open, onClose}:LocationModalProps) {
               </label>
               <label className="block mt-3">
                 <input type="radio" value="magicalLand" name="Location" />{" "}
-                Magical World              </label>
+                Magical World{" "}
+              </label>
               <Button type="submit" className="mt-8">
                 {" "}
                 Confirm{" "}
