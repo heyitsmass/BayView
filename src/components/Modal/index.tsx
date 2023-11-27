@@ -5,9 +5,9 @@ import AnimationComponent from "../Animations/AnimatePresenceComponent";
 import ReactPortal from "../ReactPortal";
 import styles from "./modal.module.css";
 
-export type PrebuiltManagedModalProps = {
+export type PrebuiltManagedModalProps<T = unknown> = {
   btn: JSX.Element;
-};
+} & T;
 
 export type ManagedModalProps = PropsWithChildren<{
   btnStyles?: string;
