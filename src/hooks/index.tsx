@@ -7,6 +7,18 @@ import {
 import { useCurrentEvent, useCurrentEventDispatch } from "./useCurrentEvent";
 
 import { useGetData } from "./useGetData";
+import { useState } from "react";
+
+
+const useOpen = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  const open = () => setOpen(true);
+  const close = () => setOpen(false);
+
+  return [isOpen, open, close] as const;
+};
+
 
 export {
   useHomepage,
@@ -14,5 +26,6 @@ export {
   useHomepageManager,
   useCurrentEvent,
   useCurrentEventDispatch,
-  useGetData
+  useGetData,
+  useOpen
 };
