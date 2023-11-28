@@ -9,6 +9,7 @@ import { FlightContext } from '../flightState';
 import { flightSearchAction } from '../flightActions';
 import { stepDetails } from '..';
 import { BlurOpacityAnimation } from '@/components/Animations/AnimatePresenceComponent';
+import BayviewCalendar from '@/components/Input/BayviewCalendar';
 
 export default function Search() {
 	const { dispatch, flightState } = useContext(FlightContext);
@@ -121,22 +122,19 @@ export default function Search() {
 					/>
 				</InputPair>
 				<InputPair icon={faArrowRight}>
-					<Input
+					<BayviewCalendar
 						label="Departure Date"
-						defaultValue={flightState.searchState.formValues?.departure_date || ''}
-						type="date"
+						value={flightState.searchState.formValues?.departure_date}
 						name="departure_date"
-						icon={{ icon: faCalendarDays }}
 						placeholder="Date"
-						required
+						minDate={new Date(Date.now())}
 					/>
-					<Input
+					<BayviewCalendar
 						label="Return Date"
-						defaultValue={flightState.searchState.formValues?.return_date || ''}
-						type="date"
+						value={flightState.searchState.formValues?.return_date}
 						name="return_date"
-						icon={{ icon: faCalendarDays }}
 						placeholder="Date"
+						minDate={new Date(Date.now())}
 					/>
 				</InputPair>
 				<InputPair>

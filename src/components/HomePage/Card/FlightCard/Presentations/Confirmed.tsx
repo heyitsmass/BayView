@@ -13,8 +13,10 @@ export default function Confirmed() {
 	// Extracting the selected offer details
 	const { selectedOffer, returnFlight } = flightState.selectState;
 
-	const prettyPrintDate = (dateString) =>
-		`${parseInt(dateString.substring(5, 7), 10)}/${parseInt(dateString.substring(8, 10), 10)}/${dateString.substring(2, 4)}`;
+	const prettyPrintDate = dateString => {
+		const d = new Date(dateString);
+		return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear().toString().slice(-2)}`;
+	};
 
 	const isoDurationToMilliseconds = (duration) => {
 		const hoursMatch = duration.match(/(\d+)H/);

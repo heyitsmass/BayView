@@ -14,8 +14,13 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import styles from "./input.module.css";
 
+type IconProps = Omit<FontAwesomeIconProps, "icon"> & {
+  icon: IconProp;
+  onClick?: (event: MouseEvent) => void;
+};
+
 export type UserInputProps = {
-  icon?: Omit<FontAwesomeIconProps, "icon"> & { icon: IconProp };
+  icon?: IconProps;
   label?: string;
 } & DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
