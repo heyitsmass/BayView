@@ -22,6 +22,7 @@ const EditableInputField = ({ initialText }) => {
     <div onDoubleClick={handleDoubleClick}>
       {isEditing ? (
         <input
+          className="dark:bg-zinc-800"
           type="text"
           value={text}
           onChange={handleChange}
