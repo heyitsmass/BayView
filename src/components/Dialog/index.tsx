@@ -2,9 +2,10 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { useOpen } from "@/hooks";
 import { motion } from "framer-motion";
-import React, { Fragment, PropsWithChildren } from "react";
+import React, { Fragment, PropsWithChildren, Suspense } from "react";
+import { Loading } from "../Loading";
 
-type ContainedDialogProps<T = unknown> = PropsWithChildren<
+export type ContainedDialogProps<T = unknown> = PropsWithChildren<
   {
     btn: JSX.Element;
   } & T
@@ -74,4 +75,17 @@ const GenericDialog = ({ ...props }: GenericDialogProps) => {
   );
 };
 
-export { ContainedDialog, GenericDialog };
+const SuspenedDialog = ({
+  children,
+  ...props
+}: ContainedDialogProps & GenericDialogProps) => {
+  return (
+    <ContainedDialog {...props}>
+      <Suspense fallback={<Loading />}>
+        <GenericDialog {...props}>{children}</GenericDialog>
+      </Suspense>
+    </ContainedDialog>
+  );
+};
+
+export { ContainedDialog, GenericDialog, SuspenedDialog };
