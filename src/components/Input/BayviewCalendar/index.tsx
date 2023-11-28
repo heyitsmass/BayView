@@ -23,7 +23,7 @@ const BayviewCalendar = ({ label, name, placeholder, value, minDate, disabled} :
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [inputValue, setInputValue] = useState(value || ''); // State for the input value
   const [dateValue, setDateValue] = useState<Date | null>(null); // State for the validated date
-  const inputRef = useRef<HTMLElement | undefined>(null); // Ref for the input element
+  const inputRef = useRef<HTMLDivElement>(null); // Ref for the input element
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -40,7 +40,7 @@ const BayviewCalendar = ({ label, name, placeholder, value, minDate, disabled} :
     setIsOpen(true);
   }
 
-  const handleChange = (value: Date) => {
+  const handleChange = (value) => {
     setDateValue(value);
     setInputValue(value.toDateString());
     setIsOpen(false);

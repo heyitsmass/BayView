@@ -34,7 +34,7 @@ type FlightStateSelectType = {
 type ResultsSortingProps = FlightStateSelectType & {
 	sortDataBySortingType: (sortBy: string, currentOffers: Offer[]) => void;
 	setCurrentPage: Dispatch<SetStateAction<number>>;
-	setCurrentOffers: Dispatch<SetStateAction<Array>>;
+	setCurrentOffers;
 	currentOffers: Offer[] | undefined;
 	isDepartingPresentation: boolean;
 };
