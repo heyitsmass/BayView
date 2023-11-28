@@ -2,6 +2,9 @@ import { HydratedDocument } from "mongoose";
 import { Event, EventTypes } from "./Event";
 import { Notifiers } from "@/lib/notifier";
 
+
+export type DiningOptions = "Breakfast" | "Lunch" | "Dinner";
+
 export type FlattenedEvent = Event &
   DisplayData & {
     _id: string;

@@ -1,6 +1,6 @@
 import { UpgradeProps } from "@/types";
 
-import { ContainedDialog, GenericDialog } from "../Dialog";
+import { ContainedDialog } from "../Dialog";
 import styles from "./upgrade.module.css";
 
 export const Upgrade = ({ ...props }: UpgradeProps) => {
@@ -56,9 +56,5 @@ const RequestUpgradeDialog = ({ btn }: { btn: JSX.Element }) => {
     title: "Request Upgrade",
     description: "Request an Upgrade"
   };
-  return (
-    <ContainedDialog btn={btn}>
-      <GenericDialog {...data}></GenericDialog>
-    </ContainedDialog>
-  );
+  return <ContainedDialog btn={btn} {...data} />;
 };

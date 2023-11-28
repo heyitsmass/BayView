@@ -1,13 +1,12 @@
 "use client";
 
+import { useOpen } from "@/hooks";
 import { PartyMember } from "@/types/User";
 import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import { AnimatedDialog, ContainedDialog } from "../Dialog";
 import styles from "./party.module.css";
-import { useOpen } from "@/hooks";
-import { ContainedDialog, GenericDialog } from "../Dialog";
-import { Dialog } from "@headlessui/react";
 
 const Member = ({
   children,
@@ -66,11 +65,7 @@ const AddMemberDialog = ({ btn }: { btn: JSX.Element }) => {
     description: "Add a party member to your event!"
   };
 
-  return (
-    <ContainedDialog btn={btn}>
-      <GenericDialog {...data}></GenericDialog>
-    </ContainedDialog>
-  );
+  return <ContainedDialog btn={btn} {...data} />;
 };
 
 type UpdateMemberDialogProps = {
@@ -82,16 +77,11 @@ const UpdateMemberDialog = ({ isOpen, close }: UpdateMemberDialogProps) => {
   return (
     <>
       {isOpen && (
-        <Dialog open={isOpen} onClose={close}>
-          <Dialog.Title>Update Member</Dialog.Title>
-          <Dialog.Description>
-            <div className="flex flex-col items-center justify-center p-4">
-              <p className="text-center">
-                <b>Coming Soon!</b>
-              </p>
-            </div>
-          </Dialog.Description>
-        </Dialog>
+        <AnimatedDialog
+          open={isOpen}
+          onClose={close}
+          title="Update Member"
+        ></AnimatedDialog>
       )}
     </>
   );
