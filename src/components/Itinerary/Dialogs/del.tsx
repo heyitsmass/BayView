@@ -4,6 +4,6 @@ const Component = () => {
 
 export default {
   title: "Delete",
-  description: "Delete your event!",
+  description: "Are you sure you want to delete this event?",
   Component
 } as const;

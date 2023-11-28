@@ -19,14 +19,12 @@ import email from "./email";
 import sms from "./sms";
 import slack from "./slack";
 
-type ActionDialogProps = {
-  readonly title: string;
-  readonly description: string;
-  readonly Component: (props?: any) => JSX.Element;
-};
-
 const dialogs: {
-  [P in ActionMethods]: ActionDialogProps;
+  [P in ActionMethods]: {
+    readonly title: string;
+    readonly description: string;
+    readonly Component: (props?: any) => Promise<JSX.Element> | JSX.Element;
+  };
 } = {
   map,
   directions,
