@@ -1,6 +1,6 @@
 import { UpgradeProps } from "@/types";
 
-import { ContainedDialog, GenericDialog } from "../ContainedDialog";
+import { ContainedDialog, GenericDialog } from "../Dialog";
 import styles from "./upgrade.module.css";
 
 export const Upgrade = ({ ...props }: UpgradeProps) => {

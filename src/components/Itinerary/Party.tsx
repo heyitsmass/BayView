@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import styles from "./party.module.css";
 import { useOpen } from "@/hooks";
-import { ContainedDialog, GenericDialog } from "../ContainedDialog";
+import { ContainedDialog, GenericDialog } from "../Dialog";
 import { Dialog } from "@headlessui/react";
 
 const Member = ({
@@ -80,15 +80,19 @@ type UpdateMemberDialogProps = {
 
 const UpdateMemberDialog = ({ isOpen, close }: UpdateMemberDialogProps) => {
   return (
-    <Dialog open={isOpen} onClose={close}>
-      <Dialog.Title>Update Member</Dialog.Title>
-      <Dialog.Description>
-        <div className="flex flex-col items-center justify-center p-4">
-          <p className="text-center">
-            <b>Coming Soon!</b>
-          </p>
-        </div>
-      </Dialog.Description>
-    </Dialog>
+    <>
+      {isOpen && (
+        <Dialog open={isOpen} onClose={close}>
+          <Dialog.Title>Update Member</Dialog.Title>
+          <Dialog.Description>
+            <div className="flex flex-col items-center justify-center p-4">
+              <p className="text-center">
+                <b>Coming Soon!</b>
+              </p>
+            </div>
+          </Dialog.Description>
+        </Dialog>
+      )}
+    </>
   );
 };
