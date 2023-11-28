@@ -9,8 +9,25 @@ import Input from "@/components/Input";
 import InputPair from "@/components/Input/InputPair";
 import Button from "@/components/Button";
 import Card from "@/components/HomePage/Card";
-
+import BayviewCalendar from "@/components/Input/BayviewCalendar";
+import {useState} from "react";
+type ValuePiece = Date | null;
 export default function LodgingCard() {
+  const [departureDate, setDepartureDate] = useState<
+    ValuePiece | [ValuePiece, ValuePiece]
+  >(null);
+  const [returnDate, setReturnDate] = useState<
+    ValuePiece | [ValuePiece, ValuePiece]
+  >(null);
+  const [disabled, setDisabled] = useState(false);
+  const checkDate = (departureDate) => {
+    if (departureDate != null) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
+
   return (
     <Card title="Lodging" subtitle="search for lodging reservations">
       <form>
@@ -21,22 +38,26 @@ export default function LodgingCard() {
           placeholder="Going to..."
           required
         />
-        <InputPair icon={faArrowRight}>
-          <Input
-            label="Check-In Date"
-            name="check-in-date"
-            icon={{ icon: faCalendarDays }}
-            placeholder="Check-in Date"
-            required
-          />
-          <Input
-            label="Check-Out Date"
-            name="check-out-date"
-            icon={{ icon: faCalendarDays }}
-            placeholder="Check-Out Date"
-            required
-          />
-        </InputPair>
+          <InputPair icon={faArrowRight}>
+            <BayviewCalendar
+              label="Departure Date"
+              placeholder="Date"
+              title="Departure"
+              date={departureDate}
+              minDate={new Date()}
+              setDate={setDepartureDate}
+              disabled={false}
+            />
+            <BayviewCalendar
+              label="Return Date"
+              placeholder="Date"
+              title="Return"
+              date={returnDate}
+              minDate={departureDate}
+              setDate={setReturnDate}
+              disabled={departureDate === null ? true : false}
+            />
+          </InputPair>
         <div className="display: flex gap-3">
           <Input
             label="Number of Guests"

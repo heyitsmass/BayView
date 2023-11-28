@@ -155,3 +155,55 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
+
+@media (prefers-color-scheme: dark) {
+  .react-calendar {
+    background: #27272a;
+  }
+
+  .react-calendar__navigation button:disabled {
+  background-color: #27272a;
+}
+
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color:#3f3f46;
+  }
+
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: black;
+  }
+
+
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: lightcoral;
+      color: black;
+      border-radius: 4px;
+  }
+
+  .react-calendar__tile--now {
+    background: #27272a;
+    color: lightcoral;
+  }
+
+  .react-calendar__tile:disabled {
+  background-color: #3f3f46;
+  color: gray;
+}
+
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+    background-color: lightcoral;
+      color: black;
+      border-radius: 4px;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+  color: white;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: gray;
+}
+}

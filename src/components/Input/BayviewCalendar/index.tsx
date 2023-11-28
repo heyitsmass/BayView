@@ -40,12 +40,12 @@ const BayviewCalendar = ({ date, setDate, label, placeholder, title, minDate, di
           <FontAwesomeIcon
             className={styles.icon}
             icon={faCalendarDays}
-            onClick={disabled === true ? () => {}: openModal}
+            onClick={disabled === true ? () => {} : openModal}
           />
           <input
             className={styles.input}
             disabled={disabled}
-            placeholder = {date === null ? placeholder: ""}
+            placeholder={date === null ? placeholder : ""}
             required
             value={date === null ? "" : date.toLocaleDateString()}
           ></input>
@@ -65,7 +65,7 @@ const BayviewCalendar = ({ date, setDate, label, placeholder, title, minDate, di
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-xs max-h-min rounded bg-white pl-5 pb-5 pr-5 border-4 border-gray-200">
+                <Dialog.Panel className="w-full max-w-xs max-h-min rounded bg-white pl-5 pb-5 pr-5 border-4 border-gray-200 dark:bg-zinc-800 dark:border-zinc-700">
                   <div className="text-2xl font-bold text-center pb-3 pt-2">
                     <Dialog.Title>Select {title} Date</Dialog.Title>
                   </div>
