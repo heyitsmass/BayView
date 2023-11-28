@@ -3,7 +3,7 @@ import {
   faDiscord,
   faFacebook,
   faSlack,
-  faTwitter,
+  faTwitter
 } from "@fortawesome/free-brands-svg-icons";
 import {
   IconDefinition,
@@ -18,7 +18,7 @@ import {
   faShare,
   faShareNodes,
   faTrashCan,
-  faXmark,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren, SyntheticEvent, useState } from "react";
@@ -26,14 +26,11 @@ import { PropsWithChildren, SyntheticEvent, useState } from "react";
 import { Notifiers } from "@/lib/notifier";
 import {
   InfoMethods,
-  InfoModal,
-  NotificationModal,
-  PrebuiltModalPropsWithType,
+  NotifyMethods,
   ShareMethods,
-  ShareModal,
-  UpdateMethods,
-  UpdateModal,
-} from "./Modals";
+  UpdateMethods
+} from "@/types";
+import { ActionsDialog } from "./Dialogs";
 import styles from "./actions.module.css";
 
 type ActionsProps = {
@@ -41,11 +38,12 @@ type ActionsProps = {
     [P in Notifiers]: boolean;
   };
 };
+
 export type ActionMethods =
-  | UpdateMethods
   | InfoMethods
-  | Notifiers
-  | ShareMethods;
+  | ShareMethods
+  | UpdateMethods
+  | NotifyMethods;
 
 type ActionsArr<T extends ActionMethods> = {
   type: T;
@@ -59,16 +57,14 @@ type ActionDefinition<T extends ActionMethods = ActionMethods> = {
   };
   methods: ActionsArr<T>;
   className?: string;
-  Component: ({ ...props }: PrebuiltModalPropsWithType<T>) => JSX.Element;
 };
 
 const updateActions: ActionDefinition<UpdateMethods> = {
   labels: { lg: "Quick Updates", sm: "Updates" },
   methods: [
-    { type: "delete", icon: faTrashCan },
-    { type: "refresh", icon: faArrowsRotate },
-  ],
-  Component: UpdateModal,
+    { type: "del", icon: faTrashCan },
+    { type: "refresh", icon: faArrowsRotate }
+  ]
 };
 
 const infomationActions: ActionDefinition<InfoMethods> = {
@@ -76,9 +72,8 @@ const infomationActions: ActionDefinition<InfoMethods> = {
   methods: [
     { type: "map", icon: faMapPin },
     { type: "directions", icon: faCar },
-    { type: "weather", icon: faCloud },
-  ],
-  Component: InfoModal,
+    { type: "weather", icon: faCloud }
+  ]
 };
 
 const shareActions: ActionDefinition<ShareMethods> = {
@@ -86,10 +81,9 @@ const shareActions: ActionDefinition<ShareMethods> = {
   methods: [
     { type: "rss", icon: faRss },
     { type: "social", icon: faShareNodes },
-    { type: "link", icon: faShare },
+    { type: "link", icon: faShare }
   ],
-  className: "min-w-max",
-  Component: ShareModal,
+  className: "min-w-max"
 };
 
 export const Actions = ({ notify }: ActionsProps) => {
@@ -97,28 +91,27 @@ export const Actions = ({ notify }: ActionsProps) => {
     labels: { lg: "Get Notified!", sm: "Notify!" },
     methods: [
       { type: "email", icon: faEnvelope },
-      { type: "phone", icon: faPhone },
+      { type: "sms", icon: faPhone },
       { type: "discord", icon: faDiscord },
       { type: "facebook", icon: faFacebook },
       { type: "slack", icon: faSlack },
-      { type: "twitter", icon: faTwitter },
-    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>,
-    Component: NotificationModal,
+      { type: "twitter", icon: faTwitter }
+    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>
   };
 
-  const actions = [
+  const actions: ActionDefinition[] = [
     infomationActions,
     notificationActions,
     shareActions,
-    updateActions,
-  ] as ActionDefinition[];
+    updateActions
+  ];
 
   return (
     <div className={styles.actions}>
       {actions.map(({ labels, methods, Component, className }, i) => (
         <ActionGroup labels={labels} className={className} key={i}>
           {methods.map(({ type, icon }, j: number) => (
-            <Component
+            <ActionsDialog
               btn={<FontAwesomeIcon icon={icon} />}
               type={type}
               key={j}
@@ -151,9 +144,7 @@ const ActionGroup = ({ ...props }: ActionProps) => {
       </label>
       <label className={styles.sm_label}>{labels.sm}</label>
       <span
-        className={`${styles.icons} ${
-          isOpen ? styles.open : styles.closed
-        }`}
+        className={`${styles.icons} ${isOpen ? styles.open : styles.closed}`}
       >
         <span className={styles.bars}>
           <FontAwesomeIcon
