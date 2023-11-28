@@ -1,6 +1,6 @@
 import { HydratedDocument } from "mongoose";
 import { Event, EventTypes } from "./Event";
-
+import { Notifiers } from "@/lib/notifier";
 
 export type FlattenedEvent = Event &
   DisplayData & {
@@ -117,3 +117,9 @@ export type GoogleGeoCodeResponse =
   | SuccessResponse
   | BadRequestResponse
   | ZeroResultsResponse;
+
+export type NotifyMethods = Notifiers;
+export type UpdateMethods = "del" | "refresh";
+export type InfoMethods = "map" | "directions" | "weather";
+export type ShareMethods = "rss" | "social" | "link";
+
