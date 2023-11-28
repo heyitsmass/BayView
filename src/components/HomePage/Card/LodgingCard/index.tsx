@@ -9,6 +9,7 @@ import Input from "@/components/Input";
 import InputPair from "@/components/Input/InputPair";
 import Button from "@/components/Button";
 import Card from "@/components/HomePage/Card";
+import BayviewCalendar from "@/components/Input/BayviewCalendar";
 
 export default function LodgingCard() {
   return (
@@ -22,19 +23,16 @@ export default function LodgingCard() {
           required
         />
         <InputPair icon={faArrowRight}>
-          <Input
+          <BayviewCalendar
             label="Check-In Date"
             name="check-in-date"
-            icon={{ icon: faCalendarDays }}
             placeholder="Check-in Date"
-            required
-          />
-          <Input
+						minDate={new Date(Date.now())}
+					/>
+          <BayviewCalendar
             label="Check-Out Date"
             name="check-out-date"
-            icon={{ icon: faCalendarDays }}
             placeholder="Check-Out Date"
-            required
           />
         </InputPair>
         <div className="display: flex gap-3">
