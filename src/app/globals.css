@@ -151,7 +151,7 @@ div {
   width: 100%;
 }
 
-#modal-portal {
+#headlessui-portal-root {
   position: absolute;
   display: flex;
   background-blend-mode: overlay;
@@ -161,5 +161,5 @@ div {
   z-index: 999;
   align-items: center;
   justify-content: center;
-  @apply bg-black bg-opacity-30; 
+  @apply bg-black bg-opacity-30;
 }

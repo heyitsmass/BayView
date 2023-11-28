@@ -4,12 +4,14 @@ import { PartyMember } from "@/types/User";
 import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { ManagedModal, Modal, useOpen } from "../Modal";
 import styles from "./party.module.css";
+import { useOpen } from "@/hooks";
+import { ContainedDialog, GenericDialog } from "../ContainedDialog";
+import { Dialog } from "@headlessui/react";
 
 const Member = ({
   children,
-  open,
+  open
 }: {
   children: PartyMember;
   open: () => void;
@@ -45,24 +47,7 @@ export const Party = ({ members }: PartyProps) => {
       <h2 className="text-lg">
         <b>Party</b>
       </h2>
-
-      <ManagedModal
-        btn={
-          <FontAwesomeIcon
-            icon={faPlus}
-            className="absolute right-4 top-4"
-          />
-        }
-      >
-        <Modal.Header title="Add Party Member" />
-        <Modal.Body>
-          <div className="flex flex-col items-center justify-center p-4">
-            <p className="text-center">
-              <b>Coming Soon!</b>
-            </p>
-          </div>
-        </Modal.Body>
-      </ManagedModal>
+      <AddMemberDialog btn={<FontAwesomeIcon icon={faPlus} />} />
       <div className={styles.members}>
         {members.map((user, i) => (
           <Member key={i} open={open}>
@@ -70,16 +55,40 @@ export const Party = ({ members }: PartyProps) => {
           </Member>
         ))}
       </div>
-      <Modal isOpen={isOpen} close={close}>
-        <Modal.Header title="Update Member" />
-        <Modal.Body>
-          <div className="flex flex-col items-center justify-center p-4">
-            <p className="text-center">
-              <b>Coming Soon!</b>
-            </p>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <UpdateMemberDialog isOpen={isOpen} close={close} />
     </div>
+  );
+};
+
+const AddMemberDialog = ({ btn }: { btn: JSX.Element }) => {
+  const data = {
+    title: "Add Party Member",
+    description: "Add a party member to your event!"
+  };
+
+  return (
+    <ContainedDialog btn={btn}>
+      <GenericDialog {...data}></GenericDialog>
+    </ContainedDialog>
+  );
+};
+
+type UpdateMemberDialogProps = {
+  isOpen: boolean;
+  close: () => void;
+};
+
+const UpdateMemberDialog = ({ isOpen, close }: UpdateMemberDialogProps) => {
+  return (
+    <Dialog open={isOpen} onClose={close}>
+      <Dialog.Title>Update Member</Dialog.Title>
+      <Dialog.Description>
+        <div className="flex flex-col items-center justify-center p-4">
+          <p className="text-center">
+            <b>Coming Soon!</b>
+          </p>
+        </div>
+      </Dialog.Description>
+    </Dialog>
   );
 };
