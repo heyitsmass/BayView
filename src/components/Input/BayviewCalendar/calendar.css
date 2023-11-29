@@ -158,3 +158,21 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
+
+.hide-time-icon::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.hide-time-icon::-webkit-inner-spin-button,
+.hide-time-icon::-webkit-clear-button {
+  display: none;
+}
+
+.hide-time-icon::-ms-clear,
+.hide-time-icon::-ms-reveal {
+  display: none;
+}
+
+.hide-time-icon {
+  -moz-appearance: textfield; /* For Firefox */
+}
