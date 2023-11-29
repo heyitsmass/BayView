@@ -4,20 +4,21 @@
 import styles from "./page.module.css";
 import { CardCollapseContext } from "@/components/HomePage/Card/cardCollapseContext";
 import { AnimatePresence, motion } from "framer-motion";
-import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
+import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
 import FlightCard from "@/components/HomePage/Card/FlightCard";
 import ItineraryTitle from "@/components/ItineraryTitle";
 import { useRef, useState } from "react";
 import React from "react";
-import LodgingCard from "@/components/HomePage/Card/LodgingCard";
 import DiningCard from "@/components/HomePage/Card/DiningCard";
+import LodgingCard from "@/components/HomePage/Card/LodgingCard";
 
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
   <FlightCard />,
   <LodgingCard />,
-  <DiningCard/>
+  <DiningCard />
+
   // ... Add cards here
 ];
 
@@ -46,7 +47,7 @@ export default function Page() {
       const cardId = `card-${index}`;
       return React.cloneElement(child, {
         key: cardId,
-        cardId: cardId,
+        cardId: cardId
       });
     });
   };
