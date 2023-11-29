@@ -1,5 +1,5 @@
 "use client";
-import { useHomepage } from "@/context";
+import { useHomepage } from "@/hooks";
 import { handleNotifierCall } from "@/lib/notifier/Handler";
 
 export default function Page() {
