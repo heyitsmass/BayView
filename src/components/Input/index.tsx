@@ -2,6 +2,7 @@
 import {
   DetailedHTMLProps,
   InputHTMLAttributes,
+  forwardRef,
   useCallback,
   useState, SyntheticEvent
 } from "react";
@@ -38,7 +39,7 @@ function useInputValidation(initialValue: string = "") {
 	return [input, validateInput] as const;
 }
 
-const UserInput = ({ ...props }: UserInputProps) => {
+const UserInput = forwardRef<HTMLInputElement, UserInputProps>((props, ref) => {
   const { icon, label, id, children, className } = props;
 
   const [input, validateInput] = useInputValidation();
@@ -61,11 +62,11 @@ const UserInput = ({ ...props }: UserInputProps) => {
       )}
       <div className={styles.inputWrapper}>
         {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
-        <input {...props} className={style} />
+        <input {...props} ref={ref} className={style} />
         {children}
       </div>
     </div>
   );
-};
-
+});
+UserInput.displayName = "UserInput";
 export default UserInput;
