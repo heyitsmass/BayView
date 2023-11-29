@@ -24,15 +24,18 @@ export default function LodgingCard() {
         />
         <InputPair icon={faArrowRight}>
           <BayviewCalendar
-            label="Check-In Date"
+            label="Check-In Date / Time"
             name="check-in-date"
-            placeholder="Check-in Date"
+            placeholder="Check-in Date / Time"
 						minDate={new Date(Date.now())}
+            includeTime
 					/>
           <BayviewCalendar
-            label="Check-Out Date"
+            label="Check-Out Date / Time"
             name="check-out-date"
-            placeholder="Check-Out Date"
+            placeholder="Check-Out Date / Time"
+            minDate={new Date(Date.now())}
+            includeTime
           />
         </InputPair>
         <div className="display: flex gap-3">
