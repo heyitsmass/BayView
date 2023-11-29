@@ -12,7 +12,9 @@ export const ContainedDialog = ({
       {React.cloneElement(props.btn, {
         onClick: open
       })}
-      <PrebuiltDialog {...props} open={isOpen} onClose={close} />
+      {isOpen && (
+        <PrebuiltDialog {...props} open={isOpen} onClose={close} />
+      )}
     </>
   );
 };
