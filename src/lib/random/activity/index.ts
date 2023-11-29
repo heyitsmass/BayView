@@ -1,31 +1,31 @@
-import { aquarium } from './Aquarium';
+import { aquarium } from "./Aquarium";
 
-import { amusementPark } from './AmusementPark';
+import { amusementPark } from "./AmusementPark";
 
-import { biking } from './Biking';
+import { biking } from "./Biking";
 
-import { concert } from './Concert';
+import { concert } from "./Concert";
 
-import { golf } from './Golf';
+import { golf } from "./Golf";
 
-import { hiking } from './Hiking';
+import { hiking } from "./Hiking";
 
-import { museum } from './Museum';
+import { museum } from "./Museum";
 
-import { nightlife } from './Nightlife';
+import { nightlife } from "./Nightlife";
 
-import { park } from './Park';
+import { park } from "./Park";
 
-import { shopping } from './Shopping';
+import { shopping } from "./Shopping";
 
-import { spa } from './Spa';
+import { spa } from "./Spa";
 
-import { sports } from './Sports';
+import { sports } from "./Sports";
 
-import { theatre } from './Theatre';
+import { theatre } from "./Theatre";
+import { waterpark } from "./Waterpark";
 
-import { waterpark } from './Waterpark';
-import { Zoo } from '@/types/Event';
+import { zoo } from "./Zoo";
 
 import { Activity, EventTypes } from "@/types/Event";
 
