@@ -4,8 +4,8 @@ export async function middleware() {
   const res = NextResponse.next();
 
   const origin =
-    process.env.NODE_ENV === "production"
-      ? `https://www.bayview.dev/`
+    process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+      ? process.env.NEXT_PUBLIC_VERCEL_ENV!
       : "*";
   res.headers.set("Access-Control-Allow-Origin", origin);
   res.headers.set("Access-Control-Allow-Credentials", "true");
@@ -23,6 +23,6 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: "/(api/)?auth/:path*",
+  matcher: "/(api/)?auth/:path*"
 };
 export default middleware;
