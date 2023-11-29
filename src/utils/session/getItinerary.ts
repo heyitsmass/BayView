@@ -20,7 +20,9 @@ export const getItinerary = async (
       {
         _id
       },
-      {},
+      {
+        _id
+      },
       {
         upsert: true,
         new: true
