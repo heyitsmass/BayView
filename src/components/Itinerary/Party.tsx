@@ -5,8 +5,9 @@ import { PartyMember } from "@/types/User";
 import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { AnimatedDialog, ContainedDialog } from "../Dialog";
+import { AnimatedDialog, ContainedDialog, PrebuiltDialog } from "../Dialog";
 import styles from "./party.module.css";
+import { useState } from "react";
 
 const Member = ({
   children,
@@ -41,6 +42,8 @@ type PartyProps = {
 export const Party = ({ members }: PartyProps) => {
   const [isOpen, open, close] = useOpen();
 
+  const [index, setUser] = useState(0);
+
   return (
     <div className={styles.party}>
       <h2 className="text-lg">
@@ -54,7 +57,11 @@ export const Party = ({ members }: PartyProps) => {
           </Member>
         ))}
       </div>
-      <UpdateMemberDialog isOpen={isOpen} close={close} />
+      <UpdateMemberDialog
+        isOpen={isOpen}
+        close={close}
+        user={members[index]}
+      />
     </div>
   );
 };
@@ -71,18 +78,20 @@ const AddMemberDialog = ({ btn }: { btn: JSX.Element }) => {
 type UpdateMemberDialogProps = {
   isOpen: boolean;
   close: () => void;
+  user: PartyMember;
 };
 
-const UpdateMemberDialog = ({ isOpen, close }: UpdateMemberDialogProps) => {
+const UpdateMemberDialog = ({
+  isOpen,
+  close,
+  user
+}: UpdateMemberDialogProps) => {
   return (
-    <>
-      {isOpen && (
-        <AnimatedDialog
-          open={isOpen}
-          onClose={close}
-          title="Update Member"
-        ></AnimatedDialog>
-      )}
-    </>
+    <PrebuiltDialog
+      title="Update Member"
+      description={`Modify the reservation for ${user.name}`}
+      open={isOpen}
+      onClose={close}
+    ></PrebuiltDialog>
   );
 };

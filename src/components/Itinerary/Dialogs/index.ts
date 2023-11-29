@@ -23,7 +23,7 @@ const dialogs: {
   [P in ActionMethods]: {
     readonly title: string;
     readonly description: string;
-    readonly Component: (props?: any) => Promise<JSX.Element> | JSX.Element;
+    readonly Component: (props?: any) => JSX.Element;
   };
 } = {
   map,

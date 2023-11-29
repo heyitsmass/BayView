@@ -2,7 +2,12 @@ import { useCurrentEvent, useOpen } from "@/hooks";
 import { ContainedDialog, CustomDialogProps, PrebuiltDialog } from ".";
 import { ActionMethods } from "../Itinerary/Actions";
 import dialogs from "../Itinerary/Dialogs";
-import { PropsWithChildren, cloneElement } from "react";
+import React, {
+  Fragment,
+  PropsWithChildren,
+  ReactFragment,
+  cloneElement
+} from "react";
 
 type ActionDialogProps<T extends ActionMethods> = {
   btn: JSX.Element;
@@ -23,7 +28,7 @@ export function ActionsDialog<T extends ActionMethods>({
   return (
     <>
       {cloneElement(props.btn, {
-        onClick: open,
+        onClick: open
       })}
       {isOpen && (
         <PrebuiltDialog
@@ -32,7 +37,7 @@ export function ActionsDialog<T extends ActionMethods>({
           open={isOpen}
           onClose={close}
         >
-          <Component next={close} />
+          {Component.length && <Component next={close} />}
         </PrebuiltDialog>
       )}
     </>

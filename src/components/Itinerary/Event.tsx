@@ -4,18 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SyntheticEvent } from "react";
 import IconMap from "./Icons";
 import styles from "./event.module.css";
+import { useCurrentEvent, useHomepage } from "@/hooks";
 
 type ItineraryEventProps = {
+  className?: string;
   onClick: (e: SyntheticEvent) => void;
 } & FlattenedEvent;
 
-export const ItineraryEvent = ({ ...props }: ItineraryEventProps) => {
+export const ItineraryEvent = ({
+  className,
+  ...props
+}: ItineraryEventProps) => {
   const { __t, peek, picture_url, onClick } = props;
 
   const [title, name] = peek;
 
   return (
-    <div className={styles.event} onClick={onClick}>
+    <div className={[styles.event, className].join(" ")} onClick={onClick}>
       <div className="relative w-full flex flex-row items-center">
         <div className={styles.icon}>
           <FontAwesomeIcon

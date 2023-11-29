@@ -2,14 +2,20 @@
 
 import {} from "@/app/home/itinerary/page";
 
-import { useCurrentEventDispatch, useHomepage } from "@/hooks";
+import {
+  useCurrentEvent,
+  useCurrentEventDispatch,
+  useHomepage
+} from "@/hooks";
 import { SyntheticEvent } from "react";
 import { ItineraryEvent } from "./Event";
 import styles from "./eventlist.module.css";
 
 export const EventList = () => {
   const events = useHomepage().itinerary.events;
+
   const setEvent = useCurrentEventDispatch();
+  const currentEvent = useCurrentEvent();
 
   return (
     <div className={styles.wrapper}>
@@ -27,6 +33,9 @@ export const EventList = () => {
                   e.preventDefault();
                   setEvent(i);
                 }}
+                className={
+                  currentEvent._id === event._id ? styles.active : ""
+                }
               />
             ))}
           </div>

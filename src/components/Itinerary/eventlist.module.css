@@ -6,12 +6,16 @@
   border: solid 1px var(--card-border-color);
 }
 
-.subWrapper { 
+.subWrapper {
   @apply h-full;
 }
 
-.eventsHeader { 
+.eventsHeader {
   @apply text-4xl font-bold px-8 z-[999];
+}
+
+.active {
+  transform: scale(100%);
 }
 
 @media screen and (max-width: 850px) {
