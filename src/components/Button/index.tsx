@@ -23,7 +23,7 @@ type ButtonProps = {} & DetailedHTMLProps<
   };
 
 export default function Button({ ...props }: ButtonProps) {
-  const classNames = [
+  props.className = [
     props.className,
     props.variant ? styles[props.variant] : styles.primary,
     styles.button
