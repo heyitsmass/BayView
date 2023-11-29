@@ -9,7 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 export default function ItineraryTitle() {
 
       let [isOpen, setIsOpen] = useState(false);
-      let [location, setLocation] = useState("...");
+      let [location, setLocation] = useState();
 
       const onLocationChange = (e) => {
         setLocation(e.target.value);
@@ -82,10 +82,6 @@ export default function ItineraryTitle() {
           </Transition>
 
           <p className="inline ml-1">{location} </p>
-        </div>
-        <div>
-          <FontAwesomeIcon icon={faCalendar} className="inline" />
-          <p className="inline ml-1"> 10/4 - 10/5 </p>
         </div>
       </div>
     );
