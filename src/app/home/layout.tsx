@@ -37,23 +37,21 @@ export default async function Layout({
 
   return (
     <HomepageProvider value={ctx}>
-      <PopupProvider>
-        <div className="flex-start w-screen h-screen relative">
-          <TopBar />
-          <div
-            style={{ height: "calc(100vh - 7.5rem)" }}
-            className="mt-20 relative"
-          >
-            <Banner />
-            <Animator>
-              <div className="relative h-full overflow-y-scroll">
-                {children}
-              </div>
-            </Animator>
-          </div>
-          <Footer />
+      <div className="flex-start w-screen h-screen relative">
+        <TopBar />
+        <div
+          style={{ height: "calc(100vh - 7.5rem)" }}
+          className="mt-20 relative"
+        >
+          <Banner />
+          <Animator>
+            <div className="relative h-full overflow-y-scroll">
+              {children}
+            </div>
+          </Animator>
         </div>
-      </PopupProvider>
+        <Footer />
+      </div>
     </HomepageProvider>
   );
 }
