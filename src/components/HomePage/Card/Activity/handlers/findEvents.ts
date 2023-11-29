@@ -21,12 +21,10 @@ export const findEvents = async (
 
   const set = [] as DisplayableEvent[];
 
-  for (let i = 1; i < randomInt(20); i++) {
+  for (let i = 4; i < randomInt(4, 12); i++) {
     const activity = await fetchActivity(event, sport);
     set.push(activity);
   }
-
-  console.log(set);
 
   return set;
 };
