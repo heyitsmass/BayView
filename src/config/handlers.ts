@@ -3,13 +3,10 @@ import {
   APIInterface,
   EmailPasswordAPIOptions,
   ThirdPartyAPIOptions,
-  TypeProvider,
+  TypeProvider
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserMetadata from "supertokens-node/recipe/usermetadata";
-import {
-  getRequiredMetadata,
-  getUserInfoFromAPI,
-} from "./getRequiredMetadata";
+import { getRequiredMetadata, getUserInfoFromAPI } from "./getRequiredMetadata";
 
 export const thirdPartySignInUpPOST = async (
   input: {
@@ -57,25 +54,25 @@ export const thirdPartySignInUpPOST = async (
       }
 
       await UserMetadata.updateUserMetadata(id, {
-        [key]: fromUserInfoAPI[key],
+        [key]: fromUserInfoAPI[key]
       });
     }
 
     for (const key in required_metadata) {
       await UserMetadata.updateUserMetadata(id, {
-        [key]: required_metadata[key],
+        [key]: required_metadata[key]
       });
     }
 
     let itinerary = await ItineraryModel.exists({
-      id,
+      id
     });
 
     if (!itinerary) {
       console.log("Created itinerary for user");
       await ItineraryModel.create({
         id,
-        events: [],
+        events: []
       });
     }
   }
@@ -99,7 +96,7 @@ export const emailPasswordSignUpPOST = async (
 
   // Post sign up response, we check if it was successful
   if (response.status === "OK" && response.user.loginMethods.length === 1) {
-    let { id } = response.user;
+    let _id = response.user.id;
     // TODO: sign up successful
 
     // here we fetch a custom form field for the user's name.
@@ -115,20 +112,21 @@ export const emailPasswordSignUpPOST = async (
         continue;
       }
 
-      await UserMetadata.updateUserMetadata(id, {
-        [name]: value,
+      await UserMetadata.updateUserMetadata(_id, {
+        [name]: value
       });
     }
 
     let itinerary = await ItineraryModel.exists({
-      id,
+      _id
     });
 
     if (!itinerary) {
       console.log("Created itinerary for user");
       await ItineraryModel.create({
-        id,
+        _id,
         events: [],
+        party: []
       });
     }
   }

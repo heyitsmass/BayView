@@ -1,5 +1,5 @@
 const URL =
-  process.env.NODE_ENV === "production"
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
     ? `https://www.bayview.dev`
     : "http://localhost:3000/";
 
@@ -9,5 +9,5 @@ export const appInfo = {
   websiteDomain: URL,
   appName: "BayView",
   apiBasePath: "/api/auth",
-  websiteBasePath: "/auth",
+  websiteBasePath: "/auth"
 };

@@ -12,7 +12,7 @@ export async function connectToDB(): Promise<void> {
     const dbName = ENV !== 'DEV' ? 'bayview' : 'bayview-dev';
 
     await mongoose.connect(
-      `${MONGODB_URI}/${dbName}?retryWrites=true&w=majority`
+      `${MONGODB_URI}/${dbName}?retryWrites=true`
     );
 
     const { name, port } = mongoose.connection;
