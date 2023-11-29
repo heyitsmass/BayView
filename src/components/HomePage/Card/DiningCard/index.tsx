@@ -1,19 +1,20 @@
 import Button from "@/components/Button";
+import { PrebuiltDialog } from "@/components/Dialog";
 import Card from "@/components/HomePage/Card";
 import Input from "@/components/Input";
-import BayviewCalendar from "@/components/Input/BayviewCalendar";
 import InputPair from "@/components/Input/InputPair";
 import { ItineraryEvent } from "@/components/Itinerary/Event";
-import { Modal, useOpen } from "@/components/Modal";
-import { useHomepageManager } from "@/hooks";
+import { useHomepageManager, useOpen } from "@/hooks";
 import { DisplayableEvent } from "@/lib/random/handler";
 import {
   faArrowRight,
+  faCalendarDays,
   faClock,
   faUserGroup
 } from "@fortawesome/free-solid-svg-icons";
 import { Suspense, useState } from "react";
 import { findEvents } from "../Activity/handlers/findEvents";
+import BayviewCalendar from "@/components/Input/BayviewCalendar";
 
 export default function DiningCard() {
   const [data, setData] = useState(null as DisplayableEvent[] | null);
@@ -24,6 +25,7 @@ export default function DiningCard() {
 
   const handleSubmit = async (formData: FormData) => {
     const set = await findEvents(formData, { event: "Dining" });
+
     setData(set);
     setIsSubmitted(true);
   };
@@ -91,7 +93,7 @@ export default function DiningCard() {
       <Suspense fallback={<div>Loading...</div>}>
         {isSubmitted && (
           <>
-            <div className="overflow-y-scroll">
+            <div className="max-h-[300px] overflow-y-scroll">
               {data!.map((event, i) => (
                 <>
                   <ItineraryEvent
@@ -106,28 +108,45 @@ export default function DiningCard() {
                 </>
               ))}
             </div>
-            {currEvent && (
-              <Modal isOpen={isOpen} close={close}>
-                <Modal.Body>
-                  {
-                    <div>
-                      <pre>
-                        {JSON.stringify(currEvent.displayData, null, 2)}
-                      </pre>
-                    </div>
-                  }
-                  <button
-                    onClick={async (e) => {
+            {currEvent && isOpen && (
+              <PrebuiltDialog
+                open={!completed && isOpen}
+                onClose={close}
+                title={currEvent.name}
+              >
+                <div className="flex flex-col text-center">
+                  <pre>
+                    <code>
+                      {JSON.stringify(currEvent.displayData, null, 2)}
+                    </code>
+                  </pre>
+                  <Button
+                    variant="secondary"
+                    className="mt-4"
+                    onClick={(e) => {
                       e.preventDefault();
-                      await handleAddEvent(currEvent);
+                      handleAddEvent(currEvent);
+                      close();
                     }}
                   >
-                    Add To Itinerary
-                  </button>
-                </Modal.Body>
-              </Modal>
+                    Add to Itinerary
+                  </Button>
+                </div>
+              </PrebuiltDialog>
             )}
           </>
+        )}
+        {isSubmitted && (
+          <Button
+            variant="secondary"
+            className="mt-4 w-full"
+            onClick={() => {
+              setData(null);
+              setIsSubmitted(false);
+            }}
+          >
+            Reset
+          </Button>
         )}
       </Suspense>
     </Card>
