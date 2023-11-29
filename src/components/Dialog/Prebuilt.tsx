@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { GenericDialogPanel } from "./GenericPanel";
 import styles from "./styles.module.css";
 import { Fragment } from "react";
-import AnimationComponent from "../Animations/AnimatePresenceComponent";
+import { AnimationComponent } from "../Animations/AnimatePresenceComponent";
 
 export const PrebuiltDialog = ({
   children,
