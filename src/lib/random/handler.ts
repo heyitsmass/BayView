@@ -10,16 +10,38 @@ import {
   EventTypes,
   Reservable,
   SportEvents,
-  Sports,
+  Sports
 } from "@/types/Event";
 import { faker } from "@faker-js/faker";
 import { randomInt } from "crypto";
-import { HydratedDocument } from "mongoose";
 import { modelTypes } from "../constants";
+import { FlattenMaps } from "mongoose";
 
-export async function getRandomEvent(): Promise<
-  DocumentWithDisplayData<Event>
+export type HandlerCall =
+  | {
+      event: "Sports";
+      sport: SportEvents;
+    }
+  | {
+      event: Exclude<EventTypes, "Sports">;
+      sport?: never;
+    }
+  | {
+      event?: EventTypes;
+      sport?: SportEvents;
+    };
+
+export type DisplayableEvent<T = Activities | Reservable> = FlattenMaps<
+  DocumentWithDisplayData<Event<T>> & {
+    __t: EventTypes;
+    _id: string;
+  }
 >;
+
+type SportingEvent = Sports;
+type NonSportingEvent = Reservable | Exclude<Activities, Sports>;
+
+export async function getRandomEvent(): Promise<DisplayableEvent>;
 /**
  * Generate a random Sports event based on the type
  * @param event - The type of event to generate (must be Sports)
@@ -29,17 +51,15 @@ export async function getRandomEvent(): Promise<
 export async function getRandomEvent(
   event: "Sports",
   sport: SportEvents
-): Promise<DocumentWithDisplayData<HydratedDocument<Event<Sports>>>>;
+): Promise<DisplayableEvent<SportingEvent>>;
 /**
  * Generate a random (Non-Sports) event based on the type
  * @param event - The type of event to generate
  * @returns a Hydrated event prepared for the database
  */
 export async function getRandomEvent(
-  event: Exclude<EventTypes, "Sports">
-): Promise<
-  DocumentWithDisplayData<Event<Reservable | Omit<Activities, "Sports">>>
->;
+  event?: Exclude<EventTypes, "Sports">
+): Promise<DisplayableEvent<NonSportingEvent>>;
 
 /**
  * Generate a random event based on the type
@@ -50,7 +70,7 @@ export async function getRandomEvent(
 export async function getRandomEvent(
   event?: EventTypes,
   sport?: SportEvents
-): Promise<DocumentWithDisplayData<Event>> {
+): Promise<DisplayableEvent> {
   const types: EventTypes[] = [
     "Hotel",
     "Dining",
@@ -68,7 +88,7 @@ export async function getRandomEvent(
     "Spa",
     "Golf",
     "Hiking",
-    "Biking",
+    "Biking"
   ];
 
   const sports: SportEvents[] = [
@@ -77,7 +97,7 @@ export async function getRandomEvent(
     "Football",
     "Hockey",
     "Soccer",
-    "Tennis",
+    "Tennis"
   ];
 
   if (!event) {
@@ -99,10 +119,13 @@ export async function getRandomEvent(
       month: "numeric",
       hour: "numeric",
       minute: "numeric",
-      hour12: true,
+      hour12: true
     }),
     partySize: faker.number.int({ min: 1, max: 3 }),
     picture_url: `/assets/events/${event.toLowerCase()}.png`,
-    ...data,
-  });
+    ...data
+  }).toJSON({
+    flattenObjectIds: true,
+    virtuals: true
+  }) as DisplayableEvent;
 }

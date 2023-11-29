@@ -1,8 +1,9 @@
 import { Document, FlattenMaps, HydratedDocument } from "mongoose";
 import { Event } from "./Event";
 
-import { PartyMember } from "./User";
 import { FlattenedEvent } from ".";
+import { PartyMember } from "./User";
+import { DisplayableEvent } from "@/lib/random/handler";
 
 export interface IItinerary {
   readonly _id: string;
@@ -12,7 +13,7 @@ export interface IItinerary {
 
 export type FlattenedItinerary = {
   readonly _id: string;
-  events: FlattenedEvent[];
+  events: DisplayableEvent[];
   party: PartyMember[];
 };
 

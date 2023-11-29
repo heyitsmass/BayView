@@ -116,7 +116,7 @@ export const Actions = ({ notify }: ActionsProps) => {
   return (
     <div className={styles.actions}>
       {actions.map(({ labels, methods, Component, className }, i) => (
-        <Action labels={labels} className={className} key={i}>
+        <ActionGroup labels={labels} className={className} key={i}>
           {methods.map(({ type, icon }, j: number) => (
             <Component
               btn={<FontAwesomeIcon icon={icon} />}
@@ -124,7 +124,7 @@ export const Actions = ({ notify }: ActionsProps) => {
               key={j}
             />
           ))}
-        </Action>
+        </ActionGroup>
       ))}
     </div>
   );
@@ -139,7 +139,7 @@ type ActionProps = PropsWithChildren<{
   className?: string;
 }>;
 
-const Action = ({ ...props }: ActionProps) => {
+const ActionGroup = ({ ...props }: ActionProps) => {
   const { children, labels, className } = props;
 
   const [isOpen, setOpen] = useState(false);

@@ -29,21 +29,13 @@ export const getItinerary = async (
         new: true
       }
     )) as ItineraryWithMongo
-  ).toJSON({ flattenObjectIds: true, flattenMaps: true });
+  ).toJSON({ virtuals: true, flattenObjectIds: true, flattenMaps: true });
 
   itinerary.events = itinerary.events.map((event) => {
-    const rebuilt = new models[event.__t](event) as HydratedDocument<
-      Event & DisplayData
-    >;
+    const rebuilt = new models[event.__t](event) as HydratedDocument<Event> &
+      DisplayData;
 
-    const { peek, displayData, upgradeOptions } = rebuilt;
-
-    return {
-      ...event,
-      peek,
-      displayData,
-      upgradeOptions
-    } as FlattenedEvent;
+    return rebuilt.toJSON({ flattenObjectIds: true, virtuals: true });
   });
 
   const { metadata } = await getUserMetadata(_id);

@@ -1,6 +1,7 @@
 "use client";
 
 import { RequestActions } from "@/handlers/Itinerary/actions/helpers";
+import { DisplayableEvent } from "@/lib/random/handler";
 import { FlattenedItinerary } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
 import { createContext } from "react";
@@ -20,9 +21,9 @@ export type HomepageAction =
       payload: RequestActions;
     }
   | {
-      type: string;
-      mode: string;
-      payload: any;
+      type: "event";
+      mode: "add" | "delete" | "refresh";
+      payload: DisplayableEvent;
     };
 
 export type THomepageDispatch = (action: HomepageAction) => void;
@@ -35,3 +36,4 @@ const HomepageDispatch = createContext<THomepageDispatch>(
 const HomepageManager = createContext(async (action: HomepageAction) => {});
 
 export { HomepageContext, HomepageDispatch, HomepageManager };
+

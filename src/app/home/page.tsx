@@ -10,12 +10,14 @@ import ItineraryTitle from "@/components/ItineraryTitle";
 import { useRef, useState } from "react";
 import React from "react";
 import LodgingCard from "@/components/HomePage/Card/LodgingCard";
+import DiningCard from "@/components/HomePage/Card/DiningCard";
 
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
   <FlightCard />,
-  <LodgingCard />
+  <LodgingCard />,
+  <DiningCard/>
   // ... Add cards here
 ];
 

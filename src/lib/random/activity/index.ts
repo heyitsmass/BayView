@@ -25,8 +25,9 @@ import { sports } from './Sports';
 import { theatre } from './Theatre';
 
 import { waterpark } from './Waterpark';
+import { Zoo } from '@/types/Event';
 
-import { zoo } from './Zoo';
+import { Activity, EventTypes } from "@/types/Event";
 
 export {
   aquarium,
@@ -44,4 +45,24 @@ export {
   theatre,
   waterpark,
   zoo
+};
+
+export const activities = {
+  AmusementPark: amusementPark,
+  Aquarium: aquarium,
+  Biking: biking,
+  Concert: concert,
+  Golf: golf,
+  Hiking: hiking,
+  Museum: museum,
+  Nightlife: nightlife,
+  Park: park,
+  Shopping: shopping,
+  Spa: spa,
+  Sports: sports,
+  Theatre: theatre,
+  Waterpark: waterpark,
+  Zoo: zoo
+} as {
+  [P in EventTypes]: () => Activity;
 };
