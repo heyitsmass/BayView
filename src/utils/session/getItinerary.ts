@@ -3,7 +3,7 @@
 import { THomepageContext } from "@/context";
 import models from "@/models";
 import ItineraryModel from "@/models/Itinerary";
-import { DisplayData, FlattenedEvent } from "@/types";
+import { DisplayData } from "@/types";
 import { Event } from "@/types/Event";
 import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
 import { HydratedDocument } from "mongoose";
@@ -13,10 +13,7 @@ import { getUserMetadata } from "supertokens-node/recipe/usermetadata";
 export const getItinerary = async (
   session: SessionContainerInterface
 ): Promise<THomepageContext> => {
-  const _id =
-    process.env.NODE_ENV !== "production"
-      ? process.env.TEST_ID!
-      : session.getUserId();
+  const _id = session.getUserId();
 
   let itinerary: FlattenedItinerary = (
     (await ItineraryModel.findOneAndUpdate(
