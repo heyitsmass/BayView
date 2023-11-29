@@ -1,7 +1,7 @@
 import {
   IconDefinition,
   faCalendar,
-  faLocationArrow,
+  faLocationArrow
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./infocard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ export const InfoCard = ({
   picture_url,
   location,
   date,
-  displayData,
+  displayData
 }: InfoCardProps) => {
   const locationStr = [location.street, location.city, location.state].join(
     ", "
@@ -31,7 +31,7 @@ export const InfoCard = ({
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric",
+      day: "numeric"
     })
     .replace(",", "");
 
@@ -42,7 +42,7 @@ export const InfoCard = ({
     facebook: true,
     slack: true,
     twitter: true,
-    sms: true,
+    sms: true
   };
 
   return (
@@ -52,10 +52,9 @@ export const InfoCard = ({
           <div className={styles.infoLeft}>
             <div className="flex flex-col min-w-80 w-full">
               <div
-                className="h-48 rounded-2xl shadow-xl border border-zinc-700"
+                className="h-48 rounded-2xl shadow-xl border border-zinc-700 bg-cover"
                 style={{
-                  backgroundImage: `url(${picture_url})`,
-                  backgroundSize: "fill",
+                  backgroundImage: `url(${picture_url})`
                 }}
               ></div>
               <div className="p-2 pl-0 flex flex-col gap-2 text-sm min-w-max">
@@ -84,14 +83,12 @@ export const InfoMap = ({ data }: InfoMapProps) => {
       <div className="h-full flex">
         <div className="flex flex-col h-full min-w-max">
           {keys.map((key, i) => (
-            <>
-              <p
-                key={i}
-                className="flex flex-grow min-w-max justify-end items-center"
-              >
-                <b>{key} :</b>
-              </p>
-            </>
+            <p
+              key={i}
+              className="flex flex-grow min-w-max justify-end items-center !font-bold"
+            >
+              {key} :
+            </p>
           ))}
         </div>
         <div className="flex flex-col pl-2 h-full">
