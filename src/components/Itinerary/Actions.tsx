@@ -3,7 +3,7 @@ import {
   faDiscord,
   faFacebook,
   faSlack,
-  faTwitter
+  faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   IconDefinition,
@@ -18,7 +18,7 @@ import {
   faShare,
   faShareNodes,
   faTrashCan,
-  faXmark
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PropsWithChildren, SyntheticEvent, useState } from "react";
@@ -28,10 +28,11 @@ import {
   InfoMethods,
   NotifyMethods,
   ShareMethods,
-  UpdateMethods
+  UpdateMethods,
 } from "@/types";
-import { ActionsDialog } from "./Dialogs";
+import dialogs from "./Dialogs";
 import styles from "./actions.module.css";
+import { ActionsDialog } from "../Dialog";
 
 type ActionsProps = {
   notify: {
@@ -63,8 +64,8 @@ const updateActions: ActionDefinition<UpdateMethods> = {
   labels: { lg: "Quick Updates", sm: "Updates" },
   methods: [
     { type: "del", icon: faTrashCan },
-    { type: "refresh", icon: faArrowsRotate }
-  ]
+    { type: "refresh", icon: faArrowsRotate },
+  ],
 };
 
 const infomationActions: ActionDefinition<InfoMethods> = {
@@ -72,8 +73,8 @@ const infomationActions: ActionDefinition<InfoMethods> = {
   methods: [
     { type: "map", icon: faMapPin },
     { type: "directions", icon: faCar },
-    { type: "weather", icon: faCloud }
-  ]
+    { type: "weather", icon: faCloud },
+  ],
 };
 
 const shareActions: ActionDefinition<ShareMethods> = {
@@ -81,9 +82,9 @@ const shareActions: ActionDefinition<ShareMethods> = {
   methods: [
     { type: "rss", icon: faRss },
     { type: "social", icon: faShareNodes },
-    { type: "link", icon: faShare }
+    { type: "link", icon: faShare },
   ],
-  className: "min-w-max"
+  className: "min-w-max",
 };
 
 export const Actions = ({ notify }: ActionsProps) => {
@@ -95,20 +96,20 @@ export const Actions = ({ notify }: ActionsProps) => {
       { type: "discord", icon: faDiscord },
       { type: "facebook", icon: faFacebook },
       { type: "slack", icon: faSlack },
-      { type: "twitter", icon: faTwitter }
-    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>
+      { type: "twitter", icon: faTwitter },
+    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>,
   };
 
   const actions: ActionDefinition[] = [
     infomationActions,
     notificationActions,
     shareActions,
-    updateActions
+    updateActions,
   ];
 
   return (
     <div className={styles.actions}>
-      {actions.map(({ labels, methods, Component, className }, i) => (
+      {actions.map(({ labels, methods, className }, i) => (
         <ActionGroup labels={labels} className={className} key={i}>
           {methods.map(({ type, icon }, j: number) => (
             <ActionsDialog
@@ -144,7 +145,9 @@ const ActionGroup = ({ ...props }: ActionProps) => {
       </label>
       <label className={styles.sm_label}>{labels.sm}</label>
       <span
-        className={`${styles.icons} ${isOpen ? styles.open : styles.closed}`}
+        className={`${styles.icons} ${
+          isOpen ? styles.open : styles.closed
+        }`}
       >
         <span className={styles.bars}>
           <FontAwesomeIcon
