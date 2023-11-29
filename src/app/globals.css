@@ -5,45 +5,98 @@
 
 
 :root {
-  --gray-900: rgb(12, 13, 16);
-  --gray-800: rgb(22, 23, 26);
-  --gray-700: rgb(32, 33, 36);
-  --gray-600: rgb(42, 43, 46);
-  --gray-500: rgb(52, 53, 56);
-  --gray-400: rgb(62, 63, 66);
-  --gray-300: rgb(72, 73, 76);
-  --gray-200: rgb(82, 83, 86);
-  --gray-100: rgb(92, 93, 96);
-  --text-color:  rgb(24 24 27);
-  --background-color-light: rgb(244 244 245); /* Match bg-zinc-100 */
-  --background-color-dark: #09090b; /* Match bg-zinc-950 */
-  --background-color: var(--background-color-light);
-  --input-background-color: rgb(250,250,250);
+  /** Fonts */
+
+  --font: 'Barlow', sans-serif;
+  --font-weight: 500;
+
+  /** Colors */
+  --zinc-100: #f4f4f5;
+  --zinc-300: #d4d4d8;
+  --zinc-400: #a1a1aa;
+  --zinc-500: #71717a;
+  --zinc-600: #52525b;
+  --zinc-700: #3f3f46;
+  --zinc-800: #27272a;
+  --zinc-950: #030712;
+
+  /** Zinc but with 50% opacity */
+  --zinc-100-glass: #f4f4f57c;
+  --zinc-300-glass: #d4d4d87c;
+  --zinc-400-glass: #a1a1aa7c;
+  --zinc-500-glass: #71717a7c;
+  --zinc-600-glass: #52525b7c;
+  --zinc-700-glass: #3f3f467c;
+  --zinc-800-glass: #27272a7c;
+  --zinc-950-glass: #0307127c;
+
+  /** Background colors */
+  --bg-color-light: var(--zinc-100);
+  --bg-color-dark: var(--zinc-950);
+
+  /** Card colors */
+  --card-bg-light: var(--zinc-300);
+  --card-bg-dark: var(--zinc-800);
+
+  --card-bg-light-glass: var(--zinc-300-glass);
+  --card-bg-dark-glass: var(--zinc-800-glass);
+
+  --card-fg-light: var(--zinc-400);
+  --card-fg-dark: var(--zinc-700);
+
+  --card-border-light: var(--zinc-500);
+  --card-border-dark: var(--zinc-600);
+
+  /** Input colors */
+  --input-bg-dark: rgb(63, 63, 70);
+  --input-bg-light: rgb(250, 250, 250);
+
+  /** Light scheme defaults */
+  --bg-color: var(--bg-color-light);
+
+  --card-bg-color: var(--card-bg-light);
+  --card-bg-color-glass: var(--card-bg-light-glass);
+  --card-fg-color: var(--card-fg-light);
+  --card-border-color: var(--card-border-light);
+
+  --text-color: var(--zinc-950);
+  --input-bg-color: rgb(250, 250, 250);
+
 }
 
+/** Dark scheme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: var(--background-color-dark);
-    --text-color: white;
-    --input-background-color: rgb(63,63,70);
+    --bg-color: var(--bg-color-dark);
+
+    --card-bg-color: var(--card-bg-dark);
+    --card-bg-color-glass: var(--card-bg-dark-glass);
+    --card-fg-color: var(--card-fg-dark);
+    --card-border-color: var(--card-border-dark);
+
+    --text-color: var(--zinc-100);
+
+    --input-bg-color: var(--input-bg-dark);
   }
 }
 
 html {
   width: 100vw;
   height: 100vh;
+
 }
 
 html,
 body {
-  font-family: var(--font-barlow);
-  font-weight: 500;
-  overflow: hidden;
-  
+  font-family: var(--font);
+  font-weight: var(--font-weight);
+  color: var(--text-color);
+
   color-scheme: auto;
-  @apply text-base;
-  @apply text-zinc-900 dark:text-white;
-  @apply bg-zinc-100 dark:bg-zinc-950;
+
+  overflow: hidden;
+
+  background: var(--bg-color);
 }
 
 body {
@@ -72,4 +125,41 @@ td {
 table {
   margin: 1rem;
   border-radius: 0.4em !important;
+}
+
+
+textarea,
+p,
+h1,
+h2,
+h3,
+select,
+button,
+option,
+input,
+label,
+span,
+div {
+  font-family: var(--font);
+  color: var(--text-color);
+}
+
+#popup-portal {
+  position: absolute;
+  bottom: 4rem;
+  height: 0;
+  width: 100%;
+}
+
+#headlessui-portal-root {
+  position: absolute;
+  display: flex;
+  background-blend-mode: overlay;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  @apply bg-black bg-opacity-30;
 }

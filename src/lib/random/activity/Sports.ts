@@ -1,7 +1,7 @@
 import { SportEvents, Sports } from '@/types/Event';
 import { faker } from '@faker-js/faker';
 import { randomInt } from 'crypto';
-import { randomWordList, wordFromList } from '../utils';
+import { randomWordList, roundedFloat, wordFromList } from '../utils';
 
 /** Generate a random sports event
  * @param event - The type of sport to generate
@@ -428,7 +428,7 @@ export const sports = (event: SportEvents): Sports => {
     type: event,
     event: events[event][randomInt(0, events[event].length)],
     teams: [team(event), team(event)],
-    ticketPrice: faker.number.float({ min: 1, max: 100 }),
+    ticketPrice: roundedFloat(100, 1000),
     stadiumName: wordFromList([
       'Grand Slam Arena',
       'Victory Stadium',

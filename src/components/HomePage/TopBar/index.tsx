@@ -1,12 +1,12 @@
-'use client';
-import style from './topbar.module.css';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, useRef, useCallback, useEffect, useMemo, useLayoutEffect } from 'react';
-import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useHomepage } from '@/context';
+"use client";
+import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
+import { useHomepage } from "@/hooks";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import Session from "supertokens-web-js/recipe/session";
+import style from "./topbar.module.css";
 type LinkType = {
   href: string;
   label: string;
@@ -30,14 +30,14 @@ export default function TopBar() {
       {
         href: `/home/settings`,
         label: "Settings",
-        path: "/settings",
+        path: "/settings"
       },
       {
         href: `/home/itinerary`,
         label: "Itinerary",
-        path: "/itinerary",
+        path: "/itinerary"
       },
-      { href: `/home/`, label: "Home", path: "/" },
+      { href: `/home/`, label: "Home", path: "/" }
     ],
     []
   );
@@ -45,7 +45,7 @@ export default function TopBar() {
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [pillDimensions, setPillDimensions] = useState<PillDimensions>({
     width: 0,
-    position: 0,
+    position: 0
   });
   const linkRefs = useRef<LinkRefs>({});
   const profileRef = useRef<HTMLDivElement | null>(null);
@@ -137,13 +137,13 @@ export default function TopBar() {
                 initial={{
                   left: pillDimensions.position,
                   width: pillDimensions.width,
-                  opacity: 0,
+                  opacity: 0
                 }}
                 animate={{
                   left: pillDimensions.position,
                   width: pillDimensions.width,
                   opacity: 1,
-                  boxShadow: "0 0 4px 2px rgba(239, 68, 68, 0.2)",
+                  boxShadow: "0 0 4px 2px rgba(239, 68, 68, 0.2)"
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               />

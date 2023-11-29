@@ -1,11 +1,11 @@
 import { Waterpark } from '@/types/Event';
-import { nameAndRandomDescription, openingHours } from '../utils';
+import { nameAndRandomDescription, nameAndRandomDescriptions, openingHours, roundedFloat } from '../utils';
 import { faker } from '@faker-js/faker';
 
 /** Generate a random waterpark activity  */
 export const waterpark = (): Waterpark => {
   return {
-    attractions: nameAndRandomDescription([
+    attractions: nameAndRandomDescriptions([
       'Wave Pool',
       'Lazy River',
       'Water Slides',
@@ -17,11 +17,11 @@ export const waterpark = (): Waterpark => {
       'FlowRider',
       'Aquatic Play Structure'
     ]),
-    admissionFee: faker.number.float({ min: 1, max: 100 }),
+    admissionFee: roundedFloat(1, 100),
     openingHours: openingHours(),
     wavePool: faker.datatype.boolean(),
     lazyRiver: faker.datatype.boolean(),
-    waterSlides: nameAndRandomDescription([
+    waterSlides: nameAndRandomDescriptions([
       'Twisted Tornado',
       'Spiral Splash',
       'Raging Rapids',

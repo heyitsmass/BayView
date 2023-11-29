@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import "./globals.css";
 import { barlow, barlowCondensed, barlowSemiCondensed } from "./fonts";
 import { SuperTokensProvider } from "@/components/SuperTokens/SuperTokensProvider";
+import { PopupProvider } from "./PopupProvider";
 
 export default async function Layout({
   children,
@@ -11,9 +12,13 @@ export default async function Layout({
   children?: ReactNode;
 }) {
   return (
-    <html className={`${barlow.variable} ${barlowCondensed.variable}  ${barlowSemiCondensed.variable}`}>
+    <html
+      className={`${barlow.variable} ${barlowCondensed.variable}  ${barlowSemiCondensed.variable}`}
+    >
       <body>
-        <SuperTokensProvider>{children}</SuperTokensProvider>
+        <PopupProvider>
+          <SuperTokensProvider>{children}</SuperTokensProvider>
+        </PopupProvider>
       </body>
     </html>
   );

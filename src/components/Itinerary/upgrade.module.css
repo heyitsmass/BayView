@@ -1,0 +1,15 @@
+.upgrade_card {
+  @apply border border-zinc-700 rounded-xl bg-zinc-800 shadow-xl h-max;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.upgrade_card:hover {
+  transform: scale(105%);
+}
+
+.image {
+  @apply min-h-[80px] min-w-[200px] rounded-t-xl;
+  background-size: cover;
+  background-position-y: -3rem;
+}

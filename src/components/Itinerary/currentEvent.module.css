@@ -1,0 +1,158 @@
+.modify {
+  padding: 1rem !important;
+  @apply rounded-b-2xl flex min-w-[450px] gap-4;
+}
+
+.card {
+  @apply h-min w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px];
+  position: relative; 
+  z-index: 1; 
+  max-width: 50%;
+  background-blend-mode: overlay;
+  background: var(--card-bg-color-glass);
+  backdrop-filter: blur(10px);
+}
+
+.sub_card {
+  @apply h-max;
+}
+
+.mid_card {
+  display: none;
+  height: 0;
+
+}
+
+.wrapper {
+  min-width: 25%;
+  @apply bg-zinc-700 rounded-2xl border border-zinc-600 w-full p-4;
+}
+
+
+@media screen and (max-width: 1300px) and (max-height: 1200px) {
+
+  .mid_card {
+    position: relative; 
+    z-index: -1; 
+    display: block !important;
+    height: max-content;
+    width: 100%;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 1em;
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .card {
+    max-width: 100%;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1300px) {
+  .modify {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+  }
+}
+
+@media screen and (max-width: 1300px) {
+
+  .sub_card {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+
+    border-radius: 1em;
+    padding: 1rem;
+
+    min-width: 450px;
+  }
+
+  .card {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+
+  .modify {
+
+    border-radius: 1em;
+    min-height: max-content;
+    margin-top: 1em;
+    flex-direction: column;
+    height: min-content;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+}
+
+
+@media screen and (max-height: 950px) {
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modify {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+    border-radius: 1em;
+    margin-top: 1em;
+    flex-direction: column;
+    height: min-content;
+  }
+
+  .card {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .sub_card {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+
+    border-radius: 1em;
+    min-width: 450px;
+  }
+
+
+
+}
+
+@media screen and (min-height: 951px) and (max-width:900px) {
+  .modify {
+    border: solid 1px var(--card-border-color);
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+    border-radius: 1em;
+    margin-top: 1em;
+    flex-direction: column;
+    height: min-content;
+  }
+}

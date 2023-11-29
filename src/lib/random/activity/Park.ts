@@ -1,11 +1,11 @@
 import { Park } from "@/types/Event";
-import { nameAndRandomDescription, openingHours } from "../utils";
+import { nameAndRandomDescriptions, openingHours } from "../utils";
 
 /** Generate a random park activity */
 export const park = (): Park => {
   return {
     openingHours: openingHours(),
-    facilities: nameAndRandomDescription([
+    facilities: nameAndRandomDescriptions([
       "Visitor Center",
       "Picnic Area",
       "Playground",
@@ -15,9 +15,9 @@ export const park = (): Park => {
       "Amphitheater",
       "Camping Grounds",
       "Information Kiosk",
-      "Restrooms"
+      "Restrooms",
     ]),
-    activities: nameAndRandomDescription([
+    activities: nameAndRandomDescriptions([
       "Hiking",
       "Biking",
       "Picnicking",
@@ -27,9 +27,9 @@ export const park = (): Park => {
       "Camping",
       "Stargazing",
       "Photography",
-      "Nature Walks"
+      "Nature Walks",
     ]),
-    naturalFeatures: nameAndRandomDescription([
+    naturalFeatures: nameAndRandomDescriptions([
       "Waterfall",
       "Mountain Range",
       "Lake",
@@ -39,9 +39,9 @@ export const park = (): Park => {
       "River",
       "Valley",
       "Cliff",
-      "Desert Oasis"
+      "Desert Oasis",
     ]),
-    wildlife: nameAndRandomDescription([
+    wildlife: nameAndRandomDescriptions([
       "White-Tailed Deer",
       "Red Fox",
       "Bald Eagle",
@@ -51,7 +51,7 @@ export const park = (): Park => {
       "Black Bear",
       "Monarch Butterfly",
       "Eastern Chipmunk",
-      "Gray Wolf"
-    ])
+      "Gray Wolf",
+    ]),
   };
 };

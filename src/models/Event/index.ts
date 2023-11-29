@@ -5,6 +5,7 @@ export const eventSchema = new Schema<Event>({
   name: String,
   date: Date,
   time: String || undefined,
+  partySize: Number,
   location: {
     street: String,
     city: String,

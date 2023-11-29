@@ -1,11 +1,22 @@
 import mongoose, { Schema } from "mongoose";
-import { eventSchema } from "./Event";
+import { EventModel, eventSchema } from "./Event";
 import { IItinerary } from "@/types/Itinerary";
 
-export const itinerarySchema = new Schema<IItinerary>({
-  _id: { type: String, required: true, immutable: true },
-  events: [eventSchema],
-});
+export const itinerarySchema = new Schema<IItinerary>(
+  {
+    _id: { type: String, required: true, immutable: true },
+    events: [eventSchema],
+    party: [
+      {
+        name: { type: String, required: true },
+        age: { type: Number, required: true },
+      },
+    ],
+  },
+  {
+    strict: false,
+  }
+);
 
 export const ItineraryModel =
   mongoose.models.Itinerary ||

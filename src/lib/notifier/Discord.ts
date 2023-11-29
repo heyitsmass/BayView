@@ -1,4 +1,5 @@
 import { Notifier } from ".";
+import { NotifierPayload } from "./Handler";
 
 type DiscordHeaderType = {
   "Content-Type": "application/json";
@@ -34,12 +35,12 @@ export class DiscordNotifier implements Notifier {
   private static DISCORD_API = "https://discord.com/api/v10";
   private static HEADERS: DiscordHeaderType = {
     "Content-Type": "application/json",
-    Authorization: `Bot ${process.env.DISCORD_API_TOKEN}`
+    Authorization: `Bot ${process.env.DISCORD_API_TOKEN}`,
   };
   private channel_id: number | string;
   private recipient_id: number | string;
 
-  public send_notification() {
+  public send_notification({ ...props }: NotifierPayload) {
     /** Sends a notification to the users discord account */
   }
 
@@ -56,19 +57,22 @@ export class DiscordNotifier implements Notifier {
       {
         method: "POST",
         headers: DiscordNotifier.HEADERS,
-        body: JSON.stringify({ content })
+        body: JSON.stringify({ content }),
       }
     );
   }
 
-  public static async send_dm(recipient_id: number | string, content: string) {
+  public static async send_dm(
+    recipient_id: number | string,
+    content: string
+  ) {
     //Create the endpoint
     const endpoint = `${this.DISCORD_API}/users/@me/channels`;
 
     const channel_id = await fetch(endpoint, {
       method: "POST",
       headers: this.HEADERS,
-      body: JSON.stringify({ recipient_id })
+      body: JSON.stringify({ recipient_id }),
     }) // Open the DM channel with recipient
       .then(async (res) => {
         const channel: DiscordDMChannel = await res.json();
@@ -76,7 +80,7 @@ export class DiscordNotifier implements Notifier {
         await fetch(`${this.DISCORD_API}/channels/${channel.id}/messages`, {
           method: "POST",
           headers: this.HEADERS,
-          body: JSON.stringify({ content })
+          body: JSON.stringify({ content }),
         }); // Send the message to recipient
 
         return channel.id;
@@ -88,4 +92,6 @@ export class DiscordNotifier implements Notifier {
 
     return new DiscordNotifier(recipient_id, channel_id);
   }
+
+  public notify = async () => {};
 }

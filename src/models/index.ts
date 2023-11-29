@@ -35,28 +35,24 @@ import { WaterparkModel } from "./Event/Activity/Waterpark";
 import { ZooModel } from "./Event/Activity/Zoo";
 
 const models = {
-  activity: {
-    AmusementParkModel,
-    AquariumModel,
-    BikingModel,
-    ConcertModel,
-    GolfModel,
-    HikingModel,
-    MuseumModel,
-    NightlifeModel,
-    ParkModel,
-    ShoppingModel,
-    SpaModel,
-    SportsModel,
-    TheatreModel,
-    WaterparkModel,
-    ZooModel,
-  },
-  reservation: {
-    HotelModel,
-    FlightModel,
-    DiningModel,
-  },
+  Hotel: HotelModel,
+  Dining: DiningModel,
+  Flight: FlightModel,
+  Theatre: TheatreModel,
+  Concert: ConcertModel,
+  Museum: MuseumModel,
+  Park: ParkModel,
+  Zoo: ZooModel,
+  Spa: SpaModel,
+  Golf: GolfModel,
+  Aquarium: AquariumModel,
+  Hiking: HikingModel,
+  Biking: BikingModel,
+  Waterpark: WaterparkModel,
+  AmusementPark: AmusementParkModel,
+  Sports: SportsModel,
+  Nightlife: NightlifeModel,
+  Shopping: ShoppingModel,
 };
 
 export {

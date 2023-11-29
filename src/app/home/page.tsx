@@ -4,20 +4,21 @@
 import styles from "./page.module.css";
 import { CardCollapseContext } from "@/components/HomePage/Card/cardCollapseContext";
 import { AnimatePresence, motion } from "framer-motion";
-import { AnimationComponent } from '@/components/Animations/AnimatePresenceComponent';
+import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
 import FlightCard from "@/components/HomePage/Card/FlightCard";
-import Banner from "@/components/Banner";
-import bannerImg from "../../../public/images/1.png";
 import ItineraryTitle from "@/components/ItineraryTitle";
 import { useRef, useState } from "react";
 import React from "react";
+import DiningCard from "@/components/HomePage/Card/DiningCard";
 import LodgingCard from "@/components/HomePage/Card/LodgingCard";
 
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
   <FlightCard />,
-  <LodgingCard />
+  <LodgingCard />,
+  <DiningCard />
+
   // ... Add cards here
 ];
 
@@ -46,7 +47,7 @@ export default function Page() {
       const cardId = `card-${index}`;
       return React.cloneElement(child, {
         key: cardId,
-        cardId: cardId,
+        cardId: cardId
       });
     });
   };
@@ -55,24 +56,21 @@ export default function Page() {
   const enhancedCards = enhanceCards(initialCards);
 
   return (
-    <AnimatePresence>
-      <AnimationComponent transition={{ duration: 0.5 }}>
-        <Banner bannerHeight="!h-52" src={bannerImg.src} />
-        <div className={`${styles.contentGrid}`}>
-          <div className="w-[600px] -mt-52 absolute">
-            <ItineraryTitle></ItineraryTitle>
-          </div>
-          {cardOrder.map((cardId) => (
-            <motion.div layout key={cardId}>
-              <CardCollapseContext.Provider
-                value={{ onCollapse: () => handleCollapse(cardId) }}
-              >
-                {enhancedCards.find((card) => card.props.cardId === cardId)}
-              </CardCollapseContext.Provider>
-            </motion.div>
-          ))}
+    <AnimationComponent transition={{ duration: 0.5 }}>
+      <div className={styles.contentGrid}>
+        <div className="w-[600px] col-span-full">
+          <ItineraryTitle></ItineraryTitle>
         </div>
-      </AnimationComponent>
-    </AnimatePresence>
+        {cardOrder.map((cardId) => (
+          <motion.div layout key={cardId}>
+            <CardCollapseContext.Provider
+              value={{ onCollapse: () => handleCollapse(cardId) }}
+            >
+              {enhancedCards.find((card) => card.props.cardId === cardId)}
+            </CardCollapseContext.Provider>
+          </motion.div>
+        ))}
+      </div>
+    </AnimationComponent>
   );
 }

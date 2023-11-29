@@ -1,0 +1,98 @@
+.actions {
+  font-size: 1rem;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow-y: visible;
+  @apply flex flex-row w-full justify-around text-lg static z-[999];
+  max-height: 64px;
+  z-index: 2; 
+}
+
+.actions svg:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.actions label {
+  min-width: max-content;
+}
+
+.lg_label {
+  @apply text-sm mb-2;
+}
+
+.sm_label {
+  @apply text-sm mb-2 min-w-max;
+}
+
+.sm_label {
+  height: 0;
+  display: none;
+}
+
+.bars {
+  display: none;
+  cursor: pointer;
+}
+
+.bars:hover svg {
+  opacity: .8;
+}
+
+.icons {
+  @apply bg-rose-800 flex gap-x-4 items-center min-w-max w-full justify-around p-2 rounded-full;
+}
+
+@media screen and (max-width: 1200px) {
+  .lg_label {
+    display: none;
+    height: 0;
+  }
+
+  .sm_label {
+    display: contents;
+  }
+
+}
+
+@media screen and (max-width: 1200px) {
+  .bars {
+    display: contents;
+    position: relative;
+  }
+
+  .icons {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease-in-out;
+
+  }
+
+  .icons:not(.open) {
+    height: min-content;
+  }
+
+  .icons:not(.open) svg:not(:first-child) {
+    display: none;
+    opacity: 0;
+    font-size: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .icons.open {
+    height: max-content;
+    opacity: 1;
+    font-size: normal;
+    width: min-content;
+    z-index: 2;
+
+  }
+
+  .open svg:not(:first-child) {
+    display: block;
+    padding-top: 1rem;
+
+  }
+
+}

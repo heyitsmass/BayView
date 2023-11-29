@@ -1,6 +1,7 @@
-import { Golf } from '@/types/Event';
-import { faker } from '@faker-js/faker';
-import { randomInt } from 'crypto';
+import { Golf } from "@/types/Event";
+import { faker } from "@faker-js/faker";
+import { randomInt } from "crypto";
+import { randomDifficulty, roundedFloat } from "../utils";
 
 /** Generate a random golf activity.  */
 export const golf = (): Golf => {
@@ -9,8 +10,12 @@ export const golf = (): Golf => {
 
     return {
       date,
-      time: date.toLocaleTimeString('it-IT'),
-      price: faker.number.float({ min: 1, max: 100 })
+      time: date.toLocaleTimeString("it-IT", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+      }),
+      price: roundedFloat(1, 100)
     };
   };
 
@@ -32,7 +37,7 @@ export const golf = (): Golf => {
 
   return {
     course: faker.lorem.words(),
-    courseDifficulty: faker.lorem.word(),
+    courseDifficulty: randomDifficulty(),
     courseDescription: faker.lorem.words(),
     golfLessons: faker.datatype.boolean(),
     golfCartRental: faker.datatype.boolean(),

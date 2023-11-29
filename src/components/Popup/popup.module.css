@@ -1,0 +1,55 @@
+.popup {
+  position: absolute;
+
+  bottom: 10%;
+  right: 10%;
+  width: 20%;
+  height: 8%;
+
+  @apply rounded-xl bg-zinc-600 shadow-xl h-max min-h-[80px] !min-w-[200px] w-max z-[999];
+
+  background-blend-mode: overlay;
+  background: var(--card-bg-color-glass);
+  backdrop-filter: blur(10px);
+
+}
+
+.popup svg {
+  transition: all 0.2s ease-in-out;
+  @apply px-2 text-zinc-100;
+  cursor: pointer;
+}
+
+.popup svg:hover {
+  @apply text-zinc-600;
+}
+
+.popup header {
+
+  @apply rounded-t-xl text-lg font-bold p-1 pl-4 flex justify-between items-center bg-opacity-40;
+
+  background-blend-mode: overlay;
+  backdrop-filter: blur(10px);
+}
+
+.popupInner {
+  @apply p-4;
+  text-align: center;
+}
+
+.success {
+  @apply bg-emerald-600;
+
+}
+
+.error {
+  @apply bg-rose-800;
+}
+
+.warning {
+  @apply bg-orange-700;
+}
+
+.info {
+  @apply bg-purple-600;
+}

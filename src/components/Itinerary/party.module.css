@@ -1,0 +1,100 @@
+.party {
+  @apply h-5/6 w-full text-white bg-zinc-700 border border-zinc-600 rounded-2xl relative p-4 pt-2 mt-2;
+}
+
+.party_member {
+  @apply flex items-center bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full;
+  transition: all 0.1s ease-in-out;
+}
+
+.members { 
+  @apply h-min;
+}
+
+
+.party_member:hover {
+  transform: scale(105%);
+  box-shadow: 0 0 8px -2px black;
+}
+
+.party_member svg:hover {
+  opacity: .8;
+}
+
+.party svg {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.party>svg:hover {
+  transform: rotate(90deg);
+
+}
+
+
+@media screen and (max-height:950px) and (min-width:1200px) {
+  .members {
+    display: flex !important;
+    gap: 1rem;
+    justify-content: space-around;
+  }
+
+  .party_member {
+    width: calc(min-content + 4rem);
+  }
+}
+
+@media screen and (max-width:1200px) {
+  .members {
+    display: flex !important;
+    gap: 1rem;
+    justify-content: space-around;
+  }
+
+  .party_member {
+    width: calc(min-content + 4rem);
+  }
+}
+
+
+@media screen and (min-height:950px) and (max-width:700px) {
+  .party {
+    margin-bottom: 0;
+  }
+
+  .party_member {
+    width: min-content;
+  }
+
+  .party_member:hover {
+    cursor: pointer;
+  }
+
+
+}
+
+@media screen and (max-width: 600px),
+screen and (min-width:901px) and (max-width:1200px) {
+
+  .party_member {
+    justify-content: center;
+  }
+
+  .party_member *:not(:first-child) {
+    display: none;
+    width: 0;
+  }
+
+  .party_member {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+
+
+  .party_member {
+    cursor: pointer;
+  }
+}

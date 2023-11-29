@@ -1,0 +1,25 @@
+.content {
+  height: 100%; 
+
+  max-height: 86%;
+  max-width: 130rem;
+}
+
+@media screen and (max-width: 1200px) and (max-height: 1400px){
+  .content { 
+    overflow-y: scroll;
+  }
+
+}
+
+@media screen and (max-height: 1275px) {
+  .content { 
+    overflow-y: scroll;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .content { 
+    flex-direction: column;
+  }
+}

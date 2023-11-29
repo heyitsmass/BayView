@@ -1,50 +1,39 @@
 "use client";
 
-import { ItineraryWithMongo } from "@/types/Itinerary";
+import { RequestActions } from "@/handlers/Itinerary/actions/helpers";
+import { DisplayableEvent } from "@/lib/random/handler";
+import { FlattenedItinerary } from "@/types/Itinerary";
 import { UserMetadata } from "@/types/User";
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 
 export type THomepageContext = {
   user: {
     _id: string;
     metadata: UserMetadata;
   };
-  itinerary: ItineraryWithMongo;
+  itinerary: FlattenedItinerary;
 };
 
-export type HomepageAction = {
-  type: string;
-  payload?: any;
-};
+export type HomepageAction =
+  | {
+      type: "itinerary";
+      mode: "actions";
+      payload: RequestActions;
+    }
+  | {
+      type: "event";
+      mode: "add" | "delete" | "refresh";
+      payload: DisplayableEvent;
+    };
 
 export type THomepageDispatch = (action: HomepageAction) => void;
 export type THomepageManager = (action: HomepageAction) => Promise<void>;
 
-const HomepageContext = createContext<THomepageContext>(
-  {} as THomepageContext
-);
+const HomepageContext = createContext<THomepageContext>({} as THomepageContext);
 const HomepageDispatch = createContext<THomepageDispatch>(
   (action: HomepageAction) => {}
 );
 const HomepageManager = createContext(async (action: HomepageAction) => {});
 
-const useHomepage = () => {
-  return useContext(HomepageContext);
-};
+export { HomepageContext, HomepageDispatch, HomepageManager };
 
-const useHomepageDispatch = () => {
-  return useContext(HomepageDispatch);
-};
-
-const useHomepageManager = () => {
-  return useContext(HomepageManager);
-};
-
-export {
-  HomepageContext,
-  HomepageDispatch,
-  HomepageManager,
-  useHomepage,
-  useHomepageDispatch,
-  useHomepageManager,
-};

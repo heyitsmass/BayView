@@ -1,10 +1,10 @@
 import { Aquarium } from '@/types/Event';
-import { nameAndRandomDescription, openingHours, showTimes } from '../utils';
+import { nameAndRandomDescription, nameAndRandomDescriptions, openingHours, roundedFloat, showTimes } from '../utils';
 import { faker } from '@faker-js/faker';
 
 /** Generate a random aquarium activity */
 export const aquarium = (): Aquarium => {
-  const exhibits = nameAndRandomDescription([
+  const exhibits = nameAndRandomDescriptions([
     'Coral Reef Exploration',
     'Amazon Rainforest Tank',
     'Penguin Habitat',
@@ -18,7 +18,7 @@ export const aquarium = (): Aquarium => {
   ]);
   return {
     exhibits,
-    admissionFee: faker.number.float({ min: 1, max: 100 }),
+    admissionFee: roundedFloat(0, 100),
     openingHours: openingHours(),
     underwaterTunnel: faker.datatype.boolean(),
     touchPools: faker.datatype.boolean(),

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { nameAndRandomPrice, openingHours } from '../utils';
+import { nameAndRandomPrice, openingHours, roundedFloat } from '../utils';
 import { Spa } from '@/types/Event';
 
 /** Generate a random spa activity.  */
@@ -41,7 +41,7 @@ export const spa = (): Spa => {
       'Reflexology',
       'Hydrotherapy'
     ]),
-    spaRating: faker.number.float({ min: 1, max: 5 }),
+    spaRating: roundedFloat(1, 5),
     bookingPolicy: faker.lorem.words(),
     openingHours: openingHours()
   };

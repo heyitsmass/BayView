@@ -1,16 +1,19 @@
-export interface Event {
-  //eventType: string;
+export type Location = {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+};
+
+export type Event<T = Activities | Reservable> = {
   date: Date;
   name: string;
   time?: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   description?: string;
-}
+  picture_url: string;
+  partySize: number;
+} & T;
 
 export type Airport = {
   name: string;
@@ -32,12 +35,18 @@ export interface Flight {
   departureTime: Date;
   arrivalTime: Date;
   flightNumber: number;
+  currentUpgrade: string;
+  currentPrice: number;
   reservationNumber: string;
   seats: AirlineSeat[];
   gate: string;
 }
 
 export interface Hotel {
+  cabinType: {
+    name: string;
+    description: string;
+  };
   checkIn: Date;
   checkOut: Date;
   roomNumber: string | number;
@@ -312,7 +321,9 @@ export interface Shopping {
   openingHours: string;
   salesAndDeals: (Deal | Sale)[]; // Information about ongoing sales or deals
   diningOptions: DiningOptions[]; // Restaurants or food courts in the mall
-  customerReviews: Record<string, Review>; // Customer reviews for the mall or specific stores
+  customerReviews: {
+    [x: string]: Review;
+  }; // Customer reviews for the mall or specific stores
   shoppingBudget: number; // Maximum amount of money to spend on shopping
   // ... (other shopping-specific properties)
 }
@@ -351,9 +362,16 @@ export interface Golf {
   // ... (other golf-specific properties)
 }
 
+export type Difficulty =
+  | "Easy"
+  | "Moderate"
+  | "Difficult"
+  | "Extreme"
+  | "Expert";
+
 export interface Hiking {
   trail: string; // Name of the hiking trail
-  difficulty: string; // Difficulty level of the trail (e.g., easy, moderate, difficult)
+  difficulty: Difficulty; // Difficulty level of the trail (e.g., easy, moderate, difficult)
   length: number; // Length of the hiking trail in kilometers
   rating: number; // Rating of the hiking trail
   distance: number; // Length of the hiking trail in kilometers

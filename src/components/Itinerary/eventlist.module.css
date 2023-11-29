@@ -1,0 +1,57 @@
+.wrapper {
+  @apply w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-4 dark:text-white;
+  background: var(--card-bg-color-glass);
+  background-blend-mode: overlay;
+  backdrop-filter: blur(10px);
+  border: solid 1px var(--card-border-color);
+}
+
+.subWrapper {
+  @apply h-full;
+}
+
+.eventsHeader {
+  @apply text-4xl font-bold px-8 z-[999];
+}
+
+.active {
+  transform: scale(100%);
+}
+
+@media screen and (max-width: 850px) {
+  .eventsHeader {
+    text-align: center;
+  }
+}
+
+@media screen and (max-height: 950px) {
+  .wrapper {
+    margin-top: 1em;
+    margin-right: 1em;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1300px) {
+  .wrapper {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .wrapper {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    max-width: 100%;
+  }
+
+  .subWrapper {
+    background: var(--card-bg-color-glass);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(10px);
+    border: solid 1px var(--card-border-color);
+    border-radius: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+}
