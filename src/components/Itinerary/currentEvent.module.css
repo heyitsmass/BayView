@@ -103,7 +103,7 @@
   }
 
   .modify {
-    @apply rounded-2xl h-min flex-col mt-4 backdrop-blur-xl bg-blend-overlay;
+    @apply rounded-2xl h-min flex-col mt-4 backdrop-blur-xl p-4 bg-blend-overlay;
     border: solid 1px var(--card-border-color);
     background: var(--card-bg-color-glass);
   }
