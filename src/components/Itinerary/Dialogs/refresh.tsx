@@ -11,7 +11,7 @@ const Component = ({ next }: { next?: (...args: any) => void }) => {
       await manager({
         type: "event",
         mode: "refresh",
-        payload: currEvent,
+        payload: currEvent! //this component only shows when there is a current event
       });
       next && next();
     } catch (err) {
@@ -37,5 +37,5 @@ const Component = ({ next }: { next?: (...args: any) => void }) => {
 export default {
   title: "Refresh",
   description: "Check for updates to your event!",
-  Component,
+  Component
 } as const;

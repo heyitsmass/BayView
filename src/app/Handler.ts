@@ -35,6 +35,23 @@ export default async function Handler(
       case "itinerary":
         if (action.mode === "actions") {
           body = await handleItineraryActionRequest(action.payload);
+        } else {
+          switch (action.mode) {
+            case "update":
+              await ItineraryModel.updateOne(
+                {
+                  _id
+                },
+                {
+                  $set: action.payload
+                }
+              );
+              body = {
+                message: `Itinerary ${Object.keys(
+                  action.payload
+                )} updated successfully`
+              };
+          }
         }
         break;
       case "event":

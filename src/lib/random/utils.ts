@@ -11,7 +11,7 @@ const location = () => {
     street: faker.location.streetAddress(),
     city: faker.location.city(),
     state: faker.location.state(),
-    zip: faker.location.zipCode(),
+    zip: faker.location.zipCode()
   };
 };
 
@@ -29,7 +29,7 @@ type DateOptions = {
 const date = (options?: DateOptions) => {
   return {
     dateTo: faker.date.soon(),
-    dateFrom: faker.date.future(options),
+    dateFrom: faker.date.future(options)
   };
 };
 
@@ -53,7 +53,7 @@ const openingHours = () => {
     "1:00 AM",
     "2:00 AM",
     "3:00 AM",
-    "4:00 AM",
+    "4:00 AM"
   ];
 
   const openTimes = [
@@ -64,7 +64,7 @@ const openingHours = () => {
     "9:00 AM",
     "10:00 AM",
     "11:00 AM",
-    "12:00 PM",
+    "12:00 PM"
   ];
 
   return `${openTimes[randomInt(openTimes.length)]} - ${
@@ -86,7 +86,7 @@ const nameAndRandomPrice = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 10); i++) {
     experiences.push({
       name: names[randomInt(0, names.length)],
-      price: faker.number.float({ min: 1, max: 100 }),
+      price: faker.number.float({ min: 1, max: 100 })
     });
   }
 
@@ -107,7 +107,7 @@ const nameAndRandomDescriptions = (names: string[]) => {
   for (let i = 0; i < randomInt(1, 5); i++) {
     facilities.push({
       name: names[randomInt(0, names.length)],
-      description: faker.lorem.words(),
+      description: faker.lorem.words()
     });
   }
 
@@ -117,7 +117,7 @@ const nameAndRandomDescriptions = (names: string[]) => {
 const nameAndRandomDescription = (names: string[]) => {
   return {
     name: names[randomInt(0, names.length)],
-    description: faker.lorem.words(),
+    description: faker.lorem.words()
   };
 };
 
@@ -140,9 +140,9 @@ const nameAndRandomDescriptionWithTime = (names: string[]) => {
       time: faker.date.soon().toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
-        hour12: true,
+        hour12: true
       }),
-      description: faker.lorem.words(),
+      description: faker.lorem.words()
     });
   }
 
@@ -165,8 +165,8 @@ const nameAndRandomTime = (names: string[]) => {
       time: faker.date.soon().toLocaleTimeString("it-IT", {
         hour: "numeric",
         minute: "2-digit",
-        hour12: true,
-      }),
+        hour12: true
+      })
     });
   }
   return experiences;
@@ -186,8 +186,8 @@ const showTimes = (): ShowTime[] => {
       time: faker.date.soon().toLocaleTimeString("it-IT", {
         hour: "numeric",
         minute: "2-digit",
-        hour12: true,
-      }),
+        hour12: true
+      })
     });
   }
 
@@ -229,8 +229,8 @@ const nameDescriptionDateTime = (names: string[]) => {
       time: faker.date.soon().toLocaleTimeString("it-IT", {
         hour: "numeric",
         minute: "2-digit",
-        hour12: true,
-      }),
+        hour12: true
+      })
     });
   }
 
@@ -249,7 +249,7 @@ const difficulty = [
   "Moderate",
   "Difficult",
   "Extreme",
-  "Expert",
+  "Expert"
 ] as Difficulty[];
 
 const randomDifficulty = (): Difficulty =>
@@ -258,6 +258,19 @@ const randomDifficulty = (): Difficulty =>
 const roundedFloat = (min: number, max: number, precision: number = 2) =>
   Number(faker.number.float({ min, max }).toFixed(precision));
 
+const duration = (
+  options?:
+    | {
+        days?: number | undefined;
+        refDate?: string | number | Date | undefined;
+      }
+    | undefined
+) => {
+  const duration = faker.date.soon(options).getTime() - Date.now();
+  const hours = Math.floor(duration / 1000 / 60 / 60);
+  const minutes = Math.floor((duration / 1000 / 60 / 60 - hours) * 60);
+  return `${hours}h ${minutes}m`;
+};
 export {
   location,
   date,
@@ -273,4 +286,5 @@ export {
   wordFromList,
   randomDifficulty,
   roundedFloat,
+  duration
 };

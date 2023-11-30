@@ -1,21 +1,32 @@
 import { Document, FlattenMaps, HydratedDocument } from "mongoose";
 import { Event } from "./Event";
 
-import { FlattenedEvent } from ".";
+import { DisplayData, FlattenedEvent, ParkLocations } from ".";
 import { PartyMember } from "./User";
 import { DisplayableEvent } from "@/lib/random/handler";
+import { Currency } from "@faker-js/faker";
 
-export interface IItinerary {
+type UserData = {
   readonly _id: string;
-  events: Event[];
-  party: PartyMember[];
-}
-
-export type FlattenedItinerary = {
-  readonly _id: string;
-  events: DisplayableEvent[];
+  currency: Currency;
   party: PartyMember[];
 };
+
+type BaseData = {
+  title: string;
+  location: ParkLocations;
+};
+
+export interface IItinerary extends UserData, BaseData {
+  events: Event[];
+}
+
+export type FlattenedItinerary = FlattenMaps<
+  BaseData &
+    UserData & {
+      events: DisplayableEvent[];
+    }
+>;
 
 export type ItineraryWithoutMongo = Document<
   string,

@@ -21,6 +21,11 @@ export type HomepageAction =
       payload: RequestActions;
     }
   | {
+      type: "itinerary";
+      mode: "update";
+      payload: Partial<FlattenedItinerary>;
+    }
+  | {
       type: "event";
       mode: "add" | "delete" | "refresh";
       payload: DisplayableEvent;
@@ -29,11 +34,12 @@ export type HomepageAction =
 export type THomepageDispatch = (action: HomepageAction) => void;
 export type THomepageManager = (action: HomepageAction) => Promise<void>;
 
-const HomepageContext = createContext<THomepageContext>({} as THomepageContext);
+const HomepageContext = createContext<THomepageContext>(
+  {} as THomepageContext
+);
 const HomepageDispatch = createContext<THomepageDispatch>(
   (action: HomepageAction) => {}
 );
 const HomepageManager = createContext(async (action: HomepageAction) => {});
 
 export { HomepageContext, HomepageDispatch, HomepageManager };
-

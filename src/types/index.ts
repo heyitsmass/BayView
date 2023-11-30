@@ -1,7 +1,25 @@
 import { HydratedDocument } from "mongoose";
 import { Event, EventTypes } from "./Event";
 import { Notifiers } from "@/lib/notifier";
+import React, { ReactNode } from "react";
 
+export const Parks = [
+  "Adventure Haven Park",
+  "ThrillTopia",
+  "FunQuest Park"
+] as const;
+
+export type Offer = [
+  id: string,
+  time: string,
+  name: string,
+  duration: string,
+  below_duration: ReactNode,
+  extra: ReactNode,
+  price: number | string
+];
+
+export type ParkLocations = (typeof Parks)[number];
 
 export type DiningOptions = "Breakfast" | "Lunch" | "Dinner";
 
@@ -40,6 +58,7 @@ export type DisplayData = {
   upgradeOptions?: Upgrades;
   picture_url: string;
   peek: PeekData;
+  offer: Offer;
 };
 
 export type DocumentWithDisplayData<T = any> = HydratedDocument<T> &
@@ -125,4 +144,3 @@ export type NotifyMethods = Notifiers;
 export type UpdateMethods = "del" | "refresh";
 export type InfoMethods = "map" | "directions" | "weather";
 export type ShareMethods = "rss" | "social" | "link";
-
