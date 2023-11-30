@@ -101,7 +101,7 @@ export default function Search() {
 	};
 
 	return (
-		<form ref={formRef} onSubmit={handleSubmit} className="m-1">
+		<form ref={formRef} onSubmit={handleSubmit}>
 			<BlurOpacityAnimation transitionOn={flightState.contentPending}>
 				<InputPair icon={faArrowRight}>
 					<Input

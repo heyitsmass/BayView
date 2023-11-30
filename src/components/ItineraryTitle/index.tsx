@@ -1,89 +1,142 @@
-import React, { ReactNode, useState, HTMLProps, Fragment } from"react";
-import itineraryTitleCSS from './itinerarytitle.module.css'
-import EditableInputField from "../Input/EditableInputField"
-import {faLocationDot, faCalendar} from "@fortawesome/free-solid-svg-icons"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { Dialog, Transition } from "@headlessui/react";
-
+import { useHomepage, useHomepageManager } from "@/hooks";
+import { ParkLocations, Parks } from "@/types";
+import {
+  faCalendar,
+  faLocationDot
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { PrebuiltDialog } from "../Dialog";
+import itineraryTitleCSS from "./itinerarytitle.module.css";
 
 export default function ItineraryTitle() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { location, events, title } = useHomepage().itinerary;
 
-      let [isOpen, setIsOpen] = useState(false);
-      let [location, setLocation] = useState();
+  const startDate = events
+    .sort((a, b) => a.date.valueOf() - b.date.valueOf())
+    .at(0)?.date;
 
-      const onLocationChange = (e) => {
-        setLocation(e.target.value);
-      };
+  const endDate = events.at(-1)?.date;
 
-      function closeModal() {
-        setIsOpen(false);
+  const dateRange =
+    startDate && endDate
+      ? `${startDate.toLocaleDateString("en-US", {
+          month: "numeric",
+          day: "numeric"
+        })} - ${endDate.toLocaleDateString("en-US", {
+          month: "numeric",
+          day: "numeric"
+        })}`
+      : "No Events!";
+
+  const manager = useHomepageManager();
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const handleLocationChange = async (newLocation: ParkLocations) => {
+    try {
+      if (newLocation === location) {
+        return;
       }
+      await manager({
+        type: "itinerary",
+        mode: "update",
+        payload: {
+          location: newLocation
+        }
+      });
+      setIsOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-      function openModal() {
-        setIsOpen(true);
+  const handleTitleChange = async (newTitle: string) => {
+    try {
+      if (newTitle === title) {
+        return;
       }
+      await manager({
+        type: "itinerary",
+        mode: "update",
+        payload: {
+          title: newTitle
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    return (
-      <div data-testid="title-check" className={itineraryTitleCSS.title}>
-        <div className={itineraryTitleCSS.header}>
-          <EditableInputField initialText="Itinerary Title" />
-        </div>
-        <div className="pt-10">
-          <FontAwesomeIcon
-            icon={faLocationDot}
-            className="inline"
-            onClick={openModal}
-          />
+  const [isActive, setActive] = useState(false);
 
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog open={isOpen} onClose={closeModal}>
-              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-              <div className="fixed inset-0 flex w-screen items-center justify-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-xs max-h-min rounded-2xl bg-white pl-5 pb-5 pr-5 pt-3 border-4 border-gray-200 dark:bg-zinc-800 dark:border-zinc-700">
-                    <div className="text-2xl font-bold text-center">
-                      <Dialog.Title>Select Location</Dialog.Title>
-                    </div>
-                    <div className="block mt-6">
-                      <label className="block">
-                        <input
-                          type="radio"
-                          value="Magical Land"
-                          name="Location"
-                          onChange={onLocationChange}
-                          checked={location === "Magical Land"}
-                        />{" "}
-                        Magical Land
-                      </label>
-                      <label className="block mt-3">
-                        <input
-                          type="radio"
-                          value="Magical World"
-                          name="Location"
-                          onChange={onLocationChange}
-                          checked={location === "Magical World"}
-                        />{" "}
-                        Magical World{" "}
-                      </label>
-                    </div>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
-            </Dialog>
-          </Transition>
-
-          <p className="inline ml-1">{location} </p>
+  return (
+    <div data-testid="title-check" className={itineraryTitleCSS.title}>
+      <div className={itineraryTitleCSS.header}>
+        <div
+          className="flex relative w-full"
+          onClick={() => setActive(true)}
+        >
+          {(isActive && (
+            <input
+              className="bg-transparent border-b-2 border-transparent focus:border-rose-800 outline-none"
+              defaultValue={title || "Untitled Itinerary"}
+              disabled={!isActive}
+              onBlur={(e) => {
+                setActive(false);
+                handleTitleChange(e.target.value);
+              }}
+            />
+          )) || (
+            <span className="border-b-2 border-transparent selection:bg-transparent">
+              {title || "Untitled Itinerary"}
+            </span>
+          )}
         </div>
       </div>
-    );
+      <div className="pt-8">
+        <div className="flex items-center w-max" onClick={openModal}>
+          <FontAwesomeIcon icon={faLocationDot} className="inline" />
+          <p className="font-bold px-2">
+            {location || "Click to set a location!"}
+          </p>
+        </div>
+        <div className="flex items-center">
+          <FontAwesomeIcon icon={faCalendar} />
+          <p className="font-bold px-2 py-0">{dateRange}</p>
+        </div>
 
+        <PrebuiltDialog
+          open={isOpen}
+          onClose={closeModal}
+          title="Select Location!"
+        >
+          <div className="block mt-6">
+            {Parks.map((park, i) => (
+              <label className="block" key={i}>
+                <input
+                  type="radio"
+                  value={park}
+                  name="Location"
+                  onChange={async (e) => {
+                    e.preventDefault();
+                    await handleLocationChange(park);
+                  }}
+                  checked={location === park}
+                />{" "}
+                {park}
+              </label>
+            ))}
+          </div>
+        </PrebuiltDialog>
+      </div>
+    </div>
+  );
 }

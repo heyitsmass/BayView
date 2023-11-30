@@ -28,6 +28,7 @@ export default function Button({ ...props }: ButtonProps) {
     props.variant ? styles[props.variant] : styles.primary,
     styles.button
   ].join(" ");
+
   const FAIcon = React.memo(({ ...props }: FontAwesomeIconProps) => {
     return <FontAwesomeIcon {...props} />;
   });
@@ -37,6 +38,7 @@ export default function Button({ ...props }: ButtonProps) {
     <button
       {...props}
       {...(props.pending && { disabled: true, "aria-disabled": true })}
+      //className={props.className}
     >
       {props.icon && (
         <div className={styles.inlineIcon}>

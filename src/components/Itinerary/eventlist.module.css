@@ -11,7 +11,7 @@
 }
 
 .eventsHeader {
-  @apply text-4xl font-bold px-8 z-[999];
+  @apply text-4xl font-bold px-8 pl-2 z-[999];
 }
 
 .active {
@@ -26,8 +26,13 @@
 
 @media screen and (max-height: 950px) {
   .wrapper {
-    margin-top: 1em;
-    margin-right: 1em;
+    @apply m-4 ml-0
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .wrapper {
+    @apply m-4 ml-0
   }
 }
 
@@ -46,12 +51,10 @@
   }
 
   .subWrapper {
+    @apply rounded-2xl border border-zinc-700 p-4;
     background: var(--card-bg-color-glass);
     background-blend-mode: overlay;
     backdrop-filter: blur(10px);
-    border: solid 1px var(--card-border-color);
-    border-radius: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
+
   }
 }

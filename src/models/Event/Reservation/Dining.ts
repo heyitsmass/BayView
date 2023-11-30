@@ -3,13 +3,14 @@ import { EventModel } from "..";
 import { reservationSchema } from ".";
 import { Schema } from "mongoose";
 import { PeekData } from "@/types";
+import { faker } from "@faker-js/faker";
 
 const mealPeriodInfoSchema = {
   name: String,
   experience: String,
   priceLegend: String,
   primaryCuisineType: String,
-  _id: false,
+  _id: false
 };
 
 const diningSchema = new Schema<Reservation<Dining>>({
@@ -17,10 +18,10 @@ const diningSchema = new Schema<Reservation<Dining>>({
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/dining.png",
+    default: "/assets/events/dining.png"
   },
   mealPeriodInfo: {
-    type: mealPeriodInfoSchema,
+    type: mealPeriodInfoSchema
   },
   priceRange: String,
   admissionRequired: Boolean,
@@ -31,11 +32,11 @@ const diningSchema = new Schema<Reservation<Dining>>({
         offerId: String,
         time: String,
         label: String,
-        _id: false,
-      },
+        _id: false
+      }
     ],
-    default: {},
-  },
+    default: {}
+  }
 });
 
 diningSchema
@@ -47,7 +48,7 @@ diningSchema
       "Meal Period": this.mealPeriodInfo.name,
       "Price Range": this.priceRange,
       "Admission Required": this.admissionRequired ? "Yes" : "No",
-      Cuisine: this.mealPeriodInfo.primaryCuisineType,
+      Cuisine: this.mealPeriodInfo.primaryCuisineType
     };
   });
 
@@ -63,26 +64,41 @@ diningSchema
         label: "Dining",
         value: this.date.toLocaleDateString("en-US", {
           day: "numeric",
-          month: "numeric",
-        }),
+          month: "numeric"
+        })
       },
       {
-        value: this.name,
+        value: this.name
       },
       {
         label: "Price Range",
-        value: this.priceRange,
+        value: this.priceRange
       },
       {
         label: "Party Size",
-        value: this.partySize,
+        value: this.partySize
       },
       {
         label: "Cuisine",
-        value: this.mealPeriodInfo.primaryCuisineType,
-      },
+        value: this.mealPeriodInfo.primaryCuisineType
+      }
     ];
   });
+
+diningSchema.virtual("offer").get(function (this: Reservation<Dining>) {
+  return [
+    faker.string.uuid(),
+    this.date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "numeric"
+    }),
+    this.name,
+    this.mealPeriodInfo.experience,
+    this.mealPeriodInfo.primaryCuisineType,
+    this.partySize,
+    this.priceRange
+  ];
+});
 
 export const DiningModel =
   EventModel.discriminators?.Dining ||

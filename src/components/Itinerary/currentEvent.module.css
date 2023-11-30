@@ -4,9 +4,9 @@
 }
 
 .card {
-  @apply h-min w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px];
-  position: relative; 
-  z-index: 1; 
+  @apply w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px];
+  position: relative;
+  z-index: 1;
   max-width: 50%;
   background-blend-mode: overlay;
   background: var(--card-bg-color-glass);
@@ -29,11 +29,12 @@
 }
 
 
+
 @media screen and (max-width: 1300px) and (max-height: 1200px) {
 
   .mid_card {
-    position: relative; 
-    z-index: -1; 
+    position: relative;
+    z-index: -1;
     display: block !important;
     height: max-content;
     width: 100%;
@@ -54,6 +55,14 @@
 }
 
 @media screen and (min-width: 900px) and (max-width: 1300px) {
+  .empty {
+
+    @apply h-full rounded-2xl border border-zinc-700 p-4;
+    background-blend-mode: overlay;
+    background: var(--card-bg-color-glass);
+    backdrop-filter: blur(10px);
+  }
+
   .modify {
     border: solid 1px var(--card-border-color);
     background: var(--card-bg-color-glass);
@@ -104,6 +113,13 @@
 
 
 @media screen and (max-height: 950px) {
+  .empty {
+
+    @apply h-full rounded-2xl border border-zinc-700 p-4;
+    background-blend-mode: overlay;
+    background: var(--card-bg-color-glass);
+    backdrop-filter: blur(10px);
+  }
 
   .header {
     width: 100%;
@@ -144,7 +160,21 @@
 
 }
 
+@media screen and (max-width: 850px) {
+  .empty h2 {
+    text-align: center;
+  }
+}
+
 @media screen and (min-height: 951px) and (max-width:900px) {
+  .empty {
+
+    @apply h-full rounded-2xl border border-zinc-700 p-4;
+    background-blend-mode: overlay;
+    background: var(--card-bg-color-glass);
+    backdrop-filter: blur(10px);
+  }
+
   .modify {
     border: solid 1px var(--card-border-color);
     background: var(--card-bg-color-glass);

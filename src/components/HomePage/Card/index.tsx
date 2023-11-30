@@ -12,7 +12,7 @@ import {
 	titleTransitionParams,
 } from '@/components/Animations/AnimatePresenceComponent';
 
-type CardProps = {
+export type CardProps = {
 	title?: string;
 	subtitle?: string;
 	contentPending?: boolean;

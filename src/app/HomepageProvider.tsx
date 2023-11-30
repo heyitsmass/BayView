@@ -34,8 +34,6 @@ export default function Provider({ ...props }: HomepageProviderProps) {
         message: body.message
       });
     } else {
-      console.log("success", body.message);
-
       switch (action.type) {
         case "event":
           if (action.mode === "refresh") {
@@ -66,8 +64,25 @@ export default function Provider({ ...props }: HomepageProviderProps) {
   );
 }
 
-export const Reducer = (subject: THomepageContext, action: HomepageAction) => {
+export const Reducer = (
+  subject: THomepageContext,
+  action: HomepageAction
+) => {
   switch (action.type) {
+    case "itinerary":
+      switch (action.mode) {
+        case "update":
+          return {
+            ...subject,
+            itinerary: {
+              ...subject.itinerary,
+              ...action.payload
+            }
+          };
+        default:
+          return subject;
+      }
+
     case "event":
       const { itinerary } = subject;
 

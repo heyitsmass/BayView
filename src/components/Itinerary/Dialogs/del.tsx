@@ -18,7 +18,7 @@ const Component = ({ next }: { next?: (...args: any) => void }) => {
       await manager({
         type: "event",
         mode: "delete",
-        payload: currEvent
+        payload: currEvent! //this component only shows when there is a current event
       });
       setEvent(0);
       next && next();
