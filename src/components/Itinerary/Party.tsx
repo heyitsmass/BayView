@@ -22,8 +22,8 @@ const Member = ({
     <div className={styles.party_member} onClick={open}>
       <Image
         src={avatar}
-        height={30}
-        width={30}
+        height={25}
+        width={25}
         alt={name[0].toLocaleUpperCase()}
         className="rounded-full m-2 "
       />
@@ -46,10 +46,10 @@ export const Party = ({ members }: PartyProps) => {
 
   return (
     <div className={styles.party}>
-      <h2 className="text-lg">
-        <b>Party</b>
+      <h2 className="text-lg flex justify-between items-center w-full px-2">
+        <p className="font-bold">Party</p>
+        <AddMemberDialog btn={<FontAwesomeIcon icon={faPlus} />} />
       </h2>
-      <AddMemberDialog btn={<FontAwesomeIcon icon={faPlus} />} />
       <div className={styles.members}>
         {members.map((user, i) => (
           <Member key={i} open={open}>
