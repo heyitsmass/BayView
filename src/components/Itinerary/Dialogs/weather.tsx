@@ -1,3 +1,4 @@
+'use client'; 
 import { Loading } from "@/components/Loading";
 import { getWeather } from "@/handlers/Itinerary/actions/helpers";
 import { useCurrentEvent, useHomepage } from "@/hooks";
@@ -10,16 +11,16 @@ const Component = () => {
   const { locale } = useHomepage().itinerary;
   const event = useCurrentEvent();
 
-  const loc = useMemo(() => event!.location, [event]);
   const [data, setData] = useState<MappedWeatherData | null>(null);
 
   useEffect(() => {
-    const get = async () => setData(await getWeather({ location: loc }));
+    const get = async () =>
+      setData(await getWeather({ location: event!.location }));
 
     if (!data) {
       get();
     }
-  }, [data, loc]);
+  }, [data, event]);
 
   if (!data) return <Loading />;
 
