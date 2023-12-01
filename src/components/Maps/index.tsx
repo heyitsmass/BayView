@@ -2,7 +2,7 @@
 
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
-import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useMap, useMapsLibrary, Marker } from "@vis.gl/react-google-maps";
 
 import { useHomepage } from "@/hooks";
 import {
@@ -11,12 +11,34 @@ import {
   faMountainCity
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PropsWithChildren, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  ReactNode,
+  Suspense,
+  useEffect,
+  useState
+} from "react";
 import styles from "./map.module.css";
+import { Loading } from "../Loading";
 type GoogleGeoCode = {
   lat: number;
   lng: number;
 };
+
+enum Animation {
+  /**
+   * Marker bounces until animation is stopped by calling {@link
+   * google.maps.Marker.setAnimation} with <code>null</code>.
+   */
+  BOUNCE = 0.0,
+  /**
+   * Marker drops from the top of the map to its final location. Animation
+   * will cease once the marker comes to rest and {@link
+   * google.maps.Marker.getAnimation} will return <code>null</code>. This type
+   * of animation is usually specified during creation of the marker.
+   */
+  DROP = 1.0
+}
 
 enum TravelMode {
   /**
@@ -56,6 +78,26 @@ type MapProps = PropsWithChildren<{
   travelMode: TravelMode;
 }>;
 
+const MapProvider = ({ children }: { children: ReactNode }) => {
+  //api key usage is restricted as it's exposed to the client.
+
+  return (
+    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+      {children}
+    </APIProvider>
+  );
+};
+
+export function GoogleMap({ origin }: { origin: GoogleGeoCode }) {
+  return (
+    <MapProvider>
+      <Map center={origin} className="rounded-2xl h-full w-full" zoom={13}>
+        <Marker position={origin} animation={Animation.BOUNCE} />
+      </Map>
+    </MapProvider>
+  );
+}
+
 export function GoogleDirectionsMap({
   origin,
   destination,
@@ -65,9 +107,8 @@ export function GoogleDirectionsMap({
   destination: GoogleGeoCode;
   mode: "DRIVING" | "BICYCLING" | "TRANSIT" | "WALKING";
 }) {
-  //api key usage is restricted as it's exposed to the client.
   return (
-    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+    <MapProvider>
       <Map center={origin} className="rounded-2xl h-full w-full">
         <Directions
           origin={origin}
@@ -75,7 +116,7 @@ export function GoogleDirectionsMap({
           travelMode={TravelMode[mode]}
         />
       </Map>
-    </APIProvider>
+    </MapProvider>
   );
 }
 

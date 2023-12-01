@@ -4,8 +4,9 @@ import { Loading } from "@/components/Loading";
 import { GoogleDirectionsMap } from "@/components/Maps";
 
 import { getGeocode } from "@/handlers/Itinerary/actions/helpers/getGeocode";
-import { useCurrentEvent } from "@/hooks";
+import { useCurrentEvent, useGeocoder } from "@/hooks";
 import { Geocode } from "@/types";
+import { Location } from "@/types/Event";
 import {
   faBicycle,
   faBus,
@@ -13,7 +14,7 @@ import {
   faPersonWalking
 } from "@fortawesome/free-solid-svg-icons";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 
 const mapDirectionModes = [
   "DRIVING",
@@ -35,17 +36,7 @@ const Component = () => {
   const event = useCurrentEvent();
   const [mode, setMode] = useState<MapDirectionsMode>("DRIVING");
 
-  const [geocode, setGeocode] = useState<Geocode | null>(null);
-
-  const { location } = event!;
-
-  useEffect(() => {
-    const get = async () => {
-      console.log("getting geocode");
-      setGeocode(await getGeocode({ location }));
-    };
-    !geocode && get();
-  }, [geocode, location]);
+  const geocode = useGeocoder(event!.location);
 
   const [userLoc, setUserLoc] = useState<Geocode | null>(null);
 
@@ -82,13 +73,11 @@ const Component = () => {
     <>
       <div className="w-[800px] z-0 relative">
         <div className="h-[400px] mb-4">
-          <Suspense fallback={<Loading />}>
-            <GoogleDirectionsMap
-              origin={origin}
-              destination={destination}
-              mode={mode}
-            />
-          </Suspense>
+          <GoogleDirectionsMap
+            origin={origin}
+            destination={destination}
+            mode={mode}
+          />
         </div>
         <div>
           <div className="flex gap-4 pt-4 w-full justify-center">
