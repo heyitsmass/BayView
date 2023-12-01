@@ -66,20 +66,9 @@ export function GoogleMap({
   destination: GoogleGeoCode;
   mode: "DRIVING" | "BICYCLING" | "TRANSIT" | "WALKING";
 }) {
-  const [key, setKey] = useState(undefined as string | undefined);
-
-  useEffect(() => {
-    const get = async () => {
-      setKey(await getKey());
-    };
-    !key && get();
-  }, [key]);
-
-  if (!key) return <div>Loading...</div>;
-  
   //api key usage is restricted as it's exposed to the client.
   return (
-    <APIProvider apiKey={key}>
+    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
       <Map center={origin} className="rounded-2xl h-full w-full">
         <Directions
           origin={origin}
