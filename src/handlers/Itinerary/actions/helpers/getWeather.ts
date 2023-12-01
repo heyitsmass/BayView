@@ -1,20 +1,21 @@
 "use server";
 
-import { fetcher } from "@/utils/fetcher";
-import { getGeocode } from "./getGeocode";
 import { Location } from "@/types/Event";
 import { MappedWeatherData, WeatherResponse } from "@/types/Weather";
+import { fetcher } from "@/utils/fetcher";
 import { mapWeatherData } from "@/utils/openWeather";
-import theme from "@/components/Itinerary/utils/Theme";
+import { getGeocode } from "./getGeocode";
 
 export type GetWeatherPayload = {
   location: Location;
 };
 
 /** Get the current weather stats */
-const getWeather = async (
-  location: Location
-): Promise<MappedWeatherData> => {
+const getWeather = async ({
+  location
+}: {
+  location: Location;
+}): Promise<MappedWeatherData> => {
   const address = [...Object.values(location)].join(",");
 
   const geocode = await getGeocode(address);

@@ -14,7 +14,7 @@ const Component = () => {
   const [data, setData] = useState<MappedWeatherData | null>(null);
 
   useEffect(() => {
-    const get = async () => setData(await getWeather(loc));
+    const get = async () => setData(await getWeather({ location: loc }));
 
     if (!data) {
       get();
