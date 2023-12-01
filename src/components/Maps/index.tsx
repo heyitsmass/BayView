@@ -1,19 +1,18 @@
 "use client";
 
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
-import { useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
+import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { getKey } from "./getKey";
-import styles from "./map.module.css";
 import { useHomepage } from "@/hooks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faClock,
   faMountainCity
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PropsWithChildren, useEffect, useState } from "react";
+import styles from "./map.module.css";
 type GoogleGeoCode = {
   lat: number;
   lng: number;
@@ -57,7 +56,7 @@ type MapProps = PropsWithChildren<{
   travelMode: TravelMode;
 }>;
 
-export function GoogleMap({
+export function GoogleDirectionsMap({
   origin,
   destination,
   mode

@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/Button";
 import { Loading } from "@/components/Loading";
-import { GoogleMap } from "@/components/Maps";
+import { GoogleDirectionsMap } from "@/components/Maps";
 
 import { getGeocode } from "@/handlers/Itinerary/actions/helpers/getGeocode";
 import { useCurrentEvent } from "@/hooks";
@@ -83,7 +83,7 @@ const Component = () => {
       <div className="w-[800px] z-0 relative">
         <div className="h-[400px] mb-4">
           <Suspense fallback={<Loading />}>
-            <GoogleMap
+            <GoogleDirectionsMap
               origin={origin}
               destination={destination}
               mode={mode}
