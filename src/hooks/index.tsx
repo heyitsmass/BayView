@@ -9,6 +9,7 @@ import { useCurrentEvent, useCurrentEventDispatch } from "./useCurrentEvent";
 import { useGetData } from "./useGetData";
 import { useState } from "react";
 
+import { useGeocoder } from "./useGeocoder";
 
 const useOpen = () => {
   const [isOpen, setOpen] = useState(false);
@@ -27,5 +28,6 @@ export {
   useCurrentEvent,
   useCurrentEventDispatch,
   useGetData,
-  useOpen
+  useOpen,
+  useGeocoder
 };
