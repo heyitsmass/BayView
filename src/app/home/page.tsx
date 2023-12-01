@@ -56,21 +56,23 @@ export default function Page() {
   const enhancedCards = enhanceCards(initialCards);
 
   return (
-    <AnimationComponent transition={{ duration: 0.5 }}>
-      <div className={styles.contentGrid}>
-        <div className="w-[600px] col-span-full">
-          <ItineraryTitle></ItineraryTitle>
-        </div>
-        {cardOrder.map((cardId) => (
-          <motion.div layout key={cardId}>
-            <CardCollapseContext.Provider
-              value={{ onCollapse: () => handleCollapse(cardId) }}
-            >
-              {enhancedCards.find((card) => card.props.cardId === cardId)}
-            </CardCollapseContext.Provider>
-          </motion.div>
-        ))}
-      </div>
-    </AnimationComponent>
-  );
+		<>
+			<div className={styles.contentGrid + " !pb-0 !pt-16"}>
+				<div className="w-[600px] col-span-full">
+					<ItineraryTitle></ItineraryTitle>
+				</div>
+			</div>
+			<AnimationComponent transition={{ duration: 0.5 }}>
+				<div className={styles.contentGrid}>
+					{cardOrder.map((cardId) => (
+						<motion.div layout key={cardId}>
+							<CardCollapseContext.Provider value={{ onCollapse: () => handleCollapse(cardId) }}>
+								{enhancedCards.find((card) => card.props.cardId === cardId)}
+							</CardCollapseContext.Provider>
+						</motion.div>
+					))}
+				</div>
+			</AnimationComponent>
+		</>
+	);
 }
