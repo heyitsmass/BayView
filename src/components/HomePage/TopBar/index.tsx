@@ -156,9 +156,9 @@ export default function TopBar() {
             onClick={handleProfileClick}
             ref={profileRef}
           >
-            <span className={`${style.topbarShadow} text-base mr-3`}>
+            <div className={`${style.topbarShadow} text-base text-right mr-3 min-w-full`}>
               {first_name || "Unknown"} {last_name}
-            </span>
+            </div>
             <div className="flex-shrink-0">
               <div
                 data-testid="profile-icon"
