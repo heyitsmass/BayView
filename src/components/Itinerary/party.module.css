@@ -1,9 +1,9 @@
 .party {
-  @apply h-max w-full text-white bg-zinc-700 border border-zinc-600 rounded-2xl relative p-2 pt-2 mt-2;
+  @apply h-max w-full text-white bg-white border-zinc-200  dark:bg-zinc-700 border dark:border-zinc-600 rounded-2xl relative p-2 pt-2 mt-2;
 }
 
 .party_member {
-  @apply flex items-center bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full;
+  @apply flex items-center bg-white dark:bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full;
   transition: all 0.1s ease-in-out;
 }
 

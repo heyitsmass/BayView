@@ -1,5 +1,5 @@
 .upgrade_card {
-  @apply border border-zinc-700 rounded-xl bg-zinc-800 shadow-xl h-full ;
+  @apply border bg-white border-zinc-200 dark:border-zinc-700 rounded-xl dark:bg-zinc-800 shadow-xl h-full;
 
   transition: all 0.2s ease-in-out;
 }

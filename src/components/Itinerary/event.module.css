@@ -1,7 +1,7 @@
 .event {
   transform: scale(90%);
   transition: transform 0.2s ease-in-out;
-  @apply border h-28 rounded-2xl m-3 flex shadow-lg bg-zinc-700 border-zinc-600 cursor-pointer;
+  @apply border h-28 rounded-2xl m-3 flex shadow-lg bg-white border-zinc-200 dark:bg-zinc-700 dark:border-zinc-600 cursor-pointer;
 }
 
 .event:hover {
