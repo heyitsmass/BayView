@@ -1,10 +1,10 @@
 .modify {
 
-  @apply pt-4 rounded-b-2xl flex min-w-[450px] gap-4;
+  @apply pt-4 rounded-b-2xl flex min-w-[450px] gap-4 h-[calc(100%-22rem)];
 }
 
 .card {
-  @apply w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px] h-min;
+  @apply w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px];
   position: relative;
   z-index: 1;
   max-width: 50%;
@@ -14,7 +14,7 @@
 }
 
 .sub_card {
-  @apply h-max;
+  @apply !min-h-max;
 }
 
 .mid_card {
@@ -69,7 +69,7 @@
   .sub_card {
     border: solid 1px var(--card-border-color);
     background: var(--card-bg-color-glass);
-    @apply min-w-[450px] rounded-2xl p-4 backdrop-blur-xl bg-blend-overlay;
+    @apply min-w-[450px] rounded-2xl p-4 backdrop-blur-xl bg-blend-overlay h-max;
   }
 
   .card {

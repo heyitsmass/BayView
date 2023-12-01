@@ -1,6 +1,6 @@
 .content {
 
-  @apply w-full flex gap-8 border max-w-[90%] max-h-[86%] overflow-x-hidden whitespace-nowrap;
+  @apply w-full flex gap-8 max-w-[90%] h-[86%] overflow-x-hidden whitespace-nowrap;
 
 }
 
