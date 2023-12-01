@@ -1,4 +1,7 @@
 .layout {
+  max-height: 84vh; 
+  max-width: 60vw;
+  overflow-y: scroll;
   background: var(--card-bg-color-glass);
   background-blend-mode: overlay;
   backdrop-filter: blur(10px);
