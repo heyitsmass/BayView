@@ -1,7 +1,6 @@
 import { IItinerary } from "@/types/Itinerary";
 import mongoose, { Schema } from "mongoose";
 import { eventSchema } from "./Event";
-import { Currency } from "@faker-js/faker";
 
 const currencySchema = {
   name: String,
@@ -24,6 +23,10 @@ export const itinerarySchema = new Schema<IItinerary>(
       }
     ],
     title: { type: String, default: "My Itinerary" },
+    region: {
+      type: String,
+      default: "en"
+    },
     currency: {
       type: currencySchema,
       default: {
@@ -31,6 +34,22 @@ export const itinerarySchema = new Schema<IItinerary>(
         code: "USD",
         symbol: "$"
       }
+    },
+    locale: {
+      type: String,
+      default: "en"
+    },
+    speedUnit: {
+      type: String,
+      default: "mph"
+    },
+    distanceUnit: {
+      type: String,
+      default: "mi"
+    },
+    temperateUnit: {
+      type: String,
+      default: "F"
     }
   },
   {

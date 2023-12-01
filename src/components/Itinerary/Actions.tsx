@@ -1,43 +1,16 @@
 "use client";
-import {
-  faDiscord,
-  faFacebook,
-  faSlack,
-  faTwitter
-} from "@fortawesome/free-brands-svg-icons";
-import {
-  IconDefinition,
-  faArrowsRotate,
-  faBars,
-  faCar,
-  faCloud,
-  faEnvelope,
-  faMapPin,
-  faPhone,
-  faRss,
-  faShare,
-  faShareNodes,
-  faTrashCan,
-  faXmark
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PropsWithChildren, SyntheticEvent, useState } from "react";
 
-import { Notifiers } from "@/lib/notifier";
-import {
-  InfoMethods,
-  NotifyMethods,
-  ShareMethods,
-  UpdateMethods
-} from "@/types";
-import dialogs from "./Dialogs";
-import styles from "./actions.module.css";
 import { ActionsDialog } from "../Dialog";
 import { getAvailableActions } from "./Action/static";
+import styles from "./actions.module.css";
+import { PropsWithChildren, SyntheticEvent, useState } from "react";
+import { NotifyMethods } from "@/types";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type ActionsProps = {
   notify: {
-    [P in Notifiers]: boolean;
+    [P in NotifyMethods]: boolean;
   };
 };
 
