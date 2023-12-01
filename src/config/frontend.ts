@@ -1,9 +1,9 @@
-import { useRouter } from 'next/navigation';
-import { SuperTokensConfig } from 'supertokens-auth-react/lib/build/types';
-import SessionReact from 'supertokens-auth-react/recipe/session';
-import ThirdPartyEmailPasswordReact from 'supertokens-auth-react/recipe/thirdpartyemailpassword';
-import { appInfo } from './appInfo';
-import { SocialButton } from './buttons';
+import { useRouter } from "next/navigation";
+import { SuperTokensConfig } from "supertokens-auth-react/lib/build/types";
+import SessionReact from "supertokens-auth-react/recipe/session";
+import ThirdPartyEmailPasswordReact from "supertokens-auth-react/recipe/thirdpartyemailpassword";
+import { appInfo } from "./appInfo";
+import { SocialButton } from "./buttons";
 
 const routerInfo: {
   router?: ReturnType<typeof useRouter>;
@@ -111,41 +111,44 @@ export const frontendConfig = (): SuperTokensConfig => {
         signInAndUpFeature: {
           providers: [
             ThirdPartyEmailPasswordReact.Google.init({
-              buttonComponent: () => SocialButton({ recipe: 'google' })
+              buttonComponent: () => SocialButton({ recipe: "google" })
             }),
             ThirdPartyEmailPasswordReact.Facebook.init({
-              buttonComponent: () => SocialButton({ recipe: 'facebook' })
+              buttonComponent: () => SocialButton({ recipe: "facebook" })
             }),
             ThirdPartyEmailPasswordReact.Github.init({
-              buttonComponent: () => SocialButton({ recipe: 'github' })
+              buttonComponent: () => SocialButton({ recipe: "github" })
             }),
             ThirdPartyEmailPasswordReact.Discord.init({
-              buttonComponent: () => SocialButton({ recipe: 'discord' })
+              buttonComponent: () => SocialButton({ recipe: "discord" })
             })
           ],
+
           signUpForm: {
+            privacyPolicyLink: "https://www.bayview.dev/policies/privacy",
+            termsOfServiceLink: "https://www.bayview.dev/policies/terms",
             formFields: [
               {
-                id: 'username',
-                label: 'Username',
-                placeholder: 'Username...',
+                id: "username",
+                label: "Username",
+                placeholder: "Username...",
                 optional: true
               },
               {
-                id: 'first_name',
-                label: 'First Name',
-                placeholder: 'First Name...'
+                id: "first_name",
+                label: "First Name",
+                placeholder: "First Name..."
               },
               {
-                id: 'last_name',
-                label: 'Last Name',
-                placeholder: 'Last Name...',
+                id: "last_name",
+                label: "Last Name",
+                placeholder: "Last Name...",
                 optional: true
               },
               {
-                id: 'phone',
-                label: 'Phone',
-                placeholder: 'Phone...',
+                id: "phone",
+                label: "Phone",
+                placeholder: "Phone...",
                 optional: true
               }
             ]
@@ -153,7 +156,7 @@ export const frontendConfig = (): SuperTokensConfig => {
         },
         getRedirectionURL: async (context) => {
           switch (context.action) {
-            case 'SUCCESS':
+            case "SUCCESS":
               const { redirectToPath } = context;
               if (redirectToPath !== undefined) {
                 return redirectToPath;
@@ -165,7 +168,7 @@ export const frontendConfig = (): SuperTokensConfig => {
               } else { 
 
               } */
-              return '/home';
+              return "/home";
 
             default:
               return undefined;
