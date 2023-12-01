@@ -25,8 +25,8 @@ export default function Page() {
   });
 
   return (
-    <div className="flex h-full justify-center items-center overflow-y-scroll ">
-      <div className={styles.content + "  w-full flex gap-8"}>
+    <div className="flex h-full justify-center items-center border ">
+      <div className={styles.content}>
         <CurrentEventContext.Provider value={itinerary.events[index]}>
           <CurrentEventDispatch.Provider value={setIndex}>
             <CurrentEvent members={members} />

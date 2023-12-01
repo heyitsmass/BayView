@@ -1,5 +1,5 @@
 .party {
-  @apply h-5/6 w-full text-white bg-zinc-700 border border-zinc-600 rounded-2xl relative p-4 pt-2 mt-2;
+  @apply h-max w-full text-white bg-zinc-700 border border-zinc-600 rounded-2xl relative p-2 pt-2 mt-2;
 }
 
 .party_member {
@@ -7,7 +7,7 @@
   transition: all 0.1s ease-in-out;
 }
 
-.members { 
+.members {
   @apply h-min;
 }
 
@@ -62,9 +62,7 @@
     margin-bottom: 0;
   }
 
-  .party_member {
-    width: min-content;
-  }
+
 
   .party_member:hover {
     cursor: pointer;

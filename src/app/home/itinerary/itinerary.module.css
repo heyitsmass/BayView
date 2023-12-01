@@ -1,25 +1,24 @@
 .content {
-  height: 100%; 
 
-  max-height: 86%;
-  max-width: 130rem;
+  @apply w-full flex gap-8 max-w-[90%] h-[86%] overflow-x-hidden whitespace-nowrap;
+
 }
 
-@media screen and (max-width: 1200px) and (max-height: 1400px){
-  .content { 
+@media screen and (max-width: 1200px) and (max-height: 1400px) {
+  .content {
     overflow-y: scroll;
   }
 
 }
 
 @media screen and (max-height: 1275px) {
-  .content { 
+  .content {
     overflow-y: scroll;
   }
 }
 
-@media screen and (max-width: 900px){
-  .content { 
+@media screen and (max-width: 900px) {
+  .content {
     flex-direction: column;
   }
 }

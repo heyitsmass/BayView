@@ -1,7 +1,6 @@
-import { ActionMethods } from "../Actions";
 /** Info */
-import map from "./map";
 import directions from "./directions";
+import map from "./map";
 import weather from "./weather";
 /** Updates */
 import del from "./del";
@@ -12,18 +11,20 @@ import rss from "./rss";
 import social from "./social";
 
 /** Notify */
-import facebook from "./facebook";
+
 import discord from "./discord";
-import twitter from "./twitter";
 import email from "./email";
-import sms from "./sms";
+import facebook from "./facebook";
 import slack from "./slack";
+import sms from "./sms";
+import twitter from "./twitter";
+import { ActionMethods } from "../Action/static";
 
 const dialogs: {
   [P in ActionMethods]: {
     readonly title: string;
     readonly description: string;
-    readonly Component: (props?: any) => JSX.Element;
+    readonly Component: (props?: any) => JSX.Element | null;
   };
 } = {
   map,

@@ -1,111 +1,21 @@
 "use client";
-import {
-  faDiscord,
-  faFacebook,
-  faSlack,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import {
-  IconDefinition,
-  faArrowsRotate,
-  faBars,
-  faCar,
-  faCloud,
-  faEnvelope,
-  faMapPin,
-  faPhone,
-  faRss,
-  faShare,
-  faShareNodes,
-  faTrashCan,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PropsWithChildren, SyntheticEvent, useState } from "react";
 
-import { Notifiers } from "@/lib/notifier";
-import {
-  InfoMethods,
-  NotifyMethods,
-  ShareMethods,
-  UpdateMethods,
-} from "@/types";
-import dialogs from "./Dialogs";
-import styles from "./actions.module.css";
 import { ActionsDialog } from "../Dialog";
+import { getAvailableActions } from "./Action/static";
+import styles from "./actions.module.css";
+import { PropsWithChildren, SyntheticEvent, useState } from "react";
+import { NotifyMethods } from "@/types";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type ActionsProps = {
   notify: {
-    [P in Notifiers]: boolean;
+    [P in NotifyMethods]: boolean;
   };
-};
-
-export type ActionMethods =
-  | InfoMethods
-  | ShareMethods
-  | UpdateMethods
-  | NotifyMethods;
-
-type ActionsArr<T extends ActionMethods> = {
-  type: T;
-  icon: IconDefinition;
-}[];
-
-type ActionDefinition<T extends ActionMethods = ActionMethods> = {
-  labels: {
-    lg: string;
-    sm: string;
-  };
-  methods: ActionsArr<T>;
-  className?: string;
-};
-
-const updateActions: ActionDefinition<UpdateMethods> = {
-  labels: { lg: "Quick Updates", sm: "Updates" },
-  methods: [
-    { type: "del", icon: faTrashCan },
-    { type: "refresh", icon: faArrowsRotate },
-  ],
-};
-
-const infomationActions: ActionDefinition<InfoMethods> = {
-  labels: { lg: "Get Infomation!", sm: "Info" },
-  methods: [
-    { type: "map", icon: faMapPin },
-    { type: "directions", icon: faCar },
-    { type: "weather", icon: faCloud },
-  ],
-};
-
-const shareActions: ActionDefinition<ShareMethods> = {
-  labels: { lg: "Share Your Trip!", sm: "Share!" },
-  methods: [
-    { type: "rss", icon: faRss },
-    { type: "social", icon: faShareNodes },
-    { type: "link", icon: faShare },
-  ],
-  className: "min-w-max",
 };
 
 export const Actions = ({ notify }: ActionsProps) => {
-  const notificationActions: ActionDefinition<Partial<Notifiers>> = {
-    labels: { lg: "Get Notified!", sm: "Notify!" },
-    methods: [
-      { type: "email", icon: faEnvelope },
-      { type: "sms", icon: faPhone },
-      { type: "discord", icon: faDiscord },
-      { type: "facebook", icon: faFacebook },
-      { type: "slack", icon: faSlack },
-      { type: "twitter", icon: faTwitter },
-    ].filter(({ type }) => notify[type]) as ActionsArr<Partial<Notifiers>>,
-  };
-
-  const actions: ActionDefinition[] = [
-    infomationActions,
-    notificationActions,
-    shareActions,
-    updateActions,
-  ];
+  const actions = getAvailableActions({ notify });
 
   return (
     <div className={styles.actions}>
