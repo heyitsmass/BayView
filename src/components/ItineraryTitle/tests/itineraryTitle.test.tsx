@@ -4,6 +4,18 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 //import "@testing-library/jest-dom";
 
+// Mock useHomepage and useHomepageManager hooks
+vi.mock("@/hooks", () => ({
+  useHomepage: () => ({
+    itinerary: {
+      location: "MockLocation ",
+      events: [],
+      title: "MockTitle "
+    }
+  }),
+  useHomepageManager: () => vi.fn().mockResolvedValue({ /* mock response */ })
+}));
+
 describe("ItineraryTitle", () => {
   test("renders Itinerary Title component as expected", () => {
     render(
@@ -12,7 +24,7 @@ describe("ItineraryTitle", () => {
     );
 
     expect(screen.getByTestId("title-check").textContent).toEqual(
-      "Itinerary Title Disneyland 10/4 - 10/5 "
+      "MockTitle MockLocation No Events!"
     );
 
   });

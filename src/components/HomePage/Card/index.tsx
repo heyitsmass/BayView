@@ -38,7 +38,7 @@ export default function Card(props: CardProps) {
 			}`}
 		>
 			{props.title && (
-				<button className="flex items-center -mx-3 px-1 pt-2 text-left w-full" onClick={(e) => toggleOpen(e)}>
+				<button data-testid="toggle-button" className="flex items-center -mx-3 px-1 pt-2 text-left w-full" onClick={(e) => toggleOpen(e)}>
 					<FontAwesomeIcon className={`${styles.icon} w-4 pr-2 icon`} size="lg" icon={isOpen ? faAngleDown : faAngleUp} />
 					<motion.div
 						key={props.title}
@@ -76,7 +76,7 @@ export default function Card(props: CardProps) {
 			)}
 			<AnimatePresence>
 				{isOpen && (
-					<motion.div className="box-border mx-1" initial="closed" animate="open" exit="closed" variants={blurFadeVariant} transition={easeOutExpoTransition}>
+					<motion.div data-testid="card-children" className="box-border" initial="closed" animate="open" exit="closed" variants={blurFadeVariant} transition={easeOutExpoTransition}>
 						{props.children}
 					</motion.div>
 				)}

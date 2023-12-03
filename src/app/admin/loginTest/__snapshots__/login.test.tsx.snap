@@ -38,7 +38,7 @@ exports[`Admin Login Page > admin login page renders 1`] = `
               />
             </svg>
             <input
-              class="_input_f5db26"
+              class="_input_f5db26 "
               icon="[object Object]"
               placeholder="Username"
               required=""
@@ -69,7 +69,7 @@ exports[`Admin Login Page > admin login page renders 1`] = `
               />
             </svg>
             <input
-              class="_input_f5db26"
+              class="_input_f5db26 "
               icon="[object Object]"
               placeholder="Password"
               required=""

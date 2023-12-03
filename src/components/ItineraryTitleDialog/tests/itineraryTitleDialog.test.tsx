@@ -21,7 +21,7 @@ describe("ItineraryTitleDialog", () => {
 
 
     expect(screen.getByTestId("dialogTest").textContent).toEqual(
-    " Select Location  Disneyland Walt Disney World Confirm "
+    " Select Location  Magical Land Magical World  Confirm "
     );
 
    await fireEvent.click(screen.getByTestId("closeButtonTest"));

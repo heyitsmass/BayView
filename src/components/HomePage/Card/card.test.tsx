@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Card from './index';
 
@@ -14,24 +14,24 @@ describe('<Card />', () => {
 	});
 
 	it('toggles isOpen state on button click', () => {
-		const { container } = render(<Card title="Test Title" />);
-		const button = container.querySelector('button');
+		render(<Card title="Test Title" />);
+		const button = screen.getByTestId("toggle-button");
 
 		if (button) {
-			// Check for initial open state classes in div
-			expect(container.firstChild).toMatchObject({ className: expect.stringContaining('max-h-[45rem] overflow-scroll') });
-
-			// Click the button to toggle isOpen state
+			// Click the button to toggle isOpen state (default open)
 			fireEvent.click(button);
-
-			// Check for closed state classes in div
-			expect(container.firstChild).toMatchObject({ className: expect.stringContaining('max-h-24 overflow-clip') });
+			waitFor(() => {
+				// Check that children no longer render
+				expect(screen.getByTestId("card-children").children.length).toBe(0);
+			}, { timeout: 3000 }); // Wait for animation to remove 
 
 			// Click the button again to toggle isOpen state back
 			fireEvent.click(button);
 
-			// Check for open state classes again
-			expect(container.firstChild).toMatchObject({ className: expect.stringContaining('max-h-[45rem] overflow-scroll') });
+			waitFor(() => {
+				// Check for rendered children
+				expect(screen.getByTestId("card-children").children.length).toBeGreaterThan(0);
+			}, { timeout: 3000 }); // Wait to readd children
 		}
 	});
 

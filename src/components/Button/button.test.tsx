@@ -37,7 +37,7 @@ describe('<Button />', () => {
 	});
 
 	it('renders a spinner when isPending state is true', () => {
-		const { container } = render(<Button isPending={true}>User</Button>);
+		const { container } = render(<Button pending="true">User</Button>);
 		const spinner = getByTestId(container, 'spinner');
 		expect(spinner).toBeTruthy();
 	});	  
