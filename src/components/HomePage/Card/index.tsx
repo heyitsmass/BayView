@@ -51,7 +51,7 @@ export default function Card(props: CardProps) {
 					>
 						<h1 className="text-2xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">{props.title}
 							{props.contentPending && (
-								<span className="pl-2 text-red-500 text-lg">
+								<span className="pl-2 text-lg">
 									<span className={`${styles.dot} ${styles.dot1}`}>●</span>
 									<span className={`${styles.dot} ${styles.dot2}`}>●</span>
 									<span className={`${styles.dot} ${styles.dot3}`}>●</span>
@@ -76,7 +76,7 @@ export default function Card(props: CardProps) {
 			)}
 			<AnimatePresence>
 				{isOpen && (
-					<motion.div className="box-border" initial="closed" animate="open" exit="closed" variants={blurFadeVariant} transition={easeOutExpoTransition}>
+					<motion.div className="box-border mx-1" initial="closed" animate="open" exit="closed" variants={blurFadeVariant} transition={easeOutExpoTransition}>
 						{props.children}
 					</motion.div>
 				)}

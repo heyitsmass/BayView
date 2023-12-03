@@ -4,13 +4,11 @@
 }
 
 .card {
-  @apply w-full bg-zinc-800 rounded-2xl p-4 border border-zinc-700 min-w-[480px];
+  @apply w-full bg-white border-zinc-200 dark:bg-zinc-800 rounded-2xl p-4 border dark:border-zinc-700 min-w-[480px];
   position: relative;
   z-index: 1;
   max-width: 50%;
-  background-blend-mode: overlay;
-  background: var(--card-bg-color-glass);
-  backdrop-filter: blur(10px);
+  @apply bg-blend-overlay backdrop-blur-md bg-[var(--card-bg-color-glass)];
 }
 
 .sub_card {
@@ -25,7 +23,7 @@
 
 .wrapper {
   min-width: 25%;
-  @apply bg-zinc-700 rounded-2xl border border-zinc-600 w-full p-4;
+  @apply bg-white border-zinc-200 dark:bg-zinc-700 rounded-2xl border dark:border-zinc-600 w-full p-4;
 }
 
 
@@ -49,7 +47,7 @@
 @media screen and (min-width: 900px) and (max-width: 1300px) {
   .empty {
 
-    @apply h-full rounded-2xl border border-zinc-700 p-4;
+    @apply h-full rounded-2xl border border-zinc-200 dark:border-zinc-700 p-4;
     background-blend-mode: overlay;
     background: var(--card-bg-color-glass);
     backdrop-filter: blur(10px);
@@ -128,7 +126,7 @@
 
 @media screen and (min-height: 951px) and (max-width:900px) {
   .empty {
-    @apply h-full rounded-2xl border border-zinc-700 p-4;
+    @apply h-full rounded-2xl border border-zinc-200 dark:border-zinc-700 p-4;
     background-blend-mode: overlay;
     background: var(--card-bg-color-glass);
     backdrop-filter: blur(10px);

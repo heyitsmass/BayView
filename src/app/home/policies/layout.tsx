@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div
       className={
         styles.layout +
-        " border m-20 rounded-2xl bg-zinc-800 border-zinc-700 shadow-2xl p-4"
+        " border m-20 rounded-2xl bg-white border-zinc-200  dark:bg-zinc-800 dark:border-zinc-700 shadow-2xl p-4"
       }
       style={{
         height: "min-content",

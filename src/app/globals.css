@@ -6,8 +6,7 @@
 
 :root {
   /** Fonts */
-
-  --font: 'Barlow', sans-serif;
+  --font: var(--font-barlow), sans-serif;
   --font-weight: 500;
 
   /** Colors */
@@ -21,6 +20,7 @@
   --zinc-950: #030712;
 
   /** Zinc but with 50% opacity */
+  --zinc-50-glass:  #fafafa80;
   --zinc-100-glass: #f4f4f57c;
   --zinc-300-glass: #d4d4d87c;
   --zinc-400-glass: #a1a1aa7c;
@@ -38,7 +38,7 @@
   --card-bg-light: var(--zinc-300);
   --card-bg-dark: var(--zinc-800);
 
-  --card-bg-light-glass: var(--zinc-300-glass);
+  --card-bg-light-glass: var(--zinc-50-glass);
   --card-bg-dark-glass: var(--zinc-800-glass);
 
   --card-fg-light: var(--zinc-400);
@@ -161,5 +161,5 @@ div {
   z-index: 999;
   align-items: center;
   justify-content: center;
-  @apply bg-black bg-opacity-30;
+  @apply bg-zinc-50 dark:bg-black bg-opacity-30;
 }

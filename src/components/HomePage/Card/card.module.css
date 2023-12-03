@@ -33,6 +33,7 @@
     animation: blink 1.5s infinite;
     display: inline-block;
     opacity: 0;
+    @apply !text-red-500;
 }
 
 .dot1 {

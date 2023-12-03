@@ -41,7 +41,7 @@
 }
 
 .icons {
-  @apply bg-rose-800 flex gap-x-4 items-center min-w-max w-full justify-around p-2 rounded-full;
+  @apply bg-rose-800 text-white flex gap-x-4 items-center min-w-max w-full justify-around p-2 rounded-full;
 }
 
 @media screen and (max-width: 1200px) {

@@ -25,7 +25,7 @@ export default function Page() {
   });
 
   return (
-    <div className="flex h-full justify-center items-center border ">
+    <div className="flex h-full justify-center items-center">
       <div className={styles.content}>
         <CurrentEventContext.Provider value={itinerary.events[index]}>
           <CurrentEventDispatch.Provider value={setIndex}>
