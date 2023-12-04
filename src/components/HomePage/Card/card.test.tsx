@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor, getByTestId } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Card from './index';
 
@@ -11,6 +11,16 @@ describe('<Card />', () => {
 	it('renders the card with the title', () => {
 		const { getByText } = render(<Card title="Test Title" />);
 		expect(getByText('Test Title')).toBeDefined();
+	});
+
+	it('renders the card with the subtitle when passed', () => {
+		const { getByText } = render(<Card title="Test Title" subtitle="Test Subtitle"/>);
+		expect(getByText('Test Subtitle')).toBeDefined();
+	});
+
+	it('renders the card with the pending state when passed', () => {
+		render(<Card title="Test Title" contentPending={true}/>);
+		expect(screen.getByTestId("card-pending")).toBeDefined();
 	});
 
 	it('toggles isOpen state on button click', () => {

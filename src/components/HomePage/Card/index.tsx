@@ -51,7 +51,7 @@ export default function Card(props: CardProps) {
 					>
 						<h1 className="text-2xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">{props.title}
 							{props.contentPending && (
-								<span className="pl-2 text-lg">
+								<span className="pl-2 text-lg" data-testid="card-pending">
 									<span className={`${styles.dot} ${styles.dot1}`}>●</span>
 									<span className={`${styles.dot} ${styles.dot2}`}>●</span>
 									<span className={`${styles.dot} ${styles.dot3}`}>●</span>
@@ -70,6 +70,7 @@ export default function Card(props: CardProps) {
 					transition={titleTransitionParams}
 					variants={titleTransitionVariant}
 					className="px-1"
+					data-testid="card-subtitle"
 				>
 					<h2 className="pl-6 pb-2 -mx-3 text-zinc-400">{props.subtitle}</h2>
 				</motion.div>
