@@ -11,7 +11,7 @@ const flightAPI = new Duffel({
 	debug: { verbose: false },
 });
 
-async function validateNameandIATACode(name) {
+export async function validateNameandIATACode(name) {
 	try {
 		const response = await flightAPI.suggestions.list({
 			name: name,
