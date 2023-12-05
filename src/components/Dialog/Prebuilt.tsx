@@ -14,29 +14,22 @@ export const PrebuiltDialog = ({
   onClose
 }: CustomDialogProps) => {
   return (
-    <Transition
-      show={open}
-      enter="transition duration-100 ease-out"
-      enterFrom="transform scale-75 opacity-0"
-      enterTo="transform scale-100 opacity-100"
-      leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
-      as={Fragment}
-    >
-      <Dialog
-        static
-        className={styles.prebuilt_dialog}
-        as={motion.div}
-        onClose={onClose}
-        open={open}
-      >
-        <AnimationComponent>
-          <GenericDialogPanel title={title} description={description}>
-            {children}
-          </GenericDialogPanel>
-        </AnimationComponent>
-      </Dialog>
-    </Transition>
+    <AnimationComponent>
+      {open && (
+        <Dialog
+          static
+          className={styles.prebuilt_dialog}
+          as={motion.div}
+          onClose={onClose}
+          open={open}
+        >
+          <AnimationComponent>
+            <GenericDialogPanel title={title} description={description}>
+              {children}
+            </GenericDialogPanel>
+          </AnimationComponent>
+        </Dialog>
+      )}
+    </AnimationComponent>
   );
 };
