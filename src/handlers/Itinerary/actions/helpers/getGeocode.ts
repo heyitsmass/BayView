@@ -11,6 +11,9 @@ export const getGeocode = async ({
 
   const address = [...Object.values(location)].join(" ");
 
+export const getGeocode = async (
+  address: string
+): Promise<Geocode | null> => {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
   const response = await fetch(url);
