@@ -12,9 +12,8 @@ import { getSSRSession } from "@/utils/session/getSSRSession";
 import { redirect } from "next/navigation";
 
 import Banner from "@/components/Banner";
-import { Animator } from "../../components/Animator";
 import { getItinerary } from "@/utils/session/getItinerary";
-import { PopupProvider } from "../PopupProvider";
+import { Animator } from "../../components/Animator";
 
 export default async function Layout({
   children
