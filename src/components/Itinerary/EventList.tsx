@@ -51,17 +51,23 @@ const OfferDisplay = ({
           <div className="flex justify-center items-center w-1/12">
             <FontAwesomeIcon icon={icon} />
           </div>
-          <div className="flex flex-col justify-center w-10/12 px-8 text-left">
-            <div className="flex justify-between">
-              <div className="flex-col justify-start">
-                <h1>{time}</h1>
-                <h1 className="text-zinc-400 text-sm">{name}</h1>
+          <div className="flex flex-col justify-center w-10/12 px-8 text-left gap-4">
+            <div className="flex">
+              <div className="flex-col justify-start min-w-max w-48 ">
+                <h1 className="!font-semibold">{time}</h1>
+                <h1 className="text-zinc-400 text-sm ">{name}</h1>
               </div>
-              <div className="flex-col">
-                <h1>{total_duration}</h1>
-                <h1 className="text-zinc-400 text-sm">{below_duration}</h1>
+              <div className="flex-col w-48 text-center relative">
+                <h1 className="w-full truncate items-center">
+                  {total_duration}
+                </h1>
+                {below_duration && (
+                  <h1 className="text-zinc-400 text-sm justify-center absolute bottom-0 left-0 right-0">
+                    {below_duration}
+                  </h1>
+                )}
               </div>
-              <div className="flex-col">
+              <div className="flex-col min-w-max">
                 <h1>{extra}</h1>
                 <h1 className="text-zinc-400 text-sm"></h1>
               </div>

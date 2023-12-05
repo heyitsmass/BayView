@@ -1,15 +1,13 @@
-import { FlattenedEvent } from "@/types";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SyntheticEvent } from "react";
+import { DisplayableEvent } from "../HomePage/EventFinder";
 import IconMap from "./Icons";
 import styles from "./event.module.css";
-import { useCurrentEvent, useHomepage } from "@/hooks";
 
 type ItineraryEventProps = {
   className?: string;
   onClick: (e: SyntheticEvent) => void;
-} & FlattenedEvent;
+} & DisplayableEvent;
 
 export const ItineraryEvent = ({
   className,

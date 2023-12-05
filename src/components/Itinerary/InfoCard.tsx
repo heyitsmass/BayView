@@ -5,13 +5,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./infocard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Location } from "@/types/Event";
+import { TLocationType } from "@/types/Event";
 import { Actions } from "./Actions";
 import { ReactNode } from "react";
 
 export type InfoCardProps = {
   picture_url: string;
-  location: Location;
+  location: TLocationType;
   date: Date;
   displayData: Record<string, string>;
 };
