@@ -1,15 +1,6 @@
 "use server";
 
 import { Geocode } from "@/types";
-import { Location } from "@/types/Event";
-
-export const getGeocode = async ({
-  location
-}: {
-  location: Location;
-}): Promise<Geocode> => {
-
-  const address = [...Object.values(location)].join(" ");
 
 export const getGeocode = async (
   address: string
@@ -20,5 +11,5 @@ export const getGeocode = async (
 
   const data = await response.json();
 
-  return data.results[0].geometry.location;
+  return data.results.at(0)?.geometry.location;
 };
