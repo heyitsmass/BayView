@@ -1,7 +1,47 @@
-import { HydratedDocument } from "mongoose";
-import { Event, EventTypes } from "./Event";
 import { Notifiers } from "@/lib/notifier";
-import React, { ReactNode } from "react";
+import { HydratedDocument } from "mongoose";
+import { ReactNode } from "react";
+import { TEventType } from "./Event";
+import { P } from "vitest/dist/reporters-5f784f42";
+
+export const timeZones = [
+  "Pacific/Midway",
+  "Pacific/Honolulu",
+  "America/Anchorage",
+  "America/Los_Angeles",
+  "America/Denver",
+  "America/Chicago",
+  "America/New_York",
+  "America/Caracas",
+  "America/Halifax",
+  "America/St_Johns",
+  "America/Sao_Paulo",
+  "Atlantic/South_Georgia",
+  "Atlantic/Azores",
+  "Europe/London",
+  "Europe/Paris",
+  "Europe/Istanbul",
+  "Africa/Cairo",
+  "Africa/Nairobi",
+  "Asia/Dubai",
+  "Asia/Kabul",
+  "Asia/Karachi",
+  "Asia/Dhaka",
+  "Asia/Kolkata",
+  "Asia/Rangoon",
+  "Asia/Bangkok",
+  "Asia/Hong_Kong",
+  "Asia/Tokyo",
+  "Australia/Darwin",
+  "Australia/Adelaide",
+  "Australia/Sydney",
+  "Pacific/Noumea",
+  "Pacific/Auckland",
+  "Pacific/Tongatapu",
+  "Pacific/Kiritimati"
+] as const;
+
+export type TimeZones = (typeof timeZones)[number];
 
 export const Parks = [
   "Adventure Haven Park",
@@ -13,20 +53,20 @@ export type Offer = [
   id: string,
   time: string,
   name: string,
-  duration: string,
-  below_duration: ReactNode,
-  extra: ReactNode,
-  price: number | string
+  duration: ReactNode | null,
+  below_duration: ReactNode | null,
+  extra: ReactNode | null,
+  price: number | string | null
 ];
 
 export type ParkLocations = (typeof Parks)[number];
 
 export type DiningOptions = "Breakfast" | "Lunch" | "Dinner";
 
-export type FlattenedEvent = Event &
+export type FlattenedEvent = TEventType &
   DisplayData & {
     _id: string;
-    __t: EventTypes;
+    __t: TEventType;
   };
 
 export type Currency = "$" | "€" | "£" | "¥" | "₹";
@@ -61,14 +101,15 @@ export type DisplayData = {
   offer: Offer;
 };
 
+export type THydratedEvent<T extends TEventType = TEventType> =
+  HydratedDocument<T> & DisplayData;
+
 export type DocumentWithDisplayData<T = any> = HydratedDocument<T> &
   DisplayData;
 
 export type PeekData = [
   title: PeekInfo,
-  {
-    value: string;
-  },
+  Pick<PeekInfo, "value">,
   description: PeekInfo,
   data: PeekInfo,
   extra: PeekInfo

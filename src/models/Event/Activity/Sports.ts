@@ -1,21 +1,22 @@
-import { Activity, Sports } from "@/types/Event";
-import { EventModel } from "..";
+import { Offer, PeekData } from "@/types";
+import { Activity, Event, Sports } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { activitySchema } from ".";
-import { PeekData } from "@/types";
+import { EventModel, eventSchema } from "..";
 
-const sportsSchema = new Schema<Activity<Sports>>({
-  ...activitySchema.obj,
+const sportsSchema = new Schema<Event<Sports>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/sports.png",
+    default: "/assets/events/sports.png"
   },
   type: String,
   event: String,
   teams: [String],
   stadiumName: String,
-  stadiumCapacity: Number,
+  ticketPrice: Number,
+  seatType: String,
   broadcastingChannels: [String]
 });
 
@@ -27,43 +28,67 @@ sportsSchema.virtual("displayData").get(function (this: Activity<Sports>) {
     Event: this.event,
     Teams: this.teams.join(", "),
     "Stadium Name": this.stadiumName,
-    "Stadium Capacity": this.stadiumCapacity
+    "Seat Type": this.seatType
   };
 });
 
-sportsSchema.virtual("upgradeOptions").get(function (this: Activity<Sports>) {
-  /** Front Seats */
-  /** VIP Box Seats */
-  /** Courtside, etc... */
-});
-sportsSchema.virtual("peek").get(function (this: Activity<Sports>): PeekData {
+sportsSchema
+  .virtual("upgradeOptions")
+  .get(function (this: Activity<Sports>) {
+    /** Front Seats */
+    /** VIP Box Seats */
+    /** Courtside, etc... */
+  });
+sportsSchema
+  .virtual("peek")
+  .get(function (this: Activity<Sports>): PeekData {
+    return [
+      {
+        label: this.type,
+        value: this.date.toLocaleDateString("en-US", {
+          month: "numeric",
+          day: "numeric"
+        })
+      },
+      {
+        value: this.event
+      },
+      {
+        label: "Teams",
+        value: this.teams.join(", ")
+      },
+      {
+        label: "Stadium",
+        value: this.stadiumName
+      },
+      {
+        label: "Time",
+        value: this.date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true
+        })
+      }
+    ];
+  });
+
+sportsSchema.virtual("offer").get(function (this: Activity<Sports>): Offer {
   return [
-    {
-      label: this.type,
-      value: this.date.toLocaleDateString("en-US", {
-        month: "numeric",
-        day: "numeric"
-      })
-    },
-    {
-      value: this.event
-    },
-    {
-      label: "Teams",
-      value: this.teams.join(", ")
-    },
-    {
-      label: "Stadium",
-      value: this.stadiumName
-    },
-    {
-      label: "Time",
-      value: this.date.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true
-      })
-    }
+    faker.string.uuid(),
+    (
+      this.date || faker.date.soon({ refDate: new Date(Date.now()) })
+    ).toLocaleDateString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    }),
+    this.type,
+    this.event,
+    this.seatType,
+    null,
+    this.ticketPrice
   ];
 });
 

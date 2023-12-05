@@ -10,7 +10,7 @@ import {
   handleUpgradeEventRequest,
   shareLink,
   shareNodes,
-  shareRss,
+  shareRss
 } from "./helpers";
 
 export const handleItineraryActionRequest = async ({
