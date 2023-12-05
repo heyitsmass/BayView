@@ -3,10 +3,8 @@ import Button from "@/components/Button";
 import { Loading } from "@/components/Loading";
 import { GoogleDirectionsMap } from "@/components/Maps";
 
-import { getGeocode } from "@/handlers/Itinerary/actions/helpers/getGeocode";
 import { useCurrentEvent, useGeocoder } from "@/hooks";
 import { Geocode } from "@/types";
-import { Location } from "@/types/Event";
 import {
   faBicycle,
   faBus,
@@ -14,7 +12,7 @@ import {
   faPersonWalking
 } from "@fortawesome/free-solid-svg-icons";
 
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
 const mapDirectionModes = [
   "DRIVING",

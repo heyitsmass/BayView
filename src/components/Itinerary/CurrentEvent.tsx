@@ -6,7 +6,7 @@ import { Upgrades } from "./Upgrades";
 import styles from "./currentEvent.module.css";
 import { useCurrentEvent } from "@/hooks";
 import { DisplayData } from "@/types";
-import { DisplayableEvent } from "@/lib/random/handler";
+import { DisplayableEvent } from "../HomePage/EventFinder";
 
 type CurrentEventProps = {
   members: PartyMember[];
@@ -25,11 +25,9 @@ const InfoPanel = ({ event }: { event: DisplayableEvent }) => {
 };
 
 const ModifyPanel = ({
-  upgradeOptions,
-  members
+  upgradeOptions
 }: {
   upgradeOptions: DisplayData["upgradeOptions"];
-  members: PartyMember[];
 }) => {
   return (
     <section className={styles.modify}>
@@ -37,7 +35,7 @@ const ModifyPanel = ({
         <h1 className="text-xl font-bold min-w-max self-baseline pb-2">
           Modify Reservation
         </h1>
-        <Party members={members} />
+        <Party />
       </div>
       <div className={styles.wrapper}>
         <Upgrades options={upgradeOptions} />
@@ -61,9 +59,7 @@ const MiddlePanel = ({
   );
 };
 
-export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
-  const { members } = props;
-
+export const CurrentEvent = () => {
   const currEvent = useCurrentEvent();
 
   return (
@@ -72,10 +68,7 @@ export const CurrentEvent = ({ ...props }: CurrentEventProps) => {
         <>
           <InfoPanel event={currEvent} />
           <MiddlePanel {...currEvent} />
-          <ModifyPanel
-            upgradeOptions={currEvent.upgradeOptions}
-            members={members}
-          />
+          <ModifyPanel upgradeOptions={currEvent.upgradeOptions} />
         </>
       )}
       {!currEvent && (

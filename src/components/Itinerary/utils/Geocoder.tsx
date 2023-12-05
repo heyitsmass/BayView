@@ -1,8 +1,8 @@
 import { useGetData } from "@/hooks/useGetData";
 import { GoogleGeoCodeResponse, Geocode as IGeocode } from "@/types";
-import { Location } from "@/types/Event";
+import { TLocationType } from "@/types/Event";
 
-export const Geocode = (location: Location): IGeocode | null => {
+export const Geocode = (location: TLocationType): IGeocode | null => {
   const baseAddress = "https://maps.googleapis.com/maps/api/geocode/json";
 
   const address = [...Object.values(location)].join(" ");
@@ -18,6 +18,6 @@ export const Geocode = (location: Location): IGeocode | null => {
   return null;
 };
 
-export const useGeocoder = (location: Location) => {
+export const useGeocoder = (location: TLocationType) => {
   return Geocode(location);
 };

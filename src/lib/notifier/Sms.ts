@@ -5,8 +5,8 @@ import { NotifierPayload } from "./Handler";
 
 export class SMSNotifier implements Notifier {
   /** SMS Notifier implementation */
-  private static courier = CourierClient({
-    authorizationToken: process.env.COURIER_AUTH_TOKEN,
+  private static courier = new CourierClient({
+    authorizationToken: process.env.COURIER_AUTH_TOKEN
   });
 
   public async sendSMS(userMessage: string, userNum: string) {
@@ -15,12 +15,13 @@ export class SMSNotifier implements Notifier {
     const { requestId } = await SMSNotifier.courier.send({
       message: {
         to: {
-          phone_number: userNum,
+          phone_number: userNum
         },
         content: {
-          body: userMessage,
-        },
-      },
+          title: "Adventure Haven",
+          body: userMessage
+        }
+      }
     });
 
     return requestId;

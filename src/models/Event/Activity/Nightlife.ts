@@ -1,15 +1,15 @@
-import { Activity, Nightlife } from "@/types/Event";
+import { Offer, PeekData } from "@/types";
+import { Event, Nightlife } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { EventModel } from "..";
-import { activitySchema } from ".";
-import { PeekData } from "@/types";
+import { EventModel, eventSchema } from "..";
 
-const nightlifeSchema = new Schema<Activity<Nightlife>>({
-  ...activitySchema.obj,
+const nightlifeSchema = new Schema<Event<Nightlife>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/nightlife.png",
+    default: "/assets/events/nightlife.png"
   },
   venue: String,
   type: String,
@@ -26,9 +26,8 @@ const nightlifeSchema = new Schema<Activity<Nightlife>>({
 
 nightlifeSchema
   .virtual("displayData")
-  .get(function (this: Activity<Nightlife>) {
+  .get(function (this: Event<Nightlife>) {
     return {
-      "Nightlife Name": this.name,
       Address: [this.location.street, this.location.street].join(", "),
       Venue: this.venue,
       Type: this.type,
@@ -40,7 +39,7 @@ nightlifeSchema
 
 nightlifeSchema
   .virtual("upgradeOptions")
-  .get(function (this: Activity<Nightlife>) {
+  .get(function (this: Event<Nightlife>) {
     /** Bottle service */
     /** Ticket Upgrade */
     /** VIP Pass */
@@ -48,7 +47,7 @@ nightlifeSchema
 
 nightlifeSchema
   .virtual("peek")
-  .get(function (this: Activity<Nightlife>): PeekData {
+  .get(function (this: Event<Nightlife>): PeekData {
     return [
       {
         label: this.type,
@@ -78,7 +77,26 @@ nightlifeSchema
     ];
   });
 
+nightlifeSchema
+  .virtual("offer")
+  .get(function (this: Event<Nightlife>): Offer {
+    return [
+      faker.string.uuid(),
+      (
+        this.date || faker.date.soon({ refDate: new Date(Date.now()) })
+      ).toLocaleString(undefined, {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      }),
+      this.venue,
+      this.atmosphere,
+      this.dressCode,
+      null,
+      this.coverCharge
+    ];
+  });
 
 export const NightlifeModel =
   EventModel.discriminators?.Nightlife ||
-  EventModel.discriminator<Activity<Nightlife>>("Nightlife", nightlifeSchema);
+  EventModel.discriminator<Event<Nightlife>>("Nightlife", nightlifeSchema);

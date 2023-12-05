@@ -40,4 +40,6 @@ export const langText = {
   fi: { wind: "Tuuli", humidity: "Ilmankosteus" }
 };
 
-export type Lang = keyof typeof langText;
+export const locales = Object.keys(langText);
+
+export type Locale = keyof typeof langText;

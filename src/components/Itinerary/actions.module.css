@@ -4,7 +4,7 @@
   right: 0;
   left: 0;
   overflow-y: visible;
-  @apply flex flex-row w-full justify-around text-lg static z-[999];
+  @apply flex flex-row w-full justify-around text-lg static z-50;
   max-height: 64px;
   z-index: 2; 
 }

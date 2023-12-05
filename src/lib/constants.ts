@@ -16,7 +16,7 @@ import {
   SportsModel,
   TheatreModel,
   WaterparkModel,
-  ZooModel,
+  ZooModel
 } from "@/models";
 
 export const modelTypes = {
@@ -37,5 +37,5 @@ export const modelTypes = {
   AmusementPark: AmusementParkModel,
   Sports: SportsModel,
   Nightlife: NightlifeModel,
-  Shopping: ShoppingModel,
+  Shopping: ShoppingModel
 };

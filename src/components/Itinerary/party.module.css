@@ -1,3 +1,13 @@
+.avatar {
+  @apply w-16 h-16 rounded-full min-w-[4rem] min-h-[4rem];
+}
+
+.listMember {
+
+  @apply hover:scale-105 border p-4 flex justify-between transition-all hover:cursor-pointer hover:shadow-xl;
+  @apply items-center rounded-xl mb-4 bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700;
+}
+
 .party {
   @apply h-max w-full text-white bg-white border-zinc-200  dark:bg-zinc-700 border dark:border-zinc-600 rounded-2xl relative p-2 pt-2 mt-2;
 }

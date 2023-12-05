@@ -1,11 +1,11 @@
 import { Document, FlattenMaps, HydratedDocument } from "mongoose";
-import { Event } from "./Event";
+import { TEventType } from "./Event";
 
-import { DisplayableEvent } from "@/lib/random/handler";
+import { Locale } from "@/utils/openWeather/langText";
 import { Currency } from "@faker-js/faker";
 import { ParkLocations } from ".";
 import { PartyMember } from "./User";
-import { Lang } from "@/utils/openWeather/langText";
+import { DisplayableEvent } from "@/components/HomePage/EventFinder";
 
 type SpeedUnit = "mph" | "km/h";
 type DistanceUnit = "mi" | "km";
@@ -25,8 +25,7 @@ type Region =
 type UserData = {
   readonly _id: string;
   currency: Currency;
-  party: PartyMember[];
-  locale: Lang;
+  locale: Locale;
   speedUnit: SpeedUnit;
   distanceUnit: DistanceUnit;
   temperateUnit: TemperatureUnit;
@@ -40,7 +39,7 @@ type BaseData = {
 };
 
 export interface IItinerary extends UserData, BaseData {
-  events: Event[];
+  events: TEventType[];
 }
 
 export type FlattenedItinerary = FlattenMaps<

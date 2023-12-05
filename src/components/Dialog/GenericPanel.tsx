@@ -1,14 +1,17 @@
 import { Dialog } from "@headlessui/react";
 import { GenericDialogPanelProps } from ".";
 import styles from "./styles.module.css";
+import { useId } from "react";
 
 export const GenericDialogPanel = ({
   title,
   description,
   children
 }: GenericDialogPanelProps) => {
+  const id = useId();
+
   return (
-    <Dialog.Panel className={styles.generic_dialog_panel}>
+    <Dialog.Panel id={id} className={styles.generic_dialog_panel}>
       <Dialog.Title className={styles.dialog_title}>{title}</Dialog.Title>
       {description && (
         <Dialog.Description className={styles.dialog_description}>

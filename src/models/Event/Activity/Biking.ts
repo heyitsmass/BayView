@@ -1,21 +1,21 @@
+import { Offer, PeekData } from "@/types";
+import { Activity, Biking, Event, Hiking } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { activitySchema } from ".";
-import { Activity, Biking } from "@/types/Event";
+import { EventModel, eventSchema } from "..";
 import { hikingSchema } from "./Hiking";
-import { EventModel } from "..";
-import { PeekData } from "@/types";
 
-const bikingSchema = new Schema<Activity<Biking>>({
-  ...activitySchema.obj,
+const bikingSchema = new Schema<Event<Biking>>({
+  ...(eventSchema.obj as Object),
   ...hikingSchema.obj,
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/biking.png",
-  },
+    default: "/assets/events/biking.png"
+  }
 });
 
-bikingSchema.virtual("displayData").get(function (this: Activity<Biking>) {
+bikingSchema.virtual("displayData").get(function (this: Event<Biking>) {
   const unit = "km";
   const elevationUnit = "m";
   return {
@@ -25,48 +25,56 @@ bikingSchema.virtual("displayData").get(function (this: Activity<Biking>) {
     Difficulty: this.difficulty,
     Rating: `${this.rating} ⭐️`,
     Distance: `${this.distance}${unit}`,
-    "Elevation Gain": `${this.elevationGain}${elevationUnit}`,
+    "Elevation Gain": `${this.elevationGain}${elevationUnit}`
   };
 });
 
-bikingSchema
-  .virtual("upgradeOptions")
-  .get(function (this: Activity<Biking>) {
-    /** Camping Options */
-    /** Rest Stops */
-    /** ... */
-  });
-bikingSchema
-  .virtual("peek")
-  .get(function (this: Activity<Biking>): PeekData {
-    const unit = "km";
+bikingSchema.virtual("upgradeOptions").get(function (this: Event<Biking>) {
+  /** Camping Options */
+  /** Rest Stops */
+  /** ... */
+});
+bikingSchema.virtual("peek").get(function (this: Event<Biking>): PeekData {
+  const unit = "km";
 
-    return [
-      {
-        label: "Biking",
-        value: this.date.toLocaleDateString("en-US", {
-          month: "numeric",
-          day: "numeric",
-        }),
-      },
-      {
-        value: this.trail,
-      },
-      {
-        label: "Difficulty",
-        value: this.difficulty,
-      },
-      {
-        label: "Rating",
-        value: `${this.rating} ⭐️`,
-      },
-      {
-        label: "Distance",
-        value: `${this.distance}${unit}`,
-      },
-    ];
-  });
+  return [
+    {
+      label: "Biking",
+      value: this.date.toLocaleDateString("en-US", {
+        month: "numeric",
+        day: "numeric"
+      })
+    },
+    {
+      value: this.trail
+    },
+    {
+      label: "Difficulty",
+      value: this.difficulty
+    },
+    {
+      label: "Rating",
+      value: `${this.rating} ⭐️`
+    },
+    {
+      label: "Distance",
+      value: `${this.distance}${unit}`
+    }
+  ];
+});
+
+bikingSchema.virtual("offer").get(function (this: Event<Biking>): Offer {
+  return [
+    faker.string.uuid(),
+    this.difficulty,
+    this.trail,
+    this.rating,
+    null,
+    null,
+    this.distance
+  ];
+});
 
 export const BikingModel =
   EventModel.discriminators?.Biking ||
-  EventModel.discriminator<Activity<Biking>>("Biking", bikingSchema);
+  EventModel.discriminator<Event<Biking>>("Biking", bikingSchema);

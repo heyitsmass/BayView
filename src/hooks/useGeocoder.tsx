@@ -1,15 +1,16 @@
 "use client";
 import { getGeocode } from "@/handlers/Itinerary/actions/helpers/getGeocode";
 import { Geocode } from "@/types";
-import { Location } from "@/types/Event";
+import { TLocationType } from "@/types/Event";
 import { useEffect, useMemo, useState } from "react";
 
-export const useGeocoder = (location: Location) => {
+export const useGeocoder = (location: TLocationType) => {
   const [geocode, setGeocode] = useState<Geocode | null>(null);
 
   useEffect(() => {
     const get = async () => {
-      if (!geocode) setGeocode(await getGeocode({ location }));
+      if (!geocode)
+        setGeocode(await getGeocode(Object.values(location).join(" ")));
     };
     !geocode && get();
   }, [location, geocode]);

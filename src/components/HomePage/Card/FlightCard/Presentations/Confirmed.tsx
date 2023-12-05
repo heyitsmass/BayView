@@ -1,31 +1,70 @@
-import { faArrowRight, faLocationArrow, faCalendarDays, faUser, faChair } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
-import { FlightContext } from '../flightState';
-import Card from '../..';
-import React from 'react';
-import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import { FlightActionInterface, FlightStateInterface } from '../flightInterfaces';
-import { Offer } from '@duffel/api/types';
+import { DisplayableEvent } from "@/components/HomePage/EventFinder";
+import { useHomepageManager } from "@/hooks";
+import { Flight } from "@/types/Event";
+import { Offer } from "@duffel/api/types";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps
+} from "@fortawesome/react-fontawesome";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+import Card from "../..";
+import { FlightContext } from "../flightState";
 
 export default function Confirmed() {
-	const { dispatch, flightState } = useContext(FlightContext);
+  const { dispatch, flightState } = useContext(FlightContext);
+  const manager = useHomepageManager();
 
-	// Extracting the selected offer details
-	const { selectedOffer, returnFlight } = flightState.selectState;
+  // Extracting the selected offer details
+  const selectedOffer = useMemo(
+    () => flightState.selectState.selectedOffer,
+    [flightState.selectState.selectedOffer]
+  );
 
-	const prettyPrintDate = dateString => {
+  const returnFlight = useMemo(
+    () => flightState.selectState.returnFlight,
+    [flightState.selectState.returnFlight]
+  );
+
+  const [wasAdded, setWasAdded] = useState(false);
+
+  const addEvent = useCallback(async () => {
+    if (selectedOffer && returnFlight.selectedOffer) {
+      try {
+        await manager({
+          type: "event",
+          mode: "add",
+          payload: {
+            date: new Date(
+              selectedOffer.offer.slices[0].segments[0].departing_at
+            ),
+            departingFlight: selectedOffer,
+            returnFlight: returnFlight.selectedOffer,
+            __t: "Flight"
+          } as DisplayableEvent<Flight>
+        });
+        setWasAdded(true);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [manager, selectedOffer, returnFlight]);
+
+  useEffect(() => {
+    if (!wasAdded) {
+      addEvent();
+    }
+  }, [wasAdded, addEvent]);
+
+  const prettyPrintDate = dateString => {
 		const d = new Date(dateString);
 		return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear().toString().slice(-2)}`;
-	};
-
-	const isoDurationToMilliseconds = (duration) => {
-		const hoursMatch = duration.match(/(\d+)H/);
-		const minutesMatch = duration.match(/(\d+)M/);
-
-		const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
-		const minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0;
-
-		return (hours * 60 * 60 + minutes * 60) * 1000;
 	};
 
 	const formatDurationToHoursMinutes = (totalMinutes) => {
@@ -35,39 +74,6 @@ export default function Confirmed() {
 		return (hours ? `${hours}hr ` : '') + (minutes ? `${minutes}min` : hours ? '' : '0min');
 	};
 
-	const calculateTotalDuration = (offer: Offer) => {
-		if (!offer) {
-			return 0 + ' ';
-		}
-
-		let totalDuration = 0;
-
-		offer.slices.forEach((slice) => {
-			const sliceDuration = slice.segments.reduce((duration, segment, index, segments) => {
-				// Calculate duration of the current segment
-				let segmentDuration = isoDurationToMilliseconds(segment.duration);
-
-				// Calculate layover duration, if there's a next segment
-				if (index < segments.length - 1) {
-					const currentSegmentArrival = new Date(segment.arriving_at).getTime();
-					const nextSegmentDeparture = new Date(segments[index + 1].departing_at).getTime();
-					const layoverTime = nextSegmentDeparture - currentSegmentArrival;
-
-					// Add the layover time to the segment duration
-					segmentDuration += layoverTime;
-				}
-
-				return duration + segmentDuration;
-			}, 0);
-
-			// Convert duration from milliseconds to minutes and add to total duration
-			totalDuration += sliceDuration / 60000;
-		});
-
-		console.log(totalDuration);
-
-		return totalDuration;
-	};
 
 	return (
 		<form className="mb-4 mt-8 mx-4 w-100 text-center">

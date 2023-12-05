@@ -20,7 +20,7 @@ const nextConfig = {
       }
     ]
   },
-  //reactStrictMode: false,
+  reactStrictMode: false,
   redirects: () => {
     return [
       {
