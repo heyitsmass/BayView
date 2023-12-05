@@ -21,6 +21,7 @@ type Region =
   | "uk"
   | "zh_tw";
 
+
 type UserData = {
   readonly _id: string;
   currency: Currency;
@@ -30,6 +31,7 @@ type UserData = {
   distanceUnit: DistanceUnit;
   temperateUnit: TemperatureUnit;
   region: Region;
+  unitSystem: "IMPERIAL" | "METRIC";
 };
 
 type BaseData = {

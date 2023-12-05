@@ -50,6 +50,10 @@ export const itinerarySchema = new Schema<IItinerary>(
     temperateUnit: {
       type: String,
       default: "F"
+    },
+    unitSystem: {
+      type: String,
+      default: "IMPERIAL"
     }
   },
   {

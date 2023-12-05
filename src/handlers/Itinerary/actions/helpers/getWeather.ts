@@ -16,9 +16,7 @@ const getWeather = async ({
 }: {
   location: Location;
 }): Promise<MappedWeatherData> => {
-  const address = [...Object.values(location)].join(",");
-
-  const geocode = await getGeocode(address);
+  const geocode = await getGeocode({ location });
 
   type ExclusionFields =
     | "current"
