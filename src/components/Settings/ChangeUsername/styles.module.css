@@ -1,0 +1,17 @@
+.changeUsername {
+  @apply p-4 rounded-2xl bg-zinc-200 dark:bg-zinc-700 border border-zinc-100 dark:border-zinc-600 shadow-xl;
+}
+
+.emailInput {
+  @apply dark:!bg-zinc-800 border-transparent disabled:opacity-60;
+}
+
+.usernameWrapper,
+.emailWrapper {
+  @apply h-full;
+}
+
+.usernameWrapper label:hover,
+.emailWrapper label:hover {
+  cursor: pointer;
+}

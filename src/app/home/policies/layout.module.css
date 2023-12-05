@@ -1,6 +1,0 @@
-.layout {
-  background: var(--card-bg-color-glass);
-  background-blend-mode: overlay;
-  backdrop-filter: blur(10px);
-  border: solid 1px var(--card-border-color);
-}

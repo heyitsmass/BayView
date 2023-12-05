@@ -1,5 +1,5 @@
 import { DiningOptions } from "@/types";
-import { EventTypes, SportEvents } from "@/types/Event";
+import { TEventType, TSportEvent } from "@/types/Event";
 import {
   IconDefinition,
   faBaseball,
@@ -40,7 +40,7 @@ const DiningMap: {
 };
 
 const EventMap: {
-  [P in EventTypes]: IconDefinition;
+  [P in TEventType]: IconDefinition;
 } = {
   Flight: faPlane,
   Hotel: faHotel,
@@ -63,7 +63,7 @@ const EventMap: {
 };
 
 const SportMap: {
-  [P in SportEvents]: IconDefinition;
+  [P in TSportEvent]: IconDefinition;
 } = {
   Football: faFootball,
   Basketball: faBasketballBall,

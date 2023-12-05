@@ -1,36 +1,30 @@
-import { Activity, Waterpark } from "@/types/Event";
-import { activitySchema } from ".";
+import { Offer, PeekData } from "@/types";
+import { Activity, Event, Waterpark } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { EventModel } from "..";
-import { PeekData } from "@/types";
+import { EventModel, eventSchema } from "..";
 
-const waterparkSchema = new Schema<Activity<Waterpark>>({
-  ...activitySchema.obj,
+const waterSlide = {
+  name: String,
+  description: String,
+  _id: false
+};
+
+const attraction = {
+  ...waterSlide
+};
+const waterparkSchema = new Schema<Event<Waterpark>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/waterpark.png",
+    default: "/assets/events/waterpark.png"
   },
-  attractions: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
-    default: []
-  },
-  waterSlides: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
-    default: []
-  },
+  parkName: String,
+  mainAttraction: attraction,
+  attractions: [String],
+  waterSlides: [String],
+  mainWaterslide: waterSlide,
   openingHours: String,
   admissionFee: Number,
   wavePool: Boolean, // Indicates whether there's a wave pool
@@ -44,10 +38,10 @@ waterparkSchema
     const waterSlide = this.waterSlides[0];
 
     return {
-      "Waterpark Name": this.name,
+      "Waterpark Name": this.parkName,
       Address: [this.location.street, this.location.street].join(", "),
-      "Best Attraction": attraction.name,
-      "Best Water Slide": waterSlide.name,
+      "Best Attraction": attraction,
+      "Best Water Slide": waterSlide,
       "Opening Hours": this.openingHours,
       "Wave Pool": this.wavePool ? "Open" : "Closed",
       "Lazy River": this.lazyRiver ? "Open" : "Closed"
@@ -74,7 +68,7 @@ waterparkSchema
         })
       },
       {
-        value: this.name
+        value: this.parkName
       },
       {
         label: "Open",
@@ -91,6 +85,23 @@ waterparkSchema
     ];
   });
 
+waterparkSchema
+  .virtual("offer")
+  .get(function (this: Activity<Waterpark>): Offer {
+    return [
+      faker.string.uuid(),
+      this.openingHours,
+      this.parkName,
+      this.attractions[0],
+      null,
+      null,
+      this.admissionFee
+    ];
+  });
+
 export const WaterparkModel =
   EventModel.discriminators?.Waterpark ||
-  EventModel.discriminator<Activity<Waterpark>>("Waterpark", waterparkSchema);
+  EventModel.discriminator<Activity<Waterpark>>(
+    "Waterpark",
+    waterparkSchema
+  );

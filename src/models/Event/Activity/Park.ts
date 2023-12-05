@@ -1,16 +1,17 @@
-import { Activity, Park } from "@/types/Event";
+import { Offer, PeekData } from "@/types";
+import { Activity, Event, Park } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { EventModel } from "..";
-import { activitySchema } from ".";
-import { PeekData } from "@/types";
+import { EventModel, eventSchema } from "..";
 
-const parkSchema = new Schema<Activity<Park>>({
-  ...activitySchema.obj,
+const parkSchema = new Schema<Event<Park>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/park.png",
+    default: "/assets/events/park.png"
   },
+  parkName: String,
   activities: {
     type: [
       {
@@ -23,33 +24,15 @@ const parkSchema = new Schema<Activity<Park>>({
   }, // List of activities available in the park (e.g., hiking, biking, swimming)
   openingHours: String,
   facilities: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
+    type: [String],
     default: []
   }, // List of facilities available in the park (e.g., picnic areas, playgrounds)
   naturalFeatures: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
+    type: [String],
     default: []
   }, // Features like lakes, trails, etc.
   wildlife: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
+    type: [String],
     default: []
   } // Types of wildlife commonly found in the park
   // ... (other park-specific properties)
@@ -62,13 +45,13 @@ parkSchema.virtual("displayData").get(function (this: Activity<Park>) {
   const animal = this.wildlife[0];
 
   return {
-    "Park Name": this.name,
+    "Park Name": this.parkName,
     Address: [this.location.street, this.location.street].join(", "),
-    "Activity Name": activity.name,
+    "Activity Name": activity,
     "Opening Hours": this.openingHours,
-    "Closest Facility": facility.name,
-    "Hot Feature": feature.name,
-    "Popular Wildlife": animal.name
+    "Closest Facility": facility,
+    "Hot Feature": feature,
+    "Popular Wildlife": animal
   };
 });
 
@@ -88,11 +71,11 @@ parkSchema.virtual("peek").get(function (this: Activity<Park>): PeekData {
       })
     },
     {
-      value: this.name
+      value: this.parkName
     },
     {
       label: "Activity",
-      value: this.activities[0].name
+      value: this.activities[0]
     },
     {
       label: "Open",
@@ -100,11 +83,27 @@ parkSchema.virtual("peek").get(function (this: Activity<Park>): PeekData {
     },
     {
       label: "Wildlife",
-      value: this.wildlife[0].name
+      value: this.wildlife[0]
     }
   ];
 });
 
+parkSchema.virtual("offer").get(function (this: Activity<Park>): Offer {
+  return [
+    faker.string.uuid(),
+    (
+      this.date || faker.date.soon({ refDate: new Date(Date.now()) })
+    ).toLocaleDateString("en-US", {
+      month: "numeric",
+      day: "numeric"
+    }),
+    this.parkName,
+    null,
+    this.openingHours,
+    null,
+    null
+  ];
+});
 
 export const ParkModel =
   EventModel.discriminators?.Park ||

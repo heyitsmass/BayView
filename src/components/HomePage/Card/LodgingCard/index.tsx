@@ -1,17 +1,13 @@
-import {
-  faCalendarDays,
-  faLocationArrow,
-  faArrowRight,
-  faUser,
-  faChair
-} from "@fortawesome/free-solid-svg-icons";
 import Input from "@/components/Input";
-import InputPair from "@/components/Input/InputPair";
-import Button from "@/components/Button";
-import Card from "@/components/HomePage/Card";
 import BayviewCalendar from "@/components/Input/BayviewCalendar";
+import InputPair from "@/components/Input/InputPair";
+import {
+  faArrowRight,
+  faLocationArrow,
+  faUser
+} from "@fortawesome/free-solid-svg-icons";
+import { findEvents } from "../../EventFinder";
 import { SearchableCard } from "../Searchable";
-import { findEvents } from "../Activity/handlers/findEvents";
 
 export default function LodgingCard() {
   const props = {
@@ -19,7 +15,13 @@ export default function LodgingCard() {
     subtitle: "search for lodging reservations",
     btnTxt: "Find Hotels",
     handleSearch: async (form: FormData) =>
-      findEvents(form, { event: "Hotel" })
+      findEvents({
+        activity: "Reservation",
+        type: "Hotel",
+        params: {
+          ...Object.fromEntries(form)
+        }
+      })
   };
   return (
     <SearchableCard {...props}>

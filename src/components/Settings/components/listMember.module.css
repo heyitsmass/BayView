@@ -1,0 +1,9 @@
+.avatar {
+  @apply w-16 h-16 rounded-full min-w-[4rem] min-h-[4rem];
+}
+
+.listMember {
+
+  @apply hover:scale-105 border p-4 flex justify-between transition-all hover:cursor-pointer hover:shadow-xl;
+  @apply items-center rounded-xl mb-4 bg-zinc-100 border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700;
+}

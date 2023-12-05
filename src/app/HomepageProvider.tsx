@@ -69,6 +69,76 @@ export const Reducer = (
   action: HomepageAction
 ) => {
   switch (action.type) {
+    case "party_member":
+      switch (action.mode) {
+        case "delete":
+          return {
+            ...subject,
+            user: {
+              ...subject.user,
+              metadata: {
+                ...subject.user.metadata,
+                party: {
+                  ...subject.user.metadata.party,
+                  members: subject.user.metadata.party.members.filter(
+                    (member) => member._id !== action.payload.member_id
+                  )
+                }
+              }
+            },
+            itinerary: {
+              ...subject.itinerary,
+              events: subject.itinerary.events.map((event) => {
+                return {
+                  ...event,
+                  party: event.party.filter(
+                    (member) => member !== action.payload.member_id
+                  )
+                };
+              })
+            }
+          };
+      }
+
+    case "event_party":
+      switch (action.mode) {
+        case "add":
+          return {
+            ...subject,
+            itinerary: {
+              ...subject.itinerary,
+              events: subject.itinerary.events.map((event) => {
+                if (event._id === action.payload.event_id) {
+                  return {
+                    ...event,
+                    party: [...event.party, action.payload.member_id]
+                  };
+                }
+                return event;
+              })
+            }
+          };
+        case "remove":
+          return {
+            ...subject,
+            itinerary: {
+              ...subject.itinerary,
+              events: subject.itinerary.events.map((event) => {
+                if (event._id === action.payload.event_id) {
+                  return {
+                    ...event,
+                    party: event.party.filter(
+                      (member) => member !== action.payload.member_id
+                    )
+                  };
+                }
+                return event;
+              })
+            }
+          };
+        default:
+          return subject;
+      }
     case "itinerary":
       switch (action.mode) {
         case "update":

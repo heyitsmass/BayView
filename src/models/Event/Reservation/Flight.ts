@@ -1,153 +1,104 @@
-import { PeekData, PeekInfo, Upgrade, Upgrades } from "@/types";
-import { Flight, Reservation } from "@/types/Event";
+import { PeekData, Upgrades } from "@/types";
+import { Event, Flight } from "@/types/Event";
 import { Schema } from "mongoose";
-import { reservationSchema } from ".";
-import { EventModel } from "..";
-const helperSchema = {
-  name: String,
-  description: String,
-  _id: false
-};
+import { EventModel, eventSchema } from "..";
 
-const flightSchema = new Schema<Reservation<Flight>>({
-  ...reservationSchema.obj,
-  picture_url: {
-    type: String,
-    immutable: true,
-    default: "/assets/events/flight.jpg",
+const flightSchema = new Schema<Event<Flight>>(
+  {
+    ...(eventSchema.obj as Object),
+    picture_url: {
+      type: String,
+      immutable: true,
+      default: "/assets/events/flight.png"
+    },
+    departingFlight: Object,
+    returnFlight: Object
   },
-  airport: {
-    type: helperSchema,
-    default: {}
-  },
-  airline: {
-    type: helperSchema,
-    default: {}
-  },
-  departureTime: Date,
-  arrivalTime: Date,
-  flightNumber: String,
-  reservationNumber: String,
-  currentUpgrade: String,
-  currentPrice: Number,
-  seats: {
-    type: [
-      {
-        row: Number,
-        seat: String,
-        _id: false
-      }
-    ],
-    default: []
-  },
-  gate: String
-});
+);
 
-flightSchema.virtual("displayData").get(function (this: Reservation<Flight>) {
+flightSchema.virtual("displayData").get(function (this: Event<Flight>) {
+  const airline = this.departingFlight.offer.owner.name;
+  const parent = this.departingFlight.offer.slices[0].segments[0];
+
+  const flightNumber = parent.id;
+  const terminal =
+    this.departingFlight.offer.slices[0].segments[0]
+      .destination_terminal;
+
   return {
-    Airline: this.airline.name,
-    Seats: this.seats.map((seat) => `${seat.row}${seat.seat}`).join(", "),
-    "Flight Number": this.flightNumber,
-    Gate: this.gate,
-    "Reservation Number": this.reservationNumber,
-    "Departure Time": this.departureTime.toLocaleDateString("it-IT", {
-      day: "2-digit",
-      month: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit"
-    }),
-    "Arrival Time": this.arrivalTime.toLocaleDateString("it-IT", {
-      day: "2-digit",
-      month: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit"
-    })
+    Airline: airline,
+    "Flight Number": flightNumber,
+    Terminal: terminal,
+    "Reservation Number": parent.id,
+    "Departure Time": new Date(parent.departing_at).toLocaleTimeString(
+      undefined,
+      {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      }
+    ),
+    "Arrival Time": new Date(parent.arriving_at).toLocaleTimeString(
+      undefined,
+      {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      }
+    )
   };
 });
 
 flightSchema
   .virtual("upgradeOptions")
-  .get(function (this: Reservation<Flight>): Upgrades {
-    const { currentPrice, currentUpgrade } = this;
-
-    const upgrades = [
-      {
-        name: "Economy",
-        description: "The standard option",
-        priceRange: "$",
-        pricePerUpgrade: 100,
-        picture_url: '/assets/upgrades/flight/seat_change.png'
-      },
-      {
-        name: "Premium Economy",
-        description: "A little extra leg room",
-        priceRange: "$$",
-        pricePerUpgrade: 200,
-        picture_url: '/assets/upgrades/flight/economy.png'
-      },
-      {
-        name: "Business Class",
-        description: "Luxury at its finest",
-        priceRange: "$$$",
-        pricePerUpgrade: 300,
-        picture_url: '/assets/upgrades/flight/business.png'
-      },
-      {
-        name: "First Class",
-        description: "The best of the best",
-        priceRange: "$$$",
-        pricePerUpgrade: 400,
-        picture_url: '/assets/upgrades/flight/first_class.png'
-      }
-    ];
-
-    return {
-      title: "Upgrade Options",
-      partySize: this.seats.length,
-      subtitle: "(lowest price available.)",
-      altText: "Request",
-      currentUpgrade,
-      currentPrice,
-      currency: "$",
-      upgrades: upgrades.filter(
-        (upgrade) => upgrade.name !== currentUpgrade
-      ) as Upgrade[]
-    };
+  .get(function (this: Event<Flight>): Upgrades {
+    return {} as Upgrades;
   });
 
 flightSchema
   .virtual("peek")
-  .get(function (this: Reservation<Flight>): PeekData {
+  .get(function (this: Event<Flight>): PeekData {
+    const parent = this.departingFlight.offer.slices[0].segments[0];
+    const flightNumber = parent.marketing_carrier_flight_number;
+    const airline = this.departingFlight.offer.owner.name;
+
     return [
       {
         label: "Flight",
-        value: this.departureTime.toLocaleDateString("en-US", {
-          day: "2-digit",
-          month: "2-digit"
-        })
+        value: new Date(parent.departing_at).toLocaleDateString(
+          undefined,
+          {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true
+          }
+        )
       },
       {
-        value: this.airline.name
+        value: airline
       },
       {
         label: "Confirmation",
-        value: "#" + this.flightNumber
+        value: "#" + parent.id
       },
       {
-        label: "Seat(s)",
-        value: this.seats.map((seat) => `${seat.row}${seat.seat}`).join(", ")
+        label: "Terminal",
+        value: parent.origin_terminal
       },
       {
         label: "Departure Time",
-        value: this.departureTime.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true
-        })
+        value: new Date(parent.departing_at).toLocaleTimeString(
+          undefined,
+          {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true
+          }
+        )
       }
     ];
   });
 
 export const FlightModel =
   EventModel.discriminators?.Flight ||
-  EventModel.discriminator<Reservation<Flight>>("Flight", flightSchema);
+  EventModel.discriminator<Event<Flight>>("Flight", flightSchema);

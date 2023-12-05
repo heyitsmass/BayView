@@ -1,34 +1,33 @@
-import { Activity, AmusementPark } from "@/types/Event";
+import { Offer, PeekData } from "@/types";
+import { AmusementPark, Event } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { EventModel } from "..";
-import { PeekData } from "@/types";
-import { activitySchema } from ".";
-const amusementParkSchema = new Schema<Activity<AmusementPark>>({
-  ...activitySchema.obj,
+import { EventModel, eventSchema } from "..";
+const amusementParkSchema = new Schema<Event<AmusementPark>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/amusementpark.png",
+    default: "/assets/events/amusementpark.png"
   },
+  parkName: String,
   rides: [String],
   admissionFee: Number,
   openingHours: String,
-  rollerCoasters: [String],
-  themedAreas: [String],
-  waterRides: [String],
-  heightRestrictions: {
+  rollerCoaster: String,
+  waterRide: String,
+  heightRestriction: {
     type: Map,
     of: Number,
-    default: {},
-  },
+    default: {}
+  }
 });
 
 amusementParkSchema
   .virtual("displayData")
-  .get(function (this: Activity<AmusementPark>) {
-    const rollerCoaster = this.rollerCoasters[0];
-    const themedArea = this.themedAreas[0];
-    const waterRide = this.waterRides[0];
+  .get(function (this: Event<AmusementPark>) {
+    const rollerCoaster = this.rollerCoaster;
+    const waterRide = this.waterRide;
 
     return {
       "Park Name": this.name,
@@ -36,14 +35,14 @@ amusementParkSchema
       Rides: this.rides.join(", "),
       "Opening Hours": this.openingHours,
       "Best Roller Coaster": rollerCoaster,
-      "Best Themed Area": themedArea,
-      "Best Water Rides": waterRide,
+      "Main Attraction": waterRide,
+      "Admission Fee": this.admissionFee
     };
   });
 
 amusementParkSchema
   .virtual("upgradeOptions")
-  .get(function (this: Activity<AmusementPark>) {
+  .get(function (this: Event<AmusementPark>) {
     /** Dash Pass */
     /** VIP Pass */
     /** Season Pass */
@@ -51,36 +50,49 @@ amusementParkSchema
 
 amusementParkSchema
   .virtual("peek")
-  .get(function (this: Activity<AmusementPark>): PeekData {
+  .get(function (this: Event<AmusementPark>): PeekData {
     return [
       {
         label: "Amusement Park",
         value: this.date.toLocaleDateString("en-US", {
           month: "numeric",
-          day: "numeric",
-        }),
+          day: "numeric"
+        })
       },
       {
-        value: this.name,
+        value: this.parkName
       },
       {
         label: "Open",
-        value: this.openingHours,
+        value: this.openingHours
       },
       {
         label: "Best Coaster",
-        value: this.rollerCoasters[0],
+        value: this.rollerCoaster
       },
       {
         label: "Best Ride",
-        value: this.waterRides[0],
-      },
+        value: this.waterRide
+      }
     ];
   });
 
+amusementParkSchema
+  .virtual("offer")
+  .get(function (this: Event<AmusementPark>): Offer {
+    return [
+      faker.string.uuid(),
+      this.openingHours,
+      this.parkName,
+      null,
+      this.rollerCoaster,
+      null,
+      this.admissionFee
+    ];
+  });
 export const AmusementParkModel =
   EventModel.discriminators?.AmusementPark ||
-  EventModel.discriminator<Activity<AmusementPark>>(
+  EventModel.discriminator<Event<AmusementPark>>(
     "AmusementPark",
     amusementParkSchema
   );

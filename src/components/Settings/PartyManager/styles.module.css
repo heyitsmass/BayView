@@ -1,0 +1,10 @@
+.partyManager {
+  @apply p-4 rounded-2xl bg-zinc-200 dark:bg-zinc-700 border border-zinc-100 dark:border-zinc-600 shadow-xl h-full;
+
+}
+
+.content {
+  @apply h-2/3 border border-zinc-500 rounded-2xl;
+  @apply bg-zinc-100 dark:bg-zinc-600
+}
+

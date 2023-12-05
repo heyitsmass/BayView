@@ -1,14 +1,12 @@
 "use server";
 
 import { THomepageContext } from "@/context";
-import models from "@/models";
 import ItineraryModel from "@/models/Itinerary";
-import { DisplayData } from "@/types";
-import { Event } from "@/types/Event";
+import { TEventType } from "@/types/Event";
 import { FlattenedItinerary, ItineraryWithMongo } from "@/types/Itinerary";
-import { HydratedDocument } from "mongoose";
 import { SessionContainerInterface } from "supertokens-node/lib/build/recipe/session/types";
 import { getUserMetadata } from "supertokens-node/recipe/usermetadata";
+import { models } from "../../models";
 
 export const getItinerary = async (
   session: SessionContainerInterface
@@ -28,13 +26,10 @@ export const getItinerary = async (
         new: true
       }
     )) as ItineraryWithMongo
-  ).toJSON({ virtuals: true, flattenObjectIds: true, flattenMaps: true });
-
-  itinerary.events = itinerary.events.map((event) => {
-    const rebuilt = new models[event.__t](event) as HydratedDocument<Event> &
-      DisplayData;
-
-    return rebuilt.toJSON({ flattenObjectIds: true, virtuals: true });
+  ).toJSON({
+    virtuals: true,
+    flattenObjectIds: true,
+    flattenMaps: true
   });
 
   const { metadata } = await getUserMetadata(_id);
@@ -44,6 +39,16 @@ export const getItinerary = async (
       _id,
       metadata
     },
-    itinerary
+    itinerary: {
+      ...itinerary,
+      events: itinerary.events
+        .filter((event) => !!event.__t)
+        .map((event) =>
+          (new models[event.__t as TEventType](event) as any).toJSON({
+            flattenObjectIds: true,
+            virtuals: true
+          })
+        )
+    }
   };
 };

@@ -1,24 +1,26 @@
 "use server";
 
-import { Location } from "@/types/Event";
+import { TLocationType } from "@/types/Event";
 import { MappedWeatherData, WeatherResponse } from "@/types/Weather";
 import { fetcher } from "@/utils/fetcher";
 import { mapWeatherData } from "@/utils/openWeather";
 import { getGeocode } from "./getGeocode";
 
 export type GetWeatherPayload = {
-  location: Location;
+  location: TLocationType;
 };
 
 /** Get the current weather stats */
 const getWeather = async ({
   location
 }: {
-  location: Location;
-}): Promise<MappedWeatherData> => {
+  location: TLocationType;
+}): Promise<MappedWeatherData | null> => {
   const address = [...Object.values(location)].join(",");
 
   const geocode = await getGeocode(address);
+
+  if (!geocode) return null;
 
   type ExclusionFields =
     | "current"

@@ -20,7 +20,7 @@
   --zinc-950: #030712;
 
   /** Zinc but with 50% opacity */
-  --zinc-50-glass:  #fafafa80;
+  --zinc-50-glass: #fafafa80;
   --zinc-100-glass: #f4f4f57c;
   --zinc-300-glass: #d4d4d87c;
   --zinc-400-glass: #a1a1aa7c;
@@ -158,8 +158,8 @@ div {
   backdrop-filter: blur(10px);
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 100;
   align-items: center;
   justify-content: center;
-  @apply bg-zinc-50 dark:bg-black !bg-opacity-30;
+  @apply bg-zinc-900 bg-opacity-50;
 }

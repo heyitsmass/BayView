@@ -1,4 +1,4 @@
-import { DisplayableEvent } from "@/lib/random/handler";
+import { DisplayableEvent } from "@/components/HomePage/EventFinder";
 import { FlattenedEvent } from "@/types";
 import React, { Dispatch, SetStateAction } from "react";
 

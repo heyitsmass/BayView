@@ -1,34 +1,35 @@
+'use client'; 
 import { Loading } from "@/components/Loading";
 import { getWeather } from "@/handlers/Itinerary/actions/helpers";
 import { useCurrentEvent, useHomepage } from "@/hooks";
 import { MappedWeatherData } from "@/types/Weather";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import ReactWeather from "react-open-weather";
 import theme from "../utils/Theme";
 
 const Component = () => {
-  const { locale } = useHomepage().itinerary;
+  const { locale, temperateUnit, speedUnit } = useHomepage().itinerary;
   const event = useCurrentEvent();
 
-  const loc = useMemo(() => event!.location, [event]);
   const [data, setData] = useState<MappedWeatherData | null>(null);
 
   useEffect(() => {
-    const get = async () => setData(await getWeather({ location: loc }));
+    const get = async () =>
+      setData(await getWeather({ location: event!.location }));
 
     if (!data) {
       get();
     }
-  }, [data, loc]);
+  }, [data, event]);
 
-  if (!data) return <Loading />;
+  if (data === null) return <Loading />;
 
   const defaults = {
     lang: locale,
     locationLabel: event!.location.city,
     unitsLabels: {
-      temperature: "F",
-      windSpeed: "mph"
+      temperature: temperateUnit,
+      windSpeed: speedUnit
     },
     showForecast: true,
     theme
@@ -36,7 +37,7 @@ const Component = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <ReactWeather {...defaults} data={data} />
+      {data != null && <ReactWeather {...defaults} data={data} />}
     </Suspense>
   );
 };

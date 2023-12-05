@@ -1,60 +1,62 @@
-export type Location = {
+import { Offer as DuffelOffer } from "@duffel/api/types";
+import { TActivityQuery } from "./query";
+
+export type TLocationType = {
+  /** */
   street: string;
   city: string;
   state: string;
   zip: string;
+  lat: number;
+  lng: number;
 };
 
 export type Event<T = Activities | Reservable> = {
   date: Date;
   name: string;
-  time?: string;
-  location: Location;
+  location: TLocationType;
   description?: string;
   picture_url: string;
-  partySize: number;
+  party: string[];
 } & T;
 
-export type Airport = {
-  name: string;
-  iataCode: string;
-};
-
-export type Airline = {
-  name: string;
-  iataCode: string;
-};
-
-type AirlineSeat = {
-  row: number;
-  seat: string;
+export type TFlightOffer = {
+  id: string;
+  offer: DuffelOffer & {
+    total_duration: number;
+  };
 };
 export interface Flight {
-  airport: Airport;
-  airline: Airline;
-  departureTime: Date;
-  arrivalTime: Date;
-  flightNumber: number;
-  currentUpgrade: string;
-  currentPrice: number;
-  reservationNumber: string;
-  seats: AirlineSeat[];
-  gate: string;
+  departingFlight: TFlightOffer;
+  returnFlight: TFlightOffer;
 }
 
+export const CabinType = [
+  "Single",
+  "Double",
+  "Triple",
+  "Quad",
+  "Queen",
+  "King",
+  "Suite"
+] as const;
+
+export type TCabinType = (typeof CabinType)[number];
+
 export interface Hotel {
-  cabinType: {
-    name: string;
-    description: string;
-  };
+  cabinType: string;
+  roomCount: number;
+  price: number;
   checkIn: Date;
   checkOut: Date;
   roomNumber: string | number;
 }
 
-export type MealTypes = "breakfast" | "lunch" | "dinner";
+export const MealType = ["Breakfast", "Lunch", "Dinner"] as const;
+
+export type MealTypes = (typeof MealType)[number];
 export interface Offer<T extends MealTypes = MealTypes> {
-  offerId: string;
+  id: string;
   time: string;
   label: T;
 }
@@ -62,22 +64,17 @@ export interface Offer<T extends MealTypes = MealTypes> {
 export interface MealPeriodInfo {
   name: string;
   experience: string;
-  priceLegend: string;
-  primaryCuisineType: string;
+  price: number;
+  cuisine: string;
 }
 
 export interface Dining {
   mealPeriodInfo: MealPeriodInfo;
   priceRange: string;
-  admissionRequired: boolean;
-  offers: {
-    [x: string]: Offer[];
-  };
+  mealOffer: Offer;
 }
 
 export type Reservable = Hotel | Flight | Dining;
-
-export type Reservation<T extends Reservable = Reservable> = Event & T;
 
 export type Activities =
   | Theatre
@@ -96,25 +93,119 @@ export type Activities =
   | Hiking
   | Biking;
 
-export type EventTypes =
-  | "Hotel"
-  | "Flight"
-  | "Dining"
-  | "Theatre"
-  | "Concert"
-  | "Museum"
-  | "Park"
-  | "Zoo"
-  | "Aquarium"
-  | "Waterpark"
-  | "AmusementPark"
-  | "Sports"
-  | "Nightlife"
-  | "Shopping"
-  | "Spa"
-  | "Golf"
-  | "Hiking"
-  | "Biking";
+export const ReservationType = [
+  "Hotel", //reservation
+  "Flight", //reservation
+  "Dining" //reservation
+] as const;
+
+export type TReservationType = (typeof ReservationType)[number];
+export type TReservation = Hotel | Flight | Dining;
+
+export const EntertainmentType = [
+  "Theatre", //entertainment
+  "Concert", //entertainment
+  "Sports", //entertainment
+  "Nightlife", //entertainment
+  "Shopping" //entertainment
+] as const;
+
+export type TEntertainmentType = (typeof EntertainmentType)[number];
+export type TEntertainment =
+  | Theatre
+  | Concert
+  | Sports
+  | Nightlife
+  | Shopping;
+export const RelaxationType = [
+  "Spa", //Relaxation
+  "Museum", //Relaxation
+  "Park" //Relaxation
+] as const;
+
+export type TRelaxationType = (typeof RelaxationType)[number];
+export type TRelaxation = Spa | Museum | Park;
+export const OutdoorType = [
+  "Golf", //Outdoor
+  "Hiking", //Outdoor
+  "Biking" //Outdoor
+] as const;
+
+export type TOutdoorType = (typeof OutdoorType)[number];
+export type TOutdoor = Golf | Hiking | Biking;
+export const ExperienceType = [
+  "Zoo", //Experience
+  "Aquarium", //Experience
+  "Waterpark", //Experience
+  "AmusementPark" //Experience
+] as const;
+
+export type TExperienceType = (typeof ExperienceType)[number];
+export type TExperience = Zoo | Aquarium | Waterpark | AmusementPark;
+
+const EventType = [
+  ...RelaxationType,
+  ...OutdoorType,
+  ...ExperienceType,
+  ...EntertainmentType,
+  ...ReservationType
+] as const;
+
+export type TEventType = (typeof EventType)[number];
+export type TEvent =
+  | TEntertainment
+  | TExperience
+  | TRelaxation
+  | TOutdoor
+  | TReservation;
+
+export const ActivityGroup = [
+  "Relaxation",
+  "Outdoor",
+  "Experience",
+  "Entertainment",
+  "Reservation"
+] as const;
+
+export type TActivityGroup = (typeof ActivityGroup)[number];
+
+export type TActivitySubType<T extends TActivityGroup> =
+  T extends "Sports" ? TSportEvent : undefined;
+
+export type TEventQuery<
+  G extends TActivityGroup = TActivityGroup,
+  T extends TEventType = TEventType
+> = {
+  activity: G;
+  subtype?: T extends "Sports" ? TSportEvent : undefined;
+} & TActivityQuery<G, T>;
+
+const TerrainType = [
+  "Gravel",
+  "Dirt",
+  "Paved",
+  "Rocky",
+  "Sandy",
+  "Wet"
+] as const;
+
+export type TTerrainType = (typeof TerrainType)[number];
+
+export const CuisineTypes = [
+  "American",
+  "Chinese",
+  "French",
+  "Indian",
+  "Italian",
+  "Japanese",
+  "Korean",
+  "Mexican",
+  "Spanish",
+  "Thai",
+  "Vietnamese"
+] as const;
+
+export type TCuisineType = (typeof CuisineTypes)[number];
 
 export type Activity<T extends Activities = Activities> = Event & T;
 
@@ -122,75 +213,71 @@ export type ShowTime = {
   date: Date;
   time: string;
 };
+
+export const TheatreSeatType = [
+  "Orchestra",
+  "Mezzanine",
+  "Balcony",
+  "Box",
+  "Loge",
+  "Dress Circle",
+  "Pit",
+  "Gallery"
+] as const;
+
+export type TTheatreSeatType = (typeof TheatreSeatType)[number];
 export interface Theatre {
+  venue: string; // Name of the theatre
   play: string; // Name of the play currently running
   playwright: string; // Name of the playwright of the current play
   showTimes: ShowTime[]; // Schedule of show times for the play
   ticketPrice: number; // Cost of a ticket for the theatre
   theatreRating: number; // Rating of the theatre
-  seatingCapacity: number; // Maximum seating capacity of the theatre
-  isSoldOut: boolean; // Indicates whether the current play is sold out
+  seatType: TTheatreSeatType; // Type of seat (e.g., orchestra, mezzanine)
   intervalDuration: string; // Duration of the intermission between acts
 }
 
 export interface Concert {
   artist: string; // Name of the performing artist or band
   venue: string; // Name of the concert venue
+  concert: string; // Name of the concert
   venueRating: number; // Rating of the concert venue
   date: Date; // Date and time of the concert
   ticketPrice: number; // Cost of a ticket for the concert
   attendees: number; // Number of people attending the concert
   setList: string[]; // List of songs or pieces that will be performed
-  isSoldOut: boolean; // Indicates whether the concert is sold out
-  departureLocation: string; // Location where the trip to the concert starts
-  transportationMode: string; // Mode of transportation (e.g., car, public transit)
+  seatType: TSeatType; // Type of seat (e.g., general admission, reserved seating)
 }
 
 type Exhibit = {
   name: string;
   description: string;
+  date: Date;
 };
 
 type SpecialEvent = {
   name: string;
   description: string;
   date: Date;
-  time: string;
 };
 export interface Museum {
-  exhibits: Exhibit[];
+  museum: string;
+  exhibit: Exhibit;
   admissionFee: number;
   openingHours: string;
-  specialEvents: SpecialEvent[]; // List of special events or exhibitions
+  specialEvent: SpecialEvent; // List of special events or exhibitions
   guidedTours: boolean; // Indicates whether guided tours are available
   audioGuide: boolean; // Indicates whether audio guides are available
   // ... (other museum-specific properties)
 }
 
-type Wildlife = {
-  name: string;
-  description: string;
-};
-
-type NaturalFeature = {
-  name: string;
-  description: string;
-};
-
-type Facility = {
-  name: string;
-  description: string;
-};
-
 export interface Park {
-  activities: {
-    name: string;
-    description: string;
-  }[];
+  parkName: string;
+  activities: string[];
   openingHours: string;
-  facilities: Facility[]; // List of facilities available in the park (e.g., picnic areas, playgrounds)
-  naturalFeatures: NaturalFeature[]; // Features like lakes, trails, etc.
-  wildlife: Wildlife[]; // Types of wildlife commonly found in the park
+  facilities: string[]; // List of facilities available in the park (e.g., picnic areas, playgrounds)
+  naturalFeatures: string[]; // Features like lakes, trails, etc.
+  wildlife: string[]; // Types of wildlife commonly found in the park
   // ... (other park-specific properties)
 }
 
@@ -205,28 +292,25 @@ type InteractiveExperience = {
   description: string;
 };
 
-type ConvservationProgram = {
-  name: string;
-  description: string;
-};
-
 export interface Zoo {
-  animalExhibits: Exhibit[];
+  zoo: string;
+  exhibit: Exhibit;
   admissionFee: number;
   openingHours: string;
-  feedingSchedule: FeedingSchedule[]; // Schedule for animal feeding sessions
-  interactiveExperiences: InteractiveExperience[]; // Interactive activities for visitors
-  conservationPrograms: ConvservationProgram[]; // Information about zoo's conservation programs
+  feedingSchedule: FeedingSchedule; // Schedule for animal feeding sessions
+  interactiveExperience: InteractiveExperience; // Interactive activities for visitors
   // ... (other zoo-specific properties)
 }
 
 export interface Aquarium {
-  exhibits: Exhibit[];
+  aquarium: string;
+  exhibit: Exhibit;
   admissionFee: number;
   openingHours: string;
   underwaterTunnel: boolean; // Indicates whether there's an underwater tunnel for visitors
   touchPools: boolean; // Indicates whether there are touch pools for interactive experiences
-  showSchedule: ShowTime[]; // Schedule for shows and presentations
+  showSchedule: ShowTime; // Schedule for shows and presentations
+  interactiveExperience: InteractiveExperience; // Interactive activities for visitors
   // ... (other aquarium-specific properties)
 }
 
@@ -241,44 +325,62 @@ type Waterslide = {
 };
 
 export interface Waterpark {
-  attractions: WaterparkAttraction[];
+  parkName: string;
+  attractions: string[];
+  mainAttraction: WaterparkAttraction; // Main attraction of the waterpark
   admissionFee: number;
   openingHours: string;
   wavePool: boolean; // Indicates whether there's a wave pool
   lazyRiver: boolean; // Indicates whether there's a lazy river
-  waterSlides: Waterslide[]; // Different types of water slides available
+  waterSlides: string[]; // Different types of water slides available
+  mainWaterslide: Waterslide; // Main waterslide of the waterpark
   // ... (other waterpark-specific properties)
 }
 
 export interface AmusementPark {
+  parkName: string;
   rides: string[];
   admissionFee: number;
   openingHours: string;
-  rollerCoasters: string[]; // Different types of roller coasters available
-  themedAreas: string[]; // Themed sections within the amusement park
-  heightRestrictions: Record<string, number>; // Height restrictions for certain rides
-  waterRides: string[];
+  rollerCoaster: string; // Different types of roller coasters available
+  heightRestriction: Record<string, number>; // Height restrictions for certain rides
+  waterRide: string;
   // ... (other amusement park-specific properties)
 }
 
-export interface Sports<T extends SportEvents = SportEvents> {
+export const SeatType = [
+  "General Admission",
+  "Reserved Seating",
+  "Standing Room Only",
+  "VIP Seating",
+  "Box Seating",
+  "Premium Seating",
+  "Accessible Seating"
+];
+
+export type TSeatType = (typeof SeatType)[number];
+
+export interface Sports<T extends TSportEvent = TSportEvent> {
   type: T;
   event: string;
   teams: string[];
   stadiumName: string;
   ticketPrice: number;
-  stadiumCapacity: number; // Capacity of the sports stadium
+  seatType: TSeatType;
   broadcastingChannels: string[]; // TV channels broadcasting the event
   // ... (other sports-specific properties)
 }
 
-export type SportEvents =
-  | "Football"
-  | "Baseball"
-  | "Basketball"
-  | "Hockey"
-  | "Soccer"
-  | "Tennis";
+const SportEvent = [
+  "Football",
+  "Baseball",
+  "Basketball",
+  "Hockey",
+  "Soccer",
+  "Tennis"
+] as const;
+
+export type TSportEvent = (typeof SportEvent)[number];
 
 export interface Nightlife {
   venue: string;
@@ -303,6 +405,7 @@ type Deal = {
 
 type Sale = Deal & {
   date: Date;
+  discount: string;
 };
 
 type Review = {
@@ -311,20 +414,32 @@ type Review = {
   rating: number;
 };
 
-type DiningOptions = {
-  name: string;
-  description: string;
-};
+export const MallType = [
+  "Regional Mall",
+  "Super-Regional Mall",
+  "Outlet Mall",
+  "Lifestyle Center",
+  "Strip Mall/Plaza",
+  "Power Center",
+  "Specialty Mall",
+  "Fashion Mall",
+  "Entertainment Center",
+  "Mixed-Use Development"
+] as const;
+
+export type TMallType = (typeof MallType)[number];
+
 export interface Shopping {
   mall: string;
-  stores: string[];
+  store: string;
   openingHours: string;
-  salesAndDeals: (Deal | Sale)[]; // Information about ongoing sales or deals
-  diningOptions: DiningOptions[]; // Restaurants or food courts in the mall
+  kind: TMallType;
+  sale: Sale; // Information about ongoing sales or deals
+  deal: Deal; // Information about ongoing sales or deals
   customerReviews: {
     [x: string]: Review;
   }; // Customer reviews for the mall or specific stores
-  shoppingBudget: number; // Maximum amount of money to spend on shopping
+  shoppingBudget?: number; // Maximum amount of money to spend on shopping
   // ... (other shopping-specific properties)
 }
 
@@ -336,11 +451,13 @@ type SpaPackage = {
 type WellnessClass = SpaPackage;
 type Service = SpaPackage;
 export interface Spa {
+  date: Date;
+  spaName: string;
   spaRating: number;
-  services: Service[];
+  service: Service;
   openingHours: string;
-  spaPackages: SpaPackage[]; // Different spa packages offered
-  wellnessClasses: WellnessClass[]; // Classes or workshops related to wellness
+  spaPackage: SpaPackage; // Different spa packages offered
+  wellnessClass: WellnessClass; // Classes or workshops related to wellness
   bookingPolicy: string; // Information about booking policies
   // ... (other spa-specific properties)
 }
@@ -353,25 +470,29 @@ type TeeTime = {
 export interface Golf {
   course: string;
   holes: number;
-  teeTimes: TeeTime[];
+  teeTime: TeeTime;
   golfCartRental: boolean; // Indicates whether golf carts are available for rent
   golfClubRental: boolean; // Indicates whether golf clubs are available for rent
   golfLessons: boolean; // Indicates whether golf lessons are offered
   courseDifficulty: string; // Difficulty level of the golf course
   courseDescription: string; // Description of the golf course
+
   // ... (other golf-specific properties)
 }
 
-export type Difficulty =
-  | "Easy"
-  | "Moderate"
-  | "Difficult"
-  | "Extreme"
-  | "Expert";
+const Difficulty = [
+  "Easy",
+  "Moderate",
+  "Difficult",
+  "Extreme",
+  "Expert"
+] as const;
+
+export type TDifficultyType = (typeof Difficulty)[number];
 
 export interface Hiking {
   trail: string; // Name of the hiking trail
-  difficulty: Difficulty; // Difficulty level of the trail (e.g., easy, moderate, difficult)
+  difficulty: TDifficultyType; // Difficulty level of the trail (e.g., easy, moderate, difficult)
   length: number; // Length of the hiking trail in kilometers
   rating: number; // Rating of the hiking trail
   distance: number; // Length of the hiking trail in kilometers

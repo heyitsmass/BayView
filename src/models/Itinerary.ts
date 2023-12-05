@@ -16,12 +16,6 @@ export const itinerarySchema = new Schema<IItinerary>(
     _id: { type: String, required: true, immutable: true },
     events: [eventSchema],
     location: { type: String, default: "Adventure Haven Park" },
-    party: [
-      {
-        name: { type: String, required: true },
-        age: { type: Number, required: true }
-      }
-    ],
     title: { type: String, default: "My Itinerary" },
     region: {
       type: String,
@@ -50,6 +44,10 @@ export const itinerarySchema = new Schema<IItinerary>(
     temperateUnit: {
       type: String,
       default: "F"
+    },
+    unitSystem: {
+      type: String,
+      default: "IMPERIAL"
     }
   },
   {
@@ -57,9 +55,11 @@ export const itinerarySchema = new Schema<IItinerary>(
   }
 );
 
-export const ItineraryModel =
-  mongoose.models.Itinerary ||
-  mongoose.model<IItinerary>("Itinerary", itinerarySchema);
+export const ItineraryModel = (mongoose.models.Itinerary ||
+  mongoose.model<IItinerary>(
+    "Itinerary",
+    itinerarySchema
+  )) as mongoose.Model<IItinerary, {}, {}, {}>;
 
 /** Legacy !! Deprecated !! */
 export default ItineraryModel;

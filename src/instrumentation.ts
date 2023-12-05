@@ -15,7 +15,7 @@ export async function register() {
     preview: "bayview-dev"
   } as Record<NEXT_VERCEL_ENV, MONGODB_COLLECTIONS>;
 
-  const ENV = process.env.NEXT_PUBLIC_VERCEL_ENV || "production";
+  const ENV = process.env.NEXT_PUBLIC_VERCEL_ENV || "development";
 
   const MONGODB_URI =
     process.env.MONGODB_URI || "mongodb://localhost:27017";

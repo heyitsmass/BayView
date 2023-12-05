@@ -11,3 +11,7 @@
 .topBar h1 {
     @apply text-2xl font-bold;
 }
+
+.dropdownList p {
+    @apply px-4 py-2 w-full cursor-pointer font-medium hover:dark:bg-zinc-600 hover:bg-zinc-100 rounded-xl
+}

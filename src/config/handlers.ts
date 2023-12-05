@@ -6,7 +6,12 @@ import {
   TypeProvider
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserMetadata from "supertokens-node/recipe/usermetadata";
-import { getRequiredMetadata, getUserInfoFromAPI } from "./getRequiredMetadata";
+import {
+  getRequiredMetadata,
+  getUserInfoFromAPI
+} from "./getRequiredMetadata";
+import { PartyMember } from "@/types/User";
+import { TEvent } from "@/types/Event";
 
 export const thirdPartySignInUpPOST = async (
   input: {
@@ -64,15 +69,22 @@ export const thirdPartySignInUpPOST = async (
       });
     }
 
+    await UserMetadata.updateUserMetadata(id, {
+      party: {
+        name: "My Party",
+        members: []
+      }
+    });
+
     let itinerary = await ItineraryModel.exists({
-      id
+      _id: id
     });
 
     if (!itinerary) {
       console.log("Created itinerary for user");
       await ItineraryModel.create({
-        id,
-        events: []
+        _id: id,
+        events: [] as TEvent[]
       });
     }
   }

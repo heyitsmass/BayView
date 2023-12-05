@@ -1,46 +1,46 @@
-import { Activity, Aquarium } from "@/types/Event";
+import { Offer, PeekData } from "@/types";
+import { Aquarium, Event } from "@/types/Event";
+import { faker } from "@faker-js/faker";
 import { Schema } from "mongoose";
-import { EventModel } from "..";
-import { activitySchema } from ".";
-import { PeekData } from "@/types";
+import { EventModel, eventSchema } from "..";
 
-export const aquariumSchema = new Schema<Activity<Aquarium>>({
-  ...activitySchema.obj,
+const exhibit = {
+  name: String,
+  description: String,
+  _id: false
+};
+
+const show = {
+  date: Date,
+  time: String,
+  _id: false
+};
+
+const interactiveExperience = {
+  ...exhibit,
+  ...show
+};
+
+export const aquariumSchema = new Schema<Event<Aquarium>>({
+  ...(eventSchema.obj as Object),
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/aquarium.png",
+    default: "/assets/events/aquarium.png"
   },
-
-  exhibits: {
-    type: [
-      {
-        name: String,
-        description: String,
-        _id: false
-      }
-    ],
-    default: []
-  },
+  aquarium: String,
+  exhibit: exhibit,
   admissionFee: Number,
   openingHours: String,
   underwaterTunnel: Boolean, // Indicates whether there's an underwater tunnel for visitors
   touchPools: Boolean, // Indicates whether there are touch pools for interactive experiences
-  showSchedule: {
-    type: [
-      {
-        date: Date,
-        time: String,
-        _id: false
-      }
-    ],
-    default: []
-  } // Schedule for shows and presentations
+  showSchedule: show,
+  interactiveExperience: interactiveExperience
 });
 
-aquariumSchema.virtual("displayData").get(function (this: Activity<Aquarium>) {
-  const exhibit = this.exhibits[0];
-  const show = this.showSchedule[0];
+aquariumSchema.virtual("displayData").get(function (this: Event<Aquarium>) {
+  const exhibit = this.exhibit;
+  const show = this.showSchedule;
 
   return {
     "Aquarium Name": this.name,
@@ -54,16 +54,16 @@ aquariumSchema.virtual("displayData").get(function (this: Activity<Aquarium>) {
       day: "numeric",
       hour: "numeric",
       minute: "numeric"
-    }),
+    })
   };
 });
 
 aquariumSchema
   .virtual("upgradeOptions")
-  .get(function (this: Activity<Aquarium>) {});
+  .get(function (this: Event<Aquarium>) {});
 aquariumSchema
   .virtual("peek")
-  .get(function (this: Activity<Aquarium>): PeekData {
+  .get(function (this: Event<Aquarium>): PeekData {
     return [
       {
         label: "Aquarium",
@@ -73,7 +73,7 @@ aquariumSchema
         })
       },
       {
-        value: this.name
+        value: this.aquarium
       },
       {
         label: "Open",
@@ -81,16 +81,34 @@ aquariumSchema
       },
       {
         label: "Exhibit",
-        value: this.exhibits[0].name
+        value: this.exhibit.name
       },
       {
         label: "Show",
-        value: this.showSchedule[0].time
+        value: this.showSchedule.time
       }
     ];
   });
 
-
+aquariumSchema
+  .virtual("offer")
+  .get(function (this: Event<Aquarium>): Offer {
+    return [
+      faker.string.uuid(),
+      (
+        this.date || faker.date.soon({ refDate: new Date(Date.now()) })
+      ).toLocaleString(undefined, {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      }),
+      this.aquarium,
+      this.exhibit.name,
+      null,
+      null,
+      this.admissionFee
+    ];
+  });
 export const AquariumModel =
   EventModel.discriminators?.Aquarium ||
-  EventModel.discriminator<Activity<Aquarium>>("Aquarium", aquariumSchema);
+  EventModel.discriminator<Event<Aquarium>>("Aquarium", aquariumSchema);
