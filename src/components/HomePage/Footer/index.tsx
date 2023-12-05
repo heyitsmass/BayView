@@ -32,7 +32,7 @@ export function Footer() {
   ];
 
   return (
-    <div className="flex text-xs items-center justify-center gap-4 footer w-full border border-x-0 bg-white border-zinc-200 dark:border-zinc-700 dark:text-white z-50 dark:bg-zinc-800 absolute bottom-0 h-10">
+    <div className="flex text-xs items-center justify-center gap-4 footer w-full border border-x-0 bg-white border-zinc-200 dark:border-zinc-700 dark:text-white z-0 dark:bg-zinc-800 absolute bottom-0 h-10">
       {policies.map((policy, i) => (
         <Link key={i} href={policy.href}>
           {policy.label}
