@@ -11,6 +11,7 @@ import {
   getUserInfoFromAPI
 } from "./getRequiredMetadata";
 import { PartyMember } from "@/types/User";
+import { TEvent } from "@/types/Event";
 
 export const thirdPartySignInUpPOST = async (
   input: {
@@ -76,14 +77,14 @@ export const thirdPartySignInUpPOST = async (
     });
 
     let itinerary = await ItineraryModel.exists({
-      id
+      _id: id
     });
 
     if (!itinerary) {
       console.log("Created itinerary for user");
       await ItineraryModel.create({
-        id,
-        events: []
+        _id: id,
+        events: [] as TEvent[]
       });
     }
   }

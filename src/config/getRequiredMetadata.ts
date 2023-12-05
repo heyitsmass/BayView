@@ -64,8 +64,6 @@ export const getRequiredMetadata = async (
     case "facebook": {
       const { access_token } = response.oAuthTokens;
 
-      console.log(access_token);
-
       const res = await fetch(
         `https://graph.facebook.com/v18.0/me?fields=id,name,age_range,first_name,last_name,email,picture{url}&access_token=${access_token}`
       );
