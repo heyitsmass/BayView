@@ -11,14 +11,23 @@ import { useRef, useState } from "react";
 import React from "react";
 import DiningCard from "@/components/HomePage/Card/DiningCard";
 import LodgingCard from "@/components/HomePage/Card/LodgingCard";
+import {
+  EntertainmentCard,
+  ExperienceCard,
+  OutdoorCard,
+  RelaxationCard
+} from "@/components/HomePage/Card/EventCard";
 
 // NOTE: Define cards here
 // in the order they should initially appear in the grid
 const initialCards = [
   <FlightCard />,
   <LodgingCard />,
-  <DiningCard />
-
+  <DiningCard />,
+  <RelaxationCard />,
+  <EntertainmentCard />,
+  <OutdoorCard />,
+  <ExperienceCard />
   // ... Add cards here
 ];
 
@@ -47,7 +56,8 @@ export default function Page() {
       const cardId = `card-${index}`;
       return React.cloneElement(child, {
         key: cardId,
-        cardId: cardId
+        cardId: cardId,
+        className: `${child.props.className} relative z-0`
       });
     });
   };
