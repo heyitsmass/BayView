@@ -1,0 +1,4 @@
+.changePassword {
+  @apply p-4 rounded-2xl bg-zinc-200 dark:bg-zinc-700 border border-zinc-100 dark:border-zinc-600 shadow-xl;
+
+}
