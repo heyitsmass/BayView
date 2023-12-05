@@ -57,6 +57,7 @@ export default function Card(props: CardProps) {
             exit="closed"
             variants={blurFadeVariant}
             transition={easeOutExpoTransition}
+            data-testid="card-children"
           >
             {props.children}
           </motion.div>
@@ -73,6 +74,7 @@ const CardSubtitle = ({ subtitle }: { subtitle: string }) => {
       initial="initial"
       animate="animate"
       exit="exit"
+      data-testid="card-subtitle"
       transition={titleTransitionParams}
       variants={titleTransitionVariant}
       className="px-1"
@@ -97,6 +99,7 @@ const CardTitle = ({
     <button
       className="flex items-center -mx-3 px-1 pt-2 text-left w-full"
       onClick={onClick}
+      data-testid="toggle-button"
     >
       <FontAwesomeIcon
         className={`${styles.icon} w-4 pr-2 icon`}
@@ -115,7 +118,7 @@ const CardTitle = ({
         <h1 className="text-2xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
           {title}
           {contentPending && (
-            <span className="pl-2 text-red-500 text-lg">
+            <span className="pl-2 text-red-500 text-lg" data-testid="card-pending">
               <span className={`${styles.dot} ${styles.dot1}`}>●</span>
               <span className={`${styles.dot} ${styles.dot2}`}>●</span>
               <span className={`${styles.dot} ${styles.dot3}`}>●</span>

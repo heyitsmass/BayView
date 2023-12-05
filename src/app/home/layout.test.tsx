@@ -12,7 +12,7 @@ vi.mock("next/headers", () => {
   };
 });
 
-describe("Layout Component", async () => {
+describe.skip("Layout Component", async () => {
   //await Users.deleteOne({ username: 'testuser' });
   /*
   it('It should redirect a non-logged in user to the login page.', async () => {

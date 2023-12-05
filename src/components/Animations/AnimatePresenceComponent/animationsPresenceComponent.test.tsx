@@ -4,11 +4,15 @@ import { AnimationComponent } from './index'; // Adjust the path to your compone
 import { motion } from 'framer-motion';
 
 // Mock the framer-motion motion component
-vi.mock('framer-motion', () => ({
-	motion: {
-		div: vi.fn().mockImplementation(({ children, ...props }) => <div {...props}>{children}</div>),
-	},
-}));
+vi.mock('framer-motion', async () => {
+	const actual: Object = await vi.importActual("framer-motion");
+	return { 
+		...actual, 
+		cubicBezier: () => {}, 
+		motion: {
+		div: vi.fn().mockImplementation(({ children, ...props }) => <div {...props}>{children}</div>)}
+	}
+});
 
 describe('AnimationComponent', () => {
 

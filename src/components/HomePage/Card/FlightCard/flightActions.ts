@@ -11,16 +11,13 @@ const flightAPI = new Duffel({
 	debug: { verbose: false },
 });
 
-async function validateNameandIATACode(name) {
+export async function validateNameandIATACode(name) {
 	try {
 		const response = await flightAPI.suggestions.list({
 			name: name,
 		});
 		return response.data[0];
 	} catch (error: unknown) {
-		if (error instanceof DuffelError) {
-			throw error;
-		}
 		throw new Error('Something went wrong' + error); // Throwing a generic error if it's not a DuffelError
 	}
 }
@@ -31,9 +28,6 @@ export async function getSingleOfferById(id: string) {
 
 		return { offer: response.data };
 	} catch (error: unknown) {
-		if (error instanceof DuffelError) {
-			throw error;
-		}
 		throw new Error('Something went wrong' + error); // Throwing a generic error if it's not a DuffelError
 	}
 }
@@ -113,9 +107,6 @@ export async function flightSearchAction(formState: FlightStateInterface['search
 
 		return { data: response.data, formValues: dataReq};
 	} catch (error: unknown) {
-		if (error instanceof DuffelError) {
-			throw error;
-		}
 		throw new Error('Something went wrong' + error); // Throwing a generic error if it's not a DuffelError
 	}
 }
@@ -127,9 +118,6 @@ export async function getNextSliceFromPartialOfferRequestIDAction(requestId: str
 		  });
 		return { data: response };
 	} catch (error: unknown) {
-		if (error instanceof DuffelError) {
-			throw error;
-		}
 		throw new Error('Something went wrong' + error); // Throwing a generic error if it's not a DuffelError
 	}
 }

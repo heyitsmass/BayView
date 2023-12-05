@@ -3,10 +3,12 @@
 exports[`FlightCard > FlightCard component snapshot 1`] = `
 <div>
   <div
-    class="undefined _defaultCard_c57b5c max-h-[45rem] overflow-scroll"
+    class="undefined _defaultCard_c57b5c _extraCardPadding_c57b5c false
+			}"
   >
     <button
-      class="flex items-center"
+      class="flex items-center -mx-3 px-1 pt-2 text-left w-full"
+      data-testid="toggle-button"
     >
       <svg
         aria-hidden="true"
@@ -23,17 +25,21 @@ exports[`FlightCard > FlightCard component snapshot 1`] = `
           fill="currentColor"
         />
       </svg>
-      <h1
-        class="text-2xl font-bold"
+      <div
+        class="max-w-[98%]"
+        style="opacity: 0; filter: blur(5px); transform: none;"
       >
-        Test
-      </h1>
+        <h1
+          class="text-2xl font-bold text-ellipsis whitespace-nowrap overflow-hidden"
+        >
+          Test
+        </h1>
+      </div>
     </button>
-    <h2
-      class="pl-6 text-zinc-400"
-    />
     <div
-      class="px-3 pb-2 pt-3"
+      class="box-border"
+      data-testid="card-children"
+      style="opacity: 0; max-height: 0px; overflow: hidden; filter: blur(10px);"
     />
   </div>
 </div>

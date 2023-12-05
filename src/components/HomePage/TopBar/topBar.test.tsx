@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, it, vi, expect } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { usePathname } from 'next/navigation';
 import TopBar from '@/components/HomePage/TopBar';
 
@@ -15,11 +15,34 @@ vi.mock('next/navigation', () => ({
 }));
 
 // Mock the AnimatePresence and motion components from framer-motion
-vi.mock('framer-motion', () => ({
-	AnimatePresence: ({ children }) => children,
-	motion: {
-		div: ({ children }) => <div>{children}</div>,
-	},
+vi.mock('framer-motion', async () => {
+	const actual: Object = await vi.importActual("framer-motion");
+	return {
+	  ...actual,
+	  cubicBezier: () => {}, 
+	  AnimatePresence: ({ children }) => children,
+	  motion: {
+		  div: ({ children }) => <div>{children}</div>,
+	  },
+	};
+});
+
+// Mock useHomepage hook with the updated structure
+vi.mock('@/hooks', () => ({
+	useHomepage: () => ({
+		user: {
+			_id: 'mockUserId',
+			metadata: {
+				username: 'MockUsername',
+				first_name: 'MockFirstName',
+				last_name: 'MockLastName',
+				discord: 'MockDiscord',
+			},
+		},
+		itinerary: {
+			// Mock the itinerary object as needed
+		},
+	}),
 }));
 
 describe('<TopBar />', () => {
@@ -65,8 +88,8 @@ describe('<TopBar />', () => {
 	});
 
 	it('closes the profile dropdown when clicking outside and removes mousedown event listener on second click', async () => {
-		const { getByText, queryByText } = render(<TopBar />);
-		const profileIcon = getByText(/Username/i);
+		const { queryByText } = render(<TopBar />);
+		const profileIcon = screen.getByTestId('profile-icon');
 
 		// Simulate opening the dropdown
 		fireEvent.click(profileIcon);

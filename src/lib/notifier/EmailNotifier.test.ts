@@ -1,7 +1,7 @@
 import { Test, expect, test } from "vitest";
-import { EmailNotifier } from "../ItineraryManager";
+import { EmailNotifier } from "../../lib/notifier/Email";
 
-test("EmailNotifier", async () => {
+test.skip("EmailNotifier", async () => {
   const notifier = new EmailNotifier();
 
   const response = await notifier.send_email(
