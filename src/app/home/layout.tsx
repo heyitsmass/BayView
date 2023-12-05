@@ -17,7 +17,7 @@ import { getItinerary } from "@/utils/session/getItinerary";
 import { PopupProvider } from "../PopupProvider";
 
 export default async function Layout({
-  children,
+  children
 }: {
   children: ReactNode;
 }) {
@@ -45,7 +45,7 @@ export default async function Layout({
         >
           <Banner />
           <Animator>
-            <div className="relative h-full overflow-y-scroll">
+            <div className="relative h-full overflow-y-scroll z-0">
               {children}
             </div>
           </Animator>
