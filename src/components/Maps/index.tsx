@@ -92,7 +92,7 @@ export function GoogleMap({ origin }: { origin: GoogleGeoCode }) {
   return (
     <MapProvider>
       <Map center={origin} className="rounded-2xl h-full w-full" zoom={13}>
-        <Marker position={origin} animation={Animation.BOUNCE} />
+        <Marker position={origin} />
       </Map>
     </MapProvider>
   );
@@ -150,28 +150,29 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
 
-    directionsService
-      .route({
+    directionsService.route(
+      {
         origin,
         destination,
         travelMode,
         provideRouteAlternatives: true,
-        unitSystem: UnitSystem[unitSystem],
-        language: locale
-      })
-      .then((response) => {
-        if (directionsRenderer.getMap() === null) {
-          directionsRenderer.setMap(map);
-        }
+        unitSystem: UnitSystem[unitSystem]
+      },
+      (res) => {
+        try {
+          if (directionsRenderer.getMap() === null) {
+            directionsRenderer.setMap(map);
+          }
 
-        directionsRenderer.setDirections(response);
-        setRoutes(response.routes);
-        setEmpty(false);
-      })
-      .catch((err) => {
-        setEmpty(true);
-        directionsRenderer.setMap(null);
-      });
+          directionsRenderer.setDirections(res);
+          setRoutes(res.routes);
+          setEmpty(false);
+        } catch (err) {
+          setEmpty(true);
+          directionsRenderer.setMap(null);
+        }
+      }
+    );
 
     //return () => directionsRenderer.setMap(null);
   }, [
@@ -210,10 +211,27 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
         ></div>
       </div>
     );
+
+  const getSummary = (start: string, end: string) => {
+    return start.split(",")[0] + " to " + end.split(",")[0];
+  };
+
+  const summary = getSummary(
+    selected.legs[0].start_address,
+    selected.legs[0].end_address
+  );
+
+  const getRouteSummary = (route: google.maps.DirectionsRoute) => {
+    return getSummary(
+      route.legs[0].start_address,
+      route.legs[0].end_address
+    );
+  };
+
   return (
     <div className="text-zinc-900 dark:text-zinc-100">
       <div className={styles.title}>
-        <p className="min-w-max font-semibold">{selected.summary}</p>
+        <p className="min-w-max font-semibold">{summary}</p>
       </div>
 
       <div
@@ -237,13 +255,19 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
         <div className="pb-4 mt-4">
           <ul className="flex flex-col gap-2">
             {routes.map((route, index) => (
-              <li key={route.summary}>
+              <li key={index}>
                 <button
                   className={styles.button}
                   onClick={() => setRouteIndex(index)}
-                  disabled={selected.summary === route.summary}
+                  disabled={
+                    summary ===
+                    getSummary(
+                      route.legs[0].start_address,
+                      route.legs[0].end_address
+                    )
+                  }
                 >
-                  {route.summary}
+                  {getRouteSummary(route)}
                 </button>
               </li>
             ))}
