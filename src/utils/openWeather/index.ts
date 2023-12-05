@@ -8,9 +8,9 @@ import {
 } from "@/types/Weather";
 import dayjs from "dayjs";
 import { getIcon } from "./IconsMap";
-import { Lang } from "./langText";
+import { Locale } from "./langText";
 
-const formatDate = (dte, lang: Lang) => {
+const formatDate = (dte, lang: Locale) => {
   if (lang && lang !== "en") {
     dayjs.locale(lang.replace("_", "-"));
   }
@@ -20,7 +20,7 @@ const formatDate = (dte, lang: Lang) => {
   return "";
 };
 
-const mapCurrent = (day: CurrentForecast, lang: Lang): MappedDailyForecast => {
+const mapCurrent = (day: CurrentForecast, lang: Locale): MappedDailyForecast => {
   return {
     date: formatDate(day.dt, lang),
     description: day.weather[0]?.description,
@@ -37,7 +37,7 @@ const mapCurrent = (day: CurrentForecast, lang: Lang): MappedDailyForecast => {
 
 const mapForecast = (
   forecast: DailyForecast[],
-  lang: Lang = "en"
+  lang: Locale = "en"
 ): MappedForecast[] => {
   const mappedForecasts = [] as MappedForecast[];
 
@@ -62,7 +62,7 @@ const mapForecast = (
 const mapWeatherData = (
   forecastData: DailyForecast[],
   todayData: CurrentForecast,
-  lang: Lang
+  lang: Locale
 ): MappedWeatherData => {
   return {
     current: mapCurrent(todayData, lang),
