@@ -19,6 +19,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.17",
     "@trycourier/courier": "^6.0.0",
+    "@types/googlemaps": "^3.43.3",
     "@types/node": "20.1.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
