@@ -1,10 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { CustomDialogProps } from ".";
-import { motion } from "framer-motion";
+import { AnimationComponent } from "../Animations/AnimatePresenceComponent";
 import { GenericDialogPanel } from "./GenericPanel";
 import styles from "./styles.module.css";
-import { Fragment } from "react";
-import { AnimationComponent } from "../Animations/AnimatePresenceComponent";
 
 export const PrebuiltDialog = ({
   children,
@@ -14,22 +13,24 @@ export const PrebuiltDialog = ({
   onClose
 }: CustomDialogProps) => {
   return (
-    <AnimationComponent>
+    <AnimatePresence>
       {open && (
-        <Dialog
-          static
-          className={styles.prebuilt_dialog}
-          as={motion.div}
-          onClose={onClose}
-          open={open}
-        >
-          <AnimationComponent>
-            <GenericDialogPanel title={title} description={description}>
-              {children}
-            </GenericDialogPanel>
-          </AnimationComponent>
-        </Dialog>
+        <AnimationComponent>
+          <Dialog
+            static
+            className={styles.prebuilt_dialog}
+            as={motion.div}
+            onClose={onClose}
+            open={open}
+          >
+            <AnimationComponent>
+              <GenericDialogPanel title={title} description={description}>
+                {children}
+              </GenericDialogPanel>
+            </AnimationComponent>
+          </Dialog>
+        </AnimationComponent>
       )}
-    </AnimationComponent>
+    </AnimatePresence>
   );
 };
