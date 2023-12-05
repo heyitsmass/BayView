@@ -3,13 +3,13 @@ import Input from "@/components/Input";
 import BayviewCalendar from "@/components/Input/BayviewCalendar";
 import InputPair from "@/components/Input/InputPair";
 import { useHomepageManager } from "@/hooks";
-import { DisplayableEvent } from "@/lib/random/handler";
+
 import {
   faArrowRight,
   faClock,
   faUserGroup
 } from "@fortawesome/free-solid-svg-icons";
-import { findEvents } from "../Activity/handlers/findEvents";
+import { DisplayableEvent, findEvents } from "../../EventFinder";
 import { SearchableCard } from "../Searchable";
 
 export default function DiningCard() {
@@ -26,7 +26,13 @@ export default function DiningCard() {
         payload: event
       }),
     handleSearch: async (form: FormData) =>
-      findEvents(form, { event: "Dining" })
+      findEvents({
+        activity: "Reservation",
+        type: "Dining",
+        params: {
+          ...Object.fromEntries(form)
+        }
+      })
   };
 
   return (
