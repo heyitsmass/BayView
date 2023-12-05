@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import "./styles.css";
 
-export default function Page() {
+export default async function Page() {
   const date = "11/15/2023";
 
   const toc = [
@@ -19,11 +20,11 @@ export default function Page() {
     "DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?",
     "DO WE MAKE UPDATES TO THIS NOTICE?",
     "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?",
-    "HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?",
+    "HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?"
   ];
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <h2 className="text-3xl">
         <b>Privacy Notice</b>
       </h2>
@@ -200,7 +201,7 @@ export default function Page() {
           </span>
         ))}
       </section>
-    </>
+    </Suspense>
   );
 }
 
@@ -457,9 +458,11 @@ const Panels = [
         We may share information in specific situations described in this
         section and/or with the following third parties.
       </p>
-      <p>
-        We may need to share your personal information in the following
-        situations:
+      <div>
+        <p>
+          We may need to share your personal information in the following
+          situations:
+        </p>
         <ul className="list-disc p-4 pl-12">
           <li>
             <b>Business Transfers.</b> We may share or transfer your
@@ -468,7 +471,7 @@ const Panels = [
             or a portion of our business to another company.
           </li>
         </ul>
-      </p>
+      </div>
     </div>
   </>,
   <>
@@ -774,101 +777,108 @@ const Panels = [
         in the past twelve (12) months:
       </p>
       <table>
-        <tr>
-          <th>Category</th>
-          <th>Examples</th>
-          <th>Collected</th>
-        </tr>
-        <tr>
-          <td>A. Identifiers</td>
-          <td>
-            Contact details, such as real name, alias, postal address,
-            telephone or mobile contact number, unique personal identifier,
-            online identifier, Internet Protocol address, email address, and
-            account name{" "}
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>
-            {" "}
-            B. Protected classification characteristics under state or
-            federal law
-          </td>
-          <td> Gender and date of birth</td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>C. Commercial information</td>
-          <td>
-            Transaction information, purchase history, financial details,
-            and payment information
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>D. Biometric information</td>
-          <td>Fingerprints and voiceprints</td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>E. Internet or other similar network activity</td>
-          <td>
-            Browsing history, search history, online behavior, interest
-            data, and interactions with our and other websites,
-            applications, systems, and advertisements
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>F. Geolocation data</td>
-          <td>Device location</td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>
-            G. Audio, electronic, visual, thermal, olfactory, or similar
-            information
-          </td>
-          <td>
-            Images and audio, video or call recordings created in connection
-            with our business activities
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>H. Professional or employment-related information</td>
-          <td>
-            Business contact details in order to provide you our Services at
-            a business level or job title, work history, and professional
-            qualifications if you apply for a job with us
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>I. Education Information</td>
-          <td>Student records and directory information</td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>J. Inferences drawn from collected personal information</td>
-          <td>
-            Inferences drawn from any of the collected personal information
-            listed above to create a profile or summary about, for example,
-            an individual&apos;s preferences and characteristics
-          </td>
-          <td className="text-center">NO</td>
-        </tr>
-        <tr>
-          <td>K. Sensitive personal Information</td>
-          <td></td>
-          <td className="text-center">NO</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Examples</th>
+            <th>Collected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A. Identifiers</td>
+            <td>
+              Contact details, such as real name, alias, postal address,
+              telephone or mobile contact number, unique personal
+              identifier, online identifier, Internet Protocol address,
+              email address, and account name{" "}
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>
+              {" "}
+              B. Protected classification characteristics under state or
+              federal law
+            </td>
+            <td> Gender and date of birth</td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>C. Commercial information</td>
+            <td>
+              Transaction information, purchase history, financial details,
+              and payment information
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>D. Biometric information</td>
+            <td>Fingerprints and voiceprints</td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>E. Internet or other similar network activity</td>
+            <td>
+              Browsing history, search history, online behavior, interest
+              data, and interactions with our and other websites,
+              applications, systems, and advertisements
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>F. Geolocation data</td>
+            <td>Device location</td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>
+              G. Audio, electronic, visual, thermal, olfactory, or similar
+              information
+            </td>
+            <td>
+              Images and audio, video or call recordings created in
+              connection with our business activities
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>H. Professional or employment-related information</td>
+            <td>
+              Business contact details in order to provide you our Services
+              at a business level or job title, work history, and
+              professional qualifications if you apply for a job with us
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>I. Education Information</td>
+            <td>Student records and directory information</td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>J. Inferences drawn from collected personal information</td>
+            <td>
+              Inferences drawn from any of the collected personal
+              information listed above to create a profile or summary about,
+              for example, an individual&apos;s preferences and
+              characteristics
+            </td>
+            <td className="text-center">NO</td>
+          </tr>
+          <tr>
+            <td>K. Sensitive personal Information</td>
+            <td></td>
+            <td className="text-center">NO</td>
+          </tr>
+        </tbody>
       </table>
-      <p>
-        We may also collect other personal information outside of these
-        categories through instances where you interact with us in person,
-        online, or by phone or mail in the context of:
+      <div>
+        <p>
+          We may also collect other personal information outside of these
+          categories through instances where you interact with us in person,
+          online, or by phone or mail in the context of:
+        </p>
         <ol className="list-disc p-4 pl-12 mb-5">
           <li className="mb-2">
             Receiving help through our customer support channels;
@@ -881,7 +891,7 @@ const Panels = [
             your inquiries.
           </li>
         </ol>
-      </p>
+      </div>
       <p>
         <b>How do we use and share your personal information?</b>
       </p>
@@ -972,5 +982,5 @@ const Panels = [
       </a>
       .
     </p>
-  </>,
+  </>
 ];
