@@ -1,12 +1,21 @@
 "use client";
 import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
-import { useHomepage } from "@/hooks";
+import { SettingsDialog } from "@/components/Settings";
+import { useHomepage, useOpen } from "@/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import Session from "supertokens-web-js/recipe/session";
 import style from "./topbar.module.css";
+
 type LinkType = {
   href: string;
   label: string;
@@ -22,16 +31,13 @@ type LinkRefs = {
   [key: string]: HTMLLIElement | null;
 };
 
+function useOutsideAlerter(ref) {}
+
 export default function TopBar() {
   const pathname = usePathname();
 
   const links = useMemo(
     () => [
-      {
-        href: `/home/settings`,
-        label: "Settings",
-        path: "/settings"
-      },
       {
         href: `/home/itinerary`,
         label: "Itinerary",
@@ -68,30 +74,22 @@ export default function TopBar() {
     }
   }, [currentLink]);
 
-  const toggleProfileDropdown = () => {
-    setProfileDropdownOpen(!isProfileDropdownOpen);
-  };
-
-  const handleOutsideClick = (event: MouseEvent) => {
-    // Cast event.target to Element, which is a subtype of Node and has the contains method
-    const target = event.target as Node;
-    if (profileRef.current && !profileRef.current.contains(target)) {
-      setProfileDropdownOpen(false);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setProfileDropdownOpen(false);
+      }
     }
-  };
-
-  // This function is called when the profile icon is clicked
-  const handleProfileClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // If the dropdown is not open, we set up a listener for outside clicks
-    if (!isProfileDropdownOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      // If the dropdown is open, we remove the listener
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    toggleProfileDropdown();
-  };
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [profileRef]);
 
   const { user } = useHomepage();
 
@@ -100,7 +98,7 @@ export default function TopBar() {
   return (
     <>
       <div className={style.topBar}>
-        <div className="flex max-w-[100rem] justify-between items-center m-auto h-full">
+        <div className="flex max-w-[100rem] justify-between items-center m-auto h-full z-0">
           {/* Left Section: Title */}
           <div className="flex items-center">
             <h1 className={style.topbarShadow}>BAYVIEW</h1>
@@ -153,7 +151,7 @@ export default function TopBar() {
           {/* Right Section: Profile */}
           <div
             className="flex items-center cursor-pointer relative"
-            onClick={handleProfileClick}
+            onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
             ref={profileRef}
           >
             <div className={`${style.topbarShadow} text-base text-right mr-3 min-w-full`}>
@@ -186,28 +184,34 @@ export default function TopBar() {
 }
 
 function ProfileDropdown() {
-  //const links = [{ href: "/api/auth/logout", label: "Logout" }];
+  const id = useId();
+  const [isOpen, open, close] = useOpen();
 
   return (
-    <AnimationComponent>
-      <div
-        data-testid="logout-button"
-        className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600"
-      >
-        <ul className="w-full">
-          <li>
-            <p
-              className="px-4 py-2 w-full cursor-pointer font-medium hover:dark:bg-zinc-600 hover:bg-zinc-100 rounded-xl"
-              onClick={async () => {
-                await Session.signOut();
-                window.location.href = "/auth";
-              }}
-            >
-              Logout
-            </p>
-          </li>
-        </ul>
-      </div>
-    </AnimationComponent>
+    <>
+      <AnimationComponent>
+        <div
+          data-testid="logout-button"
+          className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 rounded-xl shadow-lg bg-white border dark:bg-zinc-700 dark:border-zinc-600"
+        >
+          <ul className={style.dropdownList}>
+            <li>
+              <p onClick={open}>Settings</p>
+            </li>
+            <li>
+              <p
+                onClick={async () => {
+                  await Session.signOut();
+                  window.location.href = "/auth";
+                }}
+              >
+                Logout
+              </p>
+            </li>
+          </ul>
+        </div>
+      </AnimationComponent>
+      {isOpen && <SettingsDialog isOpen={isOpen} close={close} />}
+    </>
   );
 }
