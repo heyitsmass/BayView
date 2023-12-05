@@ -31,8 +31,6 @@ type LinkRefs = {
   [key: string]: HTMLLIElement | null;
 };
 
-function useOutsideAlerter(ref) {}
-
 export default function TopBar() {
   const pathname = usePathname();
 

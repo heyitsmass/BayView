@@ -5,7 +5,7 @@ import { faLock, faUnlock } from "@fortawesome/free-solid-svg-icons";
 export const PasswordInput = ({
   ...props
 }: UserInputProps & {
-  ref: React.Ref<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement>;
 }) => {
   const [hidden, setHidden] = useState(true);
 
