@@ -1,12 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware() {
+export async function middleware(request: NextRequest) {
+  const req = new NextRequest(request);
   const res = NextResponse.next();
 
   const origin =
     process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
       ? process.env.NEXT_PUBLIC_VERCEL_ENV!
       : "*";
+
+  if (
+    process.env.NEXT_PUBLIC_VERCEL_ENV !== "development" &&
+    request.url.includes("/api/auth/dashboard")
+  ) {
+    return NextResponse.redirect(request.nextUrl.origin + "/home");
+  }
+
   res.headers.set("Access-Control-Allow-Origin", origin);
   res.headers.set("Access-Control-Allow-Credentials", "true");
 
@@ -25,4 +34,4 @@ export async function middleware() {
 export const config = {
   matcher: "/(api/)?auth/:path*"
 };
-export default middleware;
+//export default middleware;

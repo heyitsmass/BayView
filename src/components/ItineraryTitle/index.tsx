@@ -78,7 +78,7 @@ export default function ItineraryTitle() {
   const [isActive, setActive] = useState(false);
 
   return (
-    <div data-testid="title-check" className={itineraryTitleCSS.title}>
+    <div data-testid="title-check" className={itineraryTitleCSS.title + ' !w-[600px]'}>
       <div className={itineraryTitleCSS.header}>
         <div
           className="flex relative w-full"

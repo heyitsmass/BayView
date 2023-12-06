@@ -67,24 +67,30 @@ export default function Page() {
 
   return (
     <>
-      <AnimationComponent
-        layoutId="__content"
-        layout
-        transition={{ duration: 0.5 }}
-        className={styles.contentGrid}
-      >
-        <div className="w-[600px] col-span-full !pb-0 !pt-16">
-          <ItineraryTitle></ItineraryTitle>
-        </div>
-        {cardOrder.map((cardId, i) => (
-          <CardCollapseContext.Provider
-            value={{ onCollapse: () => handleCollapse(cardId) }}
-            key={i}
-          >
-            {enhancedCards.find((card) => card.props.cardId === cardId)}
-          </CardCollapseContext.Provider>
-        ))}
-      </AnimationComponent>
+      <AnimatePresence>
+        <AnimationComponent
+          transition={{ duration: 0.5 }}
+          layoutId="__content"
+        >
+          <div className={`${styles.contentGrid}`}>
+            <div className="col-span-full">
+              <ItineraryTitle></ItineraryTitle>
+            </div>
+
+            {cardOrder.map((cardId) => (
+              <motion.div layout key={cardId}>
+                <CardCollapseContext.Provider
+                  value={{ onCollapse: () => handleCollapse(cardId) }}
+                >
+                  {enhancedCards.find(
+                    (card) => card.props.cardId === cardId
+                  )}
+                </CardCollapseContext.Provider>
+              </motion.div>
+            ))}
+          </div>
+        </AnimationComponent>
+      </AnimatePresence>
     </>
   );
 }

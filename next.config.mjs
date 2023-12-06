@@ -20,7 +20,6 @@ const nextConfig = {
       }
     ]
   },
-  reactStrictMode: false,
   redirects: () => {
     return [
       {

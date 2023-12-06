@@ -5,19 +5,11 @@ import { useHomepage, useOpen } from "@/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+
+import { useDropdownRef } from "@/components/Settings/hooks/useDropdownRef";
 import Session from "supertokens-web-js/recipe/session";
 import style from "./topbar.module.css";
-import { useDropdownRef } from "@/components/Settings/hooks/useDropdownRef";
-import { Amiko } from "next/font/google";
-
 type PillDimensions = {
   width: number;
   position: number;
@@ -59,8 +51,6 @@ function Bar() {
     first_name: "Unknown",
     last_name: ""
   };
-
-  console.log(user.metadata);
 
   return (
     <>

@@ -49,7 +49,7 @@ export const ItineraryEvent = ({
           <div
             className={styles.img}
             style={{
-              background: `url(${picture_url})`,
+              backgroundImage: `url(${picture_url})`,
               backgroundSize: "cover"
             }}
           ></div>

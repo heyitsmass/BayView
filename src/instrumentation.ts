@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const envTypes = ["production", "development", "preview"] as const;
 
 const dbNames = ["bayview", "bayview-dev", "bayview-dev"] as const;
@@ -9,6 +7,7 @@ type NEXT_VERCEL_ENV = (typeof envTypes)[number];
 type MONGODB_COLLECTIONS = (typeof dbNames)[number];
 
 export async function register() {
+  const mongoose = await import("mongoose");
   const dbMap = {
     production: "bayview",
     development: "bayview-dev",
@@ -20,27 +19,30 @@ export async function register() {
   const MONGODB_URI =
     process.env.MONGODB_URI || "mongodb://localhost:27017";
 
-  try {
-    console.log(
-      `Connecting to ${
-        ENV === "production" ? "production" : "development"
-      } database...`
-    );
+  if (!mongoose.connection?.readyState) {
+    try {
+      console.log(
+        `Connecting to ${
+          ENV === "production" ? "production" : "development"
+        } database...`
+      );
 
-    await mongoose.connect(
-      `${MONGODB_URI}/${dbMap[ENV]}?retryWrites=true&w=majority`
-    );
+      await mongoose.connect(
+        `${MONGODB_URI}/${dbMap[ENV]}?retryWrites=true&w=majority`,
+        {}
+      );
 
-    const { name, port } = mongoose.connection;
+      const { name, port } = mongoose.connection;
 
-    if (ENV !== "production") {
-      console.log("\n*********** MongoDB ***********\n");
-      console.log(`  Name: ${name}`);
-      console.log(`  Port: ${port}`);
-      console.log("\n********** Connected **********\n");
+      if (ENV !== "production") {
+        console.log("\n*********** MongoDB ***********\n");
+        console.log(`  Name: ${name}`);
+        console.log(`  Port: ${port}`);
+        console.log("\n********** Connected **********\n");
+      }
+    } catch (err) {
+      const { message } = err as Error;
+      console.log(message);
     }
-  } catch (err) {
-    const { message } = err as Error;
-    console.log(message);
   }
 }
