@@ -108,7 +108,7 @@
 }
 
 .react-calendar__viewContainer {
-  @apply: !rounded-2xl !overflow-clip;
+  @apply !rounded-2xl !overflow-clip;
 }
 
 .react-calendar__tile:disabled {

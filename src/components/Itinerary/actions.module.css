@@ -4,9 +4,10 @@
   right: 0;
   left: 0;
   overflow-y: visible;
-  @apply flex flex-row w-full justify-around text-lg static z-50;
+  @apply flex flex-row w-full justify-around text-lg;
   max-height: 64px;
-  z-index: 2; 
+  position: relative; 
+  z-index: 999 !important; 
 }
 
 .actions svg:hover {
@@ -83,9 +84,10 @@
   .icons.open {
     height: max-content;
     opacity: 1;
-    font-size: normal;
+    @apply text-base;
     width: min-content;
-    z-index: 2;
+    position: relative; 
+    z-index: 999; 
 
   }
 

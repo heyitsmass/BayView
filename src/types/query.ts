@@ -18,6 +18,7 @@ import {
 /** Flight */
 
 export type TFlightQuery = {
+  date?:Date;
   departingFrom: string;
   arrivingTo: string;
   departureDate: Date;
@@ -29,6 +30,7 @@ export type TFlightQuery = {
 /** Hotel */
 
 export type THotelQuery = {
+  date?:Date;
   checkIn: Date;
   checkOut: Date;
   cabinType?: TCabinType;
@@ -146,7 +148,7 @@ export type TAmusementParkQuery = {
 
 export type TTheatreQuery = {
   date: Date;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   seatType: string;
   play?: string;
@@ -156,14 +158,14 @@ export type TTheatreQuery = {
 export type TConcertQuery = {
   date: Date;
   artist?: string;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   seatType: string;
 };
 
 export type TSportsQuery<T extends TSportEvent> = {
   date: Date;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   seatType: string;
   team?: string;
@@ -173,22 +175,23 @@ export type TSportsQuery<T extends TSportEvent> = {
 export type TNightlifeQuery = {
   date: Date;
   dressCode: string;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   atmosphere: string;
   club?: string;
 };
 
 export type TShoppingQuery = {
+  date?:Date;
   location?: string;
-  priceRange: string;
+  priceRange: number;
   mallType: TMallType;
 };
 /** Relaxation */
 
 export type TSpaQuery = {
   date: Date;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   spa?: string;
   service?: string;
@@ -197,7 +200,7 @@ export type TSpaQuery = {
 
 export type TMuseumQuery = {
   date: Date;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   museum?: string;
   ageRange?: number;
@@ -206,13 +209,14 @@ export type TMuseumQuery = {
 
 export type TParkQuery = {
   // finds local parks
+  date?:Date;
 };
 
 /** Outdoor */
 
 export type TGolfQuery = {
   date: Date;
-  priceRange: string;
+  priceRange: number;
   partySize: number;
   difficulty: TDifficultyType;
   course?: string;
@@ -220,6 +224,7 @@ export type TGolfQuery = {
 };
 
 export type THikingQuery = {
+  date?:Date;
   difficulty: TDifficultyType;
   trail?: string;
   length: number;

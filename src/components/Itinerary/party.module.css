@@ -13,7 +13,7 @@
 }
 
 .party_member {
-  @apply flex items-center bg-white dark:bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full;
+  @apply flex items-center bg-white dark:bg-zinc-800 shadow-md rounded-xl relative p-1 mt-2 w-full min-w-max;
   transition: all 0.1s ease-in-out;
 }
 
@@ -50,7 +50,7 @@
   }
 
   .party_member {
-    width: calc(min-content + 4rem);
+    @apply w-min px-4; 
   }
 }
 
@@ -62,7 +62,7 @@
   }
 
   .party_member {
-    width: calc(min-content + 4rem);
+    @apply w-min px-4; 
   }
 }
 

@@ -1,10 +1,10 @@
 'use client';
 import Card from '@/components/HomePage/Card';
 import { AnimatePresence, motion } from 'framer-motion';
-import Search from './Presentations/Search';
-import SelectFlight from './Presentations/Select';
 import Book from './Presentations/Book';
 import Confirmed from './Presentations/Confirmed';
+import Search from './Presentations/Search';
+import SelectFlight from './Presentations/Select';
 import { FlightContext, useFlightCardState } from './flightState';
 
 export const stepDetails = {
@@ -35,7 +35,7 @@ export default function FlightCard() {
 	};
 
 	return (
-		<motion.div layout="position">
+
 			<FlightContext.Provider value={{ flightState, dispatch }}>
 				<Card title={flightState.cardTitle} subtitle={flightState.cardSubtitle} step={flightState.step} contentPending={flightState.contentPending}>
 					<AnimatePresence onExitComplete={() => dispatch({ type: 'SET_EXITING', payload: false })}>
@@ -55,6 +55,6 @@ export default function FlightCard() {
 					</AnimatePresence>
 				</Card>
 			</FlightContext.Provider>
-		</motion.div>
+
 	);
 }

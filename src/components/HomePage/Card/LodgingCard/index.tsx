@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { findEvents } from "../../EventFinder";
 import { SearchableCard } from "../Searchable";
+import LocationInput from "@/components/Button/Location";
 
 export default function LodgingCard() {
   const props = {
@@ -25,13 +26,7 @@ export default function LodgingCard() {
   };
   return (
     <SearchableCard {...props}>
-      <Input
-        label="Location"
-        name="lodgingLocation"
-        icon={{ icon: faLocationArrow }}
-        placeholder="Going to..."
-        required
-      />
+      <LocationInput/>
       <InputPair icon={faArrowRight}>
         <BayviewCalendar
           label="Check-In Date / Time"
@@ -54,6 +49,7 @@ export default function LodgingCard() {
           name="adult_count"
           icon={{ icon: faUser }}
           type="number"
+          defaultValue="1"
           min="0"
           placeholder="Adults"
           required
@@ -63,6 +59,7 @@ export default function LodgingCard() {
           name="children_count"
           icon={{ icon: faUser }}
           placeholder="Children"
+          defaultValue="0"
           min="0"
           type="number"
           required
@@ -72,6 +69,7 @@ export default function LodgingCard() {
           name="room_count"
           icon={{ icon: faUser }}
           placeholder="Rooms"
+          defaultValue="1"
           min="0"
           type="number"
           required
@@ -81,7 +79,10 @@ export default function LodgingCard() {
     </SearchableCard>
   );
 }
-const preventMinus = (e: { code: string; preventDefault: () => void }) => {
+const preventMinus = (e: {
+  code: string;
+  preventDefault: () => void;
+}) => {
   if (e.code === "Minus") {
     e.preventDefault();
   }

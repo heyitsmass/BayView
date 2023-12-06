@@ -59,16 +59,18 @@ const findDining = async ({
   const { date, priceRange, partySize, mealType, cuisineType, restaurant } =
     params;
 
+  let price = priceRange === 0?  9999 : priceRange; 
+
   const getResult = () => {
     return {
       name: restaurant || getRandom(diners),
       mealPeriodInfo: {
         name: mealType || getRandom(MealType),
         experience: faker.lorem.sentence(),
-        price: faker.number.int({ min: 0, max: priceRange }) * partySize,
+        price: faker.number.int({ min: 0, max: price }) * partySize,
         cuisine: cuisineType || getRandom(CuisineTypes)
       },
-      priceRange: priceRange < 40 ? "$" : priceRange < 80 ? "$$" : "$$$",
+      priceRange: price < 40 ? "$" : price < 80 ? "$$" : "$$$",
       mealOffer: {
         id: faker.string.uuid(),
         time: faker.date
@@ -144,7 +146,7 @@ const findHotel = async ({ ...params }: THotelQuery): Promise<Hotel[]> => {
       price:
         faker.number.int({
           min: 0,
-          max: priceRange
+          max: priceRange === 0?  9999 : priceRange
         }) *
         roomCount *
         partySize,

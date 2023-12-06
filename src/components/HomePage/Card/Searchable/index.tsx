@@ -40,6 +40,7 @@ export const SearchableCard = ({
   subtitle,
   children,
   btnTxt,
+  disabled,
   handleSearch
 }: SearchableCardProps) => {
   const [data, setData] = useState(null as DisplayableEvent[] | null);
@@ -85,7 +86,12 @@ export const SearchableCard = ({
           <form action={handleSubmit}>
             <FormFields>
               {children}
-              <Button variant="secondary" className="mt-4" type="submit">
+              <Button
+                variant="secondary"
+                className="mt-4"
+                type="submit"
+                disabled={disabled}
+              >
                 {btnTxt}
               </Button>
             </FormFields>

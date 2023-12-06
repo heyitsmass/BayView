@@ -20,6 +20,7 @@ export function ScrollableData<T>({
   data: readonly T[] | T[];
   title?: string;
   current?: any;
+  ref?: React.MutableRefObject<any>;
   onClick?: (value: T) => void;
   End?: () => JSX.Element;
   Component?: React.FC<T>;
@@ -27,7 +28,10 @@ export function ScrollableData<T>({
   const [currentPage, setPage] = useState(1);
   const max_page = Math.ceil(data.length / 5);
 
-  const displayData = data.slice(5 * (currentPage - 1), currentPage * 5);
+  const displayData = data.slice(
+    5 * (currentPage - 1),
+    currentPage * 5
+  );
 
   const id = useId();
 
@@ -76,8 +80,10 @@ export function ScrollableData<T>({
   };
 
   return (
-    <div className="overflow-y-auto min-w-fit h-full py-2">
-      {title && <h2 className="px-2 font-semibold capitalize">{title}</h2>}
+    <div className="overflow-y-auto min-w-fit h-full py-2 relative">
+      {title && (
+        <h2 className="px-2 font-semibold capitalize">{title}</h2>
+      )}
       <InfiniteScroll
         className="!h-full"
         hasMore={currentPage < max_page}
@@ -87,15 +93,21 @@ export function ScrollableData<T>({
         dataLength={data.length}
         endMessage={(End && <End />) || <EndMessage />}
       >
-        <ul className="scale-95" id={id}>
+        <ul className="scale-95 relative" id={id}>
           {displayData.map((value, i) => {
             return (
-              <li key={i}>
+              <li
+                key={i}
+                onClick={(e) => {
+                  onClick && onClick(value);
+                }}
+              >
                 {(Component && <Component key={i} {...value} />) || (
                   <p
-                    onClick={() => onClick && onClick(value)}
                     className={
-                      (current === value ? "bg-zinc-600 rounded-2xl" : "") +
+                      (current === value
+                        ? "bg-zinc-600 rounded-2xl"
+                        : "") +
                       " dark:text-zinc-300 dark:hover:!text-zinc-400 hover:hover:cursor-pointer  font-semibold  p-2 text-center capitalize"
                     }
                   >

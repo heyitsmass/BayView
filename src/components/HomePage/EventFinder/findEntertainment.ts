@@ -99,7 +99,9 @@ export const StoreNames = [
 
 export type TStoreNameType = (typeof StoreNames)[number];
 
-export const customerReviews = (stores: readonly string[] | string[]) => {
+export const customerReviews = (
+  stores: readonly string[] | string[]
+) => {
   const names = [
     "John Doe",
     "Jane Doe",
@@ -358,13 +360,15 @@ const findTheatre = async ({
   const { date, priceRange, partySize, seatType, play, playwright } =
     params;
 
+  let price = priceRange === 0 ? 9999 : priceRange;
+
   const getResult = () => {
     return {
       venue: getRandom(theatres),
-      play: play || getRandom(plays),
+      play: getRandom(plays, play),
       playwright: playwright || faker.person.firstName(),
       showTimes: showTimes({ refDate: date }),
-      ticketPrice: roundedFloat(1, parseInt(priceRange)),
+      ticketPrice: roundedFloat(1, price),
       theatreRating: roundedFloat(1, 5),
       seatType: getRandom(SeatType, seatType),
       intervalDuration: `${faker.number.int({
@@ -375,7 +379,8 @@ const findTheatre = async ({
   };
 
   return Array.from({ length: randomInt(1, 18) }, getResult).sort(
-    (a, b) => a.showTimes[0].date.valueOf() - b.showTimes[0].date.valueOf()
+    (a, b) =>
+      a.showTimes[0].date.valueOf() - b.showTimes[0].date.valueOf()
   ) as Theatre[];
 };
 
@@ -449,7 +454,7 @@ const findConcert = async ({
   ...params
 }: TConcertQuery): Promise<Concert[]> => {
   const { date, artist, priceRange, partySize, seatType } = params;
-
+  let price = priceRange === 0 ? 9999 : priceRange;
   const getResult = () => {
     return {
       artist: getRandom([faker.person.firstName(), artist]),
@@ -459,7 +464,7 @@ const findConcert = async ({
         days: 1
       }),
       concert: getRandom(Concerts),
-      ticketPrice: roundedFloat(1, parseInt(priceRange)),
+      ticketPrice: roundedFloat(1, price),
       setList: randomList(setList),
       venueRating: roundedFloat(1, 5),
       attendees: faker.number.int({ min: 1, max: 1000 }),
@@ -978,6 +983,17 @@ const broadcastingChannels = [
   "TLC"
 ];
 
+export const SportType = [
+  "Football",
+  "Baseball",
+  "Basketball",
+  "Hockey",
+  "Soccer",
+  "Tennis"
+] as const;
+
+export type TSportType = (typeof SportType)[number];
+
 const teamsBySport = (sport: TSportEvent) => {
   return teams[sport];
 };
@@ -999,6 +1015,8 @@ async function findSports<T extends TSportEvent = TSportEvent>({
 }: TSportsQuery<T>): Promise<Sports[]> {
   const { date, priceRange, partySize, seatType, team } = params;
 
+  let price = priceRange === 0 ? 9999 : priceRange;
+
   const sport =
     params.sport || getRandom(Object.keys(events) as TSportEvent[]);
 
@@ -1006,7 +1024,7 @@ async function findSports<T extends TSportEvent = TSportEvent>({
     type: sport,
     event: randomEvent(sport),
     teams: [team || randomTeam(sport), randomTeam(sport)],
-    ticketPrice: roundedFloat(1, parseInt(priceRange)),
+    ticketPrice: roundedFloat(1, price),
     date: faker.date.soon({
       refDate: date,
       days: 1
@@ -1165,7 +1183,7 @@ export const DressCode = [
 export type TDressCodeType = (typeof DressCode)[number];
 
 export const Music = [
-  "Electronic Dance Music (EDM)",
+  "EDM",
   "Hip-Hop/Rap",
   "Pop",
   "Rock",
@@ -1203,22 +1221,15 @@ export const Music = [
   "Ska",
   "Grime",
   "Hardcore",
-  "Country Rock",
-  "Fusion Jazz",
   "Trap",
   "Samba",
   "Acoustic",
-  "Instrumental",
-  "Electropop",
   "Dub",
   "Garage",
   "Big Band",
   "Synthwave",
   "Deep House",
-  "Progressive Rock",
   "Nu Disco",
-  "Ambient House",
-  "Tropical House",
   "Dub Techno",
   "Folk Rock",
   "Trip-Hop",
@@ -1257,7 +1268,6 @@ export const Music = [
   "Industrial",
   "NeoSoul",
   "New Age",
-  "IDM (Intelligent Dance Music)",
   "Post-Hardcore"
 ] as const;
 
@@ -1439,12 +1449,13 @@ const findNightlife = async ({
 }: TNightlifeQuery): Promise<Nightlife[]> => {
   const { date, dressCode, priceRange, partySize, atmosphere, club } =
     params;
+  let price = priceRange === 0 ? 9999 : priceRange;
 
   return Array.from({ length: randomInt(1, 18) }, () => {
     return {
       venue: getRandom(Clubs, club),
       dressCode: getRandom(DressCode, dressCode),
-      coverCharge: roundedFloat(1, parseInt(priceRange)) * partySize,
+      coverCharge: roundedFloat(1, price) * partySize,
       ageRestriction: randomInt(18, 21),
       openingHours: openingHours(),
       livePerformances: faker.datatype.boolean(),
@@ -1460,6 +1471,8 @@ const findShopping = async ({
   ...params
 }: TShoppingQuery): Promise<Shopping[]> => {
   const { location, priceRange } = params;
+  let price = priceRange === 0 ? 9999 : priceRange;
+
   const getResult = () => {
     const store = getRandom(StoreNames);
 
@@ -1477,10 +1490,10 @@ const findShopping = async ({
         description: faker.lorem.sentence()
       },
       customerReviews: customerReviews([store]),
-      shoppingBudget: roundedFloat(1, parseInt(priceRange))
+      shoppingBudget: roundedFloat(1, price)
     } as Shopping;
   };
-  return Array.from({ length: randomInt(1, 18) }, getResult).sort((a, b) =>
-    a.mall.localeCompare(b.mall)
+  return Array.from({ length: randomInt(1, 18) }, getResult).sort(
+    (a, b) => a.mall.localeCompare(b.mall)
   ) as Shopping[];
 };

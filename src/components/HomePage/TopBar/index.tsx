@@ -5,7 +5,7 @@ import { useHomepage, useOpen } from "@/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
+import React, {
   useEffect,
   useId,
   useLayoutEffect,
@@ -15,83 +15,52 @@ import {
 } from "react";
 import Session from "supertokens-web-js/recipe/session";
 import style from "./topbar.module.css";
-
-type LinkType = {
-  href: string;
-  label: string;
-  path: string;
-};
+import { useDropdownRef } from "@/components/Settings/hooks/useDropdownRef";
+import { Amiko } from "next/font/google";
 
 type PillDimensions = {
   width: number;
   position: number;
 };
 
-type LinkRefs = {
-  [key: string]: HTMLLIElement | null;
+const links = {
+  "/home": {
+    label: "Home",
+    path: "/"
+  },
+  "/home/itinerary": {
+    label: "Itinerary",
+    path: "/itinerary"
+  }
+} as const;
+
+type Links = keyof typeof links;
+
+type LinkType<T extends Links = Links> = {
+  href?: T;
+  label: string;
+  path: string;
 };
 
-export default function TopBar() {
-  const pathname = usePathname();
+type LinkRefs = {
+  [P in Links]: HTMLAnchorElement | null;
+};
 
-  const links = useMemo(
-    () => [
-      {
-        href: `/home/itinerary`,
-        label: "Itinerary",
-        path: "/itinerary"
-      },
-      { href: `/home/`, label: "Home", path: "/" }
-    ],
-    []
-  );
+const hrefs = Object.keys(links);
+const values = Object.values(links);
 
-  const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const [pillDimensions, setPillDimensions] = useState<PillDimensions>({
-    width: 0,
-    position: 0
-  });
-  const linkRefs = useRef<LinkRefs>({});
-  const profileRef = useRef<HTMLDivElement | null>(null);
+const TopBar = React.memo(Bar);
 
-  // Determine the current link based on the pathname
-  const currentLink: LinkType = useMemo(() => {
-    return links.find((link) => pathname.includes(link.path)) || links[0];
-  }, [links, pathname]);
-
-  // useLayoutEffect is used to measure and update the pill's size and position
-  // immediately after the DOM updates but before the browser has painted. This
-  // helps prevent any visual discrepancies. It runs only once per relevant change,
-  // because it depends on `currentLink`, which is memoized and changes less frequently.
-  useLayoutEffect(() => {
-    const el = linkRefs.current[currentLink.href];
-    if (el && el.parentElement) {
-      const newWidth = el.offsetWidth;
-      const newPosition = el.offsetLeft - el.parentElement.offsetLeft;
-      setPillDimensions({ width: newWidth, position: newPosition });
-    }
-  }, [currentLink]);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        profileRef.current &&
-        !profileRef.current.contains(event.target)
-      ) {
-        setProfileDropdownOpen(false);
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [profileRef]);
-
+export default TopBar;
+function Bar() {
   const { user } = useHomepage();
 
-  const { first_name, last_name } = user.metadata;
+  const { first_name, last_name } = user.metadata || {
+    first_name: "Unknown",
+    last_name: ""
+  };
+
+  console.log(user.metadata);
 
   return (
     <>
@@ -103,86 +72,135 @@ export default function TopBar() {
           </div>
 
           {/* Middle Section: Links */}
-          <div className="flex flex-grow justify-center items-center text-base relative">
-            <div className="items-start">
-              <ul className="flex justify-center items-center gap-10 mt-[1.6rem]">
-                {links.toReversed().map((link) => (
-                  <li
-                    key={link.href}
-                    ref={(el) =>
-                      el ? (linkRefs.current[link.href] = el) : null
-                    }
-                  >
-                    <Link href={link.href}>
-                      <h6 className={style.topbarShadow}>
-                        {link.label == currentLink.label ? (
-                          <span className="font-bold transition-all">
-                            {link.label}
-                          </span>
-                        ) : (
-                          <span className="font-medium">{link.label}</span>
-                        )}
-                      </h6>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              {/* Pill indicator below the links */}
-              <motion.div
-                className="relative h-1 mt-[1.4rem] rounded bg-red-500"
-                initial={{
-                  left: pillDimensions.position,
-                  width: pillDimensions.width,
-                  opacity: 0
-                }}
-                animate={{
-                  left: pillDimensions.position,
-                  width: pillDimensions.width,
-                  opacity: 1,
-                  boxShadow: "0 0 4px 2px rgba(239, 68, 68, 0.2)"
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              />
-            </div>
-          </div>
+          <TopBarLinks />
 
           {/* Right Section: Profile */}
-          <div
-            className="flex items-center cursor-pointer relative"
-            onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
-            ref={profileRef}
-          >
-            <div className={`${style.topbarShadow} text-base text-right mr-3 min-w-full`}>
-              {first_name || "Unknown"} {last_name}
-            </div>
-            <div className="flex-shrink-0">
-              <div
-                data-testid="profile-icon"
-                className="flex rounded-full w-9 h-9 bg-red-500 text-center justify-center items-center"
-              >
-                <p
-                  data-testid="profile-initials"
-                  className={`${style.topbarShadow} w-100 font-bold text-white`}
-                >
-                  {(first_name || "Unknown").at(0)?.toLocaleUpperCase()}
-                </p>
-              </div>
-              {/* <Image src={null} width="100" height="50" alt="Profile Image" className="w-8 h-8 rounded-full" /> */}
-            </div>
-
-            {/* Dropdown */}
-            <AnimatePresence>
-              {isProfileDropdownOpen && <ProfileDropdown />}
-            </AnimatePresence>
-          </div>
+          <ProfileRight first_name={first_name} last_name={last_name} />
         </div>
       </div>
     </>
   );
 }
 
-function ProfileDropdown() {
-  const id = useId();
+const LinkComponent = () => {
+  const pathname = usePathname() as keyof typeof links;
+  const linkRefs = useRef<LinkRefs>({} as LinkRefs);
+
+  const [pillDimensions, setPillDimensions] = useState<PillDimensions>({
+    width: 0,
+    position: 0
+  });
+
+  useLayoutEffect(() => {
+    const el = linkRefs.current[pathname];
+    if (el && el.parentElement) {
+      const width = el.offsetWidth;
+      const position = el.offsetLeft - el.parentElement.offsetLeft;
+      setPillDimensions({ width, position });
+    }
+  }, [pathname]);
+
+  return (
+    <div className="flex flex-grow justify-center items-center text-base relative">
+      <div className="items-start">
+        <ul className="flex justify-center items-center gap-10 mt-[1.6rem]">
+          {values.map((link, i) => (
+            <TopBarLink
+              key={i}
+              label={link.label}
+              linkRefs={linkRefs}
+              index={i}
+            />
+          ))}
+        </ul>
+
+        {/* Pill indicator below the links */}
+        <motion.div
+          className="relative h-1 mt-[1.4rem] rounded bg-red-500"
+          initial={{
+            left: pillDimensions.position,
+            width: pillDimensions.width,
+            opacity: 0
+          }}
+          animate={{
+            left: pillDimensions.position,
+            width: pillDimensions.width,
+            opacity: 1,
+            boxShadow: "0 0 4px 2px rgba(239, 68, 68, 0.2)"
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const TopBarLinks = React.memo(LinkComponent);
+
+const BarLink = ({ label, linkRefs, index }) => {
+  const pathname = usePathname();
+
+  return (
+    <Link
+      key={index}
+      href={hrefs[index]}
+      ref={(el) => (el ? (linkRefs.current[hrefs[index]] = el) : null)}
+    >
+      <h6 className={style.topbarShadow}>
+        <span
+          className={
+            label === links[pathname].label
+              ? "font-bold transition-all"
+              : "font-medium"
+          }
+        >
+          {label}
+        </span>
+      </h6>
+    </Link>
+  );
+};
+
+const TopBarLink = React.memo(BarLink);
+
+const Right = ({ ...props }: { first_name: string; last_name: string }) => {
+  const [isOpen, open, close] = useOpen();
+  const profileRef = useDropdownRef<HTMLDivElement>(close);
+  const toggleDropdown = () => (isOpen ? close() : open());
+
+  const { first_name, last_name } = props;
+  return (
+    <div
+      className="flex items-center cursor-pointer relative"
+      onClick={toggleDropdown}
+      ref={profileRef}
+    >
+      <div
+        className={`${style.topbarShadow} text-base text-right mr-3 min-w-full`}
+      >
+        {first_name} {last_name}
+      </div>
+      <div className="flex-shrink-0">
+        <div
+          data-testid="profile-icon"
+          className="flex rounded-full w-9 h-9 bg-red-500 text-center justify-center items-center"
+        >
+          <p
+            data-testid="profile-initials"
+            className={`${style.topbarShadow} w-100 font-bold text-white`}
+          >
+            {first_name[0].toLocaleUpperCase()}
+          </p>
+        </div>
+      </div>
+      <AnimatePresence>{isOpen && <ProfileDropdown />}</AnimatePresence>
+    </div>
+  );
+};
+
+const ProfileRight = React.memo(Right);
+
+const Dropdown = () => {
   const [isOpen, open, close] = useOpen();
 
   return (
@@ -212,4 +230,6 @@ function ProfileDropdown() {
       {isOpen && <SettingsDialog isOpen={isOpen} close={close} />}
     </>
   );
-}
+};
+
+const ProfileDropdown = React.memo(Dropdown);

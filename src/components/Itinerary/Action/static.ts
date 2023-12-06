@@ -45,8 +45,7 @@ export type ActionDefinition<T extends ActionMethods = ActionMethods> = {
 const updateActions: ActionDefinition<UpdateMethods> = {
   labels: { lg: "Quick Updates", sm: "Updates" },
   methods: [
-    { type: "del", icon: faTrashCan },
-    { type: "refresh", icon: faArrowsRotate }
+    { type: "del", icon: faTrashCan }
   ]
 };
 
@@ -73,8 +72,6 @@ const notificationMethods = [
   { type: "email", icon: faEnvelope },
   { type: "sms", icon: faPhone },
   { type: "discord", icon: faDiscord },
-  { type: "facebook", icon: faFacebook },
-  { type: "slack", icon: faSlack },
   { type: "twitter", icon: faTwitter }
 ];
 

@@ -169,8 +169,9 @@ export const ActivityGroup = [
 
 export type TActivityGroup = (typeof ActivityGroup)[number];
 
-export type TActivitySubType<T extends TActivityGroup> =
-  T extends "Sports" ? TSportEvent : undefined;
+export type TActivitySubType<T extends TActivityGroup> = T extends "Sports"
+  ? TSportEvent
+  : undefined;
 
 export type TEventQuery<
   G extends TActivityGroup = TActivityGroup,
@@ -349,13 +350,13 @@ export interface AmusementPark {
 }
 
 export const SeatType = [
-  "General Admission",
-  "Reserved Seating",
-  "Standing Room Only",
-  "VIP Seating",
-  "Box Seating",
-  "Premium Seating",
-  "Accessible Seating"
+  "GA",
+  "Reserved",
+  "Standing",
+  "VIP",
+  "Box",
+  "Premium",
+  "Accessible"
 ];
 
 export type TSeatType = (typeof SeatType)[number];
@@ -480,7 +481,9 @@ export interface Golf {
   // ... (other golf-specific properties)
 }
 
-const Difficulty = [
+export const GolfHoles = ["9", "18"] as const;
+
+export const Difficulty = [
   "Easy",
   "Moderate",
   "Difficult",

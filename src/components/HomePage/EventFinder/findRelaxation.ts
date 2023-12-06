@@ -1,8 +1,19 @@
-import { Museum, Park, Spa, TEventQuery, TRelaxation } from "@/types/Event";
+import {
+  Museum,
+  Park,
+  Spa,
+  TEventQuery,
+  TRelaxation
+} from "@/types/Event";
 import { TMuseumQuery, TParkQuery, TSpaQuery } from "@/types/query";
 import { faker } from "@faker-js/faker";
 import { randomInt } from "crypto";
-import { getRandom, openingHours, randomList, roundedFloat } from "./utils";
+import {
+  getRandom,
+  openingHours,
+  randomList,
+  roundedFloat
+} from "./utils";
 
 export const findRelaxation = async ({
   ...props
@@ -21,7 +32,7 @@ export const findRelaxation = async ({
   }
 };
 
-const spas = [
+export const spas = [
   "Serenity Spa Retreat",
   "Tranquil Oasis Wellness Center",
   "Blissful Escapes Spa",
@@ -44,7 +55,7 @@ const spas = [
   "Celestial Serenity Spa"
 ];
 
-const packages = [
+export const packages = [
   "Relaxation Retreat",
   "Couples Bliss Package",
   "Detox and Renewal",
@@ -57,7 +68,7 @@ const packages = [
   "Wellness Wonderland"
 ];
 
-const wellnessClasses = [
+export const wellnessClasses = [
   "Yoga Basics",
   "Meditation and Mindfulness",
   "Pilates Fusion",
@@ -70,7 +81,7 @@ const wellnessClasses = [
   "Mind-Body Connection Class"
 ];
 
-const services = [
+export const services = [
   "Swedish Massage",
   "Deep Tissue Massage",
   "Hot Stone Therapy",
@@ -84,7 +95,11 @@ const services = [
 ];
 
 const findSpa = async ({ ...params }: TSpaQuery): Promise<Spa[]> => {
-  const { date, priceRange, partySize, service, spaPackage, spa } = params;
+  const { date, priceRange, partySize, service, spaPackage, spa } =
+    params;
+
+  let price =
+    parseInt(priceRange.toString()) === 0 ? 9999 : priceRange;
 
   return Array.from({ length: randomInt(1, 18) }, () => {
     return {
@@ -92,21 +107,21 @@ const findSpa = async ({ ...params }: TSpaQuery): Promise<Spa[]> => {
         refDate: date,
         days: 1
       }),
-      spaName: spa || getRandom(spas),
+      spaName: getRandom(spas, spa),
       spaRating: roundedFloat(1, 5),
       bookingPolicy: "24 hours",
       openingHours: openingHours(),
       spaPackage: {
-        name: spaPackage || getRandom(packages),
-        price: roundedFloat(1, parseInt(priceRange))
+        name: getRandom(packages, spaPackage),
+        price: roundedFloat(1, price)
       },
       service: {
-        name: service || getRandom(services),
-        price: roundedFloat(1, parseInt(priceRange))
+        name: getRandom(services, service),
+        price: roundedFloat(1, price)
       },
       wellnessClass: {
         name: getRandom(wellnessClasses),
-        price: roundedFloat(1, parseInt(priceRange))
+        price: roundedFloat(1, price)
       }
     } as Spa;
   }).sort((a, b) => a.date.valueOf() - b.date.valueOf()) as Spa[];
@@ -164,16 +179,17 @@ const specialEvents = [
 const findMuseum = async ({
   ...params
 }: TMuseumQuery): Promise<Museum[]> => {
-  const { date, priceRange, partySize, museum, ageRange, exhibit } = params;
-
+  const { date, priceRange, partySize, museum, ageRange, exhibit } =
+    params;
+  let price = priceRange === 0 ? 9999 : priceRange;
   return Array.from({ length: randomInt(1, 18) }, () => {
     return {
-      museum: museum || getRandom(museums),
+      museum: getRandom(museums, museum),
       ageRange: ageRange || randomInt(1, 18),
-      admissionFee: roundedFloat(1, parseInt(priceRange)),
+      admissionFee: roundedFloat(1, price),
       openingHours: openingHours(),
       exhibit: {
-        name: exhibit || getRandom(exhibits),
+        name: getRandom(exhibits, exhibit),
         description: faker.lorem.words(),
         date: faker.date.soon({
           refDate: date,

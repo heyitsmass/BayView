@@ -112,7 +112,7 @@ const experiences = [
 ];
 const findZoo = async ({ ...params }: TZooQuery): Promise<Zoo[]> => {
   const { date, priceRange, exhibit, experience, partySize } = params;
-
+  let price =priceRange === 0?  9999 : priceRange;
   const getResult = () => {
     return {
       zoo: getRandom(ZooName),
@@ -131,7 +131,8 @@ const findZoo = async ({ ...params }: TZooQuery): Promise<Zoo[]> => {
         description: faker.lorem.sentence()
       },
       admissionFee:
-        faker.number.int({ min: 0, max: priceRange }) * partySize,
+        faker.number.int({ min: 0, max: price }) *
+        partySize,
       feedingSchedule: {
         name: getRandom(feedings),
         time: faker.date
@@ -157,8 +158,9 @@ const findZoo = async ({ ...params }: TZooQuery): Promise<Zoo[]> => {
     } as Zoo;
   };
 
-  return Array.from({ length: randomInt(1, 18) }, getResult).sort((a, b) =>
-    a.feedingSchedule.time.localeCompare(b.feedingSchedule.time)
+  return Array.from({ length: randomInt(1, 18) }, getResult).sort(
+    (a, b) =>
+      a.feedingSchedule.time.localeCompare(b.feedingSchedule.time)
   ) as Zoo[];
 };
 
@@ -234,7 +236,7 @@ const findAquarium = async ({
       days: 1
     });
     const exp = getRandom(AquariumExperiences, experience);
-
+    let price =priceRange === 0?  9999 : priceRange;
     return {
       aquarium: getRandom(AquariumName),
       exhibit: {
@@ -242,7 +244,10 @@ const findAquarium = async ({
         description: faker.lorem.sentence(),
         date: showTime
       },
-      admissionFee: faker.number.int({ min: 0, max: priceRange }),
+      admissionFee: faker.number.int({
+        min: 0,
+        max: price
+      }),
       openingHours: openingHours("Day"),
       underwaterTunnel: faker.datatype.boolean(),
       touchPools: exp === "Touch Pools",
@@ -265,8 +270,8 @@ const findAquarium = async ({
       }
     } as Aquarium;
   };
-  return Array.from({ length: randomInt(1, 18) }, getResult).sort((a, b) =>
-    a.showSchedule.time.localeCompare(b.showSchedule.time)
+  return Array.from({ length: randomInt(1, 18) }, getResult).sort(
+    (a, b) => a.showSchedule.time.localeCompare(b.showSchedule.time)
   ) as Aquarium[];
 };
 
@@ -333,10 +338,17 @@ const waterSlides = [
 const findWaterPark = async ({
   ...params
 }: TWaterParkQuery): Promise<Waterpark[]> => {
-  const { date, priceRange, partySize, waterPark, attraction, waterslide } =
-    params;
+  const {
+    date,
+    priceRange,
+    partySize,
+    waterPark,
+    attraction,
+    waterslide
+  } = params;
 
   const atrs = randomList(waterParkAttraction);
+  let price =priceRange === 0?  9999 : priceRange;
   const getResult = () => {
     return {
       parkName: getRandom(WaterPark, waterPark),
@@ -346,7 +358,8 @@ const findWaterPark = async ({
         description: faker.lorem.sentence()
       },
       admissionFee:
-        faker.number.int({ min: 0, max: priceRange }) * partySize,
+        faker.number.int({ min: 0, max: price}) *
+        partySize,
       waterSlides: randomList(waterSlides),
       openingHours: openingHours("Day"),
       wavePool: atrs.includes("Wave Pool"),
@@ -462,13 +475,14 @@ const findAmusementPark = async ({
   } = params;
 
   const rds = randomList(rides);
-
+  let price =priceRange === 0?  9999 : priceRange;
   const getResult = () => {
     return {
       parkName: getRandom(parks, amusementPark),
       rides: rds,
       admissionFee:
-        faker.number.int({ min: 0, max: priceRange }) * partySize,
+        faker.number.int({ min: 0, max: price}) *
+        partySize,
       openingHours: openingHours("Day"),
       rollerCoaster: getRandom(rollerCoasters, attraction),
       heightRestriction: heightRestrictions(rds),

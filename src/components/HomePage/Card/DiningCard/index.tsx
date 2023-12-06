@@ -42,13 +42,14 @@ export default function DiningCard() {
         icon={{ icon: faUserGroup }}
         placeholder="Party Size"
         type="number"
+        min={0}
+        defaultValue={1}
         max={10}
       ></Input>
       <BayviewCalendar
         label="Booking Date"
         name="booking_date"
         placeholder="Booking Date"
-        minDate={new Date(Date.now())}
       />
       <InputPair icon={faArrowRight}>
         <Input

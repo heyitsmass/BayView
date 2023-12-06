@@ -1,4 +1,4 @@
-'use client'; 
+"use client";
 import { Loading } from "@/components/Loading";
 import { getWeather } from "@/handlers/Itinerary/actions/helpers";
 import { useCurrentEvent, useHomepage } from "@/hooks";
@@ -11,7 +11,9 @@ const Component = () => {
   const { locale, temperateUnit, speedUnit } = useHomepage().itinerary;
   const event = useCurrentEvent();
 
-  const [data, setData] = useState<MappedWeatherData | null>(null);
+  const [data, setData] = useState<MappedWeatherData | null>(
+    null
+  );
 
   useEffect(() => {
     const get = async () =>
@@ -22,7 +24,9 @@ const Component = () => {
     }
   }, [data, event]);
 
-  if (data === null) return <Loading />;
+  if (data === null) {
+    return <Loading />;
+  }
 
   const defaults = {
     lang: locale,
@@ -35,11 +39,7 @@ const Component = () => {
     theme
   };
 
-  return (
-    <Suspense fallback={<Loading />}>
-      {data != null && <ReactWeather {...defaults} data={data} />}
-    </Suspense>
-  );
+  return <ReactWeather {...defaults} data={data} />;
 };
 export default {
   title: "Weather",

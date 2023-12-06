@@ -1,5 +1,5 @@
 .selectWrapper {
-    @apply w-full pb-4 relative;
+    @apply w-full pb-2 relative;
 }
 
 .selectWrapper * {
@@ -15,7 +15,7 @@
     @apply w-full text-base rounded-full focus:outline-none;
     @apply bg-zinc-50 border border-zinc-300 focus:ring-red-500 caret-red-500 focus:border-red-500 dark:bg-zinc-700 dark:border-zinc-500 dark:placeholder-zinc-400;
     @apply appearance-none;
-    padding: 0.65rem 1rem 0.65rem 3.1rem;
+    padding: 0.65rem 1rem 0.75rem 3.1rem;
 }
 
 .selectArrow {
@@ -33,7 +33,7 @@
     top: 0.1rem;
     bottom: 0.02;
     width: 2.5rem;
-    height: 70%;
+    height: 80%;
     @apply rounded-tr-full rounded-br-full;
     pointer-events: none;
     @apply bg-zinc-200 dark:bg-zinc-800;

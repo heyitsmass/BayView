@@ -30,6 +30,11 @@ const findEvents = async ({
 
   let res: TEvent[] | null = null;
 
+  if ("priceRange" in props.params) {
+    const asInt = parseInt(props.params.priceRange.toString());
+    props.params.priceRange = asInt <= 0 ? 9999 : asInt;
+  }
+
   switch (activity) {
     case "Entertainment":
       res = await findEntertainment({
@@ -62,7 +67,9 @@ const findEvents = async ({
       break;
   }
 
-  return res ? hydrate(res, type) : null;
+  return res
+    ? hydrate(res, type, props.params.date || new Date(Date.now()))
+    : null;
 };
 
 const getLocation = (): TLocationType => {
@@ -77,18 +84,20 @@ const getLocation = (): TLocationType => {
 };
 const hydrate = async (
   events: TEvent[],
-  mode: TEventType
+  mode: TEventType,
+  refDate: Date
 ): Promise<DisplayableEvent[]> =>
   events.map(
     (event) =>
       new modelTypes[mode]({
+        location: getLocation(),
+        party: [],
         ...event,
         name: faker.company.name(),
-        location: getLocation(),
         description: faker.lorem.words(10),
-        party: [],
         date: faker.date.soon({
-          refDate: new Date()
+          refDate: new Date(Date.now()),
+          days: 1 + Math.floor(Math.random() * 3)
         }),
         __t: mode
       }).toJSON({

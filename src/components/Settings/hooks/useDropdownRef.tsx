@@ -2,8 +2,10 @@
 
 import { MutableRefObject, useEffect, useRef } from "react";
 
-export const useDropdownRef = (onClose: () => void) => {
-  const ref = useRef<HTMLDivElement>(null);
+export function useDropdownRef<T extends HTMLElement = HTMLElement>(
+  onClose: () => void
+): MutableRefObject<T | null> {
+  const ref = useRef<T | null>(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -20,4 +22,4 @@ export const useDropdownRef = (onClose: () => void) => {
   }, [ref, onClose]);
 
   return ref;
-};
+}

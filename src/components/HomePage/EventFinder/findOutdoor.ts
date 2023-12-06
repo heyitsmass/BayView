@@ -55,6 +55,7 @@ const findGolf = async ({ ...params }: TGolfQuery): Promise<Golf[]> => {
 
   const dateMin = new Date(date);
 
+  let price =priceRange === 0?  9999 : priceRange;
   const teeTime = () => {
     const date = faker.date.soon({
       refDate: dateMin,
@@ -68,7 +69,7 @@ const findGolf = async ({ ...params }: TGolfQuery): Promise<Golf[]> => {
         minute: "2-digit",
         hour12: true
       }),
-      price: roundedFloat(1, parseInt(priceRange))
+      price: roundedFloat(1, price) * partySize
     };
   };
 
@@ -76,7 +77,7 @@ const findGolf = async ({ ...params }: TGolfQuery): Promise<Golf[]> => {
     { length: randomInt(1, 18) },
     () =>
       ({
-        course: getRandom(courses),
+        course: getRandom(courses, course),
         courseDescription: faker.lorem.words(),
         golfLessons: faker.datatype.boolean(),
         golfCartRental: faker.datatype.boolean(),
@@ -170,8 +171,8 @@ const findHiking = async ({
     { length: randomInt(1, 18) },
     () =>
       ({
-        trail: trail || getRandom(trails),
-        terrain: terrain || getRandom(terrains),
+        trail: getRandom(trails, trail),
+        terrain: getRandom(terrains, terrain),
         length: getNumberSimilarTo(length),
         difficulty: difficulty,
         distance: roundedFloat(1, 20),
@@ -218,8 +219,8 @@ const findBiking = async ({
     { length: randomInt(1, 18) },
     () =>
       ({
-        trail: trail || getRandom(trails),
-        terrain: terrain || getRandom(terrains),
+        trail: getRandom(trails, trail),
+        terrain: getRandom(terrains, terrain),
         length: getNumberSimilarTo(length),
         difficulty: difficulty,
         distance: roundedFloat(1, 20),

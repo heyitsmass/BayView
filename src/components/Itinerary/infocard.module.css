@@ -1,10 +1,12 @@
 .info {
-  @apply flex flex-col relative min-h-max;
+  @apply flex flex-col relative min-h-max z-0;
+  
 }
 
 
-.infoTop { 
-  display: flex; 
+.infoTop {
+  @apply min-h-[260px];
+  display: flex;
 }
 
 .infoLeft {
@@ -29,14 +31,14 @@
 }
 
 @media screen and (max-width: 1300px) and (max-height: 1200px) {
-  .infoTop > div:last-child {
+  .infoTop>div:last-child {
     display: none;
 
   }
 }
 
 @media screen and (max-width:1300px) and (max-height: 850px) {
-  .infoTop > .data {
+  .infoTop>.data {
     display: none;
     padding: 0;
     width: 0;

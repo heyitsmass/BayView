@@ -36,7 +36,7 @@ export default async function Layout({
 
   return (
     <HomepageProvider value={ctx}>
-      <div className="flex-start w-screen h-screen relative">
+      <div className="flex-start w-screen h-screen">
         <TopBar />
         <div
           style={{ height: "calc(100vh - 7.5rem)" }}
@@ -44,9 +44,7 @@ export default async function Layout({
         >
           <Banner />
           <Animator>
-            <div className="relative h-full overflow-y-scroll z-0">
-              {children}
-            </div>
+            <div className=" h-full overflow-y-scroll">{children}</div>
           </Animator>
         </div>
         <Footer />

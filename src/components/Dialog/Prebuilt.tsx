@@ -13,7 +13,7 @@ export const PrebuiltDialog = ({
   onClose
 }: CustomDialogProps) => {
   return (
-    <AnimatePresence>
+    <>
       {open && (
         <AnimationComponent>
           <Dialog
@@ -31,6 +31,6 @@ export const PrebuiltDialog = ({
           </Dialog>
         </AnimationComponent>
       )}
-    </AnimatePresence>
+    </>
   );
 };

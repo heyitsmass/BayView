@@ -61,7 +61,7 @@ const OfferDisplay = ({
                 <h1 className="w-full truncate items-center">
                   {total_duration}
                 </h1>
-                {below_duration && (
+                {!!below_duration && (
                   <h1 className="text-zinc-400 text-sm justify-center absolute bottom-0 left-0 right-0">
                     {below_duration}
                   </h1>

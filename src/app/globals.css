@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
-
 
 :root {
   /** Fonts */
@@ -61,7 +59,6 @@
 
   --text-color: var(--zinc-950);
   --input-bg-color: rgb(250, 250, 250);
-
 }
 
 /** Dark scheme */
@@ -83,8 +80,25 @@
 html {
   width: 100vw;
   height: 100vh;
-
+  position: relative;
+  z-index: 0 !important;
 }
+#__card {
+  position: relative;
+}
+#__card.unfocused {
+  z-index: 0;
+}
+
+#__card.focused {
+  z-index: 1;
+}
+
+#__card.unfocused * { 
+
+  z-index: 0; 
+}
+
 
 html,
 body {
@@ -127,7 +141,6 @@ table {
   border-radius: 0.4em !important;
 }
 
-
 textarea,
 p,
 h1,
@@ -158,7 +171,7 @@ div {
   backdrop-filter: blur(10px);
   width: 100%;
   height: 100%;
-  z-index: 100;
+  z-index: 100 !important;
   align-items: center;
   justify-content: center;
   @apply bg-zinc-900 bg-opacity-50;

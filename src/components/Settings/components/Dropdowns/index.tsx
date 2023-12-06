@@ -6,16 +6,16 @@ import { timeZones } from "@/types";
 import { Locale, locales } from "@/utils/openWeather/langText";
 import { AnimatePresence } from "framer-motion";
 
-import { motion } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useState } from "react";
 import { useDropdownRef } from "../../hooks/useDropdownRef";
 import { ScrollableData } from "../ScrollableData";
-import ReactPortal from "@/components/ReactPortal";
+
 export const Dropdown = ({
   isOpen,
   data,
   current,
   title,
+  ref,
   children,
   onClick
 }: {
@@ -24,17 +24,19 @@ export const Dropdown = ({
   current: any;
   title: string;
   children?: ReactNode;
+  ref?: React.MutableRefObject<any>;
   onClick?: () => void;
 }) => {
   return (
     <>
       {isOpen && (
-        <div className="absolute top-full overflow-hidden right-0 mt-6 w-56 p-2 h-max rounded-xl shadow-lg bg-white border dark:bg-zinc-800 dark:border-zinc-700">
+        <div className="absolute overflow-hidden right-0 -top-5 mt-6 w-56 p-2 h-max rounded-xl shadow-lg bg-white border dark:bg-zinc-800 dark:border-zinc-700">
           {children || (
             <ScrollableData
               data={data!}
               title={title}
               current={current}
+              ref={ref}
               onClick={onClick}
             />
           )}
@@ -46,52 +48,65 @@ export const Dropdown = ({
 
 export const ScrollableDropdown = ({
   btnName,
+  btnClassName,
   id,
   title,
   data,
-  peek,
+  parentRef,
+  curr: peek,
+  onFocus,
   onClick,
   onSubmit
 }: {
   btnName: string;
+  btnClassName?: string;
   id?: string;
+  parentRef?: React.MutableRefObject<any>;
   title: string;
   data: readonly any[] | any[];
-  peek: any;
-  onClick?: (e) => void;
+  curr: any;
+  onFocus?: (...values: any) => void;
+  onClick?: (...values: any) => void;
   onSubmit?: (...values: any) => void;
 }) => {
   const [isOpen, open, close] = useOpen();
 
-  const ref = useDropdownRef(close);
+  const ref = useDropdownRef<HTMLDivElement>(close);
 
-  const toggle = () => (isOpen ? close() : open());
+  const toggle = isOpen ? close : open;
+
   return (
-    <div ref={ref}>
+    <div
+      id="dropdown"
+      ref={ref}
+      className="my-2 w-full place-items-center"
+      onBlur={(e) => {
+        close();
+      }}
+    >
       <Button
         type="button"
-        id={id}
-        className="w-full"
+        id="__dropdown-btn"
+        className={btnClassName + " min-w-max h-min"}
         variant="secondary"
         onClick={toggle}
         name={(btnName as string)?.replaceAll(" ", "_").toLowerCase()}
       >
-        {btnName} <small className="capitalize">({peek})</small>
+        {btnName}: <small className="capitalize">{peek}</small>
       </Button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div>
-            <AnimationComponent>
-              <Dropdown
-                isOpen={isOpen}
-                data={data}
-                title={title}
-                current={peek}
-                onClick={(onSubmit as () => void) || undefined}
-              />
-            </AnimationComponent>
-          </motion.div>
+          <AnimationComponent>
+            <Dropdown
+              isOpen={isOpen}
+              data={data}
+              title={title}
+              current={peek}
+              ref={parentRef}
+              onClick={onSubmit}
+            />
+          </AnimationComponent>
         )}
       </AnimatePresence>
     </div>
@@ -105,7 +120,7 @@ const TimezoneDropdown = ({ timezone }) => {
       btnName="Timezone"
       title="Select Timezone"
       data={timeZones}
-      peek={timezone}
+      curr={timezone}
     />
   );
 };
@@ -116,7 +131,7 @@ const LocaleDropdown = ({ locale }: { locale: Locale }) => {
       id="locale"
       btnName={"Locale"}
       title="Select Locale"
-      peek={locale}
+      curr={locale}
       data={locales}
     />
   );
@@ -130,7 +145,7 @@ const AgeDropdown = ({ age }) => {
         btnName="Age"
         title="Select Age"
         data={["Adult", "Child"]}
-        peek={age}
+        curr={age}
       />
     </>
   );

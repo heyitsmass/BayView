@@ -49,7 +49,7 @@ const UserInput = forwardRef<HTMLInputElement, UserInputProps>(
     }
 
     return (
-      <div>
+      <div className="w-full">
         {label ? (
           <label className={styles.label} htmlFor={id}>
             {label}
@@ -58,17 +58,25 @@ const UserInput = forwardRef<HTMLInputElement, UserInputProps>(
                 {" "}
                 {props.disabled ? "" : props.required ? "*" : ""}{" "}
               </b>
+              <small className="text-xs">{props.readOnly ? " (Read Only)" : ""}</small>
             </small>
           </label>
         ) : (
           <div className="w-full h-7"></div>
         )}
         <div className={styles.inputWrapper}>
-          {icon && <FontAwesomeIcon className={styles.icon} {...icon} />}
+          {icon && (
+            <FontAwesomeIcon
+              {...icon}
+              className={[styles.icon, icon.className].join(" ")}
+            />
+          )}
           <input
             {...props}
             ref={ref}
-            className={[props.className, styles.input].join(" ")}
+            className={[props.className, styles.input, "truncate"].join(
+              " "
+            )}
             name={
               !props.name
                 ? props.label?.replaceAll(" ", "_").toLowerCase()
