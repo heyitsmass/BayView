@@ -1,3 +1,4 @@
+'use client';
 import { Loading } from "@/components/Loading";
 import { GoogleMap } from "@/components/Maps";
 import { useCurrentEvent, useGeocoder } from "@/hooks";

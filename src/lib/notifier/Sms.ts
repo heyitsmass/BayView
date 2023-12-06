@@ -5,7 +5,7 @@ import { NotifierPayload } from "./Handler";
 
 export class SMSNotifier implements Notifier {
   /** SMS Notifier implementation */
-  private static courier = new CourierClient({
+  private static courier = CourierClient({
     authorizationToken: process.env.COURIER_AUTH_TOKEN
   });
 

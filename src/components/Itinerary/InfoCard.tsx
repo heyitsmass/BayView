@@ -1,3 +1,5 @@
+'use client'; 
+
 import {
   IconDefinition,
   faCalendar,
@@ -25,9 +27,11 @@ export const InfoCard = ({
   displayData,
   isPending = false
 }: InfoCardProps) => {
-  const locationStr = [location.street, location.city, location.state].join(
-    ", "
-  );
+  const locationStr =
+    (location &&
+      "street" in location &&
+      [location.street, location.city, location.state].join(", ")) ||
+    "Unable to gather location";
 
   const dateStr = new Date(date)
     .toLocaleDateString("en-US", {

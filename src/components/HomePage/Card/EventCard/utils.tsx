@@ -1,3 +1,4 @@
+'use client';
 import { ScrollableDropdown } from "@/components/Settings/components/Dropdowns";
 import { TEventType } from "@/types/Event";
 import { useState } from "react";

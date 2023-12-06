@@ -1,3 +1,4 @@
+'use client';
 import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
 import Button from "@/components/Button";
 import { GenericDialogPanel } from "@/components/Dialog/GenericPanel";

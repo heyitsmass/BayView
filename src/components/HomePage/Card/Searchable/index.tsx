@@ -241,6 +241,7 @@ const SearchResults = ({
               dataLength={data.length}
               endMessage={<EndMessage />}
               scrollableTarget="scrollArea"
+              key="1"
             >
               {displayedOffers.map((event, i) => (
                 <SearchResult
@@ -261,6 +262,7 @@ const SearchResults = ({
               open={currEvent !== null}
               onClose={() => setCurrEvent(null)}
               title={currEvent.name}
+              key="1"
             >
               <div className="flex flex-col text-center">
                 <pre>

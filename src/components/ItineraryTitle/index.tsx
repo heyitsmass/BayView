@@ -1,3 +1,4 @@
+'use client';
 import { useHomepage, useHomepageManager } from "@/hooks";
 import { ParkLocations, Parks } from "@/types";
 import {

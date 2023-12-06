@@ -409,7 +409,7 @@ type Sale = Deal & {
   discount: string;
 };
 
-type Review = {
+export type Review = {
   store: string;
   comment: string;
   rating: number;

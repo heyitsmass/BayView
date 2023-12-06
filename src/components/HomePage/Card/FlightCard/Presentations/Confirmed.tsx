@@ -1,3 +1,4 @@
+'use client';
 import { DisplayableEvent } from "@/components/HomePage/EventFinder";
 import { useHomepageManager } from "@/hooks";
 import { Flight } from "@/types/Event";

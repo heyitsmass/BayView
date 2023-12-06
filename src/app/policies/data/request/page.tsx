@@ -1,4 +1,4 @@
-"use client";
+'use client'; 
 import { useState } from "react";
 import { submitDataRequest } from "./handler";
 import "./styles.css";
@@ -15,7 +15,7 @@ export default function Page() {
         <b>Data Request</b>
       </h2>
 
-      <form className="data-request-form" action={submitDataRequest}>
+      <form className="data-request-form">
         <section className="p-4">
           <UserInput
             icon={{

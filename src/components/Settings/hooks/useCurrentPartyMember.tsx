@@ -1,3 +1,4 @@
+'use client';
 import { useContext } from "react";
 import { CurrentPartyMember, CurrentPartyMemberDispatch } from "../context";
 

@@ -1,3 +1,4 @@
+'use client';
 import { useRouter } from "next/navigation";
 import { SuperTokensConfig } from "supertokens-auth-react/lib/build/types";
 import SessionReact from "supertokens-auth-react/recipe/session";

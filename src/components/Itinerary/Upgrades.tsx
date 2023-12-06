@@ -1,3 +1,4 @@
+'use client';
 import { Upgrades as UpgradesProps } from "@/types";
 import { Upgrade } from "./Upgrade";
 import { AnimatePresence, motion } from "framer-motion";

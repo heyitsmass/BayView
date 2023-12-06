@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 import UserInput, { UserInputProps } from "..";
 import { faLock, faUnlock } from "@fortawesome/free-solid-svg-icons";

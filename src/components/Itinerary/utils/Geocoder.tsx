@@ -1,3 +1,4 @@
+'use client';
 import { useGetData } from "@/hooks/useGetData";
 import { GoogleGeoCodeResponse, Geocode as IGeocode } from "@/types";
 import { TLocationType } from "@/types/Event";

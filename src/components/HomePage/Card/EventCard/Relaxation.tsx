@@ -1,3 +1,4 @@
+'use client';
 import UserInput from "@/components/Input";
 import { RelaxationType, TRelaxationType } from "@/types/Event";
 import {
@@ -10,7 +11,8 @@ import { SearchableCard } from "../Searchable";
 import { EventDropdown, useCurrentValue } from "./utils";
 import BayviewCalendar from "@/components/Input/BayviewCalendar";
 import { ScrollableDropdown } from "@/components/Settings/components/Dropdowns";
-import { packages, services } from "../../EventFinder/findRelaxation";
+import { packages, services } from "../../EventFinder/constants";
+
 
 export function RelaxationCard() {
   const props = {

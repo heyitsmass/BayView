@@ -1,3 +1,4 @@
+'use server';
 import { ensureSuperTokensInit } from "@/config/backend";
 import { NextRequest, NextResponse } from "next/server";
 import Session, {

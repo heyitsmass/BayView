@@ -20,29 +20,20 @@ export async function register() {
     process.env.MONGODB_URI || "mongodb://localhost:27017";
 
   if (!mongoose.connection?.readyState) {
-    try {
-      console.log(
-        `Connecting to ${
-          ENV === "production" ? "production" : "development"
-        } database...`
-      );
+    console.log(`Connecting to ${ENV} database...`);
 
-      await mongoose.connect(
-        `${MONGODB_URI}/${dbMap[ENV]}?retryWrites=true&w=majority`,
-        {}
-      );
+    await mongoose.connect(
+      `${MONGODB_URI}/${dbMap[ENV]}?retryWrites=true&w=majority`,
+      {}
+    );
 
-      const { name, port } = mongoose.connection;
+    const { name, port } = mongoose.connection;
 
-      if (ENV !== "production") {
-        console.log("\n*********** MongoDB ***********\n");
-        console.log(`  Name: ${name}`);
-        console.log(`  Port: ${port}`);
-        console.log("\n********** Connected **********\n");
-      }
-    } catch (err) {
-      const { message } = err as Error;
-      console.log(message);
+    if (ENV !== "production") {
+      console.log("\n*********** MongoDB ***********\n");
+      console.log(`  Name: ${name}`);
+      console.log(`  Port: ${port}`);
+      console.log("\n********** Connected **********\n");
     }
   }
 }

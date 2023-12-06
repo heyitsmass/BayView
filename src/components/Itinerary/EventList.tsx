@@ -1,7 +1,5 @@
 "use client";
 
-import {} from "@/app/home/itinerary/page";
-
 import {
   useCurrentEvent,
   useCurrentEventDispatch,

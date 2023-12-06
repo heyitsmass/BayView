@@ -2,11 +2,7 @@
 
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
-import {
-  useMap,
-  useMapsLibrary,
-  Marker
-} from "@vis.gl/react-google-maps";
+import { Marker, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
 import { useHomepage } from "@/hooks";
 import {
@@ -15,15 +11,8 @@ import {
   faMountainCity
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  PropsWithChildren,
-  ReactNode,
-  Suspense,
-  useEffect,
-  useState
-} from "react";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import styles from "./map.module.css";
-import { Loading } from "../Loading";
 type GoogleGeoCode = {
   lat: number;
   lng: number;
@@ -95,11 +84,7 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
 export function GoogleMap({ origin }: { origin: GoogleGeoCode }) {
   return (
     <MapProvider>
-      <Map
-        center={origin}
-        className="rounded-2xl h-full w-full"
-        zoom={13}
-      >
+      <Map center={origin} className="rounded-2xl h-full w-full" zoom={13}>
         <Marker position={origin} />
       </Map>
     </MapProvider>
@@ -140,9 +125,7 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
     useState<google.maps.DirectionsService>();
   const [directionsRenderer, setDirectionsRenderer] =
     useState<google.maps.DirectionsRenderer>();
-  const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>(
-    []
-  );
+  const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
   const [routeIndex, setRouteIndex] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
@@ -151,9 +134,7 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
   useEffect(() => {
     if (!routesLibrary || !map) return;
     setDirectionsService(new routesLibrary.DirectionsService());
-    setDirectionsRenderer(
-      new routesLibrary.DirectionsRenderer({ map })
-    );
+    setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
   }, [routesLibrary, map]);
 
   const [empty, setEmpty] = useState(false);
@@ -249,10 +230,9 @@ const Directions = ({ origin, destination, travelMode }: MapProps) => {
       </div>
 
       <div
-        className={[
-          styles.directions,
-          styles[travelMode.toString()]
-        ].join(" ")}
+        className={[styles.directions, styles[travelMode.toString()]].join(
+          " "
+        )}
       >
         <p className="py-4 font-semibold">
           {leg.start_address.split(",")[0]}{" "}

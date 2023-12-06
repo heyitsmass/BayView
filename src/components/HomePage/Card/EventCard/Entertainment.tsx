@@ -1,3 +1,4 @@
+'use client';
 import LocationInput from "@/components/Button/Location";
 import UserInput from "@/components/Input";
 import BayviewCalendar from "@/components/Input/BayviewCalendar";
@@ -29,13 +30,11 @@ import {
   Music,
   Sales,
   SportType
-} from "../../EventFinder/findEntertainment";
+} from "../../EventFinder/constants";
 import { SearchableCard } from "../Searchable";
 import { EventDropdown } from "./utils";
 
-export function EntertainmentCard<
-  S extends TSportEvent
->() {
+export function EntertainmentCard<S extends TSportEvent>() {
   const props = {
     title: "Entertainment",
     subtitle: "Search for something entertaining!",
@@ -45,8 +44,7 @@ export function EntertainmentCard<
       return findEvents({
         activity: "Entertainment",
         type: type,
-        subtype:
-          type === "Sports" ? (form.get("subtype") as S) : undefined,
+        subtype: type === "Sports" ? (form.get("subtype") as S) : undefined,
         params: {
           ...Object.fromEntries(form)
         }
@@ -71,11 +69,7 @@ export function EntertainmentCard<
     <>
       <SearchableCard {...props}>
         <div className="grid grid-cols-2 gap-4">
-          <BayviewCalendar
-            name="date"
-            label="Date"
-            placeholder="Date..."
-          />
+          <BayviewCalendar name="date" label="Date" placeholder="Date..." />
           {type === "Sports" && (
             <UserInput
               name="event"
@@ -287,11 +281,7 @@ export function EntertainmentCard<
             )}
           </div>
 
-          <EventDropdown
-            event={type}
-            setEvent={setType}
-            data={events}
-          />
+          <EventDropdown event={type} setEvent={setType} data={events} />
         </div>
       </SearchableCard>
     </>

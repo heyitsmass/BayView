@@ -1,3 +1,4 @@
+'use client';
 import { UpgradeProps } from "@/types";
 
 import { ContainedDialog } from "../Dialog";

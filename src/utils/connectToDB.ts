@@ -1,28 +1,50 @@
-import mongoose from 'mongoose';
+'use server';
+import mongoose from "mongoose";
 
-export async function connectToDB(): Promise<void> {
-  try {
-    const { MONGODB_URI } = process.env;
-    let { ENV } = process.env;
+const envTypes = ["production", "development", "preview"] as const;
 
-    if (!MONGODB_URI) throw Error('MONGODB_URI is not defined');
+const dbNames = ["bayview", "bayview-dev", "bayview-dev"] as const;
 
-    if (!ENV) ENV = 'DEV';
+type NEXT_VERCEL_ENV = (typeof envTypes)[number];
 
-    const dbName = ENV !== 'DEV' ? 'bayview' : 'bayview-dev';
+type MONGODB_COLLECTIONS = (typeof dbNames)[number];
 
-    await mongoose.connect(
-      `${MONGODB_URI}/${dbName}?retryWrites=true`
-    );
+export default async function connectToDB(): Promise<void> {
+  const dbMap = {
+    production: "bayview",
+    development: "bayview-dev",
+    preview: "bayview-dev"
+  } as Record<NEXT_VERCEL_ENV, MONGODB_COLLECTIONS>;
 
-    const { name, port } = mongoose.connection;
+  const ENV = process.env.NEXT_PUBLIC_VERCEL_ENV || "development";
 
-    console.log('\n*********** MongoDB ***********\n');
-    console.log(`  Name: ${name}`);
-    console.log(`  Port: ${port}`);
-    console.log('\n********** Connected **********\n');
-  } catch (err) {
-    const { message } = err as Error;
-    console.log(message);
+  const MONGODB_URI =
+    process.env.MONGODB_URI || "mongodb://localhost:27017";
+
+  if (!mongoose.connection?.readyState) {
+    try {
+      console.log(
+        `Connecting to ${
+          ENV === "production" ? "production" : "development"
+        } database...`
+      );
+
+      await mongoose.connect(
+        `${MONGODB_URI}/${dbMap[ENV]}?retryWrites=true&w=majority`,
+        {}
+      );
+
+      const { name, port } = mongoose.connection;
+
+      if (ENV !== "production") {
+        console.log("\n*********** MongoDB ***********\n");
+        console.log(`  Name: ${name}`);
+        console.log(`  Port: ${port}`);
+        console.log("\n********** Connected **********\n");
+      }
+    } catch (err) {
+      const { message } = err as Error;
+      console.log(message);
+    }
   }
 }

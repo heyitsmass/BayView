@@ -1,3 +1,4 @@
+'use server';
 import { NextRequest, NextResponse } from "next/server";
 import { getAppDirRequestHandler } from "supertokens-node/nextjs";
 import { ensureSuperTokensInit } from "../../../../config/backend";

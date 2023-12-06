@@ -1,3 +1,4 @@
+'use client'; 
 import { useHomepage } from "@/hooks";
 import { PropsWithChildren } from "react";
 import { PrebuiltDialog } from "../Dialog/Prebuilt";

@@ -1,3 +1,4 @@
+'use server';
 import { redirect } from "next/navigation";
 import supertokens from "supertokens-node";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";

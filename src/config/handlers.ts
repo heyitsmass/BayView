@@ -1,3 +1,4 @@
+'use server';
 import ItineraryModel from "@/models/Itinerary";
 import {
   APIInterface,
@@ -44,7 +45,7 @@ export const thirdPartySignInUpPOST = async (
   ) {
     let { id } = response.user;
 
-    const fromUserInfoAPI = getUserInfoFromAPI(response);
+    const fromUserInfoAPI = await getUserInfoFromAPI(response);
 
     const required_metadata = await getRequiredMetadata(
       response,

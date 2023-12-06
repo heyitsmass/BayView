@@ -1,6 +1,4 @@
-"use server";
-
-export default async function Page() {
+export default function Page() {
   const date = "11/15/2023";
 
   return (

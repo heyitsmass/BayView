@@ -1,3 +1,4 @@
+'use client';
 import Button from "@/components/Button";
 import { PasswordInput } from "@/components/Input/Password";
 import { usePopupDispatch } from "@/context/popup";

@@ -1,3 +1,4 @@
+'use client';
 import { AnimationComponent } from "@/components/Animations/AnimatePresenceComponent";
 import { GenericDialogPanel } from "@/components/Dialog/GenericPanel";
 import { Dialog } from "@headlessui/react";

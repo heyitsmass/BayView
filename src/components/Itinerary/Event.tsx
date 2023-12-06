@@ -1,3 +1,4 @@
+'use client';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SyntheticEvent } from "react";
 import { DisplayableEvent } from "../HomePage/EventFinder";

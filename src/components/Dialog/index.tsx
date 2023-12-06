@@ -1,3 +1,4 @@
+'use client';
 import { AnimatedDialog } from "./Animated";
 import { ContainedDialog } from "./Contained";
 import { PrebuiltDialog } from "./Prebuilt";

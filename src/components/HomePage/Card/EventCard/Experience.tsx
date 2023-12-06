@@ -1,3 +1,4 @@
+'use client';
 import UserInput from "@/components/Input";
 
 import BayviewCalendar from "@/components/Input/BayviewCalendar";

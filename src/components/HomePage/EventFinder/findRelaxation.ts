@@ -1,19 +1,10 @@
-import {
-  Museum,
-  Park,
-  Spa,
-  TEventQuery,
-  TRelaxation
-} from "@/types/Event";
+"use server";
+import { Museum, Park, Spa, TEventQuery, TRelaxation } from "@/types/Event";
 import { TMuseumQuery, TParkQuery, TSpaQuery } from "@/types/query";
 import { faker } from "@faker-js/faker";
 import { randomInt } from "crypto";
-import {
-  getRandom,
-  openingHours,
-  randomList,
-  roundedFloat
-} from "./utils";
+import { getRandom, openingHours, randomList, roundedFloat } from "./utils";
+import { packages, services, spas, wellnessClasses } from "./constants";
 
 export const findRelaxation = async ({
   ...props
@@ -32,74 +23,10 @@ export const findRelaxation = async ({
   }
 };
 
-export const spas = [
-  "Serenity Spa Retreat",
-  "Tranquil Oasis Wellness Center",
-  "Blissful Escapes Spa",
-  "Elysian Fields Spa & Resort",
-  "Harmony Haven Spa",
-  "Zenith Wellness Spa",
-  "Pure Indulgence Day Spa",
-  "Heavenly Retreat Spa",
-  "Radiant Tranquility Spa",
-  "Aqua Serene Spa",
-  "Revitalize Wellness Spa",
-  "Relaxation Haven Spa",
-  "Soothing Waters Spa",
-  "Essence of Calmness Spa",
-  "Sanctuary Spa and Salon",
-  "Inner Harmony Spa",
-  "The Zen Den Spa",
-  "Nature's Rejuvenation Spa",
-  "Tranquility Time Spa",
-  "Celestial Serenity Spa"
-];
-
-export const packages = [
-  "Relaxation Retreat",
-  "Couples Bliss Package",
-  "Detox and Renewal",
-  "Pampering Paradise",
-  "Tranquil Tranformation",
-  "Holistic Harmony",
-  "Aromatherapy Delight",
-  "Skin Rejuvenation Escape",
-  "Stress-Free Serenity",
-  "Wellness Wonderland"
-];
-
-export const wellnessClasses = [
-  "Yoga Basics",
-  "Meditation and Mindfulness",
-  "Pilates Fusion",
-  "Tai Chi for Beginners",
-  "Holistic Nutrition Workshop",
-  "Stress Reduction Seminar",
-  "Zumba Fitness Party",
-  "Guided Nature Walk",
-  "Breathing Techniques Workshop",
-  "Mind-Body Connection Class"
-];
-
-export const services = [
-  "Swedish Massage",
-  "Deep Tissue Massage",
-  "Hot Stone Therapy",
-  "Aromatherapy Massage",
-  "Facial Rejuvenation",
-  "Body Scrub and Wrap",
-  "Manicure and Pedicure",
-  "Couples Massage",
-  "Reflexology",
-  "Hydrotherapy"
-];
-
 const findSpa = async ({ ...params }: TSpaQuery): Promise<Spa[]> => {
-  const { date, priceRange, partySize, service, spaPackage, spa } =
-    params;
+  const { date, priceRange, partySize, service, spaPackage, spa } = params;
 
-  let price =
-    parseInt(priceRange.toString()) === 0 ? 9999 : priceRange;
+  let price = parseInt(priceRange.toString()) === 0 ? 9999 : priceRange;
 
   return Array.from({ length: randomInt(1, 18) }, () => {
     return {
@@ -125,6 +52,56 @@ const findSpa = async ({ ...params }: TSpaQuery): Promise<Spa[]> => {
       }
     } as Spa;
   }).sort((a, b) => a.date.valueOf() - b.date.valueOf()) as Spa[];
+};
+
+const findMuseum = async ({
+  ...params
+}: TMuseumQuery): Promise<Museum[]> => {
+  const { date, priceRange, partySize, museum, ageRange, exhibit } = params;
+  let price = priceRange === 0 ? 9999 : priceRange;
+  return Array.from({ length: randomInt(1, 18) }, () => {
+    return {
+      museum: getRandom(museums, museum),
+      ageRange: ageRange || randomInt(1, 18),
+      admissionFee: roundedFloat(1, price),
+      openingHours: openingHours(),
+      exhibit: {
+        name: getRandom(exhibits, exhibit),
+        description: faker.lorem.words(),
+        date: faker.date.soon({
+          refDate: date,
+          days: 1
+        })
+      },
+      specialEvent: {
+        name: getRandom(specialEvents),
+        description: faker.lorem.words(),
+        date: faker.date.soon({
+          refDate: date,
+          days: 1
+        })
+      },
+      guidedTours: faker.datatype.boolean(),
+      audioGuide: faker.datatype.boolean()
+    } as Museum;
+  }).sort((a, b) =>
+    exhibit
+      ? a.exhibit.date.valueOf() - b.exhibit.date.valueOf()
+      : a.specialEvent.date.valueOf() - b.specialEvent.date.valueOf()
+  ) as Museum[];
+};
+
+const findPark = async ({ ...params }: TParkQuery): Promise<Park[]> => {
+  return Array.from({ length: randomInt(1, 18) }, () => ({
+    parkName: getRandom(parks),
+    openingHours: openingHours(),
+    facilities: randomList(facilites),
+    activities: randomList(activities),
+    naturalFeatures: randomList(features),
+    wildlife: randomList(wildlife)
+  })).sort((a, b) => {
+    return a.parkName.localeCompare(b.parkName);
+  }) as Park[];
 };
 
 const museums = [
@@ -175,44 +152,6 @@ const specialEvents = [
   "Gallery Tour with Curator",
   "Innovation Symposium"
 ];
-
-const findMuseum = async ({
-  ...params
-}: TMuseumQuery): Promise<Museum[]> => {
-  const { date, priceRange, partySize, museum, ageRange, exhibit } =
-    params;
-  let price = priceRange === 0 ? 9999 : priceRange;
-  return Array.from({ length: randomInt(1, 18) }, () => {
-    return {
-      museum: getRandom(museums, museum),
-      ageRange: ageRange || randomInt(1, 18),
-      admissionFee: roundedFloat(1, price),
-      openingHours: openingHours(),
-      exhibit: {
-        name: getRandom(exhibits, exhibit),
-        description: faker.lorem.words(),
-        date: faker.date.soon({
-          refDate: date,
-          days: 1
-        })
-      },
-      specialEvent: {
-        name: getRandom(specialEvents),
-        description: faker.lorem.words(),
-        date: faker.date.soon({
-          refDate: date,
-          days: 1
-        })
-      },
-      guidedTours: faker.datatype.boolean(),
-      audioGuide: faker.datatype.boolean()
-    } as Museum;
-  }).sort((a, b) =>
-    exhibit
-      ? a.exhibit.date.valueOf() - b.exhibit.date.valueOf()
-      : a.specialEvent.date.valueOf() - b.specialEvent.date.valueOf()
-  ) as Museum[];
-};
 
 const parks = [
   "Yellowstone National Park",
@@ -288,16 +227,3 @@ const wildlife = [
   "Eastern Chipmunk",
   "Gray Wolf"
 ];
-
-const findPark = async ({ ...params }: TParkQuery): Promise<Park[]> => {
-  return Array.from({ length: randomInt(1, 18) }, () => ({
-    parkName: getRandom(parks),
-    openingHours: openingHours(),
-    facilities: randomList(facilites),
-    activities: randomList(activities),
-    naturalFeatures: randomList(features),
-    wildlife: randomList(wildlife)
-  })).sort((a, b) => {
-    return a.parkName.localeCompare(b.parkName);
-  }) as Park[];
-};

@@ -1,5 +1,5 @@
+'use server';
 import { faker } from "@faker-js/faker";
-import { randomInt } from "crypto";
 
 import { ShowTime, TDifficultyType } from "@/types/Event";
 
@@ -13,7 +13,7 @@ const randomList = <T>(arr: readonly T[] | T[]): T[] => {
     return value;
   };
 
-  return Array.from({ length: randomInt(1, arr.length - 1) }, getResult);
+  return Array.from({ length: faker.number.int({min:1, max:arr.length - 1})}, getResult);
 };
 
 function coinFlip<T>(a: T, b: T) {
@@ -125,8 +125,8 @@ const openingHours = (option?: "Day" | "Night") => {
     return `${getRandom(nightTimes)} - ${getRandom(dayTimes)}`;
   }
 
-  return `${openTimes[randomInt(openTimes.length)]} - ${
-    closeTimes[randomInt(closeTimes.length)]
+  return `${openTimes[faker.number.int({max:openTimes.length})]} - ${
+    closeTimes[faker.number.int({max:closeTimes.length})]
   }`;
 };
 
@@ -141,9 +141,9 @@ const nameAndRandomPrice = (names: readonly string[] | string[]) => {
     price: number;
   }[];
 
-  for (let i = 0; i < randomInt(1, 10); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:10}); i++) {
     experiences.push({
-      name: names[randomInt(0, names.length)],
+      name: names[faker.number.int({min:0, max:names.length})],
       price: faker.number.float({ min: 1, max: 100 })
     });
   }
@@ -162,9 +162,9 @@ const nameAndRandomDescriptions = (names: readonly string[] | string[]) => {
     description: string;
   }[];
 
-  for (let i = 0; i < randomInt(1, 5); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:5}); i++) {
     facilities.push({
-      name: names[randomInt(0, names.length)],
+      name: names[faker.number.int({min:0, max:names.length})],
       description: faker.lorem.words()
     });
   }
@@ -174,7 +174,7 @@ const nameAndRandomDescriptions = (names: readonly string[] | string[]) => {
 
 const nameAndRandomDescription = (names: readonly string[] | string[]) => {
   return {
-    name: names[randomInt(0, names.length)],
+    name: names[faker.number.int({min:0, max:names.length})],
     description: faker.lorem.words()
   };
 };
@@ -194,9 +194,9 @@ const nameAndRandomDescriptionWithTime = (
     description: string;
   }[];
 
-  for (let i = 0; i < randomInt(1, 10); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:10}); i++) {
     experiences.push({
-      name: names[randomInt(0, names.length)],
+      name: names[faker.number.int({min:0, max:names.length})],
       time: faker.date.soon().toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
@@ -219,9 +219,9 @@ const nameAndRandomTime = (names: readonly string[] | string[]) => {
     time: string;
   }[];
 
-  for (let i = 0; i < randomInt(1, 10); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:10}); i++) {
     experiences.push({
-      name: names[randomInt(0, names.length)],
+      name: names[faker.number.int({min:0, max:names.length})],
       time: faker.date.soon().toLocaleTimeString("it-IT", {
         hour: "numeric",
         minute: "2-digit",
@@ -244,7 +244,7 @@ const showTimes = ({
 }): ShowTime[] => {
   const times = [] as any[];
 
-  for (let i = 0; i < randomInt(1, 5); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:5}); i++) {
     const date = faker.date.soon({
       refDate,
       days: 1
@@ -271,8 +271,8 @@ const showTimes = ({
 const randomWordList = (words: readonly string[] | string[]) => {
   const points = [] as string[];
 
-  for (let i = 0; i < randomInt(1, 10); i++) {
-    points.push(words[randomInt(0, words.length)]);
+  for (let i = 0; i < faker.number.int({min:1, max:10}); i++) {
+    points.push(words[faker.number.int({min:0, max:words.length})]);
   }
 
   return points;
@@ -290,9 +290,9 @@ const nameDescriptionDateTime = (names: readonly string[] | string[]) => {
     time: string;
   }[];
 
-  for (let i = 0; i < randomInt(1, 10); i++) {
+  for (let i = 0; i < faker.number.int({min:1, max:10}); i++) {
     experiences.push({
-      name: names[randomInt(0, names.length)],
+      name: names[faker.number.int({min:0, max:names.length})],
       description: faker.lorem.words(),
       date: faker.date.soon(),
       time: faker.date.soon().toLocaleTimeString("it-IT", {
@@ -312,7 +312,7 @@ const nameDescriptionDateTime = (names: readonly string[] | string[]) => {
  * @returns A random word from the list
  */
 const wordFromList = (words: readonly string[] | string[]) =>
-  words[randomInt(0, words.length)];
+  words[faker.number.int({min:0, max:words.length})];
 
 const difficulty = [
   "Easy",
@@ -323,7 +323,7 @@ const difficulty = [
 ] as TDifficultyType[];
 
 const randomDifficulty = (): TDifficultyType =>
-  difficulty[randomInt(difficulty.length)];
+  difficulty[faker.number.int({max:difficulty.length})];
 
 const roundedFloat = (min: number, max: number, precision: number = 2) =>
   Number(faker.number.float({ min, max }).toFixed(precision));

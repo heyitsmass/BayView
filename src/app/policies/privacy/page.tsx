@@ -1,7 +1,6 @@
-import { Suspense } from "react";
 import "./styles.css";
 
-export default async function Page() {
+export default function Page() {
   const date = "11/15/2023";
 
   const toc = [
@@ -24,7 +23,7 @@ export default async function Page() {
   ];
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       <h2 className="text-3xl">
         <b>Privacy Notice</b>
       </h2>
@@ -201,7 +200,7 @@ export default async function Page() {
           </span>
         ))}
       </section>
-    </Suspense>
+    </>
   );
 }
 

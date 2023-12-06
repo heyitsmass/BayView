@@ -1,3 +1,4 @@
+'use client';
 import { Dispatch, createContext, useContext, useReducer } from 'react';
 import { FlightActionInterface, FlightStateInterface } from './flightInterfaces';
 import { stepDetails } from '.';

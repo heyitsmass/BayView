@@ -1,3 +1,5 @@
+'use server'; 
+
 import { User } from "supertokens-node";
 import {
   DiscordResponse,
@@ -44,7 +46,7 @@ const getPrimaryLoginMethod = (response: SuperTokensResponse) => {
   return loginMethods[0];
 };
 
-export const getUserInfoFromAPI = (response: SuperTokensResponse) => {
+export const getUserInfoFromAPI = async (response: SuperTokensResponse) => {
   const { rawUserInfoFromProvider } = response;
 
   return rawUserInfoFromProvider.fromUserInfoAPI;

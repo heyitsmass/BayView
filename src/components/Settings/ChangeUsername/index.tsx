@@ -1,3 +1,4 @@
+'use client';
 import UserInput from "@/components/Input";
 import styles from "./styles.module.css";
 import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";

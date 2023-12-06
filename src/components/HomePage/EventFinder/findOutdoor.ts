@@ -1,3 +1,4 @@
+'use server';
 import { Biking, Golf, Hiking, TEventQuery, TOutdoor } from "@/types/Event";
 import { TBikingQuery, TGolfQuery, THikingQuery } from "@/types/query";
 import { faker } from "@faker-js/faker";

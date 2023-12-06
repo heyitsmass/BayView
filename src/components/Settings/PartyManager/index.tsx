@@ -1,3 +1,4 @@
+'use client'; 
 import Button from "@/components/Button";
 import { useHomepage } from "@/hooks";
 import { PartyMember } from "@/types/User";
