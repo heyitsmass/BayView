@@ -2,7 +2,6 @@ import { Notifiers } from "@/lib/notifier";
 import { HydratedDocument } from "mongoose";
 import { ReactNode } from "react";
 import { TEventType } from "./Event";
-import { P } from "vitest/dist/reporters-5f784f42";
 
 export const timeZones = [
   "Pacific/Midway",
