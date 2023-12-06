@@ -1,5 +1,3 @@
-import "./styles.css";
-
 export default function Page() {
   const date = "11/15/2023";
 

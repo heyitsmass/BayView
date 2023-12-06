@@ -27,7 +27,7 @@ const zooSchema = new Schema<Event<Zoo>>({
   picture_url: {
     type: String,
     immutable: true,
-    default: "/assets/events/zoo.jpg"
+    default: "/assets/events/zoo.png"
   },
   feedingSchedule: feedingSchedule,
   interactiveExperience: interactiveExperience,

@@ -2,6 +2,7 @@
     @apply w-full pt-5 pb-7 pr-96 pl-5 border border-zinc-200 rounded-2xl dark:border-zinc-700;
     @apply transition-all duration-300 ease-in-out;
     @apply bg-blend-overlay !backdrop-blur-md bg-[var(--card-bg-color-glass)];
+    
 }
 
 .header {

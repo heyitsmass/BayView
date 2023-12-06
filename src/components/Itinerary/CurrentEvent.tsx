@@ -27,6 +27,7 @@ const InfoPanel = ({
 }) => {
   const { name } = event;
 
+  /**
   const splitName = (name: string) => {
     const split = name.split(/[A-Z]/).filter((s) => !!s);
 
@@ -39,13 +40,11 @@ const InfoPanel = ({
 
     return name;
   };
-
+ */
   return (
     <motion.section className={styles.sub_card}>
       <motion.h2 className="text-xl font-bold capitalize w-full pb-2 truncate ellipsis">
-        {isPending
-          ? `Checking for updates`
-          : `${splitName(event.__t)} - ${name}`}
+        {isPending ? `Checking for updates` : `${event.__t} - ${name}`}
         {isPending && <Loading />}
       </motion.h2>
       <InfoCard {...event} isPending={isPending} />
@@ -96,7 +95,7 @@ export const CurrentEvent = () => {
   const [isPending, setIsPending] = React.useState(false);
 
   useEffect(() => {
-    if (eventRef.current !== currEvent) {
+    if (eventRef?.current !== currEvent) {
       setIsPending(true);
       setTimeout(() => {
         eventRef.current = currEvent;

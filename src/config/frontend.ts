@@ -44,6 +44,10 @@ export const frontendConfig = (): SuperTokensConfig => {
             height: min-content; 
           }
 
+          [data-supertokens~="input"]{
+            border-radius: 1rem;
+          }
+
           [data-supertokens~="row"] { 
             padding-bottom: 0; 
           }

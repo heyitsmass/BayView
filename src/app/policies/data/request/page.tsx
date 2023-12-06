@@ -1,9 +1,8 @@
-'use client'; 
-import { useState } from "react";
-import { submitDataRequest } from "./handler";
-import "./styles.css";
+"use client";
 import UserInput from "@/components/Input";
 import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import "./styles.css";
 export default function Page() {
   type Laws = "CCPA" | "GDPR" | "Other";
 
@@ -19,7 +18,7 @@ export default function Page() {
         <section className="p-4">
           <UserInput
             icon={{
-              icon: faUser,
+              icon: faUser
             }}
             label="Name"
             name="name"
@@ -28,7 +27,7 @@ export default function Page() {
           <div></div>
           <UserInput
             icon={{
-              icon: faEnvelope,
+              icon: faEnvelope
             }}
             label="Email"
             name="email"
